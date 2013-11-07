@@ -1,0 +1,45 @@
+Aby instrukci želva provedla, musí mít minimálně
+vyžadovaný počet parametrů.
+
+všeobecné instrukce:
+
+  [ - ulož stav na zásobník
+  ] - obnov stav ze zásobníku
+  A(x) - nastav úhel otočení na x stupňů
+  L(x) - otoč se o x stupňů doleva
+  R(x) - otoč se o x stupňů doprava
+  C(r,g,b) - nastav barvu na [r,g,b]
+  D - kresli čáru
+  G - jdi dopředu (bez kreslení)
+
+instrukce nezávislé na velikosti:
+
+  P(x) - nastav délku kroku na x procent aktuální délky
+  B(x) - nastav délku kroku na x * 0,001 šířky obrázku
+  W(x) - nastav tloušťku čáry na x * 0,001 šířky obrázku
+  S(x,y) - nastav typ čáry:
+    x: styl:
+      0 - rovná
+      1 - klikatá
+      2 - vlnitá
+      3 - šipka
+      4 - dvojitá
+      5 - částice
+    y: délka vynechávané mezery v 0,001 šířky obrázku
+
+pixelové instrukce:
+
+  I(x) - zvětši délku kroku o x pixelů
+  M(x) - nastav délku kroku na x pixelů
+  F(x) - nastav tloušťku čáry na x pixelů
+  T(x,y) - nastav typ čáry:
+    x: styl:
+      0 - rovná
+      1 - klikatá
+      2 - vlnitá
+      3 - šipka
+      4 - dvojitá
+      5 - částice
+    y: délka vynechávané mezery v pixelech
+
+

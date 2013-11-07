@@ -1,0 +1,25 @@
+zápis gramatiky
+
+syntaxe:
+
+
+
+
+<START>          => <LEFT> <CHANCE> -> <RIGHT>
+<LEFT>           => <LETTER> | <LETTER> (<PARAM_LIST>) <CONDITION>
+<PARAM_LIST>     => <LETTER> | <LETTER>, <PARAM_LIST>
+<CONDITION>      => [ <EXPRESSION> ] | ''
+<RIGHT>          => '' | <RIGHT_NONEMPTY>
+<RIGHT_NONEMPTY> => <SYMBOL> | <SYMBOL> <RIGHT_NONEMPTY>
+<SYMBOL>         => <LETTER> | <LETTER> (<PARAM_ASSIGN>)
+<PARAM_ASSIGN>   => <EXPRESSION> | <EXPRESSION>, <PARAM_ASSIGN>
+<CHANCE>         => : <NUMBER> | ''
+<EXPRESSION>     => <OPERAND> | <OPERAND> <OPERATOR> <OPERAND>
+<OPERATOR>       => + | - | * | / | & | '|' | ! | > | < | =
+<OPERAND>        => <NUMBER> | <LETTER> | (<EXPRESSION>)
+<NUMBER>         => 1 | 2 | 3 | ... | 10 | 11 | ...
+<LETTER>         => a | A | b | B | ... | z | Z | { | }
+
+
+
+A (x,y) [(x > y) and (x >= 5)] : 50 -> B(5,7 + x)A
