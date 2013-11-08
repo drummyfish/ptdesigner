@@ -58,6 +58,81 @@ t_color_buffer turtle_noise_buffer;  // global help buffer
 
 //----------------------------------------------------------------------
 
+
+/***
+ * Private function - prepares given buffer to be processed with
+ * cellular automaton. This means that the format of the buffer will be
+ * made such that only red channel matters and its value is equal to the
+ * current state number.
+ *
+ * @param buffer buffer to be converted to the cellular automata format
+ * @param number_of_states number of states of the automata
+ */
+
+void _pt_cellular_automaton_prepare(t_color_buffer *buffer,
+  unsigned int number_of_states)
+
+  {
+    unsigned char r,g,b;
+    double interval;
+    unsigned int x,y,i;
+
+    interval = 255.0 / number_of_states;
+
+    pt_grayscale(buffer);
+
+    for (y = 0; y < buffer->height; y++)
+      for (x = 0; x < buffer->width; x++)
+        {
+          color_buffer_get_pixel(buffer,x,y,&r,&g,&b);
+
+          // threshold:
+
+          for (i = 1; i <= number_of_states; i++)
+            if (r <= interval * i)
+              {
+                r = i - 1;
+                break;
+              }
+
+          color_buffer_set_pixel(buffer,x,y,r,0,0);
+        }
+  }
+
+//----------------------------------------------------------------------
+
+/***
+ * Private function - converts the buffer's data back from cellular
+ * automaton format to grayscale image format.
+ *
+ * @param buffer buffer to be converted
+ * @param number_of_states number of states of the automaton
+ */
+
+void _pt_cellular_automaton_convert_back(t_color_buffer *buffer,
+  unsigned int number_of_states)
+
+  {
+    unsigned char r,g,b;
+    double interval;
+    unsigned int x,y;
+
+    if (number_of_states == 1)
+      number_of_states = 2;     // to prevent division by zero
+
+    interval = 255.0 / (number_of_states - 1);
+
+    for (y = 0; y < buffer->height; y++)
+      for (x = 0; x < buffer->width; x++)
+        {
+          color_buffer_get_pixel(buffer,x,y,&r,&g,&b);
+          r = round_to_char(interval * r);
+          color_buffer_set_pixel(buffer,x,y,r,r,r);
+        }
+  }
+
+//----------------------------------------------------------------------
+
   /**
    * Private function - fills an area with constant color with given
    * color.
@@ -3169,80 +3244,6 @@ void pt_glass(t_color_buffer *normal_map, t_color_buffer *buffer,
 
 //----------------------------------------------------------------------
 
-/***
- * Private function - prepares given buffer to be processed with
- * cellular automaton. This means that the format of the buffer will be
- * made such that only red channel matters and its value is equal to the
- * current state number.
- *
- * @param buffer buffer to be converted to the cellular automata format
- * @param number_of_states number of states of the automata
- */
-
-void _pt_cellular_automaton_prepare(t_color_buffer *buffer,
-  unsigned int number_of_states)
-
-  {
-    unsigned char r,g,b;
-    double interval;
-    unsigned int x,y,i;
-
-    interval = 255.0 / number_of_states;
-
-    pt_grayscale(buffer);
-
-    for (y = 0; y < buffer->height; y++)
-      for (x = 0; x < buffer->width; x++)
-        {
-          color_buffer_get_pixel(buffer,x,y,&r,&g,&b);
-
-          // threshold:
-
-          for (i = 1; i <= number_of_states; i++)
-            if (r <= interval * i)
-              {
-                r = i - 1;
-                break;
-              }
-
-          color_buffer_set_pixel(buffer,x,y,r,0,0);
-        }
-  }
-
-//----------------------------------------------------------------------
-
-/***
- * Private function - converts the buffer's data back from cellular
- * automaton format to grayscale image format.
- *
- * @param buffer buffer to be converted
- * @param number_of_states number of states of the automaton
- */
-
-void _pt_cellular_automaton_convert_back(t_color_buffer *buffer,
-  unsigned int number_of_states)
-
-  {
-    unsigned char r,g,b;
-    double interval;
-    unsigned int x,y;
-
-    if (number_of_states == 1)
-      number_of_states = 2;     // to prevent division by zero
-
-    interval = 255.0 / (number_of_states - 1);
-
-    for (y = 0; y < buffer->height; y++)
-      for (x = 0; x < buffer->width; x++)
-        {
-          color_buffer_get_pixel(buffer,x,y,&r,&g,&b);
-          r = round_to_char(interval * r);
-          color_buffer_set_pixel(buffer,x,y,r,r,r);
-        }
-  }
-
-//----------------------------------------------------------------------
-
 void pt_cellular_automaton_rps(t_color_buffer *buffer,
   t_neighbourhood_type neighbourhood, unsigned int neighbourhood_size,
   unsigned char number_of_players, int random, unsigned int iterations)
@@ -3485,6 +3486,202 @@ void pt_cellular_automaton_general(t_color_buffer *buffer,
     color_buffer_copy_data(main_buffer,buffer);
     _pt_cellular_automaton_convert_back(buffer,states);
     color_buffer_destroy(&buffer2);
+  }
+
+//----------------------------------------------------------------------
+
+  /**
+   * Private function - creates an array of points accoording to shape
+   * describing string.
+   *
+   * @param side_string string describing a tile side, it is of format
+   *        "%lf %lf %lf %lf ..." where two succeeding number are x and
+   *        y coordinations of points, there must be exactly one space
+   *        between numbers
+   * @param points in this variable the list of points will be returned,
+   *        the list will start with [0,0] and will be sorted by values
+   *        of x, points with duplicite x value will be eliminated, only
+   *        points with x values in range (0,1) will be considered and y
+   *        values will be saturated to range <-0.5,0.5>
+   * @param length in this variable length of created array will be
+   *        returned
+   */
+
+void _pt_make_side_points(char *side_string, double points[128][2],
+  unsigned int *length)
+
+  {
+    unsigned int i, j, position;
+    int scanning_x;    // say if we're scanning x or y
+    int already_in_array, scanning_done;
+    double helper;
+    double point[2];
+
+    if (points == NULL || length == NULL)
+      return;
+
+    points[0][0] = 0; // initial point
+    points[0][1] = 0;
+    *length = 1;
+
+    position = 0;      // position in the string
+    scanning_x = 1;
+    scanning_done = 0;
+
+    while (1)          // scan the string for points
+      {
+        if (!sscanf(side_string + position,"%lf",&helper) ||
+          (side_string[position] == 0))
+          break;
+
+        // go to the next item:
+
+        position++;
+
+        while (side_string[position] != 0 &&
+          side_string[position] != ' ')
+          position++;
+
+        point[scanning_x ? 0 : 1] = helper;
+        scanning_x = !scanning_x;
+
+        if (scanning_x) // one point scanned => add to array
+          {
+            point[0] = saturate_double(point[0],0.0,1.0);
+            point[1] = saturate_double(point[1],-0.5,0.5);
+
+            if (point[0] == 1.0) // make points with 1.0 not get to list
+              point[0] = 0.0;
+
+            already_in_array = 0;
+
+            for (j = 0; j < *length; j++)       // check for duplicities
+              if (points[j][0] == point[0])     // only x matters
+                {
+                  already_in_array = 1;
+                  break;
+                }
+
+            if (!already_in_array)      // add the point to the array
+              {
+                points[*length][0] = point[0];
+                points[*length][1] = point[1];
+                *length = *length + 1;
+              }
+
+            if (*length >= 128)
+              break;
+          }
+      }
+
+    for (j = 1; j < *length; j++)  // sort the list with bubble sort
+      for (i = 0; i < *length - j; i++)
+        if (points[i][0] > points[i + 1][0])
+          {
+            helper = points[i][0];
+            points[i][0] = points[i + 1][0];
+            points[i + 1][0] = helper;
+
+            helper = points[i][1];
+            points[i][1] = points[i + 1][1];
+            points[i + 1][1] = helper;
+          }
+  }
+
+//----------------------------------------------------------------------
+
+void pt_mosaic_square(t_color_buffer *destination,
+  t_fill_type fill_type, unsigned char fill_colors[],
+  t_square_mosaic *mosaic)
+
+  {
+    double **tile_polygon;  // array of polygon points
+    double helper;
+    unsigned int length,polygon_points;
+    unsigned int extra_border_x,extra_border_y,tile_width,tile_height;
+    t_color_buffer tile_buffer;
+    double points[128][2];
+    double (*polygon)[2];       // dynamic array of polygon points
+    unsigned int i, j;
+
+    if (destination == NULL || mosaic == NULL ||
+      !square_mosaic_is_valid(mosaic))
+      return;
+
+    // make the tile polygon:
+
+    polygon_points = 0;
+    polygon = NULL;
+
+    for (i = 0; i < 4; i++) // for each side
+      {
+        _pt_make_side_points(mosaic->side_shape[i],points,&length);
+
+        polygon = realloc(polygon,(polygon_points + length) *
+          2 * sizeof(double));
+
+        for (j = 0; j < length; j++)  // transform points
+          {
+            switch (i)
+              {
+                case 0: // top
+                  points[j][1] += 1.0;
+                  break;
+
+                case 1: // right
+                  helper = points[j][0];
+                  points[j][0] = 1.0 + points[j][1];
+                  points[j][1] = 1.0 - helper;
+                  break;
+
+                case 2: // bottom
+                  points[j][0] = 1.0 - points[j][0];
+                  points[j][1] *= -1;
+                  break;
+
+                case 3: // left
+                  helper = points[j][0];
+                  points[j][0] = -1 * points[j][1];
+                  points[j][1] = helper;
+                  break;
+              }
+          }
+
+        for (j = 0; j < length; j++)  // copy the side to the polygon
+          {
+            polygon[polygon_points + j][0] = points[j][0];
+            polygon[polygon_points + j][1] = points[j][1];
+          }
+
+        polygon_points += length;
+      }
+
+    tile_width = destination->width / mosaic->tiles_x;
+    tile_height = destination->height / mosaic->tiles_y;
+    extra_border_x = ceil(tile_width / 2);
+    extra_border_y = ceil(tile_height / 2);
+
+    // initialise the tile bitmap buffer with extra borders
+
+    color_buffer_init(&tile_buffer,2 * tile_width,2 * tile_height);
+
+    // draw the polygon to the buffer:
+
+    for (i = 0; i < polygon_points; i++)
+      {
+        _pt_draw_fancy_line(&tile_buffer,
+          extra_border_x + polygon[i][0] * tile_width,
+          extra_border_y + tile_height - polygon[i][1] * tile_height,
+          extra_border_x + polygon[(i + 1) % polygon_points][0] * tile_width,
+          extra_border_y + tile_height - polygon[(i + 1) % polygon_points][1] * tile_height,
+          0,0,0,1,0,0,0,NULL,LINE_NORMAL);
+      }
+
+    color_buffer_save_to_png(&tile_buffer,"pic.png");
+
+    color_buffer_destroy(&tile_buffer);
+
+    free(polygon);
   }
 
 //----------------------------------------------------------------------

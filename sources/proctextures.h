@@ -571,6 +571,21 @@ void pt_mosaic_square(t_color_buffer *destination,
   t_fill_type fill_type, unsigned char fill_colors[],
   t_square_mosaic *mosaic);
 
+  /**<
+   * Creates an mosaic image based on square grid.
+   *
+   * @param destination color buffer in which the result will be stored,
+   *        should be already initialised
+   * @param fill_type says how the tiles will be filled with color
+   * @param fill_colors array of grayscale values with which the tiles
+   *        will be colored, the colors are assigned to tiles in left to
+   *        right, top to bottom order, if this parameter is NULL, all
+   *        tiles will be filled with white color
+   * @param mosaic mosaic specification, if it's not valid, no mosaic
+   *        will be generated (validity can be checked with special
+   *        functions)
+   */
+
 //----------------------------------------------------------------------
 
 void pt_cellular_automaton_rps(t_color_buffer *buffer,

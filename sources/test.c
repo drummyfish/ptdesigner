@@ -11,9 +11,13 @@
 int main()
   {
     t_square_mosaic mosaic;
+    t_color_buffer buffer;
 
-    mosaic.side_shape[0] = "";
-    mosaic.side_shape[1] = "";
+    color_buffer_init(&buffer,512,512);
+
+    mosaic.side_shape[0] = "0.3 0.2";
+                     //     |       |       |
+    mosaic.side_shape[1] = "0.8 0.1 0.3 0.1";
     mosaic.side_shape[2] = "";
     mosaic.side_shape[3] = "";
 
@@ -25,7 +29,9 @@ int main()
     mosaic.tiles_x = 4;
     mosaic.tiles_y = 4;
 
-    printf("%d\n",square_mosaic_is_valid(&mosaic));
+    pt_mosaic_square(&buffer,FILL_KEEP_BORDERS,NULL,&mosaic);
+
+    color_buffer_destroy(&buffer);
 
     return 0;
   }

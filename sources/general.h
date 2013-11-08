@@ -67,7 +67,11 @@ typedef enum
 typedef struct
   {
     char *side_shape[4];      /**< string-specified side shape (CW from
-                                   top) */
+                                   top), the string format should be:
+                                   "%lf %lf %lf %lf ..." where odd
+                                   position numbers are x coordination
+                                   in range <0,1> and others are y
+                                   coordinations in range <0,0.5> */
 
     t_mosaic_transformation transformation[4]; /**< side transformations
                                                     (CW from top) */
