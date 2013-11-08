@@ -10,22 +10,22 @@
 
 int main()
   {
-    t_color_buffer buffer,buffer2,buffer3;
-    t_color_transition transition;
+    t_square_mosaic mosaic;
 
-    int i,j;
-    unsigned char r,g,b;
+    mosaic.side_shape[0] = "";
+    mosaic.side_shape[1] = "";
+    mosaic.side_shape[2] = "";
+    mosaic.side_shape[3] = "";
 
-    color_buffer_init(&buffer,1024,1024);
+    mosaic.transformation[0] = MOSAIC_TRANSFORM_SHIFT;
+    mosaic.transformation[1] = MOSAIC_TRANSFORM_ROTATE_SIDE;
+    mosaic.transformation[2] = MOSAIC_TRANSFORM_SHIFT;
+    mosaic.transformation[3] = MOSAIC_TRANSFORM_ROTATE_SIDE;
 
-    pt_substrate(20,0,5000,FILL_NONE,0,&buffer);
+    mosaic.tiles_x = 4;
+    mosaic.tiles_y = 4;
 
-    pt_supersampling(&buffer,2,&buffer2);
-
-    color_buffer_save_to_png(&buffer2,"pic.png");
-
-    color_buffer_destroy(&buffer);
-    color_buffer_destroy(&buffer2);
+    printf("%d\n",square_mosaic_is_valid(&mosaic));
 
     return 0;
   }

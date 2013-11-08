@@ -567,6 +567,12 @@ void pt_substrate_simple(int random, int iterations, int fill,
 
 //----------------------------------------------------------------------
 
+void pt_mosaic_square(t_color_buffer *destination,
+  t_fill_type fill_type, unsigned char fill_colors[],
+  t_square_mosaic *mosaic);
+
+//----------------------------------------------------------------------
+
 void pt_cellular_automaton_rps(t_color_buffer *buffer,
   t_neighbourhood_type neighbourhood, unsigned int neighbourhood_size,
   unsigned char number_of_players, int random, unsigned int iterations);
@@ -664,7 +670,7 @@ void pt_marble(int random, unsigned int periods, unsigned int intensity,
    * @param amplitude amplitude of the picture, must be less or equal to
    *        127
    * @param destination color buffer in which the result will be stored,
-   *        musr be initiated before this function is called
+   *        must be initialised before this function is called
    * @param noise_source external source of the noise, it may be NULL in
    *        which case perlin noise will be generated and used, if this
    *        parameter is used, the noise color buffer must be of the
@@ -694,7 +700,7 @@ void pt_marble_simple(int random, unsigned int intensity,
 void pt_particle_movement(t_color_buffer *noise_buffer,
   unsigned int particles, double position_x, double position_y,
   unsigned int angle, unsigned int spread, double velocity,
-  t_color_buffer *destination, int random);
+  t_color_buffer *destination);
 
   /**<
    * Creates an grayscale image of moving particles.
@@ -716,8 +722,6 @@ void pt_particle_movement(t_color_buffer *noise_buffer,
    * @param destination in this variable the result image will be
    *        returned, it should be deallocated before this function is
    *        called
-   * @param random this number affects the random actions during
-   *        computation
    */
 
 //----------------------------------------------------------------------
@@ -726,7 +730,7 @@ void pt_particle_movement_color(t_color_buffer *noise_buffer,
   unsigned int particles, double position_x, double position_y,
   unsigned int angle, unsigned int spread, double velocity,
   t_color_buffer *destination, unsigned char red, unsigned char green,
-  unsigned char blue, int random);
+  unsigned char blue);
 
   /**<
    * Creates an colored image of moving particles.
@@ -751,8 +755,6 @@ void pt_particle_movement_color(t_color_buffer *noise_buffer,
    * @param red amount of red color of the particles
    * @param green amount of green color of the particles
    * @param blue amount of blue color of the particles
-   * @param random this number affects the random actions during
-   *        computation
    */
 
 //----------------------------------------------------------------------

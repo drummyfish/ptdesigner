@@ -597,7 +597,7 @@ int power_int(int number, unsigned int power)
 
 //----------------------------------------------------------------------
 
-make_game_of_life_rules(int rules[256])
+void make_game_of_life_rules(int rules[256])
 
   {
     int i;
@@ -652,6 +652,66 @@ double saturate_double(double value, double minimum, double maximum)
       return minimum;
 
     return value;
+  }
+
+//----------------------------------------------------------------------
+
+int square_mosaic_is_valid(t_square_mosaic *mosaic)
+
+  {
+    int i, opposite_side, dimension_tiles;
+
+    if (mosaic == NULL)
+      return 0;
+
+    for (i = 0; i < 4; i++)  // for each side
+      {
+        opposite_side = (i + 2) % 4;
+
+        dimension_tiles = i % 2 == 0 ?
+          mosaic->tiles_y : mosaic->tiles_x;
+
+        if (mosaic->side_shape[i] == NULL)
+          return 0;
+
+        switch (mosaic->transformation[i])
+          {
+            case MOSAIC_TRANSFORM_SHIFT:
+              if (mosaic->transformation[opposite_side] !=
+                MOSAIC_TRANSFORM_SHIFT)
+                return 0;
+
+              break;
+
+            case MOSAIC_TRANSFORM_SHIFT_MIRROR:
+              if (mosaic->transformation[opposite_side] !=
+                MOSAIC_TRANSFORM_SHIFT_MIRROR)
+                return 0;
+
+              if (dimension_tiles % 2 != 0)  // multiples of 2 only
+                return 0;
+
+              break;
+
+            case MOSAIC_TRANSFORM_ROTATE_SIDE:
+              if (dimension_tiles % 2 != 0)
+                return 0;
+
+              break;
+
+            case MOSAIC_TRANSFORM_ROTATE_VERTICE:
+              if (mosaic->transformation[(i + 1) % 4] !=
+                MOSAIC_TRANSFORM_ROTATE_VERTICE)
+                return 0;
+
+              if (dimension_tiles % 2 != 0)
+                return 0;
+
+              break;
+          }
+      }
+
+    return 1;
   }
 
 //----------------------------------------------------------------------

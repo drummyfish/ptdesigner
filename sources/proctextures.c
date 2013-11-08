@@ -576,7 +576,7 @@ void _pt_draw_fancy_line(t_color_buffer *buffer, int x1, int y1, int x2,
           length * 20 + 5 + noise_intensity * 75,    // spread
           length * 13 + 0.1 +                        // initial velocity
           noise_intensity * length * 20,
-          &help_buffer,5);
+          &help_buffer);
 
         pt_map_to_transition(&help_buffer,&help_transition);
         pt_substract_buffers(&help_buffer,buffer);
@@ -2104,9 +2104,7 @@ void pt_marble(int random, unsigned int periods, unsigned int intensity,
 
           sin_value = sin(parameter);
 
-          sin_value = sin_value;
-
-          red = 127 + sin_value * amplitude;
+          red = round_to_char(127 + sin_value * amplitude);
 
           color_buffer_set_pixel(destination,i,j,red,red,red);
         }
@@ -2132,10 +2130,10 @@ void pt_marble_simple(int random, unsigned int intensity,
 void pt_particle_movement(t_color_buffer *noise_buffer,
   unsigned int particles, double position_x, double position_y,
   unsigned int angle, unsigned int spread, double velocity,
-  t_color_buffer *destination, int random)
+  t_color_buffer *destination)
 
   {
-    unsigned int i, j, k;
+    unsigned int i, j;
     int particle_coordinations[particles][2];
     double particle_angles[particles];
     double particle_velocities[particles];
@@ -2234,7 +2232,7 @@ void pt_particle_movement_color(t_color_buffer *noise_buffer,
   unsigned int particles, double position_x, double position_y,
   unsigned int angle, unsigned int spread, double velocity,
   t_color_buffer *destination, unsigned char red, unsigned char green,
-  unsigned char blue, int random)
+  unsigned char blue)
 
   {
     t_color_transition transition;
@@ -2243,7 +2241,7 @@ void pt_particle_movement_color(t_color_buffer *noise_buffer,
     color_transition_add_point(0,255,255,255,&transition);
     color_transition_add_point(255,red,green,blue,&transition);
     pt_particle_movement(noise_buffer,particles,position_x,position_y,
-      angle,spread,velocity,destination,random);
+      angle,spread,velocity,destination);
     pt_map_to_transition(destination,&transition);
     color_transition_destroy(&transition);
   }
@@ -2290,7 +2288,7 @@ void pt_particles_simple(unsigned int particles, unsigned int sources,
         random++;
 
         pt_particle_movement(&noise_buffer,particles,x,y,0,360,velocity,
-          &help_buffer,random);
+          &help_buffer);
 
         pt_add_buffers(&help_buffer,destination);
         color_buffer_destroy(&help_buffer);
@@ -3113,11 +3111,10 @@ void pt_light_simple(t_color_buffer *normal_map,
   unsigned char blue)
 
   {
-    double ambient_amount, diffuse_amount, specular_amount;
+    double ambient_amount, diffuse_amount;
 
     ambient_amount = 0.05;
     diffuse_amount = 0.5;
-    specular_amount = 1.0;
 
     pt_light(normal_map,destination,
       red * ambient_amount,
@@ -3342,7 +3339,6 @@ void pt_cellular_automaton_cyclic(t_color_buffer *buffer,
     int dx,dy;
     unsigned char r,g,b,r2,g2,b2;
     unsigned int array_length,iteration,color_count;
-    unsigned int player1,player2,winner,level1,level2,random_number;
     t_color_buffer buffer2;
     t_color_buffer *main_buffer,*secondary_buffer,*helper;
 

@@ -199,7 +199,6 @@ int _evaluate_expression(char *expression,t_symbol_table *table,
     unsigned char operation;
     int operand_2;
     int state;     // state of reading, 0 = op1, 1 = operator, 2 = op2, 3 = done
-    int scanner_position;      // to keep scanner position on stack
 
     *success = 1;
 
@@ -1010,7 +1009,6 @@ int grammar_load_from_file(t_grammar *grammar, char *filename,
 
   {
     FILE *read_file;
-    int read;
     int i;
     char buffer[256];
 

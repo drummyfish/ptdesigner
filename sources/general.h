@@ -46,6 +46,36 @@ typedef enum
     NEIGHBOURHOOD_VON_NEUMANN   ///< taxicab distance
   } t_neighbourhood_type;
 
+                            /** possible mosaic tile transformations */
+typedef enum
+  {
+    MOSAIC_TRANSFORM_SHIFT,          ///< the tile is shifted
+    MOSAIC_TRANSFORM_ROTATE_SIDE,    /**< the tile is rotated around the
+                                          center of the side */
+    MOSAIC_TRANSFORM_ROTATE_VERTICE, /**< the tile is rotated around the
+                                          vertice of the side */
+    MOSAIC_TRANSFORM_SHIFT_MIRROR,   /**< the tile is shifted and
+                                          mirrored */
+  } t_mosaic_transformation;
+
+                              /** square mosaic definition, specifies
+                                  the tile shape, way in which tiles are
+                                  placed and a number of tiles in x and
+                                  y direction, not all specifications
+                                  are valid (check can be done with
+                                  specific functions) */
+typedef struct
+  {
+    char *side_shape[4];      /**< string-specified side shape (CW from
+                                   top) */
+
+    t_mosaic_transformation transformation[4]; /**< side transformations
+                                                    (CW from top) */
+
+    unsigned char tiles_x;    ///< number of tiles in x direction
+    unsigned char tiles_y;    ///< number of tiles in y direction
+  } t_square_mosaic;
+
 //----------------------------------------------------------------------
 
 int transform_coordination(int coordination, int limit);
@@ -394,6 +424,20 @@ double saturate_double(double value, double minimum, double maximum);
    * @return saturated value, i.e. if it was greater then maximum,
    *         maximum is returned, if it was lower than minimum, minimum
    *         is returned, otherwise value is returned
+   */
+
+//----------------------------------------------------------------------
+
+int square_mosaic_is_valid(t_square_mosaic *mosaic);
+
+  /**
+   * Checks whether given square mosaic specification is valid, i.e.
+   * transformation combinations are allowed and x and y tiling does
+   * connect to itself on the other side.
+   *
+   * @param mosaic mosaic specification
+   *
+   * @return 1 if the specification is valid, 0 otherwise
    */
 
 //----------------------------------------------------------------------
