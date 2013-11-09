@@ -77,6 +77,16 @@ typedef enum
     FILL_NO_BORDERS           ///< fill the areas and also their borders
   } t_fill_type;
 
+                              /** curves for computing specular
+                                  reflections with lighting */
+typedef enum
+  {
+    REFLECTION_CURVE_COSINE_SMOOTH, ///< (cosine + 1) / 2
+    REFLECTION_CURVE_COSINE_ABS,    ///< absolute value of cosine
+    REFLECTION_CURVE_LINEAR_HALF,   ///< linear dependency to pi / 2
+    REFLECTION_CURVE_LINEAR_FULL    ///< linear dependency to pi
+  } t_reflection_curve;
+
 //----------------------------------------------------------------------
 
 void pt_color_fill(t_color_buffer *buffer, int red, int green,
@@ -1036,8 +1046,9 @@ void pt_light(t_color_buffer *normal_map, t_color_buffer *destination,
   unsigned char ambient_b, unsigned char diffuse_r,
   unsigned char diffuse_g, unsigned char diffuse_b,
   unsigned char specular_r, unsigned char specular_g,
-  unsigned char specular_b, unsigned int phong_exponent,
-  double viewer_z, double light_vector_x, double light_vector_y);
+  unsigned char specular_b, double phong_exponent,
+  t_reflection_curve reflection_curve, double viewer_z,
+  double light_vector_x, double light_vector_y);
 
   /**<
    * Based on provided normal map computes the intensity of each pixel
@@ -1059,7 +1070,10 @@ void pt_light(t_color_buffer *normal_map, t_color_buffer *destination,
    * @param specular_r amount of red intensity for the specular light
    * @param specular_g amount of green intensity for the specular light
    * @param specular_b amount of blue intensity for the specular light
-   * @param phong_exponent affects the smoothness of the surface
+   * @param phong_exponent affects the smoothness of the surface by
+   *        raising the reflection curve to the power of this parameter
+   * @param reflection_curve specifies how specular reflections will
+   *        look
    * @param viewer_z z position of the viewer, where 1 is equal to the
    *        image width, x and y positions are considered in the middle
    *        of the image

@@ -3041,8 +3041,9 @@ void pt_light(t_color_buffer *normal_map, t_color_buffer *destination,
   unsigned char ambient_b, unsigned char diffuse_r,
   unsigned char diffuse_g, unsigned char diffuse_b,
   unsigned char specular_r, unsigned char specular_g,
-  unsigned char specular_b, unsigned int phong_exponent,
-  double viewer_z, double light_vector_x, double light_vector_y)
+  unsigned char specular_b, double phong_exponent,
+  t_reflection_curve reflection_curve, double viewer_z,
+  double light_vector_x, double light_vector_y)
 
   {
     unsigned int ambient_intensity[3];
@@ -3109,7 +3110,6 @@ void pt_light(t_color_buffer *normal_map, t_color_buffer *destination,
 
           // set the viewer position, interpolate if near the border
 
-
           if (x <= interpolation_border_x)
             {
               viewer_x = (x / ((double) interpolation_border_x)) *
@@ -3156,10 +3156,30 @@ void pt_light(t_color_buffer *normal_map, t_color_buffer *destination,
             viewer_vector[1] * reflection_vector[1] + viewer_vector[2] *
             reflection_vector[2]);
 
-          specular_brightness = 1;
+          switch (reflection_curve)
+            {
+              case REFLECTION_CURVE_COSINE_SMOOTH:
+                dot_product = (dot_product + 1.0) / 2.0;
+                break;
 
-          for (i = 0; i < phong_exponent; i++)
-            specular_brightness *= dot_product;
+              case REFLECTION_CURVE_COSINE_ABS:
+                dot_product = dot_product < 0.0 ?
+                  -1 * dot_product : dot_product;
+                break;
+
+              case REFLECTION_CURVE_LINEAR_HALF:
+                dot_product = acos(dot_product) / PI * -1.0 + 1.0;
+                break;
+
+              case REFLECTION_CURVE_LINEAR_FULL:
+                dot_product = (acos(dot_product) / PI * -1.0 + 2.0)
+                  / 2.0;
+                break;
+            }
+
+          dot_product = saturate_double(dot_product,0.0,1.0);
+
+          specular_brightness = pow(dot_product,phong_exponent);
 
           specular_intensity[0] =
             round_to_char(specular_brightness * specular_r);
@@ -3201,7 +3221,9 @@ void pt_light_simple(t_color_buffer *normal_map,
       255,
       255,
       255,
-      2,1.0,0.5,0.5);
+      2.0,
+      REFLECTION_CURVE_COSINE_ABS,
+      1.0,0.5,0.5);
   }
 
 //----------------------------------------------------------------------
