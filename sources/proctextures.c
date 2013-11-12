@@ -558,6 +558,8 @@ void _pt_draw_fancy_line(t_color_buffer *buffer, int x1, int y1, int x2,
 
     dx = x2 - x1;
     dy = y2 - y1;
+    dx = dx < 0 ? -1 * dx : dx;    // make absolute values
+    dy = dy < 0 ? -1 * dy : dy;
 
     if (dx != 0)
       angle = atan(abs(dy)/abs(dx));
@@ -566,12 +568,11 @@ void _pt_draw_fancy_line(t_color_buffer *buffer, int x1, int y1, int x2,
 
     angle = two_points_to_angle(x1,y1,x2,y2);
 
-    half_width = width / 2;
+    half_width = width / 2;      // half width of the line
     gap_length = 0;
 
-    steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);   // max of dx and dy
-
-    steps++;   // this makes the line actually end in the endpoint
+    steps = dx > dy ? dx : dy;   // max of dx and dy
+    steps++;                     // make the line end in it's endpoint
 
     if (type == LINE_ZIG_ZAG)
       {

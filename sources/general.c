@@ -145,51 +145,51 @@ void line_point(int initial_x, int initial_y, double angle,
 
     switch (angle_area)
       {
-        case 0:
+        case 0:                                  // 0 to PI/4
           *point_x = initial_x + point;
-          *point_y = initial_y - point * tan(angle);
+          *point_y = initial_y - (int) (point * tan(angle));
           break;
 
-        case 1:
+        case 1:                                  // PI/4 to PI/2
           angle = PI_DIVIDED_2 - angle;
-          *point_x = initial_x + point * tan(angle);
+          *point_x = initial_x + (int) (point * tan(angle));
           *point_y = initial_y - point;
           break;
 
-        case 2:
+        case 2:                                  // PI/2 to 3/4 * PI
           angle = angle - PI_DIVIDED_2;
-          *point_x = initial_x - point * tan(angle);
+          *point_x = initial_x - (int) (point * tan(angle));
           *point_y = initial_y - point;
           break;
 
-        case 3:
+        case 3:                                  // 3/4 * PI to PI
           angle = PI -angle;
           *point_x = initial_x - point;
-          *point_y = initial_y - point * tan(angle);
+          *point_y = initial_y - (int) (point * tan(angle));
           break;
 
-        case 4:
+        case 4:                                  // PI to 5/4 * PI
           angle = angle - PI;
           *point_x = initial_x - point;
-          *point_y = initial_y + point * tan(angle);
+          *point_y = initial_y + (int) (point * tan(angle));
           break;
 
-        case 5:
+        case 5:                                  // 5/4 * PI to 3/2 * PI
           angle = PI_TIMES_3_2 - angle;
-          *point_x = initial_x - point * tan(angle);
+          *point_x = initial_x - (int) (point * tan(angle));
           *point_y = initial_y + point;
           break;
 
-        case 6:
+        case 6:                                  // 3/2 * PI to 7/4 * PI
           angle = angle - PI_TIMES_3_2;
-          *point_x = initial_x + point * tan(angle);
+          *point_x = initial_x + (int) (point * tan(angle));
           *point_y = initial_y + point;
           break;
 
         case 7:
-          angle = PI_TIMES_2 - angle;
+          angle = PI_TIMES_2 - angle;            // 7/4 * PI to 2 * PI
           *point_x = initial_x + point;
-          *point_y = initial_y + point * tan(angle);
+          *point_y = initial_y + (int) (point * tan(angle));
           break;
       }
   }
