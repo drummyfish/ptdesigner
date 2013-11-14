@@ -147,6 +147,7 @@ void line_point(int initial_x, int initial_y, double angle,
       {
         case 0:                                  // 0 to PI/4
           *point_x = initial_x + point;
+                    // without cast here weird results occur:
           *point_y = initial_y - (int) (point * tan(angle));
           break;
 

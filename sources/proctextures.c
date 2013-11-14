@@ -48,7 +48,7 @@ typedef struct
     t_turtle_state state;       ///< current state
     t_turtle_state *stack;      ///< stack of states
     unsigned int stack_size;    ///< stack size
-    t_grammar *grammar;         ///< grammar with drawing instruction
+    t_grammar *grammar;         ///< grammar with drafwing instruction
     unsigned int instruction;   ///< current instruction position
     unsigned int image_width;
   } t_turtle;
@@ -3613,32 +3613,237 @@ void _pt_make_side_points(char *side_string, double points[128][2],
 
 //----------------------------------------------------------------------
 
-void pt_mosaic_square(t_color_buffer *destination,
-  t_fill_type fill_type, unsigned char fill_colors[],
-  t_square_mosaic *mosaic)
+  /**
+   * Private function - draws transformed tile in given buffer
+   * considering transparency.
+   *
+   * @param tile tile image to be drawn, it should consist of only three
+   *        colors - black (0,0,0), white (255,255,255) and red
+   *        (255,0,0), black and white pixels will be drawn over pixels
+   *        of the destination buffer, while in addition white pixels
+   *        will be drawn as specified color, and red pixels will be
+   *        considered as transparent
+   * @param x x position of the tile in pixels
+   * @param y y position of the tile in pixels
+   * @param color grayscale value which the white color in tile image
+   *        will be replaced with
+   * @param destination in this buffer the tile will be drawn over it's
+   *        current content
+   * @param transformation transformation to be used for the tile, the
+   *        tile image will not be affected by this function call
+   * @param horizontal says if the transformation is horizontal (values
+   *        greater than zero) or vertical (other values)
+   */
+
+void _pt_draw_tile(t_color_buffer *tile, unsigned int x, unsigned int y,
+  unsigned char color, t_color_buffer *destination,
+  t_mosaic_transformation transformation, int horizontal)
 
   {
-    double **tile_polygon;  // array of polygon points
-    double helper;
-    unsigned int length,polygon_points;
-    unsigned int extra_border_x,extra_border_y,tile_width,tile_height;
-    t_color_buffer tile_buffer;
+    unsigned int i,j,x2,y2;
+    unsigned int lower_x, lower_y, upper_x, upper_y;
+    unsigned char r,g,b;
+
+    for (j = 0; j < tile->height; j++)
+      {
+        for (i = 0; i < tile->width; i++)
+          {
+            // transform the coordinations:
+
+            switch (transformation)
+              {
+                case MOSAIC_TRANSFORM_SHIFT:
+
+                  x2 = i;
+                  y2 = j;
+                  break;
+
+                case MOSAIC_TRANSFORM_SHIFT_MIRROR:
+
+                  if (horizontal)
+                    {
+                      x2 = i;
+                      y2 = tile->height - j;
+                    }
+                  else
+                    {
+                      x2 = tile->width - i;
+                      y2 = j;
+                    }
+
+                  break;
+
+                case MOSAIC_TRANSFORM_ROTATE_SIDE:
+
+                  x2 = tile->width - i;
+                  y2 = tile->height - j;
+                  break;
+
+                case MOSAIC_TRANSFORM_ROTATE_VERTICE:
+
+                  x2 = j;
+                  y2 = i;
+                  break;
+              }
+
+            color_buffer_get_pixel(tile,x2,y2,&r,&g,&b);
+
+            if (r == 255)
+              {
+                if (b == 255)     // white
+                  {
+                    r = color;
+                    g = color;
+                    b = color;
+                  }
+                else              // red
+                  {
+                    color_buffer_get_pixel(destination,i,j,&r,&g,&b);
+                  }
+              }
+            else                  // black
+              {
+                r = 0;
+                g = 0;
+                b = 0;
+              }
+
+            color_buffer_set_pixel(destination,x + i,y + j,r,g,b);
+          }
+      }
+  }
+
+//----------------------------------------------------------------------
+
+  /**
+   * Private function - depending on provided square mosaic
+   * specification makes a tile polygon and returns it as a list of
+   * coordinations.
+   *
+   * @param mosaic square mosaic specification
+   * @param array_length in this cariable length of the created list
+   *        will be returned
+   *
+   * @return list of points in format [point number][x/y] representing
+   *         the polygon based on 1 * 1 size square grid with lower
+   *         left corner at [0,0], the list is sorted CW from upper
+   *         left corder and the polygon is automatically modified
+   *         based on side transformations specified by the mosaic
+   */
+
+double **_pt_make_tile_polygon(t_square_mosaic *mosaic,
+  unsigned int *array_length)
+
+  {
     double points[128][2];
-    double (*polygon)[2];       // dynamic array of polygon points
-    unsigned int i, j;
-
-    if (destination == NULL || mosaic == NULL ||
-      !square_mosaic_is_valid(mosaic))
-      return;
-
-    // make the tile polygon:
+    double helper;
+    unsigned int i,j;
+    double (*polygon)[2];        // dynamic array of polygon points
+    unsigned int polygon_points; // length of the polygon array
+    unsigned int length;
 
     polygon_points = 0;
     polygon = NULL;
 
-    for (i = 0; i < 4; i++) // for each side
+    for (i = 0; i < 4; i++)   // for each side
       {
-        _pt_make_side_points(mosaic->side_shape[i],points,&length);
+        // create the side accoording to transformations:
+
+        switch (mosaic->transformation[i])
+          {
+            case MOSAIC_TRANSFORM_ROTATE_SIDE:
+                _pt_make_side_points(mosaic->side_shape[i],points,
+                &length);
+
+              for (j = 0; j < length; j++) // cut the side in the middle
+                if (points[j][0] >= 0.5)
+                  {
+                    length = j;
+                    break;
+                  }
+
+              // copy the half-side upside-down (minus the first point):
+
+              for (j = 1; j < length; j++)
+                {
+                  points[length * 2 - 1 - j][0] = 1.0 - points[j][0];
+                  points[length * 2 - 1 - j][1] = -1 * points[j][1];
+                }
+              length = length * 2 - 1; // leave out the first point
+
+              break;
+
+            case MOSAIC_TRANSFORM_SHIFT:
+
+              if (i == 0 || i == 1)
+                {
+                  _pt_make_side_points(mosaic->side_shape[i],points,
+                    &length);
+                }
+              else // copy the opposite side for bottom or left side
+                {
+                  _pt_make_side_points(mosaic->side_shape[i - 2],points,
+                    &length);
+
+                  // flip the side in x and y:
+
+                  for (j = 0; j < length / 2; j++)
+                    {
+                      helper = -1 * points[j + 1][1];
+                      points[j + 1][1] = -1 * points[length - j - 1][1];
+                      points[length - j - 1][1] = helper;
+
+                      helper = points[j + 1][0];
+                      points[j + 1][0] = 1.0 -
+                        points[length - j - 1][0];
+                      points[length - j - 1][0] = 1.0 - helper;
+                    }
+                }
+
+              break;
+
+            case MOSAIC_TRANSFORM_SHIFT_MIRROR:
+
+              if (i == 0 || i == 1)
+                {
+                  _pt_make_side_points(mosaic->side_shape[i],points,
+                    &length);
+                }
+              else
+                {
+                  _pt_make_side_points(mosaic->side_shape[i - 2],points,
+                    &length);
+
+                  // flip the side y coordinations:
+
+                  for (j = 0; j < length; j++)
+                    points[j][1] *= -1;
+                }
+
+              break;
+
+            case MOSAIC_TRANSFORM_ROTATE_VERTICE:
+
+              _pt_make_side_points(mosaic->side_shape[0],points,
+                &length);
+
+              if (i == 1 || i == 3)
+                {
+                  for (j = 0; j < length / 2; j++)
+                    {
+                      helper = -1 * points[j + 1][1];
+                      points[j + 1][1] = -1 * points[length - j - 1][1];
+                      points[length - j - 1][1] = helper;
+
+                      helper = points[j + 1][0];
+                      points[j + 1][0] = 1.0 -
+                        points[length - j - 1][0];
+                      points[length - j - 1][0] = 1.0 - helper;
+                    }
+                }
+
+              break;
+          }
 
         polygon = realloc(polygon,(polygon_points + length) *
           2 * sizeof(double));
@@ -3679,6 +3884,36 @@ void pt_mosaic_square(t_color_buffer *destination,
         polygon_points += length;
       }
 
+    *array_length = polygon_points;
+    return polygon;
+  }
+
+//----------------------------------------------------------------------
+
+void pt_mosaic_square(t_color_buffer *destination,
+  t_fill_type fill_type, unsigned char fill_colors[],
+  t_square_mosaic *mosaic)
+
+  {
+    double **tile_polygon;  // array of polygon points
+    double helper;
+    unsigned int length,polygon_points;
+    unsigned int extra_border_x,extra_border_y,tile_width,tile_height;
+    t_color_buffer tile_buffer;
+    double points[128][2];
+    double (*polygon)[2];       // dynamic array of polygon points
+    unsigned int i, j;
+
+    if (destination == NULL || mosaic == NULL ||
+      !square_mosaic_is_valid(mosaic))
+      return;
+
+    pt_color_fill(destination,0,0,0);
+
+    // make the polygon:
+
+    polygon = _pt_make_tile_polygon(mosaic,&polygon_points);
+
     tile_width = destination->width / mosaic->tiles_x;
     tile_height = destination->height / mosaic->tiles_y;
     extra_border_x = ceil(tile_width / 2);
@@ -3700,7 +3935,19 @@ void pt_mosaic_square(t_color_buffer *destination,
           0,0,0,1,0,0,0,NULL,LINE_NORMAL);
       }
 
-    color_buffer_save_to_png(&tile_buffer,"pic.png");
+    _pt_floodfill(&tile_buffer,0,0,255,0,0); // fill the outside
+
+    // make the mosaic:
+
+    for (j = 0; j < mosaic->tiles_y; j++)
+      for (i = 0; i < mosaic->tiles_x; i++)
+        {
+
+        }
+
+    _pt_draw_tile(&tile_buffer,- 1 * extra_border_x,-1 * extra_border_y,250,destination,MOSAIC_TRANSFORM_ROTATE_VERTICE,0);
+
+    color_buffer_save_to_png(&tile_buffer,"pic2.png");
 
     color_buffer_destroy(&tile_buffer);
 

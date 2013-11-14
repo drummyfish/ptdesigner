@@ -15,23 +15,23 @@ int main()
 
     color_buffer_init(&buffer,512,512);
 
-    mosaic.side_shape[0] = "0.3 0.2";
+    mosaic.side_shape[0] = "0.1 -0.2 0.5 0.15";
                      //     |       |       |
-    mosaic.side_shape[1] = "0.8 0.1 0.3 0.1";
+    mosaic.side_shape[1] = "0.7 -0.3";
     mosaic.side_shape[2] = "";
     mosaic.side_shape[3] = "";
 
-    mosaic.transformation[0] = MOSAIC_TRANSFORM_SHIFT;
-    mosaic.transformation[1] = MOSAIC_TRANSFORM_ROTATE_SIDE;
-    mosaic.transformation[2] = MOSAIC_TRANSFORM_SHIFT;
-    mosaic.transformation[3] = MOSAIC_TRANSFORM_ROTATE_SIDE;
+    mosaic.transformation[0] = MOSAIC_TRANSFORM_ROTATE_VERTICE;
+    mosaic.transformation[1] = MOSAIC_TRANSFORM_ROTATE_VERTICE;
+    mosaic.transformation[2] = MOSAIC_TRANSFORM_ROTATE_VERTICE;
+    mosaic.transformation[3] = MOSAIC_TRANSFORM_ROTATE_VERTICE;
 
     mosaic.tiles_x = 4;
     mosaic.tiles_y = 4;
 
     pt_mosaic_square(&buffer,FILL_KEEP_BORDERS,NULL,&mosaic);
 
-   // color_buffer_save_to_png(&buffer,"pic.png");
+    color_buffer_save_to_png(&buffer,"pic.png");
 
     color_buffer_destroy(&buffer);
 
