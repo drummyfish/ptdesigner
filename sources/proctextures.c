@@ -3684,7 +3684,7 @@ void pt_cellular_automaton_rps(t_color_buffer *buffer,
   unsigned char number_of_players, int random, unsigned int iterations)
 
   {
-    int position_differences[128][2]; // neighbourhood pos. differences
+    int position_differences[128][2];  // neighbourhood pos. differences
     unsigned int x,y;
     int dx,dy;
     unsigned char r,g,b,r2,g2,b2;
@@ -4047,6 +4047,35 @@ void pt_mosaic_square(t_color_buffer *destination,
     color_buffer_destroy(&tile_buffer);
     color_buffer_destroy(&help_buffer);
     free(polygon);
+  }
+
+//----------------------------------------------------------------------
+
+void pt_replace_colors(t_color_buffer *buffer,
+  unsigned char colors[][3],t_color_buffer *buffers[],
+  unsigned int length)
+
+  {
+    unsigned int i,j,k;
+    unsigned char r,g,b;
+
+    for (j = 0; j < buffer->height; j++)
+      for (i = 0; i < buffer->width; i++)
+        {
+          color_buffer_get_pixel(buffer,i,j,&r,&g,&b);
+
+          // find the color:
+
+          for (k = 0; k < length; k++)
+            if (r == colors[k][0] && g == colors[k][1]
+              && b == colors[k][2])
+              {
+                color_buffer_get_pixel(buffers[k],i,j,&r,&g,&b);
+                break;
+              }
+
+          color_buffer_set_pixel(buffer,i,j,r,g,b);
+        }
   }
 
 //----------------------------------------------------------------------

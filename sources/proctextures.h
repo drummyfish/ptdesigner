@@ -343,6 +343,25 @@ void pt_mix_channels(t_color_buffer *buffer_red,
 
 //----------------------------------------------------------------------
 
+void pt_replace_colors(t_color_buffer *buffer,
+  unsigned char colors[][3],t_color_buffer *buffers[],
+  unsigned int length);
+
+  /**<
+   * Replaces specified colors in given color buffer with content of
+   * other buffers.
+   *
+   * @param buffer buffer in which the replacing happens
+   * @param colors array of [r,g,b] colors, each color is paired with
+   *        one color buffer of buffers array at the same index.
+   * @param buffers array of pointers to color buffers, each one matches
+   *        one color from colors array and replaces that color in the
+   *        destination buffer with it's content
+   * @param length length of colors and buffers arrays
+   */
+
+//----------------------------------------------------------------------
+
 void pt_convolution(t_color_buffer *buffer, t_matrix *matrix);
 
   /**<
