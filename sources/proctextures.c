@@ -58,6 +58,417 @@ t_color_buffer turtle_noise_buffer;  // global help buffer
 
 //----------------------------------------------------------------------
 
+  /**
+   * Private function - replaces all pixels with specified color in
+   * given buffer with another color.
+   *
+   * @param buffer buffer in which the color will be replaced
+   * @param r1 color to be replaced - red
+   * @param g1 color to be replace - green
+   * @param b1 color to be replace - blue
+   * @param r2 color to replace with - red
+   * @param g2 color to replace with - green
+   * @param b2 color to replace with - blue
+   */
+
+void _pt_replace_color(t_color_buffer *buffer, unsigned char r1,
+  unsigned char g1, unsigned char b1, unsigned char r2,
+  unsigned char g2, unsigned char b2)
+
+  {
+    unsigned int i,j;
+    unsigned char r,g,b;
+
+    for (j = 0; j < buffer->height; j++)
+      for (i = 0; i < buffer->width; i++)
+        {
+          color_buffer_get_pixel(buffer,i,j,&r,&g,&b);
+
+          if (r == r1 && g == g1 && b == b1)
+            color_buffer_set_pixel(buffer,i,j,r2,g2,b2);
+        }
+  }
+
+//----------------------------------------------------------------------
+
+  /**
+   * Private function - creates an array of points accoording to shape
+   * describing string.
+   *
+   * @param side_string string describing a tile side, it is of format
+   *        "%lf %lf %lf %lf ..." where two succeeding number are x and
+   *        y coordinations of points, there must be exactly one space
+   *        between numbers
+   * @param points in this variable the list of points will be returned,
+   *        the list will start with [0,0] and will be sorted by values
+   *        of x, points with duplicite x value will be eliminated, only
+   *        points with x values in range (0,1) will be considered and y
+   *        values will be saturated to range <-0.5,0.5>
+   * @param length in this variable length of created array will be
+   *        returned
+   */
+
+void _pt_make_side_points(char *side_string, double points[128][2],
+  unsigned int *length)
+
+  {
+    unsigned int i, j, position;
+    int scanning_x;    // say if we're scanning x or y
+    int already_in_array;
+    double helper;
+    double point[2];
+
+    if (points == NULL || length == NULL)
+      return;
+
+    points[0][0] = 0; // initial point
+    points[0][1] = 0;
+    *length = 1;
+
+    position = 0;      // position in the string
+    scanning_x = 1;
+
+    while (1)          // scan the string for points
+      {
+        if (!sscanf(side_string + position,"%lf",&helper) ||
+          (side_string[position] == 0))
+          break;
+
+        // go to the next item:
+
+        position++;
+
+        while (side_string[position] != 0 &&
+          side_string[position] != ' ')
+          position++;
+
+        point[scanning_x ? 0 : 1] = helper;
+        scanning_x = !scanning_x;
+
+        if (scanning_x) // one point scanned => add to array
+          {
+            point[0] = saturate_double(point[0],0.0,1.0);
+            point[1] = saturate_double(point[1],-0.5,0.5);
+
+            if (point[0] == 1.0) // make points with 1.0 not get to list
+              point[0] = 0.0;
+
+            already_in_array = 0;
+
+            for (j = 0; j < *length; j++)       // check for duplicities
+              if (points[j][0] == point[0])     // only x matters
+                {
+                  already_in_array = 1;
+                  break;
+                }
+
+            if (!already_in_array)      // add the point to the array
+              {
+                points[*length][0] = point[0];
+                points[*length][1] = point[1];
+                *length = *length + 1;
+              }
+
+            if (*length >= 128)
+              break;
+          }
+      }
+
+    for (j = 1; j < *length; j++)  // sort the list with bubble sort
+      for (i = 0; i < *length - j; i++)
+        if (points[i][0] > points[i + 1][0])
+          {
+            helper = points[i][0];
+            points[i][0] = points[i + 1][0];
+            points[i + 1][0] = helper;
+
+            helper = points[i][1];
+            points[i][1] = points[i + 1][1];
+            points[i + 1][1] = helper;
+          }
+  }
+
+//----------------------------------------------------------------------
+
+  /**
+   * Private function - draws transformed tile in given buffer
+   * considering transparency.
+   *
+   * @param tile tile image to be drawn, it should consist of only three
+   *        colors - black (0,0,0), white (255,255,255) and red
+   *        (255,0,0), black and white pixels will be drawn over pixels
+   *        of the destination buffer, while in addition white pixels
+   *        will be drawn as specified color, and red pixels will be
+   *        considered as transparent
+   * @param x x position of the tile in pixels
+   * @param y y position of the tile in pixels
+   * @param color grayscale value which the white color in tile image
+   *        will be replaced with
+   * @param destination in this buffer the tile will be drawn over it's
+   *        current content
+   * @param transformation transformation to be used for the tile, the
+   *        tile image will not be affected by this function call
+   * @param horizontal says if the transformation is horizontal (values
+   *        greater than zero) or vertical (other values)
+   */
+
+void _pt_draw_tile(t_color_buffer *tile, unsigned int x, unsigned int y,
+  unsigned char color, t_color_buffer *destination,
+  t_mosaic_transformation transformation, int horizontal)
+
+  {
+    unsigned int i,j,x2,y2;
+    unsigned char r,g,b;
+
+    for (j = 0; j < tile->height; j++)
+      {
+        for (i = 0; i < tile->width; i++)
+          {
+            // transform the coordinations:
+
+            switch (transformation)
+              {
+                case MOSAIC_TRANSFORM_SHIFT:
+
+                  x2 = i;
+                  y2 = j;
+                  break;
+
+                case MOSAIC_TRANSFORM_SHIFT_MIRROR:
+
+                  if (horizontal)
+                    {
+                      x2 = i;
+                      y2 = tile->height - j;
+                    }
+                  else
+                    {
+                      x2 = tile->width - i;
+                      y2 = j;
+                    }
+
+                  break;
+
+                case MOSAIC_TRANSFORM_ROTATE_SIDE:
+
+                  x2 = tile->width - i;
+                  y2 = tile->height - j;
+                  break;
+
+                case MOSAIC_TRANSFORM_ROTATE_VERTEX:
+
+                  x2 = tile->height - j;
+                  y2 = i;
+                  break;
+              }
+
+            color_buffer_get_pixel(tile,x2,y2,&r,&g,&b);
+
+            if (r == 255)
+              {
+                if (b == 255)     // white
+                  {
+                    r = color;
+                    g = color;
+                    b = color;
+                  }
+                else              // red
+                  {
+                    color_buffer_get_pixel(destination,x + i,y + j,
+                      &r,&g,&b);
+                  }
+              }
+            else                  // black
+              {
+                r = 0;
+                g = 0;
+                b = 0;
+              }
+
+            color_buffer_set_pixel(destination,x + i,y + j,r,g,b);
+          }
+      }
+  }
+
+//----------------------------------------------------------------------
+
+  /**
+   * Private function - depending on provided square mosaic
+   * specification makes a tile polygon and returns it as a list of
+   * coordinations.
+   *
+   * @param mosaic square mosaic specification
+   * @param array in this variable a pointer to two-dimensional array of
+   *        polygon points will be returned, the list is in format
+   *        [point number][x/y] representing the polygon based on 1 * 1
+   *        size square grid with lower left corner at [0,0], the list
+   *        is sorted CW from upper left corder and the polygon is
+   *        automatically modified based on side transformations
+   *        specified by the mosaic
+   * @param array_length in this cariable length of the created list
+   *        will be returned
+   */
+
+void _pt_make_tile_polygon(t_square_mosaic *mosaic,
+  double (**array)[2],unsigned int *array_length)
+
+  {
+    double points[128][2];
+    double helper;
+    unsigned int i,j;
+    double (*polygon)[2];        // dynamic array of polygon points
+   // double **polygon;
+    unsigned int polygon_points; // length of the polygon array
+    unsigned int length;
+
+    polygon_points = 0;
+    polygon = NULL;
+
+    for (i = 0; i < 4; i++)   // for each side
+      {
+        // create the side accoording to transformations:
+
+        switch (mosaic->transformation[i])
+          {
+            case MOSAIC_TRANSFORM_ROTATE_SIDE:
+                _pt_make_side_points(mosaic->side_shape[i],points,
+                &length);
+
+              for (j = 0; j < length; j++) // cut the side in the middle
+                if (points[j][0] >= 0.5)
+                  {
+                    length = j;
+                    break;
+                  }
+
+              // copy the half-side upside-down (minus the first point):
+
+              for (j = 1; j < length; j++)
+                {
+                  points[length * 2 - 1 - j][0] = 1.0 - points[j][0];
+                  points[length * 2 - 1 - j][1] = -1 * points[j][1];
+                }
+              length = length * 2 - 1; // leave out the first point
+
+              break;
+
+            case MOSAIC_TRANSFORM_SHIFT:
+
+              if (i == 0 || i == 1)
+                {
+                  _pt_make_side_points(mosaic->side_shape[i],points,
+                    &length);
+                }
+              else // copy the opposite side for bottom or left side
+                {
+                  _pt_make_side_points(mosaic->side_shape[i - 2],points,
+                    &length);
+
+                  // flip the side in x and y:
+
+                  for (j = 0; j < length / 2; j++)
+                    {
+                      helper = -1 * points[j + 1][1];
+                      points[j + 1][1] = -1 * points[length - j - 1][1];
+                      points[length - j - 1][1] = helper;
+
+                      helper = points[j + 1][0];
+                      points[j + 1][0] = 1.0 -
+                        points[length - j - 1][0];
+                      points[length - j - 1][0] = 1.0 - helper;
+                    }
+                }
+
+              break;
+
+            case MOSAIC_TRANSFORM_SHIFT_MIRROR:
+
+              if (i == 0 || i == 1)
+                {
+                  _pt_make_side_points(mosaic->side_shape[i],points,
+                    &length);
+                }
+              else
+                {
+                  _pt_make_side_points(mosaic->side_shape[i - 2],points,
+                    &length);
+
+                  // flip the side y coordinations:
+
+                  for (j = 0; j < length; j++)
+                    points[j][1] *= -1;
+                }
+
+              break;
+
+            case MOSAIC_TRANSFORM_ROTATE_VERTEX:
+
+              _pt_make_side_points(mosaic->side_shape[0],points,
+                &length);
+
+              if (i == 1 || i == 3)
+                {
+                  for (j = 0; j < length / 2; j++)
+                    {
+                      helper = -1 * points[j + 1][1];
+                      points[j + 1][1] = -1 * points[length - j - 1][1];
+                      points[length - j - 1][1] = helper;
+
+                      helper = points[j + 1][0];
+                      points[j + 1][0] = 1.0 -
+                        points[length - j - 1][0];
+                      points[length - j - 1][0] = 1.0 - helper;
+                    }
+                }
+
+              break;
+          }
+
+        polygon = realloc(polygon,(polygon_points + length) *
+          2 * sizeof(double));
+
+        for (j = 0; j < length; j++)  // transform points
+          {
+            switch (i)
+              {
+                case 0: // top
+                  points[j][1] += 1.0;
+                  break;
+
+                case 1: // right
+                  helper = points[j][0];
+                  points[j][0] = 1.0 + points[j][1];
+                  points[j][1] = 1.0 - helper;
+                  break;
+
+                case 2: // bottom
+                  points[j][0] = 1.0 - points[j][0];
+                  points[j][1] *= -1;
+                  break;
+
+                case 3: // left
+                  helper = points[j][0];
+                  points[j][0] = -1 * points[j][1];
+                  points[j][1] = helper;
+                  break;
+              }
+          }
+
+        for (j = 0; j < length; j++)  // copy the side to the polygon
+          {
+            polygon[polygon_points + j][0] = points[j][0];
+            polygon[polygon_points + j][1] = points[j][1];
+          }
+
+        polygon_points += length;
+      }
+
+    *array_length = polygon_points;
+
+    *array = polygon;
+  }
+
+//----------------------------------------------------------------------
 
 /***
  * Private function - prepares given buffer to be processed with
@@ -544,6 +955,7 @@ void _pt_draw_fancy_line(t_color_buffer *buffer, int x1, int y1, int x2,
   t_color_buffer *noise_buffer, t_line_type type)
 
   {
+
     int i, j, k;
     int x,y,help_x,help_y;
     int dx,dy;
@@ -3513,413 +3925,41 @@ void pt_cellular_automaton_general(t_color_buffer *buffer,
 
 //----------------------------------------------------------------------
 
-  /**
-   * Private function - creates an array of points accoording to shape
-   * describing string.
-   *
-   * @param side_string string describing a tile side, it is of format
-   *        "%lf %lf %lf %lf ..." where two succeeding number are x and
-   *        y coordinations of points, there must be exactly one space
-   *        between numbers
-   * @param points in this variable the list of points will be returned,
-   *        the list will start with [0,0] and will be sorted by values
-   *        of x, points with duplicite x value will be eliminated, only
-   *        points with x values in range (0,1) will be considered and y
-   *        values will be saturated to range <-0.5,0.5>
-   * @param length in this variable length of created array will be
-   *        returned
-   */
-
-void _pt_make_side_points(char *side_string, double points[128][2],
-  unsigned int *length)
-
-  {
-    unsigned int i, j, position;
-    int scanning_x;    // say if we're scanning x or y
-    int already_in_array, scanning_done;
-    double helper;
-    double point[2];
-
-    if (points == NULL || length == NULL)
-      return;
-
-    points[0][0] = 0; // initial point
-    points[0][1] = 0;
-    *length = 1;
-
-    position = 0;      // position in the string
-    scanning_x = 1;
-    scanning_done = 0;
-
-    while (1)          // scan the string for points
-      {
-        if (!sscanf(side_string + position,"%lf",&helper) ||
-          (side_string[position] == 0))
-          break;
-
-        // go to the next item:
-
-        position++;
-
-        while (side_string[position] != 0 &&
-          side_string[position] != ' ')
-          position++;
-
-        point[scanning_x ? 0 : 1] = helper;
-        scanning_x = !scanning_x;
-
-        if (scanning_x) // one point scanned => add to array
-          {
-            point[0] = saturate_double(point[0],0.0,1.0);
-            point[1] = saturate_double(point[1],-0.5,0.5);
-
-            if (point[0] == 1.0) // make points with 1.0 not get to list
-              point[0] = 0.0;
-
-            already_in_array = 0;
-
-            for (j = 0; j < *length; j++)       // check for duplicities
-              if (points[j][0] == point[0])     // only x matters
-                {
-                  already_in_array = 1;
-                  break;
-                }
-
-            if (!already_in_array)      // add the point to the array
-              {
-                points[*length][0] = point[0];
-                points[*length][1] = point[1];
-                *length = *length + 1;
-              }
-
-            if (*length >= 128)
-              break;
-          }
-      }
-
-    for (j = 1; j < *length; j++)  // sort the list with bubble sort
-      for (i = 0; i < *length - j; i++)
-        if (points[i][0] > points[i + 1][0])
-          {
-            helper = points[i][0];
-            points[i][0] = points[i + 1][0];
-            points[i + 1][0] = helper;
-
-            helper = points[i][1];
-            points[i][1] = points[i + 1][1];
-            points[i + 1][1] = helper;
-          }
-  }
-
-//----------------------------------------------------------------------
-
-  /**
-   * Private function - draws transformed tile in given buffer
-   * considering transparency.
-   *
-   * @param tile tile image to be drawn, it should consist of only three
-   *        colors - black (0,0,0), white (255,255,255) and red
-   *        (255,0,0), black and white pixels will be drawn over pixels
-   *        of the destination buffer, while in addition white pixels
-   *        will be drawn as specified color, and red pixels will be
-   *        considered as transparent
-   * @param x x position of the tile in pixels
-   * @param y y position of the tile in pixels
-   * @param color grayscale value which the white color in tile image
-   *        will be replaced with
-   * @param destination in this buffer the tile will be drawn over it's
-   *        current content
-   * @param transformation transformation to be used for the tile, the
-   *        tile image will not be affected by this function call
-   * @param horizontal says if the transformation is horizontal (values
-   *        greater than zero) or vertical (other values)
-   */
-
-void _pt_draw_tile(t_color_buffer *tile, unsigned int x, unsigned int y,
-  unsigned char color, t_color_buffer *destination,
-  t_mosaic_transformation transformation, int horizontal)
-
-  {
-    unsigned int i,j,x2,y2;
-    unsigned int lower_x, lower_y, upper_x, upper_y;
-    unsigned char r,g,b;
-
-    for (j = 0; j < tile->height; j++)
-      {
-        for (i = 0; i < tile->width; i++)
-          {
-            // transform the coordinations:
-
-            switch (transformation)
-              {
-                case MOSAIC_TRANSFORM_SHIFT:
-
-                  x2 = i;
-                  y2 = j;
-                  break;
-
-                case MOSAIC_TRANSFORM_SHIFT_MIRROR:
-
-                  if (horizontal)
-                    {
-                      x2 = i;
-                      y2 = tile->height - j;
-                    }
-                  else
-                    {
-                      x2 = tile->width - i;
-                      y2 = j;
-                    }
-
-                  break;
-
-                case MOSAIC_TRANSFORM_ROTATE_SIDE:
-
-                  x2 = tile->width - i;
-                  y2 = tile->height - j;
-                  break;
-
-                case MOSAIC_TRANSFORM_ROTATE_VERTICE:
-
-                  x2 = j;
-                  y2 = i;
-                  break;
-              }
-
-            color_buffer_get_pixel(tile,x2,y2,&r,&g,&b);
-
-            if (r == 255)
-              {
-                if (b == 255)     // white
-                  {
-                    r = color;
-                    g = color;
-                    b = color;
-                  }
-                else              // red
-                  {
-                    color_buffer_get_pixel(destination,i,j,&r,&g,&b);
-                  }
-              }
-            else                  // black
-              {
-                r = 0;
-                g = 0;
-                b = 0;
-              }
-
-            color_buffer_set_pixel(destination,x + i,y + j,r,g,b);
-          }
-      }
-  }
-
-//----------------------------------------------------------------------
-
-  /**
-   * Private function - depending on provided square mosaic
-   * specification makes a tile polygon and returns it as a list of
-   * coordinations.
-   *
-   * @param mosaic square mosaic specification
-   * @param array_length in this cariable length of the created list
-   *        will be returned
-   *
-   * @return list of points in format [point number][x/y] representing
-   *         the polygon based on 1 * 1 size square grid with lower
-   *         left corner at [0,0], the list is sorted CW from upper
-   *         left corder and the polygon is automatically modified
-   *         based on side transformations specified by the mosaic
-   */
-
-double **_pt_make_tile_polygon(t_square_mosaic *mosaic,
-  unsigned int *array_length)
-
-  {
-    double points[128][2];
-    double helper;
-    unsigned int i,j;
-    double (*polygon)[2];        // dynamic array of polygon points
-    unsigned int polygon_points; // length of the polygon array
-    unsigned int length;
-
-    polygon_points = 0;
-    polygon = NULL;
-
-    for (i = 0; i < 4; i++)   // for each side
-      {
-        // create the side accoording to transformations:
-
-        switch (mosaic->transformation[i])
-          {
-            case MOSAIC_TRANSFORM_ROTATE_SIDE:
-                _pt_make_side_points(mosaic->side_shape[i],points,
-                &length);
-
-              for (j = 0; j < length; j++) // cut the side in the middle
-                if (points[j][0] >= 0.5)
-                  {
-                    length = j;
-                    break;
-                  }
-
-              // copy the half-side upside-down (minus the first point):
-
-              for (j = 1; j < length; j++)
-                {
-                  points[length * 2 - 1 - j][0] = 1.0 - points[j][0];
-                  points[length * 2 - 1 - j][1] = -1 * points[j][1];
-                }
-              length = length * 2 - 1; // leave out the first point
-
-              break;
-
-            case MOSAIC_TRANSFORM_SHIFT:
-
-              if (i == 0 || i == 1)
-                {
-                  _pt_make_side_points(mosaic->side_shape[i],points,
-                    &length);
-                }
-              else // copy the opposite side for bottom or left side
-                {
-                  _pt_make_side_points(mosaic->side_shape[i - 2],points,
-                    &length);
-
-                  // flip the side in x and y:
-
-                  for (j = 0; j < length / 2; j++)
-                    {
-                      helper = -1 * points[j + 1][1];
-                      points[j + 1][1] = -1 * points[length - j - 1][1];
-                      points[length - j - 1][1] = helper;
-
-                      helper = points[j + 1][0];
-                      points[j + 1][0] = 1.0 -
-                        points[length - j - 1][0];
-                      points[length - j - 1][0] = 1.0 - helper;
-                    }
-                }
-
-              break;
-
-            case MOSAIC_TRANSFORM_SHIFT_MIRROR:
-
-              if (i == 0 || i == 1)
-                {
-                  _pt_make_side_points(mosaic->side_shape[i],points,
-                    &length);
-                }
-              else
-                {
-                  _pt_make_side_points(mosaic->side_shape[i - 2],points,
-                    &length);
-
-                  // flip the side y coordinations:
-
-                  for (j = 0; j < length; j++)
-                    points[j][1] *= -1;
-                }
-
-              break;
-
-            case MOSAIC_TRANSFORM_ROTATE_VERTICE:
-
-              _pt_make_side_points(mosaic->side_shape[0],points,
-                &length);
-
-              if (i == 1 || i == 3)
-                {
-                  for (j = 0; j < length / 2; j++)
-                    {
-                      helper = -1 * points[j + 1][1];
-                      points[j + 1][1] = -1 * points[length - j - 1][1];
-                      points[length - j - 1][1] = helper;
-
-                      helper = points[j + 1][0];
-                      points[j + 1][0] = 1.0 -
-                        points[length - j - 1][0];
-                      points[length - j - 1][0] = 1.0 - helper;
-                    }
-                }
-
-              break;
-          }
-
-        polygon = realloc(polygon,(polygon_points + length) *
-          2 * sizeof(double));
-
-        for (j = 0; j < length; j++)  // transform points
-          {
-            switch (i)
-              {
-                case 0: // top
-                  points[j][1] += 1.0;
-                  break;
-
-                case 1: // right
-                  helper = points[j][0];
-                  points[j][0] = 1.0 + points[j][1];
-                  points[j][1] = 1.0 - helper;
-                  break;
-
-                case 2: // bottom
-                  points[j][0] = 1.0 - points[j][0];
-                  points[j][1] *= -1;
-                  break;
-
-                case 3: // left
-                  helper = points[j][0];
-                  points[j][0] = -1 * points[j][1];
-                  points[j][1] = helper;
-                  break;
-              }
-          }
-
-        for (j = 0; j < length; j++)  // copy the side to the polygon
-          {
-            polygon[polygon_points + j][0] = points[j][0];
-            polygon[polygon_points + j][1] = points[j][1];
-          }
-
-        polygon_points += length;
-      }
-
-    *array_length = polygon_points;
-    return polygon;
-  }
-
-//----------------------------------------------------------------------
-
 void pt_mosaic_square(t_color_buffer *destination,
   t_fill_type fill_type, unsigned char fill_colors[],
-  t_square_mosaic *mosaic)
+  unsigned char number_of_colors, t_square_mosaic *mosaic)
 
   {
-    double **tile_polygon;  // array of polygon points
-    double helper;
-    unsigned int length,polygon_points;
+    int horizontal;
+    unsigned char color;
+    unsigned char r,g,b;
+    unsigned int polygon_points,tile_number;
     unsigned int extra_border_x,extra_border_y,tile_width,tile_height;
-    t_color_buffer tile_buffer;
-    double points[128][2];
+    t_color_buffer tile_buffer, help_buffer;
     double (*polygon)[2];       // dynamic array of polygon points
-    unsigned int i, j;
+    unsigned int i,j;
+    t_mosaic_transformation current_transformation;
 
     if (destination == NULL || mosaic == NULL ||
       !square_mosaic_is_valid(mosaic))
       return;
 
-    pt_color_fill(destination,0,0,0);
-
     // make the polygon:
 
-    polygon = _pt_make_tile_polygon(mosaic,&polygon_points);
+    _pt_make_tile_polygon(mosaic,&polygon,&polygon_points);
 
-    tile_width = destination->width / mosaic->tiles_x;
-    tile_height = destination->height / mosaic->tiles_y;
+    // initialise the help buffer:
+
+    color_buffer_init(&help_buffer,destination->width,
+      destination->width);
+    pt_color_fill(&help_buffer,0,0,0);
+
+    tile_width = help_buffer.width / mosaic->tiles_x;
+    tile_height = help_buffer.height / mosaic->tiles_y;
     extra_border_x = ceil(tile_width / 2);
     extra_border_y = ceil(tile_height / 2);
 
-    // initialise the tile bitmap buffer with extra borders
+    // initialise the tile buffer with extra borders:
 
     color_buffer_init(&tile_buffer,2 * tile_width,2 * tile_height);
 
@@ -3937,20 +3977,75 @@ void pt_mosaic_square(t_color_buffer *destination,
 
     _pt_floodfill(&tile_buffer,0,0,255,0,0); // fill the outside
 
+   if (fill_type == FILL_NO_BORDERS) // get rid of borders if needed
+      _pt_replace_color(&tile_buffer,0,0,0,255,255,255);
+
     // make the mosaic:
 
+    tile_number = 0;
+    current_transformation = MOSAIC_TRANSFORM_SHIFT;  // = no transform.
+
     for (j = 0; j < mosaic->tiles_y; j++)
-      for (i = 0; i < mosaic->tiles_x; i++)
-        {
+      {
+        for (i = 0; i < mosaic->tiles_x; i++)
+          {
+            current_transformation = compute_transformation(mosaic,i,j,
+              &horizontal);
 
-        }
+            if (fill_colors == NULL || fill_type == FILL_NONE)
+              color = 255;
+            else
+              {
+                color = fill_colors[tile_number % number_of_colors];
 
-    _pt_draw_tile(&tile_buffer,- 1 * extra_border_x,-1 * extra_border_y,250,destination,MOSAIC_TRANSFORM_ROTATE_VERTICE,0);
+                if (color == 0)    // black not allowed
+                  color = 1;
+              }
 
-    color_buffer_save_to_png(&tile_buffer,"pic2.png");
+            _pt_draw_tile(&tile_buffer,
+              i * tile_width -1 * extra_border_x,
+              j * tile_height -1 * extra_border_y,
+              color,&help_buffer,current_transformation,horizontal);
 
+            tile_number++;
+          }
+      }
+
+    // get rid of possible remaining black pixels:
+
+    if (fill_type == FILL_NO_BORDERS)
+      for (j = 0; j < help_buffer.height; j++)
+        for (i = 0; i < help_buffer.width; i++)
+          {
+            color_buffer_get_pixel(&help_buffer,i,j,&r,&g,&b);
+
+            if (r == 0 && g == 0 && b == 0)
+              {
+                if (i == 0)
+                  {
+                    if (fill_colors == NULL)
+                      {
+                        r = 255;
+                        g = 255;
+                        b = 255;
+                      }
+                    else
+                      {
+                        r = fill_colors[0];
+                        g = fill_colors[0];
+                        b = fill_colors[0];
+                      }
+                  }
+                else
+                  color_buffer_get_pixel(&help_buffer,i - 1,j,&r,&g,&b);
+
+                color_buffer_set_pixel(&help_buffer,i,j,r,g,b);
+              }
+          }
+
+    pt_resize(&help_buffer,destination,INTERPOLATION_LINEAR);
     color_buffer_destroy(&tile_buffer);
-
+    color_buffer_destroy(&help_buffer);
     free(polygon);
   }
 

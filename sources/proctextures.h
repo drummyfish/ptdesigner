@@ -579,7 +579,7 @@ void pt_substrate_simple(int random, int iterations, int fill,
 
 void pt_mosaic_square(t_color_buffer *destination,
   t_fill_type fill_type, unsigned char fill_colors[],
-  t_square_mosaic *mosaic);
+  unsigned char number_of_colors, t_square_mosaic *mosaic);
 
   /**<
    * Creates an mosaic image based on square grid.
@@ -590,7 +590,10 @@ void pt_mosaic_square(t_color_buffer *destination,
    * @param fill_colors array of grayscale values with which the tiles
    *        will be colored, the colors are assigned to tiles in left to
    *        right, top to bottom order, if this parameter is NULL, all
-   *        tiles will be filled with white color
+   *        tiles will be filled with white color, if there is more
+   *        tiles than colors specified, the colors will be assigned
+   *        cyclically
+   * @param number_of_colors length of fill_colors array
    * @param mosaic mosaic specification, if it's not valid, no mosaic
    *        will be generated (validity can be checked with special
    *        functions)

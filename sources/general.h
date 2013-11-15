@@ -52,8 +52,8 @@ typedef enum
     MOSAIC_TRANSFORM_SHIFT,          ///< the tile is shifted
     MOSAIC_TRANSFORM_ROTATE_SIDE,    /**< the tile is rotated around the
                                           center of the side */
-    MOSAIC_TRANSFORM_ROTATE_VERTICE, /**< the tile is rotated around the
-                                          vertice of the side */
+    MOSAIC_TRANSFORM_ROTATE_VERTEX,  /**< the tile is rotated around the
+                                          vertex of the side */
     MOSAIC_TRANSFORM_SHIFT_MIRROR,   /**< the tile is shifted and
                                           mirrored */
   } t_mosaic_transformation;
@@ -442,6 +442,25 @@ int square_mosaic_is_valid(t_square_mosaic *mosaic);
    * @param mosaic mosaic specification
    *
    * @return 1 if the specification is valid, 0 otherwise
+   */
+
+//----------------------------------------------------------------------
+
+t_mosaic_transformation compute_transformation(t_square_mosaic *mosaic,
+  unsigned int x, unsigned int y, int *horizontal);
+
+  /**
+   * Computes a final transformation for a tile at specified position
+   * in square mosaic.
+   *
+   * @param mosaic mosaic specification
+   * @param x x position of the tile
+   * @param y y position of the tile
+   * @param horizontal in this variable posiible further specification
+   *        of transformation is returned, it will either be 1
+   *        (horizontal) or 0 (vertical)
+   *
+   * @return final transformation of the tile
    */
 
 //----------------------------------------------------------------------

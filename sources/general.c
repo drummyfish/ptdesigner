@@ -665,6 +665,9 @@ int square_mosaic_is_valid(t_square_mosaic *mosaic)
     if (mosaic == NULL)
       return 0;
 
+    if (mosaic->tiles_x != mosaic->tiles_y)
+      return 0;
+
     for (i = 0; i < 4; i++)  // for each side
       {
         opposite_side = (i + 2) % 4;
@@ -700,9 +703,9 @@ int square_mosaic_is_valid(t_square_mosaic *mosaic)
 
               break;
 
-            case MOSAIC_TRANSFORM_ROTATE_VERTICE:
+            case MOSAIC_TRANSFORM_ROTATE_VERTEX:
               if (mosaic->transformation[(i + 1) % 4] !=
-                MOSAIC_TRANSFORM_ROTATE_VERTICE)
+                MOSAIC_TRANSFORM_ROTATE_VERTEX)
                 return 0;
 
               if (dimension_tiles % 2 != 0)
@@ -713,6 +716,66 @@ int square_mosaic_is_valid(t_square_mosaic *mosaic)
       }
 
     return 1;
+  }
+
+//----------------------------------------------------------------------
+
+t_mosaic_transformation compute_transformation(t_square_mosaic *mosaic,
+  unsigned int x, unsigned int y, int *horizontal)
+
+  {
+    t_mosaic_transformation tx,ty;
+
+    tx = mosaic->transformation[1];
+    ty = mosaic->transformation[0];
+
+    *horizontal = 1;
+
+    if (x % 2 == 0)   // every transform. repeats itself after at most 2
+      tx = MOSAIC_TRANSFORM_SHIFT;
+
+    if (y % 2 == 0)
+      ty = MOSAIC_TRANSFORM_SHIFT;
+
+    if (tx == MOSAIC_TRANSFORM_SHIFT)
+      {
+        *horizontal = 0;
+        return ty;
+      }
+
+    if (ty == MOSAIC_TRANSFORM_SHIFT)
+      {
+        *horizontal = 1;
+        return tx;
+      }
+
+    if (tx == MOSAIC_TRANSFORM_ROTATE_VERTEX ||   // C4 + C4
+      ty == MOSAIC_TRANSFORM_ROTATE_VERTEX)
+      return MOSAIC_TRANSFORM_SHIFT;
+
+    if (tx == MOSAIC_TRANSFORM_ROTATE_SIDE &&     // C + C
+        ty == MOSAIC_TRANSFORM_ROTATE_SIDE)
+      return MOSAIC_TRANSFORM_SHIFT;
+
+    if (tx == MOSAIC_TRANSFORM_SHIFT_MIRROR &&    // G(h) + G(v)
+        ty == MOSAIC_TRANSFORM_SHIFT_MIRROR)
+      return MOSAIC_TRANSFORM_ROTATE_VERTEX;
+
+    if (tx == MOSAIC_TRANSFORM_SHIFT_MIRROR &&    // G(v) + C
+      ty == MOSAIC_TRANSFORM_ROTATE_SIDE)
+      {
+        *horizontal = 0;
+        return (MOSAIC_TRANSFORM_SHIFT_MIRROR);
+      }
+
+    if (ty == MOSAIC_TRANSFORM_SHIFT_MIRROR &&    // G(h) + C
+      tx == MOSAIC_TRANSFORM_ROTATE_SIDE)
+      {
+        *horizontal = 1;
+        return (MOSAIC_TRANSFORM_SHIFT_MIRROR);
+      }
+
+    return MOSAIC_TRANSFORM_SHIFT; // the function never should get here
   }
 
 //----------------------------------------------------------------------
