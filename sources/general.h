@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include "matrix.h"
 
 #define PI           3.1415926535897932384626 ///< approximate pi value
 #define PI_DIVIDED_4 0.7853981633974483096156 ///< pi / 4
@@ -434,7 +435,7 @@ double saturate_double(double value, double minimum, double maximum);
 
 int square_mosaic_is_valid(t_square_mosaic *mosaic);
 
-  /**
+  /**<
    * Checks whether given square mosaic specification is valid, i.e.
    * transformation combinations are allowed and x and y tiling does
    * connect to itself on the other side.
@@ -449,7 +450,7 @@ int square_mosaic_is_valid(t_square_mosaic *mosaic);
 t_mosaic_transformation compute_transformation(t_square_mosaic *mosaic,
   unsigned int x, unsigned int y, int *horizontal);
 
-  /**
+  /**<
    * Computes a final transformation for a tile at specified position
    * in square mosaic.
    *
@@ -461,6 +462,62 @@ t_mosaic_transformation compute_transformation(t_square_mosaic *mosaic,
    *        (horizontal) or 0 (vertical)
    *
    * @return final transformation of the tile
+   */
+
+//----------------------------------------------------------------------
+
+unsigned char dither_random(unsigned char value, unsigned char levels,
+  int random);
+
+  /**<
+   * Performs a random dithering with one value.
+   *
+   * @param value value to be dithered
+   * @param levels number of levels of dithering
+   * @param random value that will be passed to noise function and that
+   *        will affect the randomness of dithering
+   *
+   * @return dithered value
+   */
+
+//----------------------------------------------------------------------
+
+unsigned char dither_threshold(unsigned char value,
+  unsigned char levels);
+
+  /**<
+   * Performs a threshold operation with one value.
+   *
+   * @param value value to be thresholded
+   * @param levels number of levels of thresholding
+   *
+   * @return thresholded value
+   */
+
+//----------------------------------------------------------------------
+
+int is_power_of_2(unsigned int value);
+
+  /**<
+   * Checks if given value is power of two.
+   *
+   * @param value value to be tested
+   *
+   * @return 1 if the value is power of two, 0 otherwise
+   */
+
+//----------------------------------------------------------------------
+
+void make_bayer_matrix(t_matrix *matrix);
+
+  /**<
+   * Fills given matrix with integer values from 1 to (matrix width *
+   * matrix height) in a way that Bayer specified for ordered dithering.
+   * Non-power of two matrices are also allowed (the values are placed
+   * randomly in this case).
+   *
+   * @param matrix matrix in which Bayer matrix will be stored, must be
+   *        initialised
    */
 
 //----------------------------------------------------------------------

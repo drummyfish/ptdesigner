@@ -2038,9 +2038,11 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
             {                      // not using tree (using brute force)
               shortest_distance = 100000000;    // set some high numbers
               shortest_distance2 = 100000000;
+              help_x = 0;
+              help_y = 0;
 
               for (k = 0; k < number_of_points; k++) // find two nearest
-                {                                 // points distances
+                {                                    // points distances
                   help_distance = get_distance(metric,i,j,
                       point_array[k][0], point_array[k][1],
                       destination->width,destination->height);
@@ -2049,6 +2051,8 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
                     {
                       shortest_distance2 = shortest_distance;
                       shortest_distance = help_distance;
+                      help_x = point_array[k][0];
+                      help_y = point_array[k][1];
                     }
                   else if (help_distance < shortest_distance2)
                     shortest_distance2 = help_distance;
@@ -2076,6 +2080,13 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
                     shortest_distance2 / shortest_distance;
 
                 color = (unsigned char) (distance_ratio * 255);
+                break;
+
+              case VORONOI_NEAREST_HASH:
+                help_color = noise(help_x + help_y) * 255;
+                help_color = help_color < 0 ? -1 * help_color :
+                  help_color;
+                color = round_to_char(help_color);
                 break;
             }
 
@@ -3174,61 +3185,6 @@ void pt_invert_colors(t_color_buffer *buffer)
 
 //----------------------------------------------------------------------
 
-void pt_threshold(t_color_buffer *buffer, unsigned int levels)
-
-  {
-    unsigned char red, green, blue;
-    double interval_check, interval_set;
-    unsigned int i, j, k, grayscale;
-
-    if (levels > 256)
-      levels = 256;
-    else if (levels < 1)
-      levels = 1;
-
-    interval_check = 255.0 / levels;
-    interval_set = 255.0 / (levels - 1);
-
-    for (j = 0; j < buffer->height; j++)
-      for (i = 0; i < buffer->width; i++)
-        {
-          color_buffer_get_pixel(buffer,i,j,&red,&green,&blue);
-
-                         // a little optimalization for grayscale images
-          grayscale = red == green && green == blue;
-
-          for (k = 1; k < levels; k++)   // find the level
-            if (red < k * interval_check)
-              break;
-
-          red = (k - 1) * interval_set;
-
-          if (grayscale)
-            {
-              green = red;
-              blue = red;
-            }
-          else
-            {
-              for (k = 1; k < levels; k++)
-                if (green < k * interval_check)
-                  break;
-
-              green = (k - 1) * interval_set;
-
-              for (k = 1; k < levels; k++)
-                if (blue < k * interval_check)
-                  break;
-
-              blue = (k - 1) * interval_set;
-            }
-
-          color_buffer_set_pixel(buffer,i,j,red,green,blue);
-        }
-  }
-
-//----------------------------------------------------------------------
-
 void pt_crop_amplitude(t_color_buffer *buffer,
   unsigned char lower_limit, unsigned char upper_limit)
 
@@ -4076,6 +4032,267 @@ void pt_replace_colors(t_color_buffer *buffer,
 
           color_buffer_set_pixel(buffer,i,j,r,g,b);
         }
+  }
+
+//----------------------------------------------------------------------
+
+void _pt_draw_bump(t_color_buffer *buffer, unsigned int x,
+  unsigned int y, unsigned int radius)
+
+  {
+    unsigned int i,j;
+    unsigned char color;
+    double distance;
+
+    for (j = 0; j < radius; j++)    // compute only one quadrant
+      for (i = 0; i < radius; i++)
+        {
+          distance = sqrt(i * i + j * j);
+
+          if (distance <= radius)
+            distance = sin(distance / radius * PI_DIVIDED_2);
+          else
+            distance = 1.0;
+
+          color = round_to_char(255 - distance * 255);
+
+          color_buffer_substract_pixel(buffer,x + i,y + j,color,
+                color,color);
+
+          if (i != 0)
+            color_buffer_substract_pixel(buffer,x - i,y + j,color,color,
+              color);
+
+          if (j != 0)
+            color_buffer_substract_pixel(buffer,x - i,y - j,color,color,
+              color);
+
+          if (i != 0 && j != 0)
+            color_buffer_substract_pixel(buffer,x + i,y - j,color,color,
+              color);
+        }
+  }
+
+//----------------------------------------------------------------------
+
+void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
+  double bump_size_to, unsigned int bump_quantity, int random)
+
+  {
+    unsigned int bump_count,bump_size;
+    int x,y;
+
+    bump_size_from = saturate_double(bump_size_from,0.0,1.0);
+    bump_size_to = saturate_double(bump_size_to,0.0,1.0);
+
+    pt_color_fill(buffer,255,255,255);
+
+    for (bump_size = bump_size_from * buffer->width;
+      bump_size >= bump_size_to; bump_size *= 0.5)
+      for (bump_count = (buffer->width / bump_size) * bump_quantity;
+        bump_count > 0; bump_count--)
+        {
+          x = noise(random) * buffer->width;
+          random++;
+          y = noise(random) * buffer->height;
+          random++;
+
+          _pt_draw_bump(buffer,x,y,bump_size);
+        }
+  }
+
+//----------------------------------------------------------------------
+
+void pt_dithering(t_color_buffer *buffer, unsigned char levels,
+  t_dithering_method method)
+
+  {
+    unsigned int i,j,k,matrix_size,limit;
+    unsigned char r,g,b,r2,g2,b2,adding;
+    unsigned char color_levels[3];
+    int random;
+    t_matrix bayer_matrix;
+    double interval;
+    double (*error_memory1)[3];
+    double (*error_memory2)[3];
+    double (*this_line_errors)[3];
+    double (*next_line_errors)[3];
+    double (*helper)[3];
+    double error[3];
+
+    random = 0;
+
+    switch (method)
+
+      {
+        case DITHERING_THRESHOLD:
+
+          for (j = 0; j < buffer->height; j++)
+            for (i = 0; i < buffer->width; i++)
+              {
+                color_buffer_get_pixel(buffer,i,j,&r,&g,&b);
+
+                if (r == g && g == b) // grayscale
+                  {
+                    r = dither_threshold(r,levels);
+                    g = r;
+                    b = r;
+                  }
+                else                  // non-grayscale
+                  {
+                    r = dither_threshold(r,levels);
+                    g = dither_threshold(g,levels);
+                    b = dither_threshold(b,levels);
+                  }
+
+                color_buffer_set_pixel(buffer,i,j,r,g,b);
+              }
+
+          break;
+
+        case DITHERING_RANDOM:
+
+          for (j = 0; j < buffer->height; j++)
+            for (i = 0; i < buffer->width; i++)
+              {
+                color_buffer_get_pixel(buffer,i,j,&r,&g,&b);
+
+                r = dither_random(r,levels,random);
+                g = dither_random(g,levels,random);
+                b = dither_random(b,levels,random);
+                random++;
+
+                color_buffer_set_pixel(buffer,i,j,r,g,b);
+              }
+
+          break;
+
+        case DITHERING_ERROR_PROPAGATION:
+
+          error_memory1 = malloc(buffer->width * sizeof(double) * 3);
+          error_memory2 = malloc(buffer->width * sizeof(double) * 3);
+
+          this_line_errors = error_memory1;
+          next_line_errors = error_memory2;
+
+          for (i = 0; i < buffer->width; i++) // clear the error memory
+            {
+              this_line_errors[i][0] = 0.0;
+              this_line_errors[i][1] = 0.0;
+              this_line_errors[i][2] = 0.0;
+            }
+
+          for (j = 0; j < buffer->height; j++)
+            {
+              for (k = 0; k < buffer->width; k++)
+                {
+                  next_line_errors[k][0] = 0.0;
+                  next_line_errors[k][1] = 0.0;
+                  next_line_errors[k][2] = 0.0;
+                }
+
+              for (i = 0; i < buffer->width; i++)
+                {
+                  color_buffer_get_pixel(buffer,i,j,&r,&g,&b);
+
+                  // add the error:
+
+                  r = round_to_char(r + this_line_errors[i][0]);
+                  g = round_to_char(g + this_line_errors[i][1]);
+                  b = round_to_char(b + this_line_errors[i][2]);
+
+                  r2 = dither_threshold(r,levels); // threshold
+                  g2 = dither_threshold(g,levels);
+                  b2 = dither_threshold(b,levels);
+
+                  error[0] = r - r2;  // compute the error
+                  error[1] = g - g2;
+                  error[2] = b - b2;
+
+                  // distribute the error:
+
+                  for (k = 0; k < 3; k++)
+                    {
+                      this_line_errors[(i + 1) % buffer->width][k] +=
+                        0.4375 * error[k];               // 7 / 16
+
+                      next_line_errors[i == 0 ? buffer->width - 1 :
+                        i - 1][k] += 0.1875 * error[k];  // 3 / 16
+
+                                                         // 5 / 16
+                      next_line_errors[i][k] += 0.3125 * error[k];
+
+                      next_line_errors[(i + 1) % buffer->width][k] +=
+                        0.0625 * error[k];               // 1 / 16
+                    }
+
+                  color_buffer_set_pixel(buffer,i,j,r2,g2,b2);
+                }
+
+              helper = this_line_errors;  // swap the line error buffers
+              this_line_errors = next_line_errors;
+              next_line_errors = helper;
+            }
+
+          free(error_memory1);
+          free(error_memory2);
+
+          break;
+
+        case DITHERING_ORDERED:
+
+          // find the matrix size:
+
+          for (matrix_size = 1; matrix_size <= 16; matrix_size++)
+            if (matrix_size * matrix_size >= levels)
+              break;
+
+          matrix_init(&bayer_matrix,matrix_size,matrix_size);
+          make_bayer_matrix(&bayer_matrix);
+          interval = 255.0 / (double) levels;
+          limit = matrix_size * matrix_size;
+
+          for (j = 0; j < buffer->height; j++)
+            for (i = 0; i < buffer->width; i++)
+              {
+                color_buffer_get_pixel(buffer,i,j,&r,&g,&b);
+
+                // find the level for each channel:
+
+                for (k = 1; k <= levels; k++)
+                  if (r <= interval * k)
+                    break;
+
+                color_levels[0] = k - 1;
+
+                for (k = 1; k <= levels; k++)
+                  if (g <= interval * k)
+                    break;
+
+                color_levels[1] = k - 1;
+
+                for (k = 1; k <= levels; k++)
+                  if (b <= interval * k)
+                    break;
+
+                color_levels[2] = k - 1;
+
+                adding = matrix_get_value(&bayer_matrix,i % matrix_size,
+                  j % matrix_size);
+
+                for (k = 0; k < 3; k++)
+                  color_levels[k] = color_levels[k] + adding > limit ?
+                    color_levels[k] + 1 : color_levels[k];
+
+                color_buffer_set_pixel(buffer,i,j,color_levels[0] *
+                  interval,color_levels[1] * interval,color_levels[2] *
+                  interval);
+              }
+
+          matrix_destroy(&bayer_matrix);
+
+          break;
+      }
   }
 
 //----------------------------------------------------------------------
