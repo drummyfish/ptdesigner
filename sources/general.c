@@ -9,6 +9,25 @@
 #include "general.h"
 #include <math.h>
 
+                                         // pre-computed Bayer matrices:
+
+const unsigned char bayer_matrix_2x2[2][2] = {{1, 3},
+                                              {4, 2}};
+
+const unsigned char bayer_matrix_4x4[4][4] = {{0,  12, 3,  15},
+                                              {8,  4,  11, 7},
+                                              {2,  14, 1,  13},
+                                              {10, 6,  9,  5}};
+
+const unsigned char bayer_matrix_8x8[8][8] = {{0,  48, 12, 60, 3,  51, 15, 63},
+                                              {32, 16, 44, 28, 35, 19, 47, 31},
+                                              {8,  56, 4,  52, 11, 59, 7,  55},
+                                              {40, 24, 36, 20, 43, 27, 39, 23},
+                                              {2,  50, 14, 62, 1,  49, 13, 61},
+                                              {34, 18, 46, 30, 33, 17, 45, 29},
+                                              {10, 58, 6,  54, 9,  57, 5,  53},
+                                              {42, 26, 38, 22, 41, 25, 37, 21}};
+
 //----------------------------------------------------------------------
 
 int transform_coordination(int coordination, int limit)
@@ -776,6 +795,133 @@ t_mosaic_transformation compute_transformation(t_square_mosaic *mosaic,
       }
 
     return MOSAIC_TRANSFORM_SHIFT; // the function never should get here
+  }
+
+//----------------------------------------------------------------------
+
+unsigned char dither_random(unsigned char value, unsigned char levels,
+  int random)
+
+  {
+    double interval_length;
+    unsigned char level,random_number;
+
+    levels--;
+
+    interval_length = 255.0 / (double) (levels);
+
+    for (level = 0; level < levels; level++) // find the value level
+      if (value <= (level + 1) * interval_length)
+        break;
+
+    value = value - level * interval_length;
+    random_number = noise_int_range(random,0,ceil(interval_length));
+
+    if (value >= random_number)
+      level++;
+
+    return round_to_char(level * interval_length);
+  }
+
+//----------------------------------------------------------------------
+
+unsigned char dither_threshold(unsigned char value,
+  unsigned char levels)
+
+  {
+    double interval_check,interval_set;
+    unsigned int i;
+
+    interval_check = 255.0 / levels;
+    interval_set = 255.0 / (levels - 1);
+
+    for (i = 1; i < levels; i++)   // find the level
+      if (value < i * interval_check)
+        break;
+
+    value = (i - 1) * interval_set;
+
+    return value;
+  }
+
+//----------------------------------------------------------------------
+
+int is_power_of_2(unsigned int value)
+
+  {
+    unsigned int i,number_of_ones;
+
+    number_of_ones = 0;
+
+    // count the ones in binary:
+
+    for (i = 0; i < 64; i++) // assume maximum of 64 bits for uint
+      {
+        if (value & 1)
+          number_of_ones++;
+
+        value = value >> 1;  // right shift by 1
+
+        if (number_of_ones > 1)
+          break;
+      }
+
+    return number_of_ones == 1;
+  }
+
+//----------------------------------------------------------------------
+
+void make_bayer_matrix(t_matrix *matrix)
+
+  {
+    unsigned int i,j,k,x,y,width;
+    int random;
+    double value;
+
+    if (matrix == NULL)
+      return;
+
+    for (j = 0; j < matrix->height; j++)
+      for (i = 0; i < matrix->width; i++)
+        matrix_set_value(matrix,i,j,0.0);
+
+    if (matrix->width == matrix->height && matrix->width == 2)
+      {
+        for (j = 0; j < matrix->height; j++)
+          for (i = 0; i < matrix->width; i++)
+            matrix_set_value(matrix,i,j,bayer_matrix_2x2[i][j]);
+      }
+    else if (matrix->width == matrix->height && matrix->width == 4)
+      {
+        for (j = 0; j < matrix->height; j++)
+          for (i = 0; i < matrix->width; i++)
+            matrix_set_value(matrix,i,j,bayer_matrix_4x4[i][j]);
+      }
+    else if (matrix->width == matrix->height && matrix->width == 8)
+      {
+        for (j = 0; j < matrix->height; j++)
+          for (i = 0; i < matrix->width; i++)
+            matrix_set_value(matrix,i,j,bayer_matrix_8x8[i][j]);
+      }
+    else
+      {
+        random = 0;
+
+        for (k = 0; k < matrix->width * matrix->height; k++)
+          while (1)
+            {
+              x = noise_int_range(random,0,matrix->width - 1);
+              random++;
+              y = noise_int_range(random,0,matrix->height - 1);
+              random++;
+
+              if (matrix_get_value(matrix,x,y) == 0.0)
+                {
+                  matrix_set_value(matrix,x,y,(double) k + 1);
+                  break;
+                }
+            }
+      }
   }
 
 //----------------------------------------------------------------------

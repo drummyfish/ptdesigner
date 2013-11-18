@@ -25,6 +25,9 @@ typedef enum
                                    the nearest point */
     VORONOI_2_NEAREST_RATIO,  /**< pixel color depends on distance ratio
                                    from the nearest two points */
+    VORONOI_NEAREST_HASH      /**< the pixel's color is computed only
+                                   based on the nearest point position
+                                   */
   } t_voronoi_type;
 
                             /** ways in which points can be placed
@@ -86,6 +89,16 @@ typedef enum
     REFLECTION_CURVE_LINEAR_HALF,   ///< linear dependency to pi / 2
     REFLECTION_CURVE_LINEAR_FULL    ///< linear dependency to pi
   } t_reflection_curve;
+
+                              /** possible methods of dithering */
+
+typedef enum
+  {
+    DITHERING_THRESHOLD,            ///< threshold dithering
+    DITHERING_RANDOM,               ///< random dithering
+    DITHERING_ERROR_PROPAGATION,    ///< Floyd–Steinberg dithering
+    DITHERING_ORDERED               ///< ordered dithering
+  } t_dithering_method;
 
 //----------------------------------------------------------------------
 
@@ -516,8 +529,8 @@ void pt_perlin_noise(int random, unsigned char base_amplitude,
   int smooth);
 
   /**<
-   * Generates a perlin noise and stores it in given color buffer as an
-   * image.
+   * Generates a fractal perlin noise and stores it in given color
+   * buffer as an image.
    *
    * @param random number passed to noise function, different numbers
    *        will generate different noise results
@@ -534,6 +547,27 @@ void pt_perlin_noise(int random, unsigned char base_amplitude,
    * @param smooth says if the noise should be smoothed so that the
    *        number of artifacts is reduced (this is takes a little more
    *        time but looks nicer)
+   */
+
+//----------------------------------------------------------------------
+
+void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
+  double bump_size_to, unsigned int bump_quantity, int random);
+
+  /**<
+   * Generates a noise by putting circle bumps of decreasing size over
+   * each other.
+   *
+   * @param buffer buffer in which the result will be stored, must be
+   *        initialised
+   * @param bump_size_from a number in range <0,1> which determines
+   *        initial bump size in fraction of the buffer width
+   * @param bump_size_to a number in range <0,1> which determines
+   *        final bump size in fraction of the buffer width
+   * @param bump_quantity a number that specifies how fast the bump
+   *        count will grow, use value 1 for common usage
+   * @param random number that determines placement of the bumps,
+   *        different values will give different results
    */
 
 //----------------------------------------------------------------------
@@ -1018,14 +1052,16 @@ void pt_invert_colors(t_color_buffer *buffer);
 
 //----------------------------------------------------------------------
 
-void pt_threshold(t_color_buffer *buffer, unsigned int levels);
+void pt_dithering(t_color_buffer *buffer, unsigned char levels,
+  t_dithering_method method);
 
-  /**<
-   * Performs a threshold with given color buffer.
+  /**
+   * Performs dithering with given image.
    *
-   * @param buffer input (and output) buffer
-   * @param levels number of thresholding levels, should be in interval
-   *        <1,255>
+   * @param buffer input and output color buffer of the operation,
+   *        dithering is applied to all channels separately
+   * @param levels number of values each pixel can have in one channel
+   * @param method dithering method to use
    */
 
 //----------------------------------------------------------------------
