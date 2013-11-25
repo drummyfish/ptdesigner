@@ -55,7 +55,7 @@ typedef enum
                                           center of the side */
     MOSAIC_TRANSFORM_ROTATE_VERTEX,  /**< the tile is rotated around the
                                           vertex of the side */
-    MOSAIC_TRANSFORM_SHIFT_MIRROR,   /**< the tile is shifted and
+    MOSAIC_TRANSFORM_SHIFT_MIRROR    /**< the tile is shifted and
                                           mirrored */
   } t_mosaic_transformation;
 

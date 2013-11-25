@@ -7,6 +7,7 @@
 //**********************************************************************
 
 #include "grammar.h"
+#include "general.h"
 
                                /** a private structure that represents a
                                    scanner */
