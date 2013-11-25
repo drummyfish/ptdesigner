@@ -123,7 +123,11 @@ typedef enum
                                        direction (motion blur).
                                        Parameters:
                                   */
-    BLOCK_EMBOSS,                 /**<
+    BLOCK_GLASS,                  /**< Applies a glass-blur effect to
+                                       the image. Parameters:
+                                  */
+    BLOCK_EMBOSS,                 /**< Applies the emboss effect to the
+                                       image. Parameters:
                                   */
     BLOCK_TRANSFORMATION_CIRCLE,  /**< Performs a circle transformation
                                        with the grayscale image.

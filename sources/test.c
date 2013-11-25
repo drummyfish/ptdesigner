@@ -4,17 +4,15 @@
 
 int main()
   {
-    t_color_buffer buffer;
-    t_matrix matrix;
+    t_color_transition transition;
 
-    color_buffer_init(&buffer,512,512);
+    color_transition_load_from_file(&transition,"t.txt");
 
-    pt_bump_noise(&buffer,0.6,0.1,1,0,1274);
+    // color_transition_init(&transition);
 
-    color_buffer_save_to_png(&buffer,"pic.png");
+    color_transition_save_to_file(&transition,"t2.txt");
 
-
-    color_buffer_destroy(&buffer);
+    color_transition_destroy(&transition);
 
     return 0;
   }

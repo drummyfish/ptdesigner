@@ -146,3 +146,62 @@ void color_transition_destroy(t_color_transition *transition)
   }
 
 //----------------------------------------------------------------------
+
+int color_transition_load_from_file(t_color_transition *transition,
+  char *filename)
+
+  {
+    FILE *file;
+    int help_array[4];
+
+    if (!color_transition_init(transition))
+      return 0;
+
+    file = fopen(filename,"r");
+
+    if (file == NULL)
+      return 0;
+
+    while (1)
+      {
+        if (fscanf(file,"%d %d %d %d\n",&help_array[0],&help_array[1],
+          &help_array[2],&help_array[3]) != 4)
+          break;
+
+        color_transition_add_point(round_to_char(help_array[0]),
+          round_to_char(help_array[1]),round_to_char(help_array[2]),
+          round_to_char(help_array[3]),transition);
+      }
+
+    fclose(file);
+
+    return 1;
+  }
+
+//----------------------------------------------------------------------
+
+int color_transition_save_to_file(t_color_transition *transition,
+  char *filename)
+
+  {
+    FILE *file;
+    int i;
+
+    file = fopen(filename,"w");
+
+    if (file == NULL)
+      return 0;
+
+    for (i = 0; i < transition->number_of_points; i++)
+      {
+        fprintf(file,"%d %d %d %d\n",transition->points[i].value,
+          transition->points[i].red,transition->points[i].green,
+          transition->points[i].blue);
+      }
+
+    fclose(file);
+
+    return 1;
+  }
+
+//----------------------------------------------------------------------

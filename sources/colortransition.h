@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "general.h"
                                 /** a structure representing a point in
                                     color transition, it maps one
                                     grayscale value to RGB color */
@@ -89,6 +90,36 @@ void color_transition_destroy(t_color_transition *transition);
    * Frees the memory allocated for transition.
    *
    * @param transition color transition to be destroyed
+   */
+
+//----------------------------------------------------------------------
+
+int color_transition_load_from_file(t_color_transition *transition,
+  char *filename);
+
+  /**
+   * Loads a color transition from a file. Also serves as an init
+   * function.
+   *
+   * @param transition transition to be loaded, must be deallocated
+   * @param filename name of the file from which the transition will be
+   *        loaded
+   *
+   * @return 1 if the transition was loaded succesfully, 0 otherwise
+   */
+
+//----------------------------------------------------------------------
+
+int color_transition_save_to_file(t_color_transition *transition,
+  char *filename);
+
+  /**
+   * Saves color transition to file.
+   *
+   * @param transition transition to be saved
+   * @param filename name of the file
+   *
+   * @return 1 if the file was saved succesfully, 0 otherwise
    */
 
 //----------------------------------------------------------------------
