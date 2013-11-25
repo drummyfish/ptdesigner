@@ -92,6 +92,63 @@ void _pt_replace_color(t_color_buffer *buffer, unsigned char r1,
 //----------------------------------------------------------------------
 
   /**
+   * Private function - draws a "bump" into given color buffer. A bump
+   * is a fuzzy circullar object drawn as a function depending on
+   * distance from given point.
+   *
+   * @param buffer buffer to braw the bump into
+   * @param x x position of the bump central point, in pixels
+   * @param y y position of the bump central point, in pixels
+   * @param radius bump radius in pixels
+   * @param alter_amplitude says if the amplitude should be altered
+   *        depending on the bump size (its radius) (1) or not (0),
+   *        non-altering amplitude will always be set to 255
+   */
+
+void _pt_draw_bump(t_color_buffer *buffer, unsigned int x,
+  unsigned int y, unsigned int radius, int alter_amplitude)
+
+  {
+    unsigned int i,j;
+    unsigned char color;
+    double distance;
+    unsigned char max_value;
+
+    max_value = alter_amplitude ?
+      radius / ((double) buffer->width) * 255 : 255;
+
+    for (j = 0; j < radius; j++)    // compute only one quadrant
+      for (i = 0; i < radius; i++)
+        {
+          distance = sqrt(i * i + j * j);
+
+          if (distance <= radius)
+            distance = sin(distance / radius * PI_DIVIDED_2);
+          else
+            distance = 1.0;
+
+          color = round_to_char(max_value - distance * max_value);
+
+          color_buffer_substract_pixel(buffer,x + i,y + j,color,
+                color,color);
+
+          if (i != 0)
+            color_buffer_substract_pixel(buffer,x - i,y + j,color,color,
+              color);
+
+          if (j != 0)
+            color_buffer_substract_pixel(buffer,x - i,y - j,color,color,
+              color);
+
+          if (i != 0 && j != 0)
+            color_buffer_substract_pixel(buffer,x + i,y - j,color,color,
+              color);
+        }
+  }
+
+//----------------------------------------------------------------------
+
+  /**
    * Private function - creates an array of points accoording to shape
    * describing string.
    *
@@ -4036,47 +4093,9 @@ void pt_replace_colors(t_color_buffer *buffer,
 
 //----------------------------------------------------------------------
 
-void _pt_draw_bump(t_color_buffer *buffer, unsigned int x,
-  unsigned int y, unsigned int radius)
-
-  {
-    unsigned int i,j;
-    unsigned char color;
-    double distance;
-
-    for (j = 0; j < radius; j++)    // compute only one quadrant
-      for (i = 0; i < radius; i++)
-        {
-          distance = sqrt(i * i + j * j);
-
-          if (distance <= radius)
-            distance = sin(distance / radius * PI_DIVIDED_2);
-          else
-            distance = 1.0;
-
-          color = round_to_char(255 - distance * 255);
-
-          color_buffer_substract_pixel(buffer,x + i,y + j,color,
-                color,color);
-
-          if (i != 0)
-            color_buffer_substract_pixel(buffer,x - i,y + j,color,color,
-              color);
-
-          if (j != 0)
-            color_buffer_substract_pixel(buffer,x - i,y - j,color,color,
-              color);
-
-          if (i != 0 && j != 0)
-            color_buffer_substract_pixel(buffer,x + i,y - j,color,color,
-              color);
-        }
-  }
-
-//----------------------------------------------------------------------
-
 void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
-  double bump_size_to, unsigned int bump_quantity, int random)
+  double bump_size_to, unsigned int bump_quantity, int alter_amplitude,
+  int random)
 
   {
     unsigned int bump_count,bump_size;
@@ -4097,7 +4116,7 @@ void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
           y = noise(random) * buffer->height;
           random++;
 
-          _pt_draw_bump(buffer,x,y,bump_size);
+          _pt_draw_bump(buffer,x,y,bump_size,alter_amplitude);
         }
   }
 

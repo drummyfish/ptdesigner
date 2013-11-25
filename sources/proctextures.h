@@ -552,7 +552,8 @@ void pt_perlin_noise(int random, unsigned char base_amplitude,
 //----------------------------------------------------------------------
 
 void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
-  double bump_size_to, unsigned int bump_quantity, int random);
+  double bump_size_to, unsigned int bump_quantity, int alter_amplitude,
+  int random);
 
   /**<
    * Generates a noise by putting circle bumps of decreasing size over
@@ -566,6 +567,9 @@ void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
    *        final bump size in fraction of the buffer width
    * @param bump_quantity a number that specifies how fast the bump
    *        count will grow, use value 1 for common usage
+   * @param alter_amplitude says if the amplitude of the bumps will be
+   *        lowered with each iteration (1) or not (0), non-altering
+   *        amplitude creates a sharper image
    * @param random number that determines placement of the bumps,
    *        different values will give different results
    */
@@ -969,7 +973,7 @@ void pt_transformation_sine(t_color_buffer *buffer, double phase,
    * used.
    *
    * @param buffer input buffer of the transformation
-   * @param phase starting phase of the sinus function
+   * @param phase starting phase of the sinus function in radians
    * @param periods number od sinus periods that will be mapped to
    *        0 - 255 range (possible pixel values)
    * @param amplitude amplitude of the function, should be in range
