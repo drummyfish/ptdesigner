@@ -2627,6 +2627,10 @@ void pt_marble(int random, unsigned int periods, unsigned int intensity,
     if (amplitude > 127)
       amplitude = 127;
 
+
+    intensity =
+      (unsigned int) ((destination->width / 500.0) * intensity);
+
     intensity_double = intensity / 10.0;
 
     for (j = 0; j < noise_source->height; j++)
@@ -2669,6 +2673,132 @@ void pt_marble(int random, unsigned int periods, unsigned int intensity,
       {
         color_buffer_destroy(&noise_buffer);
       }
+  }
+
+//----------------------------------------------------------------------
+
+void pt_wood(int random, unsigned int circles, unsigned int hardness,
+  unsigned int intensity, t_direction direction, unsigned int amplitude,
+  t_color_buffer *destination, t_color_buffer *noise_source)
+
+  {
+    unsigned int radius;           // basic circle radius
+    int i,j;
+    int offset;
+    int dx,dy,dx_squared,dy_squared;
+    unsigned char r,g,b;
+    double distance;
+    int external_noise_source;
+    unsigned int middle_x,middle_y;
+    unsigned char value;
+    t_color_buffer noise_buffer;   // in case there's no extrernal noise
+
+
+    intensity = (unsigned int)
+      ((((double) destination->width) / 100) * intensity);
+
+    if (noise_source != NULL)
+      {
+        external_noise_source = 1;
+      }
+    else
+      {
+        color_buffer_init(&noise_buffer,destination->width,
+          destination->height);
+
+        noise_source = &noise_buffer;
+
+        pt_perlin_noise(random,128,5,-1,INTERPOLATION_LINEAR,
+          noise_source,1);
+      }
+
+    radius = destination->width >= destination->height ?
+      destination->width / 2 : destination->height / 2;
+
+    middle_x = destination->width / 2;
+    middle_y = destination->height / 2;
+
+    pt_color_fill(destination,255,255,255);
+
+    if (hardness == 0)    // 0 not allowed
+      hardness = 2;
+    else
+      hardness *= 2;      // can't be odd
+
+    for (j = -1 * intensity; j < (int) (destination->height + intensity); j++)
+      {
+        for (i = -1 * intensity; i < (int) (destination->width + intensity); i++)
+          {
+            color_buffer_get_pixel(noise_source,i,j,&r,&g,&b);
+
+
+            color_buffer_get_pixel(noise_source,i,j,&r,&g,&b);
+            offset = intensity * (((double) r) / 255);
+
+            if (direction == DIRECTION_HORIZONTAL ||
+            direction == DIRECTION_DIAGONAL_LU_RD)
+              {
+                dx = middle_x - i + offset;
+              }
+            else if (direction == DIRECTION_DIAGONAL_LD_RU)
+              {
+                dx = middle_x - i - offset;
+              }
+            else
+              {
+                dx = middle_x - i;
+              }
+
+            dx_squared = dx * dx;
+
+            if (direction == DIRECTION_VERTICAL ||
+            direction == DIRECTION_DIAGONAL_LU_RD ||
+            direction == DIRECTION_DIAGONAL_LD_RU)
+              {
+                dy = middle_y - j + offset;
+              }
+            else
+              {
+                dy = middle_y - j;
+              }
+
+            dy_squared = dy * dy;
+
+            distance = sqrt(dx_squared + dy_squared);
+
+            if (distance > radius)
+              {
+                value = 255;
+              }
+            else
+              {
+                value = 255 - round_to_char(pow(sin(distance / radius *
+                  circles * PI),hardness) * amplitude);
+              }
+
+            color_buffer_get_pixel(destination,i,j,&r,&g,&b);
+
+            value = r > value ? value : r;  // assign darker value
+
+            color_buffer_set_pixel(destination,i,j,value,value,
+              value);
+          }
+      }
+
+    if (!external_noise_source)
+      {
+        color_buffer_destroy(&noise_buffer);
+      }
+  }
+
+//----------------------------------------------------------------------
+
+void pt_wood_simple(int random, unsigned int intensity,
+  unsigned int amplitude, t_color_buffer *destination)
+
+  {
+    pt_wood(random,5,3,intensity,DIRECTION_HORIZONTAL,amplitude,
+      destination,NULL);
   }
 
 //----------------------------------------------------------------------

@@ -743,7 +743,7 @@ void pt_marble(int random, unsigned int periods, unsigned int intensity,
   t_color_buffer *destination, t_color_buffer *noise_source);
 
   /**<
-   * Generates marble structure into given color buffer.
+   * Generates marble-like structure into given color buffer.
    *
    * @param random value passed to noise function, different values
    *        generate different images
@@ -764,12 +764,55 @@ void pt_marble(int random, unsigned int periods, unsigned int intensity,
 
 //----------------------------------------------------------------------
 
+void pt_wood(int random, unsigned int circles, unsigned int hardness,
+  unsigned int intensity, t_direction direction, unsigned int amplitude,
+  t_color_buffer *destination, t_color_buffer *noise_source);
+
+  /**<
+   * Generates wood-like structure into given color buffer.
+   *
+   * @param random value passed to noise function, different values
+   *        generate different images
+   * @param circles number of circles of the basic shape being modulated
+   * @param hardness higher values result in more intense edges
+   * @param intensity intensity of the effect
+   * @param direction direction in which the modulation will be applied
+   * @param amplitude amplitude of the picture, must be less or equal to
+   *        127
+   * @param destination color buffer in which the result will be stored,
+   *        musr be initiated before this function is called
+   * @param noise_source external source of the noise, it may be NULL in
+   *        which case perlin noise will be generated and used, if this
+   *        parameter is used, the noise color buffer must be of the
+   *        same size as destination
+   */
+
+//----------------------------------------------------------------------
+
 void pt_marble_simple(int random, unsigned int intensity,
   unsigned int amplitude, t_color_buffer *destination);
 
   /**<
-   * Generates marble structure using perlin noise, horizontal direction
-   * and 4 periods.
+   * Generates marble-like structure using Perlin noise, horizontal
+   * direction and 4 periods.
+   *
+   * @param random value passed to noise function, different values
+   *        generate different images
+   * @param intensity intensity of the effect
+   * @param amplitude amplitude of the picture, must be less or equal to
+   *        127
+   * @param destination color buffer in which the result will be stored,
+   *        musr be initiated before this function is called
+   */
+
+//----------------------------------------------------------------------
+
+void pt_wood_simple(int random, unsigned int intensity,
+  unsigned int amplitude, t_color_buffer *destination);
+
+  /**<
+   * Generates wood-like structure using Perlin noise, horizontal
+   * direction and 5 circles.
    *
    * @param random value passed to noise function, different values
    *        generate different images
