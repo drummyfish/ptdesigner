@@ -24,6 +24,7 @@ c_block::c_block(c_texture_graph *texture_graph)
     this->max_inputs = MAX_INPUT_BLOCKS;
     this->min_inputs = 0;
     this->inputs = 0;
+    this->graph = texture_graph;
 
     for (i = 0; i < MAX_INPUT_BLOCKS; i++)
       {
@@ -83,6 +84,14 @@ bool c_block::load_parameters(string parameters)
 
   {
     return true;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block::invalidate()
+
+  {
+    this->valid = false;
   }
 
 //----------------------------------------------------------------------
@@ -227,9 +236,121 @@ void c_texture_graph::add_block(c_block *block)
 
 //----------------------------------------------------------------------
 
+void c_texture_graph::set_resolution(unsigned int x, unsigned int y)
+
+  {
+    if (x == this->resolution_x && y == this->resolution_y)
+      return;      // no need to change anything
+
+    this->resolution_x = x;
+    this->resolution_y = y;
+    this->adjust_all();
+  }
+
+//----------------------------------------------------------------------
+
+int c_texture_graph::get_random_seed()
+
+  {
+    return this->random_seed;
+  }
+
+//----------------------------------------------------------------------
+
+void c_texture_graph::set_multisampling(unsigned int level)
+
+  {
+    unsigned int base_resolution_x,base_resolution_y;
+
+    if (level == 0)    // zero makes no sense
+      level = 1;
+
+    if (level > MAX_MULTISAMPLING)
+      level = MAX_MULTISAMPLING;
+
+    if (level == this->multisampling_level)
+      return;    // no need to change anything
+
+    // division by zero shouldn't occur
+    base_resolution_x = this->resolution_x / this->multisampling_level;
+    base_resolution_y = this->resolution_y / this->multisampling_level;
+
+    this->multisampling_level = level;  // set the new level
+
+    /* the image must be generated larger in order to perform
+       multisampling => increase resolution: */
+
+    this->resolution_x = base_resolution_x * level;
+    this->resolution_y = base_resolution_y * level;
+
+    this->adjust_all();
+  }
+
+//----------------------------------------------------------------------
+
+void c_block::adjust()
+
+  {
+  }
+
+//----------------------------------------------------------------------
+
+void c_graphic_block::adjust()
+
+  {
+    unsigned int resolution_x,resolution_y;
+
+    this->graph->get_resolution(&resolution_x,&resolution_y);
+
+    if (this->buffer.width != resolution_x ||
+      this->buffer.height != resolution_y)
+      {
+        this->valid = false;
+
+        // reallocate the buffer with the new resolution:
+
+        color_buffer_destroy(&(this->buffer));
+
+        if (!color_buffer_init(&(this->buffer),resolution_x,
+          resolution_y))
+          this->set_error();
+      }
+  }
+
+//----------------------------------------------------------------------
+
+void c_special_block::adjust()
+
+  {
+  }
+
+//----------------------------------------------------------------------
+
 c_special_block::~c_special_block()
 
   {
+  }
+
+//----------------------------------------------------------------------
+
+void c_texture_graph::invalidate_all()
+
+  {
+    unsigned int i;
+
+    for (i = 0; i < this->blocks->size(); i++)
+      this->blocks->at(i)->invalidate();
+  }
+
+//----------------------------------------------------------------------
+
+void c_texture_graph::adjust_all()
+
+  {
+    unsigned int i;
+
+    for (i = 0; i < this->blocks->size(); i++)
+      this->blocks->at(i)->adjust();
   }
 
 //----------------------------------------------------------------------
@@ -277,6 +398,45 @@ c_block_color_fill::c_block_color_fill(c_texture_graph *texture_graph):
 
     this->min_inputs = 0;
     this->max_inputs = 0;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block::connect(c_block *input_block, unsigned int slot_number)
+
+  {
+    if (slot_number >= MAX_INPUT_BLOCKS)
+      return;
+
+    if (this->input_blocks[slot_number] == NULL)
+      this->inputs++;
+
+    this->input_blocks[slot_number] = input_block;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block::disconnect(unsigned int slot_number)
+
+  {
+    if (slot_number >= MAX_INPUT_BLOCKS)
+      return;
+
+    if (this->input_blocks[slot_number] != NULL)
+      this->inputs--;
+
+    this->input_blocks[slot_number] = NULL;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_color_fill::set_color(unsigned char red,
+  unsigned char green, unsigned char blue)
+
+  {
+    this->red = red;
+    this->green = green;
+    this->blue = blue;
   }
 
 //----------------------------------------------------------------------
@@ -337,6 +497,28 @@ void c_block_file_save::compute()
         this->set_error();
         return;
       }
+  }
+
+//----------------------------------------------------------------------
+
+c_block_bump_noise::c_block_bump_noise(c_texture_graph *texture_graph):
+  c_graphic_block(texture_graph)
+
+  {
+    this->bump_size_from = 0.5;
+    this->bump_size_to = 0.1;
+    this->quantity = 1;
+    this->alter_amplitude = false;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_bump_noise::compute()
+
+  {
+    pt_bump_noise(&(this->buffer),this->bump_size_from,
+      this->bump_size_to,this->quantity,this->alter_amplitude,
+      graph->get_random_seed());
   }
 
 //----------------------------------------------------------------------

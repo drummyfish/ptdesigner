@@ -26,7 +26,8 @@ extern "C"
 #include <vector>
 #include <string>
 
-#define MAX_INPUT_BLOCKS 5  /// maximum number of input blocks
+#define MAX_INPUT_BLOCKS  5  /// maximum number of input blocks
+#define MAX_MULTISAMPLING 6  /// maximum multisampling level
 
 using namespace std;
 
@@ -54,6 +55,7 @@ class c_block
       unsigned int inputs;      /// current number of inputs
       unsigned int max_inputs;  /// maximum number of inputs
       unsigned int min_inputs;  /// minimum number of inputs
+      c_texture_graph *graph;   /// graph that the block belongs to
 
       void set_error();
 
@@ -83,6 +85,13 @@ class c_block
          *         otherwise
          */
 
+      virtual void adjust();
+
+        /**<
+         * Adjusts the block parameters to current graph parameters
+         * (i.e. resolution and so on)
+         */
+
       void set_id(unsigned int new_id);
 
         /**<
@@ -109,7 +118,7 @@ class c_block
          *         otherwise
          */
 
-      void connect_input(c_block *input_block, int slot_number);
+      void connect(c_block *input_block, unsigned int slot_number);
 
         /**<
          * Connects another block to this block's input.
@@ -190,6 +199,13 @@ class c_graphic_block: public c_block
          *        belong to, cannot be NULL
          */
 
+      virtual void adjust();
+
+        /**<
+         * Adjusts the block parameters to current graph parameters
+         * (i.e. resolution and so on)
+         */
+
       virtual bool has_image();
 
         /**<
@@ -237,6 +253,13 @@ class c_special_block: public c_block
          *
          * @param texture_graph texture graph that this block will
          *        belong to, cannot be NULL
+         */
+
+      virtual void adjust();
+
+        /**<
+         * Adjusts the block parameters to current graph parameters
+         * (i.e. resolution and so on)
          */
 
       virtual bool has_image();
@@ -303,13 +326,28 @@ class c_texture_graph
          *         otherwise false
          */
 
+      void invalidate_all();
+
+        /**<
+         * Invalidates all the block so their outputs will be forced to
+         * be recomputed next time the compute function is called.
+         */
+
+      void adjust_all();
+
+        /**<
+         * Adjusts all the blocks so that their parameters are in match
+         * with current graph parameters.
+         */
+
       void set_multisampling(unsigned int level);
 
         /**<
          * Sets the texture multisapling level.
          *
-         * @param level level of multisampling, 1 means no multisampling,
-         *        2 means 2 x 2 etc.
+         * @param level level of multisampling, 1 means no
+         *        multisampling, 2 means 2 x 2 etc. Maximum value is
+         *        MAX_MULTISAMPLING.
          */
 
       void set_resolution(unsigned int x, unsigned int y);
@@ -453,6 +491,45 @@ class c_block_color_fill: public c_graphic_block
          * @param green amount of green
          * @param blue amount of blue
          */
+
+      void get_color(unsigned char *red, unsigned char *green,
+        unsigned char *blue);
+
+        /**<
+         * Returns currently set fill color.
+         *
+         * @param red in this variable amount of red will be returned
+         * @param green in this variable amount of green will be
+         *        returned
+         * @param blue in this variable amount of blue will be returned
+         */
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * Bump noise block.
+  */
+
+class c_block_bump_noise: public c_graphic_block
+  {
+    protected:
+      float bump_size_from;  /// upper limit of the bump size
+      float bump_size_to;    /// lower limit of the bump size
+      unsigned int quantity; /// bump quantity
+      bool alter_amplitude;  /// whether to alter amplitude
+
+    public:
+      c_block_bump_noise(c_texture_graph *texture_graph);
+
+      void set_parameters(float bump_size_upper, float bump_size_lower,
+        unsigned int quantity, bool alter_amplitude);
+
+      void get_parameters(float *bump_size_upper,
+        float *bump_size_lower, unsigned int *quantity,
+        bool *alter_amplitude);
+
+      virtual void compute();
   };
 
 //----------------------------------------------------------------------

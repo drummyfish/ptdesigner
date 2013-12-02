@@ -562,9 +562,11 @@ void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
    * @param buffer buffer in which the result will be stored, must be
    *        initialised
    * @param bump_size_from a number in range <0,1> which determines
-   *        initial bump size in fraction of the buffer width
+   *        initial bump size in fraction of the buffer width, this
+   *        is the upper limit
    * @param bump_size_to a number in range <0,1> which determines
-   *        final bump size in fraction of the buffer width
+   *        final bump size in fraction of the buffer width, this is
+   *        the lower limit
    * @param bump_quantity a number that specifies how fast the bump
    *        count will grow, use value 1 for common usage
    * @param alter_amplitude says if the amplitude of the bumps will be
