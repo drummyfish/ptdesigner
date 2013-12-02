@@ -2,11 +2,16 @@
 # Miloslav Ciz, 2012
 
 CC=gcc
+CC2=c++
 CFLAGS=-std=c99 -g -pedantic -Wall -Wextra
+CFLAGS2=-Wall -pedantic -g -lrt
 SOURCEDIR=sources
 
-test: test.o colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.0
-	$(CC) -lm -o test test.o colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.o
+test: test.o colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.0 ptdesigner.o
+	$(CC2) $(CFLAGS2) -lm -o test test.o colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.o ptdesigner.o
+
+ptdesigner.o: $(SOURCEDIR)/ptdesigner.cpp $(SOURCEDIR)/ptdesigner.h
+	$(CC2) $(CFLAGS2) -c -o ptdesigner.o $(SOURCEDIR)/ptdesigner.cpp
 
 lodepng.o: $(SOURCEDIR)/lodepng.c $(SOURCEDIR)/lodepng.h
 	$(CC) $(CFLAGS) -c -o lodepng.o $(SOURCEDIR)/lodepng.c
@@ -14,8 +19,8 @@ lodepng.o: $(SOURCEDIR)/lodepng.c $(SOURCEDIR)/lodepng.h
 grammar.0: $(SOURCEDIR)/grammar.c $(SOURCEDIR)/grammar.h
 	$(CC) $(CFLAGS) -c -o grammar.o $(SOURCEDIR)/grammar.c 
 
-test.o: $(SOURCEDIR)/test.c $(SOURCEDIR)/colorbuffer.h $(SOURCEDIR)/general.h
-	$(CC) $(CFLAGS) -c -o test.o $(SOURCEDIR)/test.c
+test.o: $(SOURCEDIR)/test.cpp $(SOURCEDIR)/colorbuffer.h $(SOURCEDIR)/general.h
+	$(CC2) $(CFLAGS2) -c -o test.o $(SOURCEDIR)/test.cpp
 
 colorbuffer.o: $(SOURCEDIR)/colorbuffer.c $(SOURCEDIR)/colorbuffer.h $(SOURCEDIR)/lodepng.h $(SOURCEDIR)/kdtree.h $(SOURCEDIR)/general.h
 	$(CC) $(CFLAGS) -c -o colorbuffer.o $(SOURCEDIR)/colorbuffer.c

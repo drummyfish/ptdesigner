@@ -3,26 +3,18 @@
 
 #include "ptdesigner.h"
 
+using namespace pt_design;
+
 int main()
   {
-    t_color_buffer buffer;
-    char name[] = "pic.png";
+    c_texture_graph *graph;
+    c_block *block;
 
-    color_buffer_init(&buffer,512,512);
 
-    //pt_bump_noise(&buffer,0.9,0.05,1,0,758);
+    graph = new c_texture_graph();
 
-    // pt_marble(456, 4, 5, DIRECTION_HORIZONTAL, 128,
-    //  &buffer, NULL);
+    block = new c_block_color_fill(graph);
 
- //   pt_wood(1234,4,2,30,DIRECTION_HORIZONTAL,128,
- //     &buffer,NULL);
-
-    pt_wood_simple(1247,21,127,&buffer);
-
-    color_buffer_save_to_png(&buffer,name);
-
-    color_buffer_destroy(&buffer);
-
+    delete graph;
     return 0;
   }
