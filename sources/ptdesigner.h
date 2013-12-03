@@ -63,6 +63,23 @@ class c_block
          * Sets the error flag and invalidates the block.
          */
 
+      bool manage_input_graphic_blocks(unsigned int number);
+
+        /**<
+         * Takes care of first number of input blocks, checking if they
+         * are connected, if they are graphic blocks, if they are valid
+         * and recomputing them in case they aren't, and if they don't
+         * have errors set. This function is supposed to help the block
+         * check its inputs before computing its output.
+         *
+         * @param number number of blocks to be checked
+         *
+         * @return true is returned if everything went OK, i.e. all of
+         *         the first number blocks are connected graphic blocks
+         *         with valid inputs and no errors, otherwise false is
+         *          returned
+         */
+
     public:
       c_block(c_texture_graph *texture_graph);
 
@@ -525,9 +542,143 @@ class c_block_bump_noise: public c_graphic_block
       void set_parameters(float bump_size_upper, float bump_size_lower,
         unsigned int quantity, bool alter_amplitude);
 
+        /**
+         * Sets the block parameters.
+         *
+         * @param bump_size_upper a number in range <0,1> which
+         *        determines initial bump size in fraction of the buffer
+         *        width, this is the upper limit
+         * @param bump_size_lower a number in range <0,1> which
+         *        determines final bump size in fraction of the buffer
+         *        width, this is the lower limit
+         * @param quantity a number that specifies how fast the bump
+         *        count will grow, use value 1 for common usage
+         * @param alter_amplitude says if the amplitude of the bumps
+         *        will be lowered with each iteration (true) or not
+         *        (false), non-altering amplitude creates a sharper
+         *        image
+         */
+
       void get_parameters(float *bump_size_upper,
         float *bump_size_lower, unsigned int *quantity,
         bool *alter_amplitude);
+
+        /**
+         * Gets the block parameters.
+         *
+         * @param bump_size_upper in this variable the upper limit for
+         *        the bump size will be returned
+         * @param bump_size_lower in this variable the lower limit for
+         *        the bump size will be returned
+         * @param quantity in this parameter the quantity parameter
+         *        value will be returned
+         * @param alter_amplitude in this variable the value of alter
+         *        amplitude parameter will be returned
+         */
+
+      virtual void compute();
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * Perlin noise block.
+  */
+
+class c_block_perlin_noise: public c_graphic_block
+  {
+    protected:
+      unsigned char amplitude;              /// base amplitude
+      unsigned int frequency;               /// base frequency
+      int max_iterations;                   /** maximum number of
+                                                iterations, negative
+                                                number means no limit */
+      t_interpolation_method interpolation; /// interpolation method
+      bool smooth;                          /// whether to smooth
+
+    public:
+      c_block_perlin_noise(c_texture_graph *texture_graph);
+
+      void set_parameters(unsigned char amplitude,
+        unsigned int frequency, int max_iterations,
+        t_interpolation_method interpolation, bool smooth);
+
+        /**
+         * Sets the block parameters.
+         *
+         * @param amplitude amplitude of the base frequency, should be
+         *        in range <0,128>
+         * @param frequency base, lowest frequency of the noise
+         * @param max_iterations maximum number of iterations, negative
+         *        number means no limit (generating will stop when the
+         *        frequency is higher than buffer resolution or when the
+         *        amplitude reaches zero)
+         * @param interpolation interpolation type
+         * @param smooth says if the noise should be smoothed so that
+         *        the number of artifacts is reduced (this is takes a
+         *        little more time but looks nicer)
+         */
+
+      void get_parameters(unsigned char *amplitude,
+        unsigned int *frequency, int *max_iterations,
+        t_interpolation_method *interpolation, bool *smooth);
+
+        /**
+         * Gets the block parameters.
+         *
+         * @param amplitude in this parameter the base amplitude
+         *        parameter value will be returned
+         * @param frequency in this parameter the base frequency
+         *        parameter value will be returned
+         * @param max_iterations in this parameter the max frequency
+         *        parameter value will be returned
+         * @param interpolation in this parameter the interpolation
+         *        method will be returned
+         * @param smooth in this parameter the smooth parameter value
+         *        will be returned
+         */
+
+      virtual void compute();
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * RGB adjust block.
+  */
+
+class c_block_rgb: public c_graphic_block
+  {
+    protected:
+      int red;            /// value to be added to red
+      int green;          /// value to be added to green
+      int blue;           /// value to be added to blue
+
+    public:
+      c_block_rgb(c_texture_graph *texture_graph);
+
+      void set_parameters(int red, int green, int blue);
+
+        /**
+         * Sets the block parameters.
+         *
+         * @param red value to be added to red
+         * @param green value to be added to green
+         * @param blue value to be added to blue
+         */
+
+      void get_parameters(int *red, int *green, int *blue);
+
+        /**
+         * Gets the block parameters.
+         *
+         * @param red in this parameter the amount of red will be
+         *        returned
+         * @param green in this parameter the amount of green will be
+         *        returned
+         * @param blue in this parameter the amount of blue will be
+         *        returned
+         */
 
       virtual void compute();
   };
