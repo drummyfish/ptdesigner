@@ -12,11 +12,12 @@ using namespace pt_design;
 
 //----------------------------------------------------------------------
 
-c_block::c_block(c_texture_graph *texture_graph)
+c_block::c_block()
 
   {
     unsigned int i;
 
+    this->initialised = false;
     this->position_x = 0;
     this->position_y = 0;
     this->valid = false;
@@ -24,50 +25,34 @@ c_block::c_block(c_texture_graph *texture_graph)
     this->max_inputs = MAX_INPUT_BLOCKS;
     this->min_inputs = 0;
     this->inputs = 0;
-    this->graph = texture_graph;
+    this->graph = NULL;
 
     for (i = 0; i < MAX_INPUT_BLOCKS; i++)
       {
         this->input_blocks[i] = NULL;
       }
-
-    texture_graph->add_block(this);
   }
 
 //----------------------------------------------------------------------
 
 c_block::~c_block()
-
   {
   }
 
 //----------------------------------------------------------------------
 
-c_graphic_block::c_graphic_block(c_texture_graph *texture_graph):
-  c_block(texture_graph)
+string c_block::get_name()
 
   {
-    unsigned int resolution_x,resolution_y;
-
-    texture_graph->get_resolution(&resolution_x,&resolution_y);
-
-    if (!color_buffer_init(&(this->buffer),resolution_x,resolution_y))
-      this->set_error();
+    return this->name;
   }
 
 //----------------------------------------------------------------------
 
-c_special_block::c_special_block(c_texture_graph *texture_graph):
-  c_block(texture_graph)
+bool c_block::compute(bool force)
 
   {
-  }
-
-//----------------------------------------------------------------------
-
-void c_block::compute()
-
-  {
+    return true;
   }
 
 //----------------------------------------------------------------------
@@ -173,6 +158,7 @@ bool c_special_block::has_image()
 c_texture_graph::c_texture_graph()
   {
     this->blocks = new vector<c_block *>();
+    this->end_blocks = new vector<c_block *>();
 
     this->last_id = 0;
     this->multisampling_level = 1;
@@ -192,6 +178,66 @@ c_texture_graph::~c_texture_graph()
       delete this->blocks->at(i);
 
     delete this->blocks;
+    delete this->end_blocks;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block::is_user_of(c_block *block)
+
+  {
+    unsigned int i;
+
+    for (i = 0; i < this->inputs; i++)
+      if (this->input_blocks[i] == block)
+        return true;
+
+    return false;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block::set_default()
+
+  {
+  }
+
+//----------------------------------------------------------------------
+
+void c_block::set_default_parameters()
+
+  {
+    this->set_default();
+    this->initialised = true;
+  }
+
+//----------------------------------------------------------------------
+
+void c_texture_graph::update()
+
+  {
+    unsigned int i, j;
+    bool is_end_block;
+
+    // recreate the end_blocks array:
+
+    this->end_blocks->clear();
+
+    for (i = 0; i < this->blocks->size(); i++)
+      {
+        is_end_block = true;
+
+        for (j = 0; j < this->blocks->size(); j++)
+          if (i != j)
+            {
+              if (this->blocks->at(j)->is_user_of(this->blocks->at(i)))
+                is_end_block = false;
+                break;
+            }
+
+        if (is_end_block)
+          this->end_blocks->push_back(this->blocks->at(i));
+      }
   }
 
 //----------------------------------------------------------------------
@@ -235,6 +281,14 @@ c_block *c_texture_graph::get_block(unsigned int block_number)
 
 //----------------------------------------------------------------------
 
+void c_block::set_texture_graph(c_texture_graph *graph)
+
+  {
+    this->graph = graph;
+  }
+
+//----------------------------------------------------------------------
+
 void c_texture_graph::add_block(c_block *block)
 
   {
@@ -242,8 +296,13 @@ void c_texture_graph::add_block(c_block *block)
       return;
 
     this->blocks->push_back(block);
+    block->set_texture_graph(this);
     block->set_id(this->last_id);     // assign an unique id
+    block->set_default_parameters();
+    block->adjust();
     this->last_id++;
+
+    this->update();
   }
 
 //----------------------------------------------------------------------
@@ -312,9 +371,10 @@ void c_graphic_block::adjust()
   {
     unsigned int resolution_x,resolution_y;
 
-    this->graph->get_resolution(&resolution_x,&resolution_y);
+    if (this->initialised && this->graph != NULL)
+      this->graph->get_resolution(&resolution_x,&resolution_y);
 
-    if (this->buffer.width != resolution_x ||
+    if (!this->initialised || this->buffer.width != resolution_x ||
       this->buffer.height != resolution_y)
       {
         this->valid = false;
@@ -378,7 +438,7 @@ void c_texture_graph::remove_block(unsigned int block_number)
 
 //----------------------------------------------------------------------
 
-bool c_texture_graph::compute(bool always)
+bool c_texture_graph::compute(bool force)
 
   {
     bool success;
@@ -386,58 +446,51 @@ bool c_texture_graph::compute(bool always)
 
     success = true;
 
-    for (i = 0; i < this->blocks->size(); i++)
-      {
-        if (always || !this->blocks->at(i)->is_valid())
-          this->blocks->at(i)->compute();
-
-        if (this->blocks->at(i)->is_error())
-          success = false;
-      }
+    for (i = 0; i < this->end_blocks->size(); i++)
+      this->end_blocks->at(i)->compute(force);
 
     return success;
   }
 
 //----------------------------------------------------------------------
 
-c_block_color_fill::c_block_color_fill(c_texture_graph *texture_graph):
-  c_graphic_block(texture_graph)
-
-  {
-    this->red = 255;   // default color is white
-    this->green = 255;
-    this->blue = 255;
-
-    this->min_inputs = 0;
-    this->max_inputs = 0;
-  }
-
-//----------------------------------------------------------------------
-
-bool c_block::manage_input_graphic_blocks(unsigned int number)
+bool c_block::manage_input_graphic_blocks(unsigned int number,
+  bool force, bool *change_occured)
 
   {
     unsigned int i;
+    bool result;
+    bool change;
 
     if (number >= MAX_INPUT_BLOCKS)
       number = MAX_INPUT_BLOCKS;
 
+    result = true;
+    change = false;
+
     for (i = 0; i < number; i++)
       {
         if (this->input_blocks[i] == NULL)
-          return false;                      // no block connected
+          result = false;                    // no block connected
+        else
+          {
+            if (!this->input_blocks[i]->has_image())
+              result = false;                // not an graphic block
+            else
+              {                              // compute the input
+                if (this->input_blocks[i]->compute(force))
+                  change = true;
+              }
 
-        if (!this->input_blocks[i]->has_image())
-          return false;                      // not an graphic block
-
-        if (!this->input_blocks[i]->is_valid())
-          this->input_blocks[i]->compute();
-
-        if (this->input_blocks[i]->is_error())
-          return false;                      // error in the input block
+            if (this->input_blocks[i]->is_error())
+              result = false;                // error in the input block
+          }
       }
 
-    return true;  // OK here
+    if (change_occured != NULL)
+      *change_occured = change;
+
+    return result;
   }
 
 //----------------------------------------------------------------------
@@ -452,6 +505,8 @@ void c_block::connect(c_block *input_block, unsigned int slot_number)
       this->inputs++;
 
     this->input_blocks[slot_number] = input_block;
+
+    this->graph->update();
   }
 
 //----------------------------------------------------------------------
@@ -466,6 +521,8 @@ void c_block::disconnect(unsigned int slot_number)
       this->inputs--;
 
     this->input_blocks[slot_number] = NULL;
+
+    this->graph->update();
   }
 
 //----------------------------------------------------------------------
@@ -482,24 +539,23 @@ void c_block_color_fill::set_color(unsigned char red,
 
 //----------------------------------------------------------------------
 
-void c_block_color_fill::compute()
+bool c_block_color_fill::compute(bool force)
 
   {
-    pt_color_fill(&(this->buffer),this->red,this->green,this->blue);
+    bool change_occured;
+
+    change_occured = false;
+
+    if (!this->valid || force)
+      {
+        pt_color_fill(&(this->buffer),this->red,this->green,this->blue);
+        change_occured = true;
+      }
+
     this->valid = true;
     this->error = false;
-  }
 
-//----------------------------------------------------------------------
-
-c_block_file_save::c_block_file_save(c_texture_graph *texture_graph):
-  c_special_block(texture_graph)
-
-  {
-    this->path = "texture.png";   // default filename
-
-    this->min_inputs = 1;
-    this->max_inputs = 1;
+    return change_occured;
   }
 
 //----------------------------------------------------------------------
@@ -512,13 +568,15 @@ void c_block_file_save::set_path(string path)
 
 //----------------------------------------------------------------------
 
-void c_block_file_save::compute()
+bool c_block_file_save::compute(bool force)
 
   {
-    if (!this->manage_input_graphic_blocks(1))
+    bool change_occured;
+
+    if (!this->manage_input_graphic_blocks(1,force,&change_occured))
       {
         this->set_error();
-        return;
+        return change_occured;
       }
 
     if (!color_buffer_save_to_png(
@@ -526,20 +584,10 @@ void c_block_file_save::compute()
         (char *) this->path.c_str()))
       {
         this->set_error();
-        return;
+        return change_occured;
       }
-  }
 
-//----------------------------------------------------------------------
-
-c_block_bump_noise::c_block_bump_noise(c_texture_graph *texture_graph):
-  c_graphic_block(texture_graph)
-
-  {
-    this->bump_size_from = 0.5;
-    this->bump_size_to = 0.1;
-    this->quantity = 1;
-    this->alter_amplitude = false;
+    return change_occured;
   }
 
 //----------------------------------------------------------------------
@@ -570,30 +618,6 @@ void c_block_bump_noise::get_parameters(float *bump_size_upper,
 
 //----------------------------------------------------------------------
 
-c_block_perlin_noise::c_block_perlin_noise(
-  c_texture_graph *texture_graph): c_graphic_block(texture_graph)
-
-  {
-    this->amplitude = 127;
-    this->frequency = 5;
-    this->interpolation = INTERPOLATION_LINEAR;
-    this->max_iterations = -1;                    // not limited
-    this->smooth = true;
-  }
-
-//----------------------------------------------------------------------
-
-c_block_rgb::c_block_rgb(c_texture_graph *texture_graph):
-  c_graphic_block(texture_graph)
-
-  {
-    this->red = 0;
-    this->green = 0;
-    this->blue = 0;
-  }
-
-//----------------------------------------------------------------------
-
 void c_block_rgb::set_parameters(int red, int green, int blue)
 
   {
@@ -616,49 +640,168 @@ void c_block_rgb::get_parameters(int *red, int *green, int *blue)
 
 //----------------------------------------------------------------------
 
-void c_block_rgb::compute()
+c_block *c_block::get_input(unsigned int index)
 
   {
-    if (!this->manage_input_graphic_blocks(1))
+    if (index >= MAX_INPUT_BLOCKS)
+      return NULL;
+
+    return this->input_blocks[index];
+  }
+
+//----------------------------------------------------------------------
+
+void c_texture_graph::print_as_text()
+
+  {
+    unsigned int i,j;
+    c_block *block,*block2;
+
+    cout << "----------" << endl;
+
+    cout << "end block IDs: ";
+
+    for (i = 0; i < this->end_blocks->size(); i++)
+      cout << this->end_blocks->at(i)->get_id() << " ";
+
+    cout << endl << endl;
+
+    for (i = 0; i < this->blocks->size(); i++)
       {
-        this->set_error();
-        return;
+        block = this->blocks->at(i);
+        cout << block->get_id() << ": " << block->get_name() << " (";
+
+        if (!block->is_valid())
+          cout << "in";
+
+        cout << "valid, ";
+
+        if (!block->is_error())
+          cout << "no ";
+
+        cout << "error), inputs: ";
+
+        for (j = 0; j < MAX_INPUT_BLOCKS; j++)
+          {
+            block2 = block->get_input(j);
+
+            if (block2 != NULL)
+              cout << block2->get_id() << "(" << j << ") ";
+          }
+
+        cout << endl;
       }
 
-    color_buffer_copy_data(((c_graphic_block *)
-      this->input_blocks[0])->get_color_buffer(),&(this->buffer));
-
-    pt_add_rgb(&(this->buffer),this->red,this->green,
-      this->blue);
-
-    this->valid = true;
-    this->error = false;
+    cout << "----------" << endl;
   }
 
 //----------------------------------------------------------------------
 
-void c_block_perlin_noise::compute()
+void c_block_bump_noise::set_default()
 
   {
-    pt_perlin_noise(this->graph->get_random_seed(),this->amplitude,
-      this->frequency,this->max_iterations,this->interpolation,
-      &(this->buffer),this->smooth ? 1 : 0);
-
-    this->valid = true;
-    this->error = false;
+    this->name = "bump noise";
+    this->bump_size_from = 0.5;
+    this->bump_size_to = 0.01;
+    this->quantity = 1;
+    this->alter_amplitude = false;
   }
 
 //----------------------------------------------------------------------
 
-void c_block_bump_noise::compute()
+bool c_block_rgb::compute(bool force)
 
   {
-    pt_bump_noise(&(this->buffer),this->bump_size_from,
-      this->bump_size_to,this->quantity,this->alter_amplitude ? 1 : 0,
-      graph->get_random_seed());
+    bool change_occured;
+
+    if (!this->manage_input_graphic_blocks(1,force,&change_occured))
+      {
+        this->set_error();
+        return change_occured;
+      }
+
+    if (change_occured || !this->valid)
+      {
+        change_occured = true;
+
+        color_buffer_copy_data(((c_graphic_block *)
+          this->input_blocks[0])->get_color_buffer(),&(this->buffer));
+
+        pt_add_rgb(&(this->buffer),this->red,this->green,
+          this->blue);
+      }
 
     this->valid = true;
     this->error = false;
+
+    return change_occured;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_perlin_noise::compute(bool force)
+
+  {
+    bool change_occured;
+
+    change_occured = false;
+
+    if (!this->valid || force)
+      {
+        pt_perlin_noise(this->graph->get_random_seed(),this->amplitude,
+          this->frequency,this->max_iterations,this->interpolation,
+          &(this->buffer),this->smooth ? 1 : 0);
+
+        change_occured = true;
+      }
+
+    this->valid = true;
+    this->error = false;
+
+    return change_occured;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_bump_noise::compute(bool force)
+
+  {
+    bool change_occured;
+
+    change_occured = false;
+
+    if (force || !this->valid)
+      {
+        pt_bump_noise(&(this->buffer),this->bump_size_from,
+          this->bump_size_to,this->quantity,
+          this->alter_amplitude ? 1 : 0,graph->get_random_seed());
+
+        change_occured = true;
+      }
+
+    this->valid = true;
+    this->error = false;
+
+    return change_occured;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_color_fill::set_default()
+
+  {
+    this->red = 255;
+    this->green = 255;
+    this->blue = 255;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_file_save::set_default()
+
+  {
+    this->path = "texture.png";
+    this->name = "file save";
   }
 
 //----------------------------------------------------------------------

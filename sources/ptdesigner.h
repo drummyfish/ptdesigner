@@ -40,10 +40,12 @@ class c_texture_graph;      // forward declaration
 
  /**
   * Represents a general texture designer block, which is a node of
-  * texture describing graph.
+  * texture describing graph. To create a block instance use the static
+  * factory method get_block_instance.
   */
 
 class c_block
+
   {
     protected:
       int position_x;    /// for GUI systems to store position
@@ -56,6 +58,8 @@ class c_block
       unsigned int max_inputs;  /// maximum number of inputs
       unsigned int min_inputs;  /// minimum number of inputs
       c_texture_graph *graph;   /// graph that the block belongs to
+      string name;              /// name of the block
+      bool initialised;         /// whether the block is initialised
 
       void set_error();
 
@@ -63,16 +67,25 @@ class c_block
          * Sets the error flag and invalidates the block.
          */
 
-      bool manage_input_graphic_blocks(unsigned int number);
+      bool manage_input_graphic_blocks(unsigned int number, bool force,
+        bool *change_occured);
 
         /**<
          * Takes care of first number of input blocks, checking if they
          * are connected, if they are graphic blocks, if they are valid
          * and recomputing them in case they aren't, and if they don't
          * have errors set. This function is supposed to help the block
-         * check its inputs before computing its output.
+         * check its inputs before computing its output. Even if false
+         * is to be returned, as many as possible of the input blocks
+         * are managed.
          *
          * @param number number of blocks to be checked
+         * @param force if true, the input blocks will always be
+         *        recomputed, if false, the blocks will only be
+         *        recommputed if needed
+         * @param change_occured if this variable is not NULL, the
+         *        information about whether any change in input blocks
+         *        occured will be returned in it
          *
          * @return true is returned if everything went OK, i.e. all of
          *         the first number blocks are connected graphic blocks
@@ -80,15 +93,19 @@ class c_block
          *          returned
          */
 
-    public:
-      c_block(c_texture_graph *texture_graph);
+      virtual void set_default();
 
         /**<
-         * Class constructor, initialises a new block. The block will
-         * set its parameters depending on the graph settings.
-         *
-         * @param texture_graph texture graph that this block will
-         *        belong to, cannot be NULL
+         * Sets block specific parameters to default values.
+         */
+
+    public:
+
+      c_block();
+
+        /**<
+         * Class constructor, initialises a new block. The block can't
+         * be used before it's added to a texture graph.
          */
 
       virtual bool load_parameters(string parameters);
@@ -102,11 +119,38 @@ class c_block
          *         otherwise
          */
 
+      void set_texture_graph(c_texture_graph *graph);
+
+        /**<
+         * Sets the block to belong to specified texture graph.
+         *
+         * @param graph texture graph which this block should belong to
+         */
+
+      c_block *get_input(unsigned int index);
+
+        /**<
+         * Gets the block input at specified input slot.
+         *
+         * @param index input slot index
+         *
+         * @return pointer to input block at given input slot of this
+         *         block
+         */
+
       virtual void adjust();
 
         /**<
          * Adjusts the block parameters to current graph parameters
          * (i.e. resolution and so on)
+         */
+
+      string get_name();
+
+        /**<
+         * Returns text name of the block.
+         *
+         * @return name of the block
          */
 
       void set_id(unsigned int new_id);
@@ -178,6 +222,17 @@ class c_block
          * @return true if there was an error, false otherwise
          */
 
+      bool is_user_of(c_block *block);
+
+        /**<
+         * Check if this block uses another block as an input.
+         *
+         * @param block block which this block is checked to be using
+         *
+         * @return true if this block uses the block block as an input,
+         *         false otherwise
+         */
+
       virtual ~c_block();
 
         /**<
@@ -185,11 +240,27 @@ class c_block
          * memory.
          */
 
-      virtual void compute();
+      virtual bool compute(bool force);
 
         /**<
          * Computes the block output and executes all other asociated
-         * actions.
+         * actions. The block will recursively call this function for
+         * all its input blocks if needed.
+         *
+         * @param force if true, the block will recompute its output and
+         *        will also force to do the same for all its input
+         *        blocks even if it wasn't not necessary, if false, the
+         *        computation will only be done if the block output
+         *        isn't valid and only invalid input blocks will be
+         *        recomputed
+         *
+         * @return true if anything was recomputed, false if not
+         */
+
+      virtual void set_default_parameters();
+
+        /**<
+         * Sets the block parameters to default values
          */
   };
 
@@ -201,21 +272,12 @@ class c_block
   */
 
 class c_graphic_block: public c_block
+
   {
     protected:
       t_color_buffer buffer;   /// image buffer of the block
 
     public:
-      c_graphic_block(c_texture_graph *texture_graph);
-
-        /**<
-         * Class constructor, initialises a new block. The block will
-         * set its parameters depending on the graph settings.
-         *
-         * @param texture_graph texture graph that this block will
-         *        belong to, cannot be NULL
-         */
-
       virtual void adjust();
 
         /**<
@@ -258,20 +320,10 @@ class c_graphic_block: public c_block
   */
 
 class c_special_block: public c_block
+
   {
     protected:
-
     public:
-      c_special_block(c_texture_graph *texture_graph);
-
-        /**<
-         * Class constructor, initialises a new block. The block will
-         * set its parameters depending on the graph settings.
-         *
-         * @param texture_graph texture graph that this block will
-         *        belong to, cannot be NULL
-         */
-
       virtual void adjust();
 
         /**<
@@ -304,6 +356,7 @@ class c_special_block: public c_block
   */
 
 class c_texture_graph
+
   {
     protected:
       unsigned int multisampling_level; /// multisampling level, 1 = off
@@ -312,6 +365,8 @@ class c_texture_graph
       unsigned int last_id;             /// id to be assigned
       int random_seed;                  /// random number generator seed
       vector<c_block *> *blocks;        /// all the graph blocks
+      vector<c_block *> *end_blocks;    /** blocks that are not an input
+                                            of any other block */
 
     public:
 
@@ -321,6 +376,13 @@ class c_texture_graph
          * Class constructor, initialises a new texture graph.
          */
 
+      void update();
+
+        /**<
+         * Updates the texture graph. Should be called after connect or
+         * disconnect functions has been called.
+         */
+
       ~c_texture_graph();
 
         /**<
@@ -328,14 +390,14 @@ class c_texture_graph
          * graph block.
          */
 
-      bool compute(bool always);
+      bool compute(bool force);
 
         /**<
          * Computes all the block outputs and executes all asociated
          * actions. As many as possible of the blocks will be computed,
          * even if there are errors.
          *
-         * @param always if true, all blocks will be forced to recompute
+         * @param force if true, all blocks will be forced to recompute
          *        even if it's not necesarry, otherwise only invalid
          *        blocks will be recomputed
          *
@@ -437,8 +499,9 @@ class c_texture_graph
       void add_block(c_block *block);
 
         /**<
-         * Adds given block to texture graph. This may change the
-         * block's properties such as it's id etc.
+         * Adds given block to texture graph. This will initialise the
+         * block's parameters to default values and adjust them so that
+         * they match the texture graph settings.
          *
          * @param block block to be added
          */
@@ -462,6 +525,13 @@ class c_texture_graph
          *
          * @param block_number index of block to be removed and deleted
          */
+
+      void print_as_text();
+
+        /**<
+         * Debugging purposes method. Prints the graph text
+         * representation to standard output.
+         */
   };
 
 /*======================================================================
@@ -475,6 +545,7 @@ class c_texture_graph
   */
 
 class c_block_voronoi
+
   {
     protected:
       t_voronoi_type type;  /// way of computing pixel intensity
@@ -488,15 +559,17 @@ class c_block_voronoi
   */
 
 class c_block_color_fill: public c_graphic_block
+
   {
     protected:
       unsigned char red;    /// amount of red in fill color
       unsigned char green;  /// amount of green in fill color
       unsigned char blue;   /// amount of blue in fill color
 
+      virtual void set_default();
+
     public:
-      c_block_color_fill(c_texture_graph *texture_graph);
-      virtual void compute();
+      virtual bool compute(bool force);
 
       void set_color(unsigned char red, unsigned char green,
         unsigned char blue);
@@ -529,6 +602,7 @@ class c_block_color_fill: public c_graphic_block
   */
 
 class c_block_bump_noise: public c_graphic_block
+
   {
     protected:
       float bump_size_from;  /// upper limit of the bump size
@@ -536,8 +610,10 @@ class c_block_bump_noise: public c_graphic_block
       unsigned int quantity; /// bump quantity
       bool alter_amplitude;  /// whether to alter amplitude
 
+      virtual void set_default();
     public:
-      c_block_bump_noise(c_texture_graph *texture_graph);
+
+      virtual bool compute(bool force);
 
       void set_parameters(float bump_size_upper, float bump_size_lower,
         unsigned int quantity, bool alter_amplitude);
@@ -575,8 +651,6 @@ class c_block_bump_noise: public c_graphic_block
          * @param alter_amplitude in this variable the value of alter
          *        amplitude parameter will be returned
          */
-
-      virtual void compute();
   };
 
 //----------------------------------------------------------------------
@@ -586,6 +660,7 @@ class c_block_bump_noise: public c_graphic_block
   */
 
 class c_block_perlin_noise: public c_graphic_block
+
   {
     protected:
       unsigned char amplitude;              /// base amplitude
@@ -596,8 +671,10 @@ class c_block_perlin_noise: public c_graphic_block
       t_interpolation_method interpolation; /// interpolation method
       bool smooth;                          /// whether to smooth
 
+      virtual void set_default();
+
     public:
-      c_block_perlin_noise(c_texture_graph *texture_graph);
+      virtual bool compute(bool force);
 
       void set_parameters(unsigned char amplitude,
         unsigned int frequency, int max_iterations,
@@ -637,8 +714,6 @@ class c_block_perlin_noise: public c_graphic_block
          * @param smooth in this parameter the smooth parameter value
          *        will be returned
          */
-
-      virtual void compute();
   };
 
 //----------------------------------------------------------------------
@@ -648,14 +723,17 @@ class c_block_perlin_noise: public c_graphic_block
   */
 
 class c_block_rgb: public c_graphic_block
+
   {
     protected:
       int red;            /// value to be added to red
       int green;          /// value to be added to green
       int blue;           /// value to be added to blue
 
+      virtual void set_default();
+
     public:
-      c_block_rgb(c_texture_graph *texture_graph);
+      virtual bool compute(bool force);
 
       void set_parameters(int red, int green, int blue);
 
@@ -679,8 +757,6 @@ class c_block_rgb: public c_graphic_block
          * @param blue in this parameter the amount of blue will be
          *        returned
          */
-
-      virtual void compute();
   };
 
 //----------------------------------------------------------------------
@@ -690,13 +766,14 @@ class c_block_rgb: public c_graphic_block
   */
 
 class c_block_file_save: public c_special_block
+
   {
     protected:
       string path;
 
+      virtual void set_default();
     public:
-      c_block_file_save(c_texture_graph *texture_graph);
-      virtual void compute();
+      virtual bool compute(bool force);
 
       void set_path(string path);
 
@@ -705,32 +782,6 @@ class c_block_file_save: public c_special_block
          *
          * @param path file path
          */
-  };
-
-//----------------------------------------------------------------------
-
- /**
-  * Special block managing an L-system.
-  */
-
-class c_block_l_system: public c_special_block
-  {
-    protected:
-      t_grammar grammar;
-    public:
-  };
-
-//----------------------------------------------------------------------
-
- /**
-  * Special block managing a color transition.
-  */
-
-class c_block_color_transition: public c_special_block
-  {
-    protected:
-      t_color_transition transition;
-    public:
   };
 
 //----------------------------------------------------------------------

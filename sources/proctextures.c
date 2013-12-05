@@ -4231,8 +4231,10 @@ void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
     unsigned int bump_count,bump_size;
     int x,y;
 
-    bump_size_from = saturate_double(bump_size_from,0.0,1.0);
-    bump_size_to = saturate_double(bump_size_to,0.0,1.0);
+    bump_size_from = saturate_double(bump_size_from,0.001,1.0);
+    bump_size_to = saturate_double(bump_size_to,0.001,1.0);
+
+      // cannot use 0.0 to prevent division by zero
 
     pt_color_fill(buffer,255,255,255);
 
