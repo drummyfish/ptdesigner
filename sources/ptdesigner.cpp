@@ -204,11 +204,64 @@ void c_block::set_default()
 
 //----------------------------------------------------------------------
 
+void c_block_mix_channels::set_default()
+
+  {
+    this->name = "mix channels";
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_mix_channels::compute(bool force)
+
+  {
+    bool change_occured;
+
+    if (!this->manage_input_graphic_blocks(3,force,&change_occured))
+      {
+        this->set_error();
+        return change_occured;
+      }
+
+    if (change_occured || !this->valid)
+      {
+        pt_mix_channels(
+          ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+          ((c_graphic_block *) this->input_blocks[1])->get_color_buffer(),
+          ((c_graphic_block *) this->input_blocks[2])->get_color_buffer(),
+          &this->buffer);
+
+        change_occured = true;
+
+        this->error = false;
+        this->valid = true;
+      }
+
+    return change_occured;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_perlin_noise::set_default()
+
+  {
+    this->name = "perlin noise";
+    this->amplitude = 127;
+    this->frequency = 5;
+    this->max_iterations = -1;
+    this->interpolation = INTERPOLATION_LINEAR;
+    this->smooth = true;
+  }
+
+//----------------------------------------------------------------------
+
 void c_block::set_default_parameters()
 
   {
+    this->name = "block";
     this->set_default();
     this->initialised = true;
+    this->invalidate();
   }
 
 //----------------------------------------------------------------------
@@ -231,8 +284,10 @@ void c_texture_graph::update()
           if (i != j)
             {
               if (this->blocks->at(j)->is_user_of(this->blocks->at(i)))
-                is_end_block = false;
-                break;
+                {
+                  is_end_block = false;
+                  break;
+                }
             }
 
         if (is_end_block)
@@ -441,15 +496,26 @@ void c_texture_graph::remove_block(unsigned int block_number)
 bool c_texture_graph::compute(bool force)
 
   {
-    bool success;
     unsigned int i;
-
-    success = true;
 
     for (i = 0; i < this->end_blocks->size(); i++)
       this->end_blocks->at(i)->compute(force);
 
-    return success;
+    return this->is_error();
+  }
+
+//----------------------------------------------------------------------
+
+bool c_texture_graph::is_error()
+
+  {
+    unsigned int i;
+
+    for (i = 0; i < this->blocks->size(); i++)
+      if (this->blocks->at(i)->is_error())
+        return true;
+
+    return false;
   }
 
 //----------------------------------------------------------------------
@@ -495,18 +561,56 @@ bool c_block::manage_input_graphic_blocks(unsigned int number,
 
 //----------------------------------------------------------------------
 
-void c_block::connect(c_block *input_block, unsigned int slot_number)
+bool c_block::connect(c_block *input_block, unsigned int slot_number)
 
   {
     if (slot_number >= MAX_INPUT_BLOCKS)
-      return;
+      return false;
 
     if (this->input_blocks[slot_number] == NULL)
       this->inputs++;
 
     this->input_blocks[slot_number] = input_block;
 
+    if (this->has_ancestor(this))
+      {
+        // if the block is its own ancestor then there is a cycle
+
+        this->input_blocks[slot_number] = NULL;  // disconnect
+        return false;
+      }
+
     this->graph->update();
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block::has_ancestor(c_block *block)
+
+  {
+    unsigned int i;
+    bool result;
+
+    result = false;
+
+    for (i = 0; i < MAX_INPUT_BLOCKS; i++)
+      {
+        if (this->input_blocks[i] != NULL)
+          {
+            if (this->input_blocks[i] == block)
+              {
+                return true;
+              }
+            else if (this->input_blocks[i]->has_ancestor(block))
+              {
+                result = true;
+                break;
+              }
+          }
+      }
+
+    return result;
   }
 
 //----------------------------------------------------------------------
@@ -630,6 +734,17 @@ void c_block_rgb::set_parameters(int red, int green, int blue)
 
 //----------------------------------------------------------------------
 
+void c_block_rgb::set_default()
+
+  {
+    this->red = 0;
+    this->green = 0;
+    this->blue = 0;
+    this->name = "adjust rgb";
+  }
+
+//----------------------------------------------------------------------
+
 void c_block_rgb::get_parameters(int *red, int *green, int *blue)
 
   {
@@ -658,6 +773,8 @@ void c_texture_graph::print_as_text()
     c_block *block,*block2;
 
     cout << "----------" << endl;
+
+    cout << "error: " << (this->is_error() ? "yes" : "no") << endl;
 
     cout << "end block IDs: ";
 
@@ -793,6 +910,7 @@ void c_block_color_fill::set_default()
     this->red = 255;
     this->green = 255;
     this->blue = 255;
+    this->name = "file save";
   }
 
 //----------------------------------------------------------------------

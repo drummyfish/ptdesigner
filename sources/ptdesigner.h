@@ -53,7 +53,7 @@ class c_block
       unsigned int id;   /// block id
       bool valid;               /// whether the block is currently valid
       bool error;               /// whether there was any error
-      c_block *input_blocks[MAX_INPUT_BLOCKS]; /// input blocks
+      c_block *(input_blocks[MAX_INPUT_BLOCKS]); /// input blocks
       unsigned int inputs;      /// current number of inputs
       unsigned int max_inputs;  /// maximum number of inputs
       unsigned int min_inputs;  /// minimum number of inputs
@@ -138,6 +138,16 @@ class c_block
          *         block
          */
 
+      bool has_ancestor(c_block *block);
+
+        /**<
+         * Checks if the block has another block as its ancestor in any
+         * depth.
+         *
+         * @return true if the block block is this block's ancestor
+         *         (even indirect), otherwise false
+         */
+
       virtual void adjust();
 
         /**<
@@ -179,7 +189,7 @@ class c_block
          *         otherwise
          */
 
-      void connect(c_block *input_block, unsigned int slot_number);
+      bool connect(c_block *input_block, unsigned int slot_number);
 
         /**<
          * Connects another block to this block's input.
@@ -188,6 +198,10 @@ class c_block
          *        input slot
          * @param slot_number number of this block's input slot to
          *        connect the input block to
+         *
+         * @return true if the block was connected, otherwise false
+         *         (the blocks cannot be connected if they make a cycle
+         *         in the graph)
          */
 
       void disconnect(unsigned int slot_number);
@@ -403,6 +417,15 @@ class c_texture_graph
          *
          * @return true if every block was computed succesfully,
          *         otherwise false
+         */
+
+      bool is_error();
+
+        /**<
+         * Checks if there is any error in any block of the graph.
+         *
+         * @return true if there is at least one error in any block,
+         *         false otherwise
          */
 
       void invalidate_all();
@@ -714,6 +737,22 @@ class c_block_perlin_noise: public c_graphic_block
          * @param smooth in this parameter the smooth parameter value
          *        will be returned
          */
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * Channel mix block.
+  */
+
+class c_block_mix_channels: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+
+    public:
+      virtual bool compute(bool force);
   };
 
 //----------------------------------------------------------------------
