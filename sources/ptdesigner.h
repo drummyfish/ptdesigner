@@ -25,16 +25,328 @@ extern "C"
 #include <iostream>
 #include <vector>
 #include <string>
+#include "rapidxml.hpp"
 
 #define MAX_INPUT_BLOCKS  5  /// maximum number of input blocks
 #define MAX_MULTISAMPLING 6  /// maximum multisampling level
 
 using namespace std;
+using namespace rapidxml;
 
 namespace pt_design
 {
 
-class c_texture_graph;      // forward declaration
+// forward declarations:
+
+class c_texture_graph;
+class c_block;
+
+//----------------------------------------------------------------------
+
+  /**
+   * Possible parameter data types.
+   */
+
+typedef enum
+  {
+    PARAMETER_INT,
+    PARAMETER_DOUBLE,
+    PARAMETER_BOOL,
+    PARAMETER_STRING,
+  } t_parameter_type;
+
+//----------------------------------------------------------------------
+
+typedef struct
+  {
+    t_parameter_type type;
+    string name;
+
+    union
+      {
+        int int_value;
+        double double_value;
+        bool bool_value;
+      };
+
+    string string_value;
+  } t_parameter;
+
+//----------------------------------------------------------------------
+
+  /**
+   * Holds and manages a set of parameters. The parameters can be either
+   * of int, double, bool or string data type.
+   */
+
+class c_parameters
+
+  {
+    protected:
+      vector<t_parameter> *parameters;   /// holds the parameters
+      c_block *block;                    /** block that this object
+                                             belongs to, it is
+                                             invalidated everythime
+                                             parameters change */
+
+      bool locked;                       /** whether the parameter
+                                             creation is locked */
+      int index_by_name(string name);
+
+        /**<
+         * Returns an index of parameter with given name.
+         *
+         * @param name name of the parameter
+         *
+         * @return index of the parameter or -1 if the parameter with
+         *         the name doesn't exist
+         */
+
+      void changed();
+
+        /**<
+         * This should be called when a change in parameters occur.
+         * Invalidation of the owner block will be performed.
+         */
+
+    public:
+      c_parameters(c_block *owner);
+
+        /**<
+         * Class constructor, creates a new object.
+         *
+         * @param owner block that this object belong to, it will be
+         *        invalidated everytime a change in parameters occur
+         */
+
+      ~c_parameters();
+
+        /**<
+         * Class destructor.
+         */
+
+      unsigned int number_of_parameters();
+
+        /**<
+         * Returns number of parameters.
+         *
+         * @return number of parameters
+         */
+
+      string get_value_string(unsigned int index);
+
+        /**<
+         * Returns a string representation of value of parameter at
+         * given index.
+         *
+         * @param index parameter index
+         *
+         * @return string representing the parameter value or an empty
+         *         string if the index is outside range
+         */
+
+      void lock();
+
+        /**<
+         * Lock creation of new parameters. Once this function has been
+         * called, it is impossible to add new parameters to this
+         * object.
+         */
+
+      bool is_locked();
+
+        /**<
+         * Checks if the object is locked for new parameter creation.
+         *
+         * @return true if the object is locked (new parameters can't be
+         *         created), otherwise false
+         */
+
+      t_parameter_type get_type(string name);
+
+        /**<
+         * Gets data type of given parameter.
+         *
+         * @param name name of the parameter, it must exist
+         *
+         * @return parameter data type
+         */
+
+      t_parameter_type get_type(unsigned int index);
+
+        /**<
+         * Gets data type of given parameter.
+         *
+         * @param index index of the parameter, it must exist
+         *
+         * @return parameter data type
+         */
+
+      string get_name(unsigned int index);
+
+        /**<
+         * Gets name of the patameter with given index.
+         *
+         * @param index parameter index
+         *
+         * @return parameter name
+         */
+
+      bool add_parameter(string name, t_parameter_type type);
+
+        /**<
+         * Adds a new parameter to the object.
+         *
+         * @param name case-sensitive parameter name, must be unique
+         *        within the object
+         * @param type parameter data type
+         *
+         * @return true if the parameter was added, false otherwise
+         */
+
+      bool set_int_value(string parameter_name, int value);
+
+        /**<
+         * Sets an integer value of the parameter.
+         *
+         * @param parameter_name parameter name
+         * @param value value to be set
+         *
+         * @return true if the value was set, false otherwise
+         */
+
+      bool set_double_value(string parameter_name, double value);
+
+        /**<
+         * Sets a double value of the parameter.
+         *
+         * @param parameter_name parameter name
+         * @param value value to be set
+         *
+         * @return true if the value was set, false otherwise
+         */
+
+      bool set_bool_value(string parameter_name, bool value);
+
+        /**<
+         * Sets a bool value of the parameter.
+         *
+         * @param parameter_name parameter name
+         * @param value value to be set
+         *
+         * @return true if the value was set, false otherwise
+         */
+
+      bool set_string_value(string parameter_name, char *value);
+
+        /**<
+         * Sets a string value of the parameter.
+         *
+         * @param parameter_name parameter name
+         * @param value value to be set
+         *
+         * @return true if the value was set, false otherwise
+         */
+
+      bool set_string_value(string parameter_name, string value);
+
+        /**<
+         * Sets a string value of the parameter.
+         *
+         * @param parameter_name parameter name
+         * @param value value to be set
+         *
+         * @return true if the value was set, false otherwise
+         */
+
+      int get_int_value(string parameter_name);
+
+        /**<
+         * Gets an integer value of the parameter. If the parameter is
+         * not of integer data type, undefined value is returned.
+         *
+         * @param parameter_name parameter name
+         *
+         * @return parameter value
+         */
+
+      double get_double_value(string parameter_name);
+
+        /**<
+         * Gets a double value of the parameter. If the parameter is
+         * not of double data type, undefined value is returned.
+         *
+         * @param parameter_name parameter name
+         *
+         * @return parameter value
+         */
+
+      bool get_bool_value(string parameter_name);
+
+       /**<
+         * Gets a bool value of the parameter. If the parameter is
+         * not of bool data type, undefined value is returned.
+         *
+         * @param parameter_name parameter name
+         *
+         * @return parameter value
+         */
+
+      string get_string_value(string parameter_name);
+
+        /**<
+         * Gets a string value of the parameter. If the parameter is
+         * not of string data type, undefined value is returned.
+         *
+         * @param parameter_name parameter name
+         *
+         * @return parameter value
+         */
+
+      int get_int_value(unsigned int index);
+
+        /**<
+         * Gets an integer value of the parameter. If the parameter is
+         * not of integer data type, undefined value is returned.
+         *
+         * @param inde parameter index
+         *
+         * @return parameter value
+         */
+
+      double get_double_value(unsigned int index);
+
+        /**<
+         * Gets a double value of the parameter. If the parameter is
+         * not of double data type, undefined value is returned.
+         *
+         * @param inde parameter index
+         *
+         * @return parameter value
+         */
+
+      bool get_bool_value(unsigned int index);
+
+       /**<
+         * Gets a bool value of the parameter. If the parameter is
+         * not of bool data type, undefined value is returned.
+         *
+         * @param inde parameter index
+         *
+         * @return parameter value
+         */
+
+      string get_string_value(unsigned int index);
+
+        /**<
+         * Gets a string value of the parameter. If the parameter is
+         * not of string data type, undefined value is returned.
+         *
+         * @param inde parameter index
+         *
+         * @return parameter value
+         */
+  };
 
 //----------------------------------------------------------------------
 
@@ -48,9 +360,8 @@ class c_block
 
   {
     protected:
-      int position_x;    /// for GUI systems to store position
-      int position_y;    /// for GUI systems to store position
-      unsigned int id;   /// block id
+      unsigned int id;          /// block id (unique within the graph)
+      char id_string[16];       /// id stored as a string
       bool valid;               /// whether the block is currently valid
       bool error;               /// whether there was any error
       c_block *(input_blocks[MAX_INPUT_BLOCKS]); /// input blocks
@@ -60,6 +371,10 @@ class c_block
       c_texture_graph *graph;   /// graph that the block belongs to
       string name;              /// name of the block
       bool initialised;         /// whether the block is initialised
+      c_parameters *parameters; /// block parameters
+      bool uses_global_seed;    /** whether global or custom random seed
+                                    is used */
+      int custom_seed;          /// custom seed value
 
       void set_error();
 
@@ -119,12 +434,30 @@ class c_block
          *         otherwise
          */
 
+      c_parameters *get_parameters();
+
+        /**<
+         * Returns a pointer to the block parameter-handling object.
+         *
+         * @return block parameters
+         */
+
       void set_texture_graph(c_texture_graph *graph);
 
         /**<
          * Sets the block to belong to specified texture graph.
          *
          * @param graph texture graph which this block should belong to
+         */
+
+      int get_random_seed();
+
+        /**<
+         * Returns random seed value used by this block (either the
+         * global value or custom set value). This should be used by
+         * the block to get random seed value during computations.
+         *
+         * @return random seed value
          */
 
       c_block *get_input(unsigned int index);
@@ -146,6 +479,32 @@ class c_block
          *
          * @return true if the block block is this block's ancestor
          *         (even indirect), otherwise false
+         */
+
+      bool is_using_global_seed();
+
+        /**<
+         * Checks if the block uses global or custom random seed value.
+         *
+         * @return true if global seed (set in the texture graph) is
+         *         used, false if custom seed is used
+         */
+
+      void use_global_seed();
+
+        /**<
+         * Sets the block so that it will use the global seed set in the
+         * texture graph instead of custom seed (global seed is used by
+         * default).
+         */
+
+      void use_custom_seed(int value);
+
+        /**<
+         * Sets the block so that it will use custom random seed value
+         * instead of global seed.
+         *
+         * @param value custom random seed value to be set
          */
 
       virtual void adjust();
@@ -177,6 +536,14 @@ class c_block
          * Returns the block id.
          *
          * @return the block id
+         */
+
+      char *get_id_string();
+
+        /**<
+         * Returns the block id as a c string.
+         *
+         * @return null-terminated string representing the block id
          */
 
       virtual bool has_image();
@@ -292,6 +659,12 @@ class c_graphic_block: public c_block
       t_color_buffer buffer;   /// image buffer of the block
 
     public:
+      c_graphic_block();
+
+        /**<
+         * Class constructor, initialises a new object.
+         */
+
       virtual void adjust();
 
         /**<
@@ -366,7 +739,8 @@ class c_special_block: public c_block
 //----------------------------------------------------------------------
 
  /**
-  * Represents a texture description graph consisting of blocks.
+  * Represents a texture description graph consisting of blocks. The
+  * graph is oriented and must not contain cycles.
   */
 
 class c_texture_graph
@@ -549,6 +923,28 @@ class c_texture_graph
          * @param block_number index of block to be removed and deleted
          */
 
+      bool load_from_file(string filename);
+
+        /**<
+         * Loads the graph from XML file.
+         *
+         * @param filename name of the XML file
+         *
+         * @return true if the graph was loaded succesfully, false
+         *         otherwise
+         */
+
+      bool save_to_file(string filename);
+
+        /**<
+         * Saves the graph as an XML file.
+         *
+         * @param filename name of the file to be saved
+         *
+         * @return true if the file was saved succesfully, false
+         *         otherwise
+         */
+
       void print_as_text();
 
         /**<
@@ -585,10 +981,6 @@ class c_block_color_fill: public c_graphic_block
 
   {
     protected:
-      unsigned char red;    /// amount of red in fill color
-      unsigned char green;  /// amount of green in fill color
-      unsigned char blue;   /// amount of blue in fill color
-
       virtual void set_default();
 
     public:
@@ -628,12 +1020,8 @@ class c_block_bump_noise: public c_graphic_block
 
   {
     protected:
-      float bump_size_from;  /// upper limit of the bump size
-      float bump_size_to;    /// lower limit of the bump size
-      unsigned int quantity; /// bump quantity
-      bool alter_amplitude;  /// whether to alter amplitude
-
       virtual void set_default();
+
     public:
 
       virtual bool compute(bool force);
@@ -686,57 +1074,10 @@ class c_block_perlin_noise: public c_graphic_block
 
   {
     protected:
-      unsigned char amplitude;              /// base amplitude
-      unsigned int frequency;               /// base frequency
-      int max_iterations;                   /** maximum number of
-                                                iterations, negative
-                                                number means no limit */
-      t_interpolation_method interpolation; /// interpolation method
-      bool smooth;                          /// whether to smooth
-
       virtual void set_default();
 
     public:
       virtual bool compute(bool force);
-
-      void set_parameters(unsigned char amplitude,
-        unsigned int frequency, int max_iterations,
-        t_interpolation_method interpolation, bool smooth);
-
-        /**
-         * Sets the block parameters.
-         *
-         * @param amplitude amplitude of the base frequency, should be
-         *        in range <0,128>
-         * @param frequency base, lowest frequency of the noise
-         * @param max_iterations maximum number of iterations, negative
-         *        number means no limit (generating will stop when the
-         *        frequency is higher than buffer resolution or when the
-         *        amplitude reaches zero)
-         * @param interpolation interpolation type
-         * @param smooth says if the noise should be smoothed so that
-         *        the number of artifacts is reduced (this is takes a
-         *        little more time but looks nicer)
-         */
-
-      void get_parameters(unsigned char *amplitude,
-        unsigned int *frequency, int *max_iterations,
-        t_interpolation_method *interpolation, bool *smooth);
-
-        /**
-         * Gets the block parameters.
-         *
-         * @param amplitude in this parameter the base amplitude
-         *        parameter value will be returned
-         * @param frequency in this parameter the base frequency
-         *        parameter value will be returned
-         * @param max_iterations in this parameter the max frequency
-         *        parameter value will be returned
-         * @param interpolation in this parameter the interpolation
-         *        method will be returned
-         * @param smooth in this parameter the smooth parameter value
-         *        will be returned
-         */
   };
 
 //----------------------------------------------------------------------
@@ -765,37 +1106,10 @@ class c_block_rgb: public c_graphic_block
 
   {
     protected:
-      int red;            /// value to be added to red
-      int green;          /// value to be added to green
-      int blue;           /// value to be added to blue
-
       virtual void set_default();
 
     public:
       virtual bool compute(bool force);
-
-      void set_parameters(int red, int green, int blue);
-
-        /**
-         * Sets the block parameters.
-         *
-         * @param red value to be added to red
-         * @param green value to be added to green
-         * @param blue value to be added to blue
-         */
-
-      void get_parameters(int *red, int *green, int *blue);
-
-        /**
-         * Gets the block parameters.
-         *
-         * @param red in this parameter the amount of red will be
-         *        returned
-         * @param green in this parameter the amount of green will be
-         *        returned
-         * @param blue in this parameter the amount of blue will be
-         *        returned
-         */
   };
 
 //----------------------------------------------------------------------
@@ -813,14 +1127,6 @@ class c_block_file_save: public c_special_block
       virtual void set_default();
     public:
       virtual bool compute(bool force);
-
-      void set_path(string path);
-
-        /**<
-         * Sets the path where the content should be saved.
-         *
-         * @param path file path
-         */
   };
 
 //----------------------------------------------------------------------

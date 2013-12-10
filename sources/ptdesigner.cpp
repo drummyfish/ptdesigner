@@ -7,8 +7,340 @@
 //**********************************************************************
 
 #include "ptdesigner.h"
+#include <fstream>
+#include "rapidxml_print.hpp"
 
 using namespace pt_design;
+
+//----------------------------------------------------------------------
+
+c_parameters::c_parameters(c_block *owner)
+
+  {
+    this->locked = false;
+    this->block = owner;
+    this->parameters = new vector<t_parameter>();
+  }
+
+//----------------------------------------------------------------------
+
+c_parameters::~c_parameters()
+
+  {
+    delete this->parameters;
+  }
+
+//----------------------------------------------------------------------
+
+void c_parameters::changed()
+
+  {
+    this->block->invalidate();
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::is_locked()
+
+  {
+    return this->locked;
+  }
+
+//----------------------------------------------------------------------
+
+unsigned int c_parameters::number_of_parameters()
+
+  {
+    return this->parameters->size();
+  }
+
+//----------------------------------------------------------------------
+
+t_parameter_type c_parameters::get_type(string name)
+
+  {
+    unsigned int i;
+
+    for (i = 0; i < this->parameters->size(); i++)
+      if (this->parameters->at(i).name == name)
+        return this->parameters->at(i).type;
+
+    return PARAMETER_INT;
+  }
+
+//----------------------------------------------------------------------
+
+t_parameter_type c_parameters::get_type(unsigned int index)
+
+  {
+    if (index < this->parameters->size())
+      return this->parameters->at(index).type;
+
+    return PARAMETER_INT;
+  }
+
+//----------------------------------------------------------------------
+
+string c_parameters::get_name(unsigned int index)
+
+  {
+    string result;
+
+    result = "";
+
+    if (index < this->parameters->size())
+      result = this->parameters->at(index).name;
+
+    return result;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::get_bool_value(unsigned int index)
+
+  {
+     if (index < this->parameters->size())
+      return this->parameters->at(index).bool_value;
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::get_bool_value(string parameter_name)
+
+  {
+    int index;
+
+    index = this->index_by_name(parameter_name);
+
+    if (index >= 0 && this->parameters->at(index).type ==
+      PARAMETER_BOOL)
+      return this->parameters->at(index).bool_value;
+
+    return 0;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::set_bool_value(string parameter_name, bool value)
+
+  {
+    int index;
+
+    index = this->index_by_name(parameter_name);
+
+    if (index >= 0 && this->parameters->at(index).type ==
+      PARAMETER_BOOL)
+      {
+        this->parameters->at(index).bool_value = value;
+        this->changed();
+
+        return true;
+      }
+
+    return false;
+  }
+
+//----------------------------------------------------------------------
+
+int c_parameters::index_by_name(string name)
+
+  {
+    unsigned int i;
+
+    for (i = 0; i < this->parameters->size(); i++)
+      if (this->parameters->at(i).name == name)
+        return i;
+
+    return -1;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::add_parameter(string name,t_parameter_type type)
+
+  {
+    int index;
+    t_parameter parameter;
+
+    if (this->locked)
+      return false;
+
+    index = this->index_by_name(name);
+
+    if (index < 0)
+      {
+        parameter.name = name;
+        parameter.type = type;
+
+        this->changed();
+
+        this->parameters->push_back(parameter);
+        return true;
+      }
+
+    return false;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::set_int_value(string parameter_name, int value)
+
+  {
+    int index;
+
+    index = this->index_by_name(parameter_name);
+
+    if (index >= 0 && this->parameters->at(index).type == PARAMETER_INT)
+      {
+        this->parameters->at(index).int_value = value;
+        this->changed();
+
+        return true;
+      }
+
+    return false;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::set_double_value(string parameter_name, double value)
+
+  {
+    int index;
+
+    index = this->index_by_name(parameter_name);
+
+    if (index >= 0 && this->parameters->at(index).type ==
+      PARAMETER_DOUBLE)
+      {
+        this->parameters->at(index).double_value = value;
+        this->changed();
+
+        return true;
+      }
+
+    return false;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::set_string_value(string parameter_name, char *value)
+
+  {
+    int index;
+
+    index = this->index_by_name(parameter_name);
+
+    if (index >= 0 && this->parameters->at(index).type ==
+      PARAMETER_STRING)
+      {
+        this->parameters->at(index).string_value = value;
+        this->changed();
+
+        return true;
+      }
+
+    return false;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_parameters::set_string_value(string parameter_name, string value)
+
+  {
+    return this->set_string_value(parameter_name,
+      (char *) value.c_str());
+  }
+
+//----------------------------------------------------------------------
+
+int c_parameters::get_int_value(unsigned int index)
+
+  {
+    if (index < this->parameters->size())
+      return this->parameters->at(index).int_value;
+
+    return 0;
+  }
+
+//----------------------------------------------------------------------
+
+double c_parameters::get_double_value(unsigned int index)
+
+  {
+    if (index < this->parameters->size())
+      return this->parameters->at(index).double_value;
+
+    return 0;
+  }
+
+//----------------------------------------------------------------------
+
+string c_parameters::get_string_value(unsigned int index)
+
+  {
+    if (index < this->parameters->size())
+      return this->parameters->at(index).string_value;
+
+    return 0;
+  }
+
+//----------------------------------------------------------------------
+
+void c_parameters::lock()
+
+  {
+    this->locked = true;
+  }
+
+//----------------------------------------------------------------------
+
+int c_parameters::get_int_value(string parameter_name)
+
+  {
+    int index;
+
+    index = this->index_by_name(parameter_name);
+
+    if (index >= 0 && this->parameters->at(index).type == PARAMETER_INT)
+      return this->parameters->at(index).int_value;
+
+    return 0;
+  }
+
+//----------------------------------------------------------------------
+
+double c_parameters::get_double_value(string parameter_name)
+
+  {
+    int index;
+
+    index = this->index_by_name(parameter_name);
+
+    if (index >= 0 && this->parameters->at(index).type ==
+      PARAMETER_DOUBLE)
+      return this->parameters->at(index).double_value;
+
+    return 0;
+  }
+
+//----------------------------------------------------------------------
+
+string c_parameters::get_string_value(string parameter_name)
+
+  {
+    int index;
+
+    index = this->index_by_name(parameter_name);
+
+    if (index >= 0 && this->parameters->at(index).type ==
+      PARAMETER_STRING)
+      return this->parameters->at(index).string_value;
+
+    return 0;
+  }
 
 //----------------------------------------------------------------------
 
@@ -18,14 +350,14 @@ c_block::c_block()
     unsigned int i;
 
     this->initialised = false;
-    this->position_x = 0;
-    this->position_y = 0;
     this->valid = false;
     this->error = false;
     this->max_inputs = MAX_INPUT_BLOCKS;
     this->min_inputs = 0;
     this->inputs = 0;
     this->graph = NULL;
+    this->set_id(0);
+    this->parameters = new c_parameters(this);
 
     for (i = 0; i < MAX_INPUT_BLOCKS; i++)
       {
@@ -35,8 +367,54 @@ c_block::c_block()
 
 //----------------------------------------------------------------------
 
-c_block::~c_block()
+c_parameters *c_block::get_parameters()
+
   {
+    return this->parameters;
+  }
+
+//----------------------------------------------------------------------
+
+c_block::~c_block()
+
+  {
+    delete this->parameters;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block::is_using_global_seed()
+
+  {
+    return this->uses_global_seed;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block::use_global_seed()
+
+  {
+    this->uses_global_seed = true;
+  }
+
+//----------------------------------------------------------------------
+
+int c_block::get_random_seed()
+
+  {
+    if (this->uses_global_seed)
+      return this->graph->get_random_seed();
+
+    return this->custom_seed;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block::use_custom_seed(int value)
+
+  {
+    this->uses_global_seed = false;
+    this->custom_seed = value;
   }
 
 //----------------------------------------------------------------------
@@ -110,6 +488,18 @@ void c_block::set_id(unsigned int new_id)
 
   {
     this->id = new_id;
+
+    // make the id string:
+
+    strncpy(this->id_string,to_string(this->id).c_str(),16);
+  }
+
+//----------------------------------------------------------------------
+
+char *c_block::get_id_string()
+
+  {
+    return this->id_string;
   }
 
 //----------------------------------------------------------------------
@@ -245,12 +635,6 @@ bool c_block_mix_channels::compute(bool force)
 void c_block_perlin_noise::set_default()
 
   {
-    this->name = "perlin noise";
-    this->amplitude = 127;
-    this->frequency = 5;
-    this->max_iterations = -1;
-    this->interpolation = INTERPOLATION_LINEAR;
-    this->smooth = true;
   }
 
 //----------------------------------------------------------------------
@@ -417,6 +801,14 @@ void c_texture_graph::set_multisampling(unsigned int level)
 void c_block::adjust()
 
   {
+  }
+
+//----------------------------------------------------------------------
+
+c_graphic_block::c_graphic_block()
+
+  {
+    color_buffer_init(&(this->buffer),0,0);
   }
 
 //----------------------------------------------------------------------
@@ -631,18 +1023,6 @@ void c_block::disconnect(unsigned int slot_number)
 
 //----------------------------------------------------------------------
 
-void c_block_color_fill::set_color(unsigned char red,
-  unsigned char green, unsigned char blue)
-
-  {
-    this->red = red;
-    this->green = green;
-    this->blue = blue;
-    this->invalidate();
-  }
-
-//----------------------------------------------------------------------
-
 bool c_block_color_fill::compute(bool force)
 
   {
@@ -652,7 +1032,10 @@ bool c_block_color_fill::compute(bool force)
 
     if (!this->valid || force)
       {
-        pt_color_fill(&(this->buffer),this->red,this->green,this->blue);
+        pt_color_fill(&(this->buffer),
+          this->parameters->get_int_value("red"),
+          this->parameters->get_int_value("green"),
+          this->parameters->get_int_value("blue"));
         change_occured = true;
       }
 
@@ -660,14 +1043,6 @@ bool c_block_color_fill::compute(bool force)
     this->error = false;
 
     return change_occured;
-  }
-
-//----------------------------------------------------------------------
-
-void c_block_file_save::set_path(string path)
-
-  {
-    this->path = path;
   }
 
 //----------------------------------------------------------------------
@@ -685,7 +1060,7 @@ bool c_block_file_save::compute(bool force)
 
     if (!color_buffer_save_to_png(
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
-        (char *) this->path.c_str()))
+        (char *) (this->parameters->get_string_value("path")).c_str()))
       {
         this->set_error();
         return change_occured;
@@ -696,61 +1071,10 @@ bool c_block_file_save::compute(bool force)
 
 //----------------------------------------------------------------------
 
-void c_block_bump_noise::set_parameters(float bump_size_upper,
-  float bump_size_lower, unsigned int quantity, bool alter_amplitude)
-
-  {
-    this->bump_size_from = bump_size_upper;
-    this->bump_size_to = bump_size_lower;
-    this->quantity = quantity;
-    this->alter_amplitude = alter_amplitude;
-
-    this->invalidate();
-  }
-
-//----------------------------------------------------------------------
-
-void c_block_bump_noise::get_parameters(float *bump_size_upper,
-  float *bump_size_lower, unsigned int *quantity, bool *alter_amplitude)
-
-  {
-    *bump_size_upper = this->bump_size_from;
-    *bump_size_lower = this->bump_size_to;
-    *quantity = this->quantity;
-    *alter_amplitude = this->alter_amplitude;
-  }
-
-//----------------------------------------------------------------------
-
-void c_block_rgb::set_parameters(int red, int green, int blue)
-
-  {
-    this->red = red;
-    this->green = green;
-    this->blue = blue;
-
-    this->invalidate();
-  }
-
-//----------------------------------------------------------------------
-
 void c_block_rgb::set_default()
 
   {
-    this->red = 0;
-    this->green = 0;
-    this->blue = 0;
     this->name = "adjust rgb";
-  }
-
-//----------------------------------------------------------------------
-
-void c_block_rgb::get_parameters(int *red, int *green, int *blue)
-
-  {
-    *red = this->red;
-    *green = this->green;
-    *blue = this->blue;
   }
 
 //----------------------------------------------------------------------
@@ -817,11 +1141,20 @@ void c_texture_graph::print_as_text()
 void c_block_bump_noise::set_default()
 
   {
-    this->name = "bump noise";
-    this->bump_size_from = 0.5;
-    this->bump_size_to = 0.01;
-    this->quantity = 1;
-    this->alter_amplitude = false;
+    if (!this->parameters->is_locked())
+      {
+        this->parameters->add_parameter("bump size from",PARAMETER_DOUBLE);
+        this->parameters->add_parameter("bump size to",PARAMETER_DOUBLE);
+        this->parameters->add_parameter("quantity",PARAMETER_INT);
+        this->parameters->add_parameter("alter amplitude",PARAMETER_BOOL);
+        this->name = "bump noise";
+        this->parameters->lock();
+      }
+
+    this->parameters->set_double_value("bump size from",0.7);
+    this->parameters->set_double_value("bump size to",0.01);
+    this->parameters->set_int_value("quantity",1);
+    this->parameters->set_bool_value("alter amplitude",false);
   }
 
 //----------------------------------------------------------------------
@@ -844,8 +1177,10 @@ bool c_block_rgb::compute(bool force)
         color_buffer_copy_data(((c_graphic_block *)
           this->input_blocks[0])->get_color_buffer(),&(this->buffer));
 
-        pt_add_rgb(&(this->buffer),this->red,this->green,
-          this->blue);
+        pt_add_rgb(&(this->buffer),
+          this->parameters->get_int_value("red"),
+          this->parameters->get_int_value("green"),
+          this->parameters->get_int_value("blue"));
       }
 
     this->valid = true;
@@ -865,9 +1200,15 @@ bool c_block_perlin_noise::compute(bool force)
 
     if (!this->valid || force)
       {
-        pt_perlin_noise(this->graph->get_random_seed(),this->amplitude,
-          this->frequency,this->max_iterations,this->interpolation,
-          &(this->buffer),this->smooth ? 1 : 0);
+        pt_perlin_noise(
+          this->get_random_seed(),
+          this->parameters->get_int_value("amplitude"),
+          this->parameters->get_int_value("frequency"),
+          this->parameters->get_int_value("max iterations"),
+          (t_interpolation_method)
+            this->parameters->get_int_value("interpolation"),
+          &(this->buffer),
+          this->parameters->get_bool_value("smooth"));
 
         change_occured = true;
       }
@@ -876,6 +1217,36 @@ bool c_block_perlin_noise::compute(bool force)
     this->error = false;
 
     return change_occured;
+  }
+
+//----------------------------------------------------------------------
+
+string c_parameters::get_value_string(unsigned int index)
+
+  {
+    if (index >= this->parameters->size())
+      return "";
+
+    switch (this->parameters->at(index).type)
+      {
+        case PARAMETER_INT:
+          return to_string(this->parameters->at(index).int_value);
+          break;
+
+        case PARAMETER_DOUBLE:
+          return to_string(this->parameters->at(index).double_value);
+          break;
+
+        case PARAMETER_BOOL:
+          return to_string(this->parameters->at(index).bool_value);
+          break;
+
+        case PARAMETER_STRING:
+          return this->parameters->at(index).string_value;
+          break;
+      }
+
+    return "";
   }
 
 //----------------------------------------------------------------------
@@ -889,9 +1260,12 @@ bool c_block_bump_noise::compute(bool force)
 
     if (force || !this->valid)
       {
-        pt_bump_noise(&(this->buffer),this->bump_size_from,
-          this->bump_size_to,this->quantity,
-          this->alter_amplitude ? 1 : 0,graph->get_random_seed());
+        pt_bump_noise(&(this->buffer),
+          this->parameters->get_double_value("bump size from"),
+          this->parameters->get_double_value("bump size to"),
+          this->parameters->get_int_value("quantity"),
+          this->parameters->get_bool_value("alter amplitude"),
+          this->get_random_seed());
 
         change_occured = true;
       }
@@ -904,13 +1278,138 @@ bool c_block_bump_noise::compute(bool force)
 
 //----------------------------------------------------------------------
 
+bool c_texture_graph::load_from_file(string filename)
+
+  {
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_texture_graph::save_to_file(string filename)
+
+  {
+    xml_document<> document;
+    ofstream save_file(filename.c_str());
+    string document_text;
+    xml_node<> *node, *node2;
+    c_block *help_block,*current_block;
+    unsigned int i,j;
+    string help_string;
+
+    if (save_file.is_open())
+      {
+        node = document.allocate_node(node_element,"texturegraph");
+        document.append_node(node);
+
+        // append blocks:
+
+        for (i = 0; i < this->blocks->size(); i++)
+          {
+            current_block = this->blocks->at(i);
+
+            node = document.allocate_node(node_element,"block");
+
+            // block element attributes:
+
+            node->append_attribute(document.allocate_attribute("type",
+              current_block->get_name().c_str()));
+
+            node->append_attribute(document.allocate_attribute("id",
+              current_block->get_id_string()));
+
+            // input block elements:
+
+            for (j = 0; j < MAX_INPUT_BLOCKS; j++)
+              {
+                help_block = current_block->get_input(j);
+
+                if (help_block != NULL)
+                  {
+                    node2 =
+                      document.allocate_node(node_element,"input");
+
+                    node2->append_attribute(
+                      document.allocate_attribute(
+                        "id",help_block->get_id_string()));
+
+                    node->append_node(node2);
+                  }
+              }
+
+            // block parameters:
+
+            for (j = 0; j < current_block->get_parameters()->number_of_parameters(); j++)
+              {
+                node2 = document.allocate_node(node_element,
+                  "parameter");
+
+                node2->append_attribute(
+                  document.allocate_attribute("name", (char *)
+                  current_block->get_parameters()->get_name(j).c_str()));
+
+                switch (current_block->get_parameters()->get_type(j))
+                  {
+                    case PARAMETER_INT:
+                      node2->append_attribute(
+                        document.allocate_attribute("type","int"));
+                      break;
+
+                    case PARAMETER_DOUBLE:
+                      node2->append_attribute(
+                        document.allocate_attribute("type","double"));
+
+                      break;
+
+                    case PARAMETER_BOOL:
+                      node2->append_attribute(
+                        document.allocate_attribute("type","bool"));
+                      break;
+
+                    case PARAMETER_STRING:
+                      node2->append_attribute(
+                        document.allocate_attribute("type","string"));
+                      break;
+                  }
+
+                node2->append_attribute(
+                  document.allocate_attribute("value",
+                  document.allocate_string(
+                  (char *) current_block->get_parameters()->get_value_string(j).c_str())));
+
+                node->append_node(node2);
+              }
+
+            document.first_node()->append_node(node);
+
+          }
+
+        save_file << document;
+        save_file.close();
+      }
+    else
+      return false;
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
 void c_block_color_fill::set_default()
 
   {
-    this->red = 255;
-    this->green = 255;
-    this->blue = 255;
-    this->name = "file save";
+    if (!this->parameters->is_locked())
+      {
+        this->parameters->add_parameter("red",PARAMETER_INT);
+        this->parameters->add_parameter("green",PARAMETER_INT);
+        this->parameters->add_parameter("blue",PARAMETER_INT);
+        this->name = "color fill";
+        this->parameters->lock();
+      }
+
+    this->parameters->set_int_value("red",255);
+    this->parameters->set_int_value("green",255);
+    this->parameters->set_int_value("blue",255);
   }
 
 //----------------------------------------------------------------------
@@ -918,8 +1417,14 @@ void c_block_color_fill::set_default()
 void c_block_file_save::set_default()
 
   {
-    this->path = "texture.png";
-    this->name = "file save";
+    if (!this->parameters->is_locked())
+      {
+        this->parameters->add_parameter("path",PARAMETER_STRING);
+        this->name = "file save";
+        this->parameters->lock();
+      }
+
+    this->parameters->set_string_value("path",(char *) "texture.txt");
   }
 
 //----------------------------------------------------------------------
