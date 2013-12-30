@@ -28,7 +28,7 @@ extern "C"
 #include "rapidxml.hpp"
 
 #define MAX_INPUT_BLOCKS  5  /// maximum number of input blocks
-#define MAX_MULTISAMPLING 6  /// maximum multisampling level
+#define MAX_SUPERSAMPLING 6  /// maximum supersampling level
 
 using namespace std;
 using namespace rapidxml;
@@ -52,7 +52,7 @@ typedef enum
     PARAMETER_INT,
     PARAMETER_DOUBLE,
     PARAMETER_BOOL,
-    PARAMETER_STRING,
+    PARAMETER_STRING
   } t_parameter_type;
 
 //----------------------------------------------------------------------
@@ -361,7 +361,6 @@ class c_block
   {
     protected:
       unsigned int id;          /// block id (unique within the graph)
-      char id_string[16];       /// id stored as a string
       bool valid;               /// whether the block is currently valid
       bool error;               /// whether there was any error
       c_block *(input_blocks[MAX_INPUT_BLOCKS]); /// input blocks
@@ -536,14 +535,6 @@ class c_block
          * Returns the block id.
          *
          * @return the block id
-         */
-
-      char *get_id_string();
-
-        /**<
-         * Returns the block id as a c string.
-         *
-         * @return null-terminated string representing the block id
          */
 
       virtual bool has_image();
@@ -747,7 +738,7 @@ class c_texture_graph
 
   {
     protected:
-      unsigned int multisampling_level; /// multisampling level, 1 = off
+      unsigned int supersampling_level; /// supersampling level, 1 = off
       unsigned int resolution_x;        /// x resolution of the testure
       unsigned int resolution_y;        /// y resolution of the texture
       unsigned int last_id;             /// id to be assigned
@@ -793,6 +784,21 @@ class c_texture_graph
          *         otherwise false
          */
 
+      bool connect_by_id(int id_input, int id_to, unsigned int slot);
+
+        /**<
+         * Connects two blocks identified by their IDs. If any of the
+         * blocks with given IDs doesn't exist, nothing happens.
+         *
+         * @param id_input ID of the block to be connected to block with
+         *        id_to ID
+         * @param id_to ID of the block to which the block with id_input
+         *        ID will be connected
+         * @param slot slot number to connect the block to
+         *
+         * @return true if the blocks were connected, false if not
+         */
+
       bool is_error();
 
         /**<
@@ -816,14 +822,14 @@ class c_texture_graph
          * with current graph parameters.
          */
 
-      void set_multisampling(unsigned int level);
+      void set_supersampling(unsigned int level);
 
         /**<
-         * Sets the texture multisapling level.
+         * Sets the texture supersapling level.
          *
-         * @param level level of multisampling, 1 means no
-         *        multisampling, 2 means 2 x 2 etc. Maximum value is
-         *        MAX_MULTISAMPLING.
+         * @param level level of supersampling, 1 means no
+         *        supersampling, 2 means 2 x 2 etc. Maximum value is
+         *        MAX_SUPERSAMPLING.
          */
 
       void set_resolution(unsigned int x, unsigned int y);
@@ -845,13 +851,13 @@ class c_texture_graph
          * @param value value to be set as seed
          */
 
-      unsigned int get_multisampling();
+      unsigned int get_supersampling();
 
         /**<
-         * Gets the information about multisampling level set for the
+         * Gets the information about supersampling level set for the
          * texture.
          *
-         * @return multisampling level
+         * @return supersampling level
          */
 
       void get_resolution(unsigned int *x, unsigned int *y);
@@ -888,9 +894,22 @@ class c_texture_graph
          * Returns a block of the texture graph with given index.
          *
          * @param block_number index of block that should be returned
+         *        (note that this is not the block ID!)
          *
-         * @return pointer to block at given index or null if the index
+         * @return pointer to block at given index or NULL if the index
          *         is out of range
+         */
+
+      c_block *get_block_by_id(unsigned int block_id);
+
+        /**<
+         * Returns a block of the texture graph with given ID.
+         *
+         * @param block_id ID of block that should be returned
+         *        (note that this is not the block index!)
+         *
+         * @return pointer to block with given ID or NULL if block with
+         *         such ID doesn't exist
          */
 
       void add_block(c_block *block);

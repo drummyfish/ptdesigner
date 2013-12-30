@@ -4,7 +4,7 @@
 CC=gcc
 CC2=c++
 CFLAGS=-std=c99 -g -pedantic -Wall -Wextra
-CFLAGS2=-Wall -pedantic -g -lrt
+CFLAGS2=-Wall -pedantic -g -std=c++0x
 SOURCEDIR=sources
 
 test: test.o colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.0 ptdesigner.o

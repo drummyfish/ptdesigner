@@ -8,9 +8,80 @@
 
 #include "ptdesigner.h"
 #include <fstream>
+#include <sstream>
 #include "rapidxml_print.hpp"
 
 using namespace pt_design;
+using namespace std;
+
+//----------------------------------------------------------------------
+
+  /**
+   * A private function that converts int to string. This works the same
+   * way as std::to_string but is used rather because to_string causes
+   * problems with MinGW.
+   *
+   * @param value value to be converted
+   *
+   * @return string representing given value
+   */
+
+string pt_to_string(int value)
+
+  {
+    string result;
+    bool is_negative;
+    unsigned int leftover;
+
+    result = "";
+    is_negative = value < 0;
+
+    if (is_negative)
+      value = -1 * value;
+
+    if (value == 0)
+      result = "0";
+    else while (true)
+      {
+        if (value == 0)
+          break;
+
+        leftover = value % 10;
+
+        value = value / 10;
+
+        result = ((char) (leftover + '0')) + result;
+      }
+
+    if (is_negative)
+      result = "-" + result;
+
+    return result;
+  }
+
+//----------------------------------------------------------------------
+
+  /**
+   * A private function that converts double to string. This works the
+   * same way as std::to_string but is used rather because to_string
+   * causes problems with MinGW.
+   *
+   * @param value value to be converted
+   *
+   * @return string representing given value
+   */
+
+string pt_to_string(double value)
+
+  {
+    string result;
+    stringstream str_stream;
+
+    str_stream << value;
+
+    result = str_stream.str();
+    return result;
+  }
 
 //----------------------------------------------------------------------
 
@@ -358,6 +429,7 @@ c_block::c_block()
     this->graph = NULL;
     this->set_id(0);
     this->parameters = new c_parameters(this);
+    this->uses_global_seed = true;
 
     for (i = 0; i < MAX_INPUT_BLOCKS; i++)
       {
@@ -488,18 +560,6 @@ void c_block::set_id(unsigned int new_id)
 
   {
     this->id = new_id;
-
-    // make the id string:
-
-    strncpy(this->id_string,to_string(this->id).c_str(),16);
-  }
-
-//----------------------------------------------------------------------
-
-char *c_block::get_id_string()
-
-  {
-    return this->id_string;
   }
 
 //----------------------------------------------------------------------
@@ -515,8 +575,8 @@ unsigned int c_block::get_id()
 void c_texture_graph::get_resolution(unsigned int *x, unsigned int *y)
 
   {
-    *x = this->resolution_x;
-    *y = this->resolution_y;
+    *x = this->resolution_x / this->supersampling_level;
+    *y = this->resolution_y / this->supersampling_level;
   }
 
 //----------------------------------------------------------------------
@@ -551,7 +611,7 @@ c_texture_graph::c_texture_graph()
     this->end_blocks = new vector<c_block *>();
 
     this->last_id = 0;
-    this->multisampling_level = 1;
+    this->supersampling_level = 1;
     this->resolution_x = 256;       // default resolution
     this->resolution_y = 256;
     this->random_seed = 1;
@@ -635,6 +695,23 @@ bool c_block_mix_channels::compute(bool force)
 void c_block_perlin_noise::set_default()
 
   {
+    if (!this->parameters->is_locked())
+      {
+        this->parameters->add_parameter("amplitude",PARAMETER_INT);
+        this->parameters->add_parameter("frequency",PARAMETER_INT);
+        this->parameters->add_parameter("max iterations",PARAMETER_INT);
+        this->parameters->add_parameter("interpolation",PARAMETER_INT);
+        this->parameters->add_parameter("smooth",PARAMETER_BOOL);
+        this->parameters->lock();
+      }
+
+    this->parameters->set_int_value("amplitude",127);
+    this->parameters->set_int_value("frequency",6);
+    this->parameters->set_int_value("max iterations",-1);
+    this->parameters->set_int_value("interpolation",INTERPOLATION_LINEAR);
+    this->parameters->set_bool_value("smooth",true);
+
+    this->name = "perlin noise";
   }
 
 //----------------------------------------------------------------------
@@ -767,7 +844,7 @@ int c_texture_graph::get_random_seed()
 
 //----------------------------------------------------------------------
 
-void c_texture_graph::set_multisampling(unsigned int level)
+void c_texture_graph::set_supersampling(unsigned int level)
 
   {
     unsigned int base_resolution_x,base_resolution_y;
@@ -775,20 +852,20 @@ void c_texture_graph::set_multisampling(unsigned int level)
     if (level == 0)    // zero makes no sense
       level = 1;
 
-    if (level > MAX_MULTISAMPLING)
-      level = MAX_MULTISAMPLING;
+    if (level > MAX_SUPERSAMPLING)
+      level = MAX_SUPERSAMPLING;
 
-    if (level == this->multisampling_level)
+    if (level == this->supersampling_level)
       return;    // no need to change anything
 
     // division by zero shouldn't occur
-    base_resolution_x = this->resolution_x / this->multisampling_level;
-    base_resolution_y = this->resolution_y / this->multisampling_level;
+    base_resolution_x = this->resolution_x / this->supersampling_level;
+    base_resolution_y = this->resolution_y / this->supersampling_level;
 
-    this->multisampling_level = level;  // set the new level
+    this->supersampling_level = level;  // set the new level
 
     /* the image must be generated larger in order to perform
-       multisampling => increase resolution: */
+       supersampling => increase resolution: */
 
     this->resolution_x = base_resolution_x * level;
     this->resolution_y = base_resolution_y * level;
@@ -893,7 +970,7 @@ bool c_texture_graph::compute(bool force)
     for (i = 0; i < this->end_blocks->size(); i++)
       this->end_blocks->at(i)->compute(force);
 
-    return this->is_error();
+    return !this->is_error();
   }
 
 //----------------------------------------------------------------------
@@ -1230,15 +1307,15 @@ string c_parameters::get_value_string(unsigned int index)
     switch (this->parameters->at(index).type)
       {
         case PARAMETER_INT:
-          return to_string(this->parameters->at(index).int_value);
+          return pt_to_string(this->parameters->at(index).int_value);
           break;
 
         case PARAMETER_DOUBLE:
-          return to_string(this->parameters->at(index).double_value);
+          return pt_to_string(this->parameters->at(index).double_value);
           break;
 
         case PARAMETER_BOOL:
-          return to_string(this->parameters->at(index).bool_value);
+          return pt_to_string(this->parameters->at(index).bool_value);
           break;
 
         case PARAMETER_STRING:
@@ -1278,10 +1355,201 @@ bool c_block_bump_noise::compute(bool force)
 
 //----------------------------------------------------------------------
 
+  /**
+   * Private function - creates an instance of concrete c_block subclass
+   * depending on provided string name of the block.
+   *
+   * @param block_name identifies which instance subclass instance
+   *        should be created
+   *
+   * @return concrete newly allocated c_block subclass or NULL if the
+   *         string does not identify any subclass
+   */
+
+c_block *get_block_instance(string block_name)
+
+  {
+    if (block_name.compare("file save") == 0)
+      return new c_block_file_save();
+    else if (block_name.compare("bump noise") == 0)
+      return new c_block_bump_noise();
+    else if (block_name.compare("color fill") == 0)
+      return new c_block_color_fill();
+    else if (block_name.compare("perlin noise") == 0)
+      return new c_block_perlin_noise();
+    else if (block_name.compare("mix channels") == 0)
+      return new c_block_mix_channels();
+
+    return NULL;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_texture_graph::connect_by_id(int id_input, int id_to,
+  unsigned int slot)
+
+  {
+    c_block *block1, *block2;
+
+    block1 = this->get_block_by_id(id_input);
+    block2 = this->get_block_by_id(id_to);
+
+    if (block1 == NULL || block2 == NULL || slot >= MAX_INPUT_BLOCKS)
+      return false;
+
+    block2->connect(block1,slot);
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_texture_graph::load_from_file(string filename)
 
   {
+    string line,filetext,block_name,parameter_name,parameter_value,
+      help_string;
+    char *parameter_type;
+    int block_id,slot_number;
+    ifstream myfile(filename);
+    xml_document<> document;
+    xml_node<> *node, *node2;
+    xml_attribute<> *help_attribute;
+    char *filetext_c;
+    c_block *block;
+
+    if (!myfile.is_open())
+      return false;
+
+    while (getline(myfile,line))
+      {
+        filetext += line;
+      }
+
+    myfile.close();
+
+    filetext_c = document.allocate_string(filetext.c_str(),
+      filetext.length());
+    document.parse<0>(filetext_c);
+
+    node = document.first_node("texturegraph");
+
+    // graph attributes:
+
+    help_string = node->first_attribute("width")->value();
+    this->resolution_x = atoi(help_string.c_str());
+    help_string = node->first_attribute("height")->value();
+    this->resolution_y = atoi(help_string.c_str());
+    help_string = node->first_attribute("seed")->value();
+    this->random_seed = atoi(help_string.c_str());
+    help_string = node->first_attribute("supersampling")->value();
+    this->set_supersampling(atoi(help_string.c_str()));
+
+    node = document.first_node("texturegraph")->first_node();
+
+    // node should point to the first block node now
+
+    while (node != NULL) // process all blocks
+      {
+        block_name = node->first_attribute("type")->value();
+
+        block_id =
+          atoi(node->first_attribute("id")->value());
+
+        block = get_block_instance(block_name);
+
+        help_attribute = node->first_attribute("seed");
+
+        if (help_attribute != NULL)
+          {
+            block->use_custom_seed(atoi(help_attribute->value()));
+          }
+
+        if (block == NULL)
+          return 0;
+
+        this->add_block(block);
+        block->set_id(block_id);
+
+        node2 = node->first_node();
+
+        while (node2 != NULL)   // load parameters
+          {
+            if (strcmp(node2->name(),"parameter") == 0)
+              {
+                parameter_name =
+                  node2->first_attribute("name")->value();
+                parameter_value =
+                  node2->first_attribute("value")->value();
+                parameter_type =
+                  node2->first_attribute("type")->value();
+
+                if (strcmp(parameter_type,"int") == 0)
+                  block->get_parameters()->set_int_value(parameter_name,
+                    atoi(parameter_value.c_str()));
+                else if (strcmp(parameter_type,"double") == 0)
+                  block->get_parameters()->set_double_value(
+                    parameter_name,atof(parameter_value.c_str()));
+                else if (strcmp(parameter_type,"string") == 0)
+                  block->get_parameters()->set_string_value(
+                    parameter_name,parameter_value);
+                else if (strcmp(parameter_type,"bool") == 0)
+                  block->get_parameters()->set_bool_value(
+                    parameter_name,parameter_value[0] == '1');
+              }
+
+            node2 = node2->next_sibling();
+          }
+
+        node = node->next_sibling();  // next block
+      }
+
+    // now that the blocks are created, connect them:
+
+    node = document.first_node()->first_node();
+
+    while (node != NULL)
+      {
+        block_id =
+          atoi(node->first_attribute()->next_attribute()->value());
+
+        block = this->get_block_by_id(block_id);
+
+        node2 = node->first_node();
+
+        while (node2 != NULL)   // load inputs
+          {
+            if (strcmp(node2->name(),"input") == 0)
+              {
+                block_id =
+                  atoi(node2->first_attribute("id")->value());
+                slot_number =
+                  atoi(node2->first_attribute("slot")->value());
+                block->connect(this->get_block_by_id(block_id),
+                  slot_number);
+              }
+
+            node2 = node2->next_sibling();
+          }
+
+        node = node->next_sibling();  // next block
+      }
+
     return true;
+  }
+
+//----------------------------------------------------------------------
+
+c_block *c_texture_graph::get_block_by_id(unsigned int block_id)
+
+  {
+    unsigned int i;
+
+    for (i = 0; i < this->blocks->size(); i++)
+      if (this->blocks->at(i)->get_id() == block_id)
+        return this->blocks->at(i);
+
+    return NULL;
   }
 
 //----------------------------------------------------------------------
@@ -1295,11 +1563,38 @@ bool c_texture_graph::save_to_file(string filename)
     xml_node<> *node, *node2;
     c_block *help_block,*current_block;
     unsigned int i,j;
-    string help_string;
+    string help_string,slot_number;
+    unsigned int res_x,res_y;
 
     if (save_file.is_open())
       {
         node = document.allocate_node(node_element,"texturegraph");
+
+        // texture graph attributes:
+
+        this->get_resolution(&res_x,&res_y);
+
+        help_string = pt_to_string((int) res_x).c_str();
+        node->append_attribute(document.allocate_attribute("width",
+          document.allocate_string(help_string.c_str(),
+          help_string.length() + 1)));
+
+        help_string = pt_to_string((int) res_y).c_str();
+        node->append_attribute(document.allocate_attribute("height",
+          document.allocate_string(help_string.c_str(),
+          help_string.length() + 1)));
+
+        help_string = pt_to_string((int) this->random_seed).c_str();
+        node->append_attribute(document.allocate_attribute("seed",
+          document.allocate_string(help_string.c_str(),
+          help_string.length() + 1)));
+
+        help_string = pt_to_string((int)
+          this->supersampling_level).c_str();
+        node->append_attribute(document.allocate_attribute(
+          "supersampling",document.allocate_string(help_string.c_str(),
+          help_string.length() + 1)));
+
         document.append_node(node);
 
         // append blocks:
@@ -1315,8 +1610,21 @@ bool c_texture_graph::save_to_file(string filename)
             node->append_attribute(document.allocate_attribute("type",
               current_block->get_name().c_str()));
 
+            help_string = pt_to_string((int) current_block->get_id());
+
             node->append_attribute(document.allocate_attribute("id",
-              current_block->get_id_string()));
+              document.allocate_string(help_string.c_str(),
+              help_string.length() + 1)));
+
+            if (!current_block->is_using_global_seed())
+              {
+                help_string = pt_to_string((int)
+                  current_block->get_random_seed());
+
+                node->append_attribute(document.allocate_attribute(
+                  "seed",document.allocate_string(help_string.c_str(),
+                  help_string.length() + 1)));
+              }
 
             // input block elements:
 
@@ -1329,9 +1637,20 @@ bool c_texture_graph::save_to_file(string filename)
                     node2 =
                       document.allocate_node(node_element,"input");
 
+                    help_string = pt_to_string((int)
+                      help_block->get_id());
+
                     node2->append_attribute(
                       document.allocate_attribute(
-                        "id",help_block->get_id_string()));
+                        "id",document.allocate_string(
+                        help_string.c_str(),help_string.length() + 1)));
+
+                    slot_number = pt_to_string((int) j);
+
+                    node2->append_attribute(
+                      document.allocate_attribute(
+                        "slot",document.allocate_string(
+                        slot_number.c_str(),slot_number.length() + 1)));
 
                     node->append_node(node2);
                   }
@@ -1358,7 +1677,6 @@ bool c_texture_graph::save_to_file(string filename)
                     case PARAMETER_DOUBLE:
                       node2->append_attribute(
                         document.allocate_attribute("type","double"));
-
                       break;
 
                     case PARAMETER_BOOL:
@@ -1424,7 +1742,7 @@ void c_block_file_save::set_default()
         this->parameters->lock();
       }
 
-    this->parameters->set_string_value("path",(char *) "texture.txt");
+    this->parameters->set_string_value("path",(char *) "texture.png");
   }
 
 //----------------------------------------------------------------------
