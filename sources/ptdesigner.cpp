@@ -466,7 +466,11 @@ bool c_block::is_using_global_seed()
 void c_block::use_global_seed()
 
   {
+    if (this->is_using_global_seed())
+      return;
+
     this->uses_global_seed = true;
+    this->invalidate();
   }
 
 //----------------------------------------------------------------------
@@ -485,8 +489,13 @@ int c_block::get_random_seed()
 void c_block::use_custom_seed(int value)
 
   {
+    if (!this->is_using_global_seed() && this->get_random_seed()
+      == value)
+      return;
+
     this->uses_global_seed = false;
     this->custom_seed = value;
+    this->invalidate();
   }
 
 //----------------------------------------------------------------------
@@ -1379,6 +1388,8 @@ c_block *get_block_instance(string block_name)
       return new c_block_perlin_noise();
     else if (block_name.compare("mix channels") == 0)
       return new c_block_mix_channels();
+    else if (block_name.compare("voronoi diagram") == 0)
+      return new c_block_voronoi();
 
     return NULL;
   }
@@ -1728,6 +1739,85 @@ void c_block_color_fill::set_default()
     this->parameters->set_int_value("red",255);
     this->parameters->set_int_value("green",255);
     this->parameters->set_int_value("blue",255);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_voronoi::set_default()
+
+  {
+    if (!this->parameters->is_locked())
+      {
+        this->parameters->add_parameter("type",PARAMETER_INT);
+        this->parameters->add_parameter("metric",PARAMETER_INT);
+        this->parameters->add_parameter("point place",PARAMETER_INT);
+        this->parameters->add_parameter("width",PARAMETER_DOUBLE);
+        this->parameters->add_parameter("point positions",
+          PARAMETER_STRING);
+        this->parameters->add_parameter("number of points",
+          PARAMETER_INT);
+        this->name = "voronoi diagram";
+        this->parameters->lock();
+      }
+
+    this->parameters->set_int_value("type",VORONOI_2_NEAREST_RATIO);
+    this->parameters->set_int_value("metric",METRIC_EUCLIDEAN);
+    this->parameters->set_int_value("point place",PLACE_RANDOM);
+    this->parameters->set_double_value("width",0.75);
+    this->parameters->set_string_value("point positions","");
+    this->parameters->set_int_value("number of points",15);
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_voronoi::compute(bool force)
+
+  {
+    bool change_occured;
+
+    change_occured = false;
+
+    if (force || !this->valid)
+      {
+        switch (this->parameters->get_int_value("point place"))
+          {
+            case PLACE_RANDOM:
+              pt_voronoi_diagram(
+                (t_voronoi_type) this->parameters->get_int_value("type"),
+                (t_metric) this->parameters->get_int_value("metric"),
+                PLACE_RANDOM,
+                this->get_random_seed(),
+                this->parameters->get_int_value("number of points"),
+                NULL,
+                &(this->buffer));
+              break;
+
+            case PLACE_SQUARE:
+            case PLACE_CIRCLE:
+            case PLACE_CROSS_HORIZONTAL:
+            case PLACE_CROSS_DIAGONAL:
+              pt_voronoi_diagram(
+                (t_voronoi_type) this->parameters->get_int_value("type"),
+                (t_metric) this->parameters->get_int_value("metric"),
+                PLACE_SQUARE,
+                this->parameters->get_double_value("width"),
+                this->parameters->get_int_value("number of points"),
+                NULL,
+                &(this->buffer));
+              break;
+
+            case PLACE_CUSTOM:
+              // TODOOOOOOOOOOOOOOOOO
+              break;
+          }
+
+        change_occured = true;
+      }
+
+    this->valid = true;
+    this->error = false;
+
+    return change_occured;
   }
 
 //----------------------------------------------------------------------

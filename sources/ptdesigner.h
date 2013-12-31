@@ -982,12 +982,14 @@ class c_texture_graph
   * Voronoi diagram block.
   */
 
-class c_block_voronoi
+class c_block_voronoi: public c_graphic_block
 
   {
     protected:
-      t_voronoi_type type;  /// way of computing pixel intensity
+      virtual void set_default();
+
     public:
+      virtual bool compute(bool force);
   };
 
 //----------------------------------------------------------------------
@@ -1004,29 +1006,6 @@ class c_block_color_fill: public c_graphic_block
 
     public:
       virtual bool compute(bool force);
-
-      void set_color(unsigned char red, unsigned char green,
-        unsigned char blue);
-
-        /**<
-         * Sets the color which the image will be filled with.
-         *
-         * @param red amount of red
-         * @param green amount of green
-         * @param blue amount of blue
-         */
-
-      void get_color(unsigned char *red, unsigned char *green,
-        unsigned char *blue);
-
-        /**<
-         * Returns currently set fill color.
-         *
-         * @param red in this variable amount of red will be returned
-         * @param green in this variable amount of green will be
-         *        returned
-         * @param blue in this variable amount of blue will be returned
-         */
   };
 
 //----------------------------------------------------------------------
@@ -1044,43 +1023,6 @@ class c_block_bump_noise: public c_graphic_block
     public:
 
       virtual bool compute(bool force);
-
-      void set_parameters(float bump_size_upper, float bump_size_lower,
-        unsigned int quantity, bool alter_amplitude);
-
-        /**
-         * Sets the block parameters.
-         *
-         * @param bump_size_upper a number in range <0,1> which
-         *        determines initial bump size in fraction of the buffer
-         *        width, this is the upper limit
-         * @param bump_size_lower a number in range <0,1> which
-         *        determines final bump size in fraction of the buffer
-         *        width, this is the lower limit
-         * @param quantity a number that specifies how fast the bump
-         *        count will grow, use value 1 for common usage
-         * @param alter_amplitude says if the amplitude of the bumps
-         *        will be lowered with each iteration (true) or not
-         *        (false), non-altering amplitude creates a sharper
-         *        image
-         */
-
-      void get_parameters(float *bump_size_upper,
-        float *bump_size_lower, unsigned int *quantity,
-        bool *alter_amplitude);
-
-        /**
-         * Gets the block parameters.
-         *
-         * @param bump_size_upper in this variable the upper limit for
-         *        the bump size will be returned
-         * @param bump_size_lower in this variable the lower limit for
-         *        the bump size will be returned
-         * @param quantity in this parameter the quantity parameter
-         *        value will be returned
-         * @param alter_amplitude in this variable the value of alter
-         *        amplitude parameter will be returned
-         */
   };
 
 //----------------------------------------------------------------------

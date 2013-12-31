@@ -24,7 +24,7 @@
                          /** possible ways of measuring distances */
 typedef enum
   {
-    METRIC_EUCLIDEAN,    ///< distance = sqrt((x1 - x2)^2 + (y1 - y2)^2)
+    METRIC_EUCLIDEAN = 0,///< distance = sqrt((x1 - x2)^2 + (y1 - y2)^2)
     METRIC_TAXICAB,      ///< distance = abs(x1 - x2) + abs(y1 - y2)
     METRIC_CHEBISHEV     ///< distance = max((x1 - x2),(y1 - y2))
   } t_metric;
@@ -33,7 +33,7 @@ typedef enum
                                 interpolated */
 typedef enum
   {
-    INTERPOLATION_NEAREST,  ///< nearest neighbour interpolation
+    INTERPOLATION_NEAREST = 0,   ///< nearest neighbour interpolation
     INTERPOLATION_LINEAR,   ///< linear interpolation
     INTERPOLATION_SINE      ///< interpolation using sine function
   } t_interpolation_method;
@@ -43,14 +43,14 @@ typedef enum
 
 typedef enum
   {
-    NEIGHBOURHOOD_MOORE,        ///< Chebishev distance (square)
+    NEIGHBOURHOOD_MOORE = 0,    ///< Chebishev distance (square)
     NEIGHBOURHOOD_VON_NEUMANN   ///< taxicab distance
   } t_neighbourhood_type;
 
                             /** possible mosaic tile transformations */
 typedef enum
   {
-    MOSAIC_TRANSFORM_SHIFT,          ///< the tile is shifted
+    MOSAIC_TRANSFORM_SHIFT = 0,      ///< the tile is shifted
     MOSAIC_TRANSFORM_ROTATE_SIDE,    /**< the tile is rotated around the
                                           center of the side */
     MOSAIC_TRANSFORM_ROTATE_VERTEX,  /**< the tile is rotated around the

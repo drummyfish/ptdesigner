@@ -21,7 +21,7 @@
                                    be created */
 typedef enum
   {
-    VORONOI_DISTANCE,         /**< pixel color depends on distance to
+    VORONOI_DISTANCE = 0,     /**< pixel color depends on distance to
                                    the nearest point */
     VORONOI_2_NEAREST_RATIO,  /**< pixel color depends on distance ratio
                                    from the nearest two points */
@@ -34,7 +34,7 @@ typedef enum
                                 when generating Voronoi diagrams */
 typedef enum
   {
-    PLACE_RANDOM,           ///< place points randomly
+    PLACE_RANDOM = 0,       ///< place points randomly
     PLACE_SQUARE,           ///< place points in a square
     PLACE_CIRCLE,           ///< place points in a circle
     PLACE_CROSS_HORIZONTAL, ///< place points in horizontal cross
@@ -46,7 +46,7 @@ typedef enum
                                  together */
 typedef enum
   {
-    MIX_ADD,                ///< pixel color = buffer1 + buffer2
+    MIX_ADD = 0,            ///< pixel color = buffer1 + buffer2
     MIX_SUBSTRACT,          ///< pixel color = buffer1 - buffer2
     MIX_AVERAGE,            ///< pixel color = (buffer1 + buffer2) / 2
     MIX_MULTIPLY            ///< pixel color = buffer1 * buffer2 (float)
@@ -56,7 +56,7 @@ typedef enum
                                   edge detection functions */
 typedef enum
   {
-    DETECTION_HORIZONTAL,     ///< detect horizontal edges
+    DETECTION_HORIZONTAL = 0, ///< detect horizontal edges
     DETECTION_VERTICAL,       ///< detect vertical edges
     DETECTION_BOTH            ///< detect both types of edges
   } t_edge_detection_type;
@@ -65,7 +65,7 @@ typedef enum
                                   flip and so on */
 typedef enum
   {
-    DIRECTION_HORIZONTAL,     ///< horizontal direction
+    DIRECTION_HORIZONTAL = 0, ///< horizontal direction
     DIRECTION_VERTICAL,       ///< vertical direction
     DIRECTION_DIAGONAL_LU_RD, ///< left-up to righ-down direction
     DIRECTION_DIAGONAL_LD_RU  ///< left-down to right-up direction
@@ -75,7 +75,7 @@ typedef enum
                                   constant color */
 typedef enum
   {
-    FILL_NONE,                ///< no fill
+    FILL_NONE = 0,            ///< no fill
     FILL_KEEP_BORDERS,        ///< fill and keep black borders
     FILL_NO_BORDERS           ///< fill the areas and also their borders
   } t_fill_type;
@@ -84,7 +84,7 @@ typedef enum
                                   reflections with lighting */
 typedef enum
   {
-    REFLECTION_CURVE_COSINE_SMOOTH, ///< (cosine + 1) / 2
+    REFLECTION_CURVE_COSINE_SMOOTH = 0,  ///< (cosine + 1) / 2
     REFLECTION_CURVE_COSINE_ABS,    ///< absolute value of cosine
     REFLECTION_CURVE_LINEAR_HALF,   ///< linear dependency to pi / 2
     REFLECTION_CURVE_LINEAR_FULL    ///< linear dependency to pi
@@ -94,7 +94,7 @@ typedef enum
 
 typedef enum
   {
-    DITHERING_THRESHOLD,            ///< threshold dithering
+    DITHERING_THRESHOLD = 0,        ///< threshold dithering
     DITHERING_RANDOM,               ///< random dithering
     DITHERING_ERROR_PROPAGATION,    ///< Floyd–Steinberg dithering
     DITHERING_ORDERED               ///< ordered dithering
