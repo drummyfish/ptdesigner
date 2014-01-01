@@ -511,6 +511,42 @@ string c_block::get_name()
 bool c_block::compute(bool force)
 
   {
+    bool change_occured, error_occured;
+    unsigned int i;
+
+    change_occured = false;
+    error_occured = false;
+
+    for (i = 0; i < MAX_INPUT_BLOCKS; i++)  // check input blocks
+      if (this->input_blocks[i] != NULL)
+        if (this->input_blocks[i]->compute(force))
+          change_occured = true;
+
+    if (change_occured || force || !this->is_valid())
+      {
+        error_occured = !this->execute();
+        change_occured = true;
+      }
+
+    if (error_occured)
+      {
+        this->invalidate();
+        this->error = true;
+      }
+    else
+      {
+        this->valid = true;
+        this->error = false;
+      }
+
+    return change_occured;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block::execute()
+
+  {
     return true;
   }
 
@@ -663,44 +699,6 @@ void c_block::set_default()
 
 //----------------------------------------------------------------------
 
-void c_block_mix_channels::set_default()
-
-  {
-    this->name = "mix channels";
-  }
-
-//----------------------------------------------------------------------
-
-bool c_block_mix_channels::compute(bool force)
-
-  {
-    bool change_occured;
-
-    if (!this->manage_input_graphic_blocks(3,force,&change_occured))
-      {
-        this->set_error();
-        return change_occured;
-      }
-
-    if (change_occured || !this->valid)
-      {
-        pt_mix_channels(
-          ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
-          ((c_graphic_block *) this->input_blocks[1])->get_color_buffer(),
-          ((c_graphic_block *) this->input_blocks[2])->get_color_buffer(),
-          &this->buffer);
-
-        change_occured = true;
-
-        this->error = false;
-        this->valid = true;
-      }
-
-    return change_occured;
-  }
-
-//----------------------------------------------------------------------
-
 void c_block_perlin_noise::set_default()
 
   {
@@ -730,6 +728,7 @@ void c_block::set_default_parameters()
   {
     this->name = "block";
     this->set_default();
+    this->parameters->lock();
     this->initialised = true;
     this->invalidate();
   }
@@ -1109,62 +1108,6 @@ void c_block::disconnect(unsigned int slot_number)
 
 //----------------------------------------------------------------------
 
-bool c_block_color_fill::compute(bool force)
-
-  {
-    bool change_occured;
-
-    change_occured = false;
-
-    if (!this->valid || force)
-      {
-        pt_color_fill(&(this->buffer),
-          this->parameters->get_int_value("red"),
-          this->parameters->get_int_value("green"),
-          this->parameters->get_int_value("blue"));
-        change_occured = true;
-      }
-
-    this->valid = true;
-    this->error = false;
-
-    return change_occured;
-  }
-
-//----------------------------------------------------------------------
-
-bool c_block_file_save::compute(bool force)
-
-  {
-    bool change_occured;
-
-    if (!this->manage_input_graphic_blocks(1,force,&change_occured))
-      {
-        this->set_error();
-        return change_occured;
-      }
-
-    if (!color_buffer_save_to_png(
-      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
-        (char *) (this->parameters->get_string_value("path")).c_str()))
-      {
-        this->set_error();
-        return change_occured;
-      }
-
-    return change_occured;
-  }
-
-//----------------------------------------------------------------------
-
-void c_block_rgb::set_default()
-
-  {
-    this->name = "adjust rgb";
-  }
-
-//----------------------------------------------------------------------
-
 c_block *c_block::get_input(unsigned int index)
 
   {
@@ -1224,89 +1167,6 @@ void c_texture_graph::print_as_text()
 
 //----------------------------------------------------------------------
 
-void c_block_bump_noise::set_default()
-
-  {
-    if (!this->parameters->is_locked())
-      {
-        this->parameters->add_parameter("bump size from",PARAMETER_DOUBLE);
-        this->parameters->add_parameter("bump size to",PARAMETER_DOUBLE);
-        this->parameters->add_parameter("quantity",PARAMETER_INT);
-        this->parameters->add_parameter("alter amplitude",PARAMETER_BOOL);
-        this->name = "bump noise";
-        this->parameters->lock();
-      }
-
-    this->parameters->set_double_value("bump size from",0.7);
-    this->parameters->set_double_value("bump size to",0.01);
-    this->parameters->set_int_value("quantity",1);
-    this->parameters->set_bool_value("alter amplitude",false);
-  }
-
-//----------------------------------------------------------------------
-
-bool c_block_rgb::compute(bool force)
-
-  {
-    bool change_occured;
-
-    if (!this->manage_input_graphic_blocks(1,force,&change_occured))
-      {
-        this->set_error();
-        return change_occured;
-      }
-
-    if (change_occured || !this->valid)
-      {
-        change_occured = true;
-
-        color_buffer_copy_data(((c_graphic_block *)
-          this->input_blocks[0])->get_color_buffer(),&(this->buffer));
-
-        pt_add_rgb(&(this->buffer),
-          this->parameters->get_int_value("red"),
-          this->parameters->get_int_value("green"),
-          this->parameters->get_int_value("blue"));
-      }
-
-    this->valid = true;
-    this->error = false;
-
-    return change_occured;
-  }
-
-//----------------------------------------------------------------------
-
-bool c_block_perlin_noise::compute(bool force)
-
-  {
-    bool change_occured;
-
-    change_occured = false;
-
-    if (!this->valid || force)
-      {
-        pt_perlin_noise(
-          this->get_random_seed(),
-          this->parameters->get_int_value("amplitude"),
-          this->parameters->get_int_value("frequency"),
-          this->parameters->get_int_value("max iterations"),
-          (t_interpolation_method)
-            this->parameters->get_int_value("interpolation"),
-          &(this->buffer),
-          this->parameters->get_bool_value("smooth"));
-
-        change_occured = true;
-      }
-
-    this->valid = true;
-    this->error = false;
-
-    return change_occured;
-  }
-
-//----------------------------------------------------------------------
-
 string c_parameters::get_value_string(unsigned int index)
 
   {
@@ -1337,33 +1197,6 @@ string c_parameters::get_value_string(unsigned int index)
 
 //----------------------------------------------------------------------
 
-bool c_block_bump_noise::compute(bool force)
-
-  {
-    bool change_occured;
-
-    change_occured = false;
-
-    if (force || !this->valid)
-      {
-        pt_bump_noise(&(this->buffer),
-          this->parameters->get_double_value("bump size from"),
-          this->parameters->get_double_value("bump size to"),
-          this->parameters->get_int_value("quantity"),
-          this->parameters->get_bool_value("alter amplitude"),
-          this->get_random_seed());
-
-        change_occured = true;
-      }
-
-    this->valid = true;
-    this->error = false;
-
-    return change_occured;
-  }
-
-//----------------------------------------------------------------------
-
   /**
    * Private function - creates an instance of concrete c_block subclass
    * depending on provided string name of the block.
@@ -1389,7 +1222,9 @@ c_block *get_block_instance(string block_name)
     else if (block_name.compare("mix channels") == 0)
       return new c_block_mix_channels();
     else if (block_name.compare("voronoi diagram") == 0)
-      return new c_block_voronoi();
+      return new c_block_voronoi_diagram();
+    else if (block_name.compare("fault formation noise") == 0)
+      return new c_block_fault_formation_noise();
 
     return NULL;
   }
@@ -1722,19 +1557,38 @@ bool c_texture_graph::save_to_file(string filename)
     return true;
   }
 
+//======================================================================
+// 'SET DEFAULT' FUNCTIONS:
+//======================================================================
+
+void c_block_voronoi_diagram::set_default()
+
+  {
+    this->parameters->add_parameter("type",PARAMETER_INT);
+    this->parameters->add_parameter("metric",PARAMETER_INT);
+    this->parameters->add_parameter("point place",PARAMETER_INT);
+    this->parameters->add_parameter("width",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("point positions",PARAMETER_STRING);
+    this->parameters->add_parameter("number of points",PARAMETER_INT);
+    this->name = "voronoi diagram";
+
+    this->parameters->set_int_value("type",VORONOI_2_NEAREST_RATIO);
+    this->parameters->set_int_value("metric",METRIC_EUCLIDEAN);
+    this->parameters->set_int_value("point place",PLACE_RANDOM);
+    this->parameters->set_double_value("width",0.75);
+    this->parameters->set_string_value("point positions",(char *) "");
+    this->parameters->set_int_value("number of points",15);
+  }
+
 //----------------------------------------------------------------------
 
 void c_block_color_fill::set_default()
 
   {
-    if (!this->parameters->is_locked())
-      {
-        this->parameters->add_parameter("red",PARAMETER_INT);
-        this->parameters->add_parameter("green",PARAMETER_INT);
-        this->parameters->add_parameter("blue",PARAMETER_INT);
-        this->name = "color fill";
-        this->parameters->lock();
-      }
+    this->parameters->add_parameter("red",PARAMETER_INT);
+    this->parameters->add_parameter("green",PARAMETER_INT);
+    this->parameters->add_parameter("blue",PARAMETER_INT);
+    this->name = "color fill";
 
     this->parameters->set_int_value("red",255);
     this->parameters->set_int_value("green",255);
@@ -1743,96 +1597,198 @@ void c_block_color_fill::set_default()
 
 //----------------------------------------------------------------------
 
-void c_block_voronoi::set_default()
-
-  {
-    if (!this->parameters->is_locked())
-      {
-        this->parameters->add_parameter("type",PARAMETER_INT);
-        this->parameters->add_parameter("metric",PARAMETER_INT);
-        this->parameters->add_parameter("point place",PARAMETER_INT);
-        this->parameters->add_parameter("width",PARAMETER_DOUBLE);
-        this->parameters->add_parameter("point positions",
-          PARAMETER_STRING);
-        this->parameters->add_parameter("number of points",
-          PARAMETER_INT);
-        this->name = "voronoi diagram";
-        this->parameters->lock();
-      }
-
-    this->parameters->set_int_value("type",VORONOI_2_NEAREST_RATIO);
-    this->parameters->set_int_value("metric",METRIC_EUCLIDEAN);
-    this->parameters->set_int_value("point place",PLACE_RANDOM);
-    this->parameters->set_double_value("width",0.75);
-    this->parameters->set_string_value("point positions","");
-    this->parameters->set_int_value("number of points",15);
-  }
-
-//----------------------------------------------------------------------
-
-bool c_block_voronoi::compute(bool force)
-
-  {
-    bool change_occured;
-
-    change_occured = false;
-
-    if (force || !this->valid)
-      {
-        switch (this->parameters->get_int_value("point place"))
-          {
-            case PLACE_RANDOM:
-              pt_voronoi_diagram(
-                (t_voronoi_type) this->parameters->get_int_value("type"),
-                (t_metric) this->parameters->get_int_value("metric"),
-                PLACE_RANDOM,
-                this->get_random_seed(),
-                this->parameters->get_int_value("number of points"),
-                NULL,
-                &(this->buffer));
-              break;
-
-            case PLACE_SQUARE:
-            case PLACE_CIRCLE:
-            case PLACE_CROSS_HORIZONTAL:
-            case PLACE_CROSS_DIAGONAL:
-              pt_voronoi_diagram(
-                (t_voronoi_type) this->parameters->get_int_value("type"),
-                (t_metric) this->parameters->get_int_value("metric"),
-                PLACE_SQUARE,
-                this->parameters->get_double_value("width"),
-                this->parameters->get_int_value("number of points"),
-                NULL,
-                &(this->buffer));
-              break;
-
-            case PLACE_CUSTOM:
-              // TODOOOOOOOOOOOOOOOOO
-              break;
-          }
-
-        change_occured = true;
-      }
-
-    this->valid = true;
-    this->error = false;
-
-    return change_occured;
-  }
-
-//----------------------------------------------------------------------
-
 void c_block_file_save::set_default()
 
   {
-    if (!this->parameters->is_locked())
-      {
-        this->parameters->add_parameter("path",PARAMETER_STRING);
-        this->name = "file save";
-        this->parameters->lock();
-      }
+    this->parameters->add_parameter("path",PARAMETER_STRING);
+    this->name = "file save";
 
     this->parameters->set_string_value("path",(char *) "texture.png");
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_rgb::set_default()
+
+  {
+    this->name = "adjust rgb";
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_fault_formation_noise::set_default()
+
+  {
+    this->name = "fault formation noise";
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_bump_noise::set_default()
+
+  {
+    this->parameters->add_parameter("bump size from",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("bump size to",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("quantity",PARAMETER_INT);
+    this->parameters->add_parameter("alter amplitude",PARAMETER_BOOL);
+    this->name = "bump noise";
+
+    this->parameters->set_double_value("bump size from",0.7);
+    this->parameters->set_double_value("bump size to",0.01);
+    this->parameters->set_int_value("quantity",1);
+    this->parameters->set_bool_value("alter amplitude",false);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_mix_channels::set_default()
+
+  {
+    this->name = "mix channels";
+  }
+
+//======================================================================
+// 'EXECUTE' FUNCTIONS:
+//======================================================================
+
+bool c_block_voronoi_diagram::execute()
+
+  {
+    switch (this->parameters->get_int_value("point place"))
+      {
+        case PLACE_RANDOM:
+          pt_voronoi_diagram(
+            (t_voronoi_type) this->parameters->get_int_value("type"),
+            (t_metric) this->parameters->get_int_value("metric"),
+            PLACE_RANDOM,
+            this->get_random_seed(),
+            this->parameters->get_int_value("number of points"),
+            NULL,
+            &(this->buffer));
+          break;
+
+        case PLACE_SQUARE:
+        case PLACE_CIRCLE:
+        case PLACE_CROSS_HORIZONTAL:
+        case PLACE_CROSS_DIAGONAL:
+          pt_voronoi_diagram(
+            (t_voronoi_type) this->parameters->get_int_value("type"),
+            (t_metric) this->parameters->get_int_value("metric"),
+            PLACE_SQUARE,
+            this->parameters->get_double_value("width"),
+            this->parameters->get_int_value("number of points"),
+            NULL,
+            &(this->buffer));
+          break;
+
+        case PLACE_CUSTOM:
+          // TODOOOOOOOOOOOOOOOOO
+          break;
+      }
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_bump_noise::execute()
+
+  {
+    pt_bump_noise(&(this->buffer),
+      this->parameters->get_double_value("bump size from"),
+      this->parameters->get_double_value("bump size to"),
+      this->parameters->get_int_value("quantity"),
+      this->parameters->get_bool_value("alter amplitude"),
+      this->get_random_seed());
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_fault_formation_noise::execute()
+
+  {
+    pt_fault_formation_noise(this->get_random_seed(),
+      &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_rgb::execute()
+
+  {
+    color_buffer_copy_data(((c_graphic_block *)
+      this->input_blocks[0])->get_color_buffer(),&(this->buffer));
+
+    pt_add_rgb(&(this->buffer),
+      this->parameters->get_int_value("red"),
+      this->parameters->get_int_value("green"),
+      this->parameters->get_int_value("blue"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_perlin_noise::execute()
+
+  {
+    pt_perlin_noise(
+      this->get_random_seed(),
+      this->parameters->get_int_value("amplitude"),
+      this->parameters->get_int_value("frequency"),
+      this->parameters->get_int_value("max iterations"),
+      (t_interpolation_method)
+        this->parameters->get_int_value("interpolation"),
+      &(this->buffer),
+      this->parameters->get_bool_value("smooth"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_mix_channels::execute()
+
+  {
+    pt_mix_channels(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      ((c_graphic_block *) this->input_blocks[1])->get_color_buffer(),
+      ((c_graphic_block *) this->input_blocks[2])->get_color_buffer(),
+      &this->buffer);
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_color_fill::execute()
+
+  {
+    pt_color_fill(&(this->buffer),
+      this->parameters->get_int_value("red"),
+      this->parameters->get_int_value("green"),
+      this->parameters->get_int_value("blue"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_file_save::execute()
+
+  {
+    if (!color_buffer_save_to_png(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+        (char *) (this->parameters->get_string_value("path")).c_str()))
+      {
+        return false;
+      }
+
+    return true;
   }
 
 //----------------------------------------------------------------------

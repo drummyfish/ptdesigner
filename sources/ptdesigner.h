@@ -413,6 +413,17 @@ class c_block
          * Sets block specific parameters to default values.
          */
 
+      virtual bool execute();
+
+        /**<
+         * Computes the block output and executes all other asociated
+         * actions. The function presumes the input blocks are
+         * already computed and valid.
+         *
+         * @return true if everything was done OK, false otherwise
+         *         (an error occured)
+         */
+
     public:
 
       c_block();
@@ -612,27 +623,28 @@ class c_block
          * memory.
          */
 
-      virtual bool compute(bool force);
-
-        /**<
-         * Computes the block output and executes all other asociated
-         * actions. The block will recursively call this function for
-         * all its input blocks if needed.
-         *
-         * @param force if true, the block will recompute its output and
-         *        will also force to do the same for all its input
-         *        blocks even if it wasn't not necessary, if false, the
-         *        computation will only be done if the block output
-         *        isn't valid and only invalid input blocks will be
-         *        recomputed
-         *
-         * @return true if anything was recomputed, false if not
-         */
-
       virtual void set_default_parameters();
 
         /**<
          * Sets the block parameters to default values
+         */
+
+      bool compute(bool force);
+
+        /**<
+         * Computes the block output. If the block has any input blocks,
+         * it will check whether they are valid and will recursively
+         * recompute them if needed.
+         *
+         * @param force if true, the block will recompute it's output
+         *        and all input blocks always, even if it's not
+         *        necesarry, otherwise recomputing will only be done
+         *        if needed
+         *
+         * @return true if any change in the block output happened,
+         *         false if not (recomputing didn't happen because it
+         *         wasn't necesarry)
+         *
          */
   };
 
@@ -982,14 +994,12 @@ class c_texture_graph
   * Voronoi diagram block.
   */
 
-class c_block_voronoi: public c_graphic_block
+class c_block_voronoi_diagram: public c_graphic_block
 
   {
     protected:
       virtual void set_default();
-
-    public:
-      virtual bool compute(bool force);
+      virtual bool execute();
   };
 
 //----------------------------------------------------------------------
@@ -1003,9 +1013,7 @@ class c_block_color_fill: public c_graphic_block
   {
     protected:
       virtual void set_default();
-
-    public:
-      virtual bool compute(bool force);
+      virtual bool execute();
   };
 
 //----------------------------------------------------------------------
@@ -1019,10 +1027,21 @@ class c_block_bump_noise: public c_graphic_block
   {
     protected:
       virtual void set_default();
+      virtual bool execute();
+  };
 
-    public:
+//----------------------------------------------------------------------
 
-      virtual bool compute(bool force);
+  /**
+   * Fault formation noise block.
+   */
+
+class c_block_fault_formation_noise: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
   };
 
 //----------------------------------------------------------------------
@@ -1036,9 +1055,7 @@ class c_block_perlin_noise: public c_graphic_block
   {
     protected:
       virtual void set_default();
-
-    public:
-      virtual bool compute(bool force);
+      virtual bool execute();
   };
 
 //----------------------------------------------------------------------
@@ -1052,9 +1069,7 @@ class c_block_mix_channels: public c_graphic_block
   {
     protected:
       virtual void set_default();
-
-    public:
-      virtual bool compute(bool force);
+      virtual bool execute();
   };
 
 //----------------------------------------------------------------------
@@ -1068,9 +1083,7 @@ class c_block_rgb: public c_graphic_block
   {
     protected:
       virtual void set_default();
-
-    public:
-      virtual bool compute(bool force);
+      virtual bool execute();
   };
 
 //----------------------------------------------------------------------
@@ -1083,11 +1096,8 @@ class c_block_file_save: public c_special_block
 
   {
     protected:
-      string path;
-
       virtual void set_default();
-    public:
-      virtual bool compute(bool force);
+      virtual bool execute();
   };
 
 //----------------------------------------------------------------------
