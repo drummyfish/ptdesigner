@@ -381,30 +381,16 @@ class c_block
          * Sets the error flag and invalidates the block.
          */
 
-      bool manage_input_graphic_blocks(unsigned int number, bool force,
-        bool *change_occured);
+      bool is_graphic_input(unsigned int number);
 
         /**<
-         * Takes care of first number of input blocks, checking if they
-         * are connected, if they are graphic blocks, if they are valid
-         * and recomputing them in case they aren't, and if they don't
-         * have errors set. This function is supposed to help the block
-         * check its inputs before computing its output. Even if false
-         * is to be returned, as many as possible of the input blocks
-         * are managed.
+         * Checks whether there is a graphic block at given input block
+         * of this block.
          *
-         * @param number number of blocks to be checked
-         * @param force if true, the input blocks will always be
-         *        recomputed, if false, the blocks will only be
-         *        recommputed if needed
-         * @param change_occured if this variable is not NULL, the
-         *        information about whether any change in input blocks
-         *        occured will be returned in it
+         * @param number number of input slot
          *
-         * @return true is returned if everything went OK, i.e. all of
-         *         the first number blocks are connected graphic blocks
-         *         with valid inputs and no errors, otherwise false is
-         *          returned
+         * @return true if there is a graphic block at given input slot,
+         *         false otherwise
          */
 
       virtual void set_default();
@@ -1079,6 +1065,20 @@ class c_block_mix_channels: public c_graphic_block
   */
 
 class c_block_rgb: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * Substrate algorithm block.
+  */
+
+class c_block_substrate: public c_graphic_block
 
   {
     protected:

@@ -664,6 +664,18 @@ c_texture_graph::c_texture_graph()
 
 //----------------------------------------------------------------------
 
+bool c_block::is_graphic_input(unsigned int number)
+
+  {
+    if (number >= MAX_INPUT_BLOCKS)
+      return false;
+
+    return (this->input_blocks[number] != NULL) &&
+      (this->input_blocks[number]->has_image());
+  }
+
+//----------------------------------------------------------------------
+
 c_texture_graph::~c_texture_graph()
 
   {
@@ -898,13 +910,29 @@ c_graphic_block::c_graphic_block()
 
 //----------------------------------------------------------------------
 
+unsigned int c_texture_graph::get_supersampling()
+
+  {
+    return this->supersampling_level;
+  }
+
+//----------------------------------------------------------------------
+
 void c_graphic_block::adjust()
 
   {
-    unsigned int resolution_x,resolution_y;
+    unsigned int resolution_x,resolution_y,supersampling;
 
     if (this->initialised && this->graph != NULL)
-      this->graph->get_resolution(&resolution_x,&resolution_y);
+      {
+        this->graph->get_resolution(&resolution_x,&resolution_y);
+        supersampling = this->graph->get_supersampling();
+
+        // compute the real resolution (with supersampling):
+
+        resolution_x *= supersampling;
+        resolution_y *= supersampling;
+      }
 
     if (!this->initialised || this->buffer.width != resolution_x ||
       this->buffer.height != resolution_y)
@@ -993,47 +1021,6 @@ bool c_texture_graph::is_error()
         return true;
 
     return false;
-  }
-
-//----------------------------------------------------------------------
-
-bool c_block::manage_input_graphic_blocks(unsigned int number,
-  bool force, bool *change_occured)
-
-  {
-    unsigned int i;
-    bool result;
-    bool change;
-
-    if (number >= MAX_INPUT_BLOCKS)
-      number = MAX_INPUT_BLOCKS;
-
-    result = true;
-    change = false;
-
-    for (i = 0; i < number; i++)
-      {
-        if (this->input_blocks[i] == NULL)
-          result = false;                    // no block connected
-        else
-          {
-            if (!this->input_blocks[i]->has_image())
-              result = false;                // not an graphic block
-            else
-              {                              // compute the input
-                if (this->input_blocks[i]->compute(force))
-                  change = true;
-              }
-
-            if (this->input_blocks[i]->is_error())
-              result = false;                // error in the input block
-          }
-      }
-
-    if (change_occured != NULL)
-      *change_occured = change;
-
-    return result;
   }
 
 //----------------------------------------------------------------------
@@ -1225,6 +1212,8 @@ c_block *get_block_instance(string block_name)
       return new c_block_voronoi_diagram();
     else if (block_name.compare("fault formation noise") == 0)
       return new c_block_fault_formation_noise();
+    else if (block_name.compare("substrate") == 0)
+      return new c_block_substrate();
 
     return NULL;
   }
@@ -1647,6 +1636,27 @@ void c_block_mix_channels::set_default()
     this->name = "mix channels";
   }
 
+//----------------------------------------------------------------------
+
+void c_block_substrate::set_default()
+
+  {
+    this->parameters->add_parameter("number of iterations",
+      PARAMETER_INT);
+    this->parameters->add_parameter("number of lines",PARAMETER_INT);
+    this->parameters->add_parameter("fill type",PARAMETER_INT);
+    this->parameters->add_parameter("grayscale",PARAMETER_BOOL);
+    this->parameters->add_parameter("iterate",PARAMETER_BOOL);
+    this->name = "substrate";
+
+    this->parameters->set_int_value("number of iterations",10);
+    this->parameters->set_int_value("number of lines",10);
+    this->parameters->set_int_value("fill type",
+      (int) FILL_KEEP_BORDERS);
+    this->parameters->set_bool_value("grayscale",false);
+    this->parameters->set_bool_value("iterate",true);
+  }
+
 //======================================================================
 // 'EXECUTE' FUNCTIONS:
 //======================================================================
@@ -1781,12 +1791,49 @@ bool c_block_color_fill::execute()
 bool c_block_file_save::execute()
 
   {
-    if (!color_buffer_save_to_png(
+    t_color_buffer help_buffer;
+    bool success;
+
+    if (!this->is_graphic_input(0))
+      return false;
+
+    pt_supersampling(   // perform supersampling
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
-        (char *) (this->parameters->get_string_value("path")).c_str()))
+      this->graph->get_supersampling(),
+      &help_buffer);
+
+    success = true;
+
+    if (!color_buffer_save_to_png(&help_buffer,
+      ((char *) (this->parameters->get_string_value("path")).c_str())))
       {
-        return false;
+        success = false;
       }
+
+    color_buffer_destroy(&help_buffer);
+
+    return success;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_substrate::execute()
+
+  {
+    int number;
+
+    if (this->parameters->get_bool_value("iterate"))
+      number = this->parameters->get_int_value("number of iterations");
+    else
+      number = this->parameters->get_int_value("number of lines");
+
+    pt_substrate(
+      this->get_random_seed(),
+      this->parameters->get_bool_value("iterate"),
+      number,
+      (t_fill_type) this->parameters->get_int_value("fill type"),
+      this->parameters->get_bool_value("grayscale"),
+      &(this->buffer));
 
     return true;
   }
