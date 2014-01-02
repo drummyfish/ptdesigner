@@ -1214,6 +1214,8 @@ c_block *get_block_instance(string block_name)
       return new c_block_fault_formation_noise();
     else if (block_name.compare("substrate") == 0)
       return new c_block_substrate();
+    else if (block_name.compare("mix") == 0)
+      return new c_block_mix();
 
     return NULL;
   }
@@ -1657,6 +1659,19 @@ void c_block_substrate::set_default()
     this->parameters->set_bool_value("iterate",true);
   }
 
+//----------------------------------------------------------------------
+
+void c_block_mix::set_default()
+
+  {
+    this->parameters->add_parameter("percentage",PARAMETER_INT);
+    this->parameters->add_parameter("method",PARAMETER_INT);
+    this->name = "mix";
+
+    this->parameters->set_int_value("percentage",50);
+    this->parameters->set_int_value("method",MIX_AVERAGE);
+  }
+
 //======================================================================
 // 'EXECUTE' FUNCTIONS:
 //======================================================================
@@ -1716,6 +1731,33 @@ bool c_block_bump_noise::execute()
 
 //----------------------------------------------------------------------
 
+bool c_block_mix::execute()
+
+  {
+    t_color_buffer *alpha_buffer;
+
+    if (!this->is_graphic_input(0) || !this->is_graphic_input(1))
+      return false;
+
+    if (this->is_graphic_input(2))
+      alpha_buffer =
+        ((c_graphic_block *)this->input_blocks[2])->get_color_buffer();
+    else
+      alpha_buffer = NULL;
+
+    pt_mix_buffers(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      ((c_graphic_block *) this->input_blocks[1])->get_color_buffer(),
+      &(this->buffer),
+      this->parameters->get_int_value("percentage"),
+      (t_mix_type) this->parameters->get_int_value("method"),
+      alpha_buffer);
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_block_fault_formation_noise::execute()
 
   {
@@ -1730,6 +1772,9 @@ bool c_block_fault_formation_noise::execute()
 bool c_block_rgb::execute()
 
   {
+    if (!this->is_graphic_input(0))
+      return false;
+
     color_buffer_copy_data(((c_graphic_block *)
       this->input_blocks[0])->get_color_buffer(),&(this->buffer));
 
@@ -1764,6 +1809,10 @@ bool c_block_perlin_noise::execute()
 bool c_block_mix_channels::execute()
 
   {
+    if (!this->is_graphic_input(0) || !this->is_graphic_input(1) ||
+      !this->is_graphic_input(2))
+      return false;
+
     pt_mix_channels(
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
       ((c_graphic_block *) this->input_blocks[1])->get_color_buffer(),

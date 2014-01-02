@@ -1089,7 +1089,36 @@ class c_block_substrate: public c_graphic_block
 //----------------------------------------------------------------------
 
  /**
-  * Special block that saves its input to png file.
+  * Mixes or blends two images together with optional alpha channel
+  * spicified with third image.
+  */
+
+class c_block_mix: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * End block, stores the final texture in set resolution and with
+   * supersampling applied.
+   */
+
+class c_block_end: public c_graphic_block
+
+  {
+    // TODOOOOOOOOOOOOO
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * Special block that saves its input to png file in set resolution
+  * and with supersampling applied.
   */
 
 class c_block_file_save: public c_special_block
