@@ -874,9 +874,8 @@ int is_power_of_2(unsigned int value)
 void make_bayer_matrix(t_matrix *matrix)
 
   {
-    unsigned int i,j,k,x,y,width;
+    unsigned int i,j,k,x,y;
     int random;
-    double value;
 
     if (matrix == NULL)
       return;

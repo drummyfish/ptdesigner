@@ -1216,6 +1216,24 @@ c_block *get_block_instance(string block_name)
       return new c_block_substrate();
     else if (block_name.compare("mix") == 0)
       return new c_block_mix();
+    else if (block_name.compare("marble") == 0)
+      return new c_block_marble();
+    else if (block_name.compare("wood") == 0)
+      return new c_block_wood();
+    else if (block_name.compare("particles") == 0)
+      return new c_block_particles();
+    else if (block_name.compare("circle transform") == 0)
+      return new c_block_circle_transform();
+    else if (block_name.compare("radius transform") == 0)
+      return new c_block_radius_transform();
+    else if (block_name.compare("sine transform") == 0)
+      return new c_block_sine_transform();
+    else if (block_name.compare("invert") == 0)
+      return new c_block_invert();
+    else if (block_name.compare("dither") == 0)
+      return new c_block_dither();
+    else if (block_name.compare("crop amplitude") == 0)
+      return new c_block_crop_amplitude();
 
     return NULL;
   }
@@ -1632,6 +1650,21 @@ void c_block_bump_noise::set_default()
 
 //----------------------------------------------------------------------
 
+void c_block_sine_transform::set_default()
+
+  {
+    this->parameters->add_parameter("phase",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("periods",PARAMETER_INT);
+    this->parameters->add_parameter("amplitude",PARAMETER_INT);
+    this->name = "sine transform";
+
+    this->parameters->set_double_value("phase",0.0);
+    this->parameters->set_int_value("periods",5);
+    this->parameters->set_int_value("amplitude",127);
+  }
+
+//----------------------------------------------------------------------
+
 void c_block_mix_channels::set_default()
 
   {
@@ -1672,9 +1705,314 @@ void c_block_mix::set_default()
     this->parameters->set_int_value("method",MIX_AVERAGE);
   }
 
+//----------------------------------------------------------------------
+
+void c_block_marble::set_default()
+
+  {
+    this->parameters->add_parameter("periods",PARAMETER_INT);
+    this->parameters->add_parameter("intensity",PARAMETER_INT);
+    this->parameters->add_parameter("amplitude",PARAMETER_INT);
+    this->parameters->add_parameter("direction",PARAMETER_INT);
+    this->name = "marble";
+
+    this->parameters->set_int_value("periods",5);
+    this->parameters->set_int_value("intensity",4);
+    this->parameters->set_int_value("amplitude",127);
+    this->parameters->set_int_value("direction",DIRECTION_HORIZONTAL);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_wood::set_default()
+
+  {
+    this->parameters->add_parameter("circles",PARAMETER_INT);
+    this->parameters->add_parameter("hardness",PARAMETER_INT);
+    this->parameters->add_parameter("intensity",PARAMETER_INT);
+    this->parameters->add_parameter("amplitude",PARAMETER_INT);
+    this->parameters->add_parameter("direction",PARAMETER_INT);
+    this->name = "wood";
+
+    this->parameters->set_int_value("circles",4);
+    this->parameters->set_int_value("hardness",8);
+    this->parameters->set_int_value("intensity",20);
+    this->parameters->set_int_value("amplitude",127);
+    this->parameters->set_int_value("direction",DIRECTION_HORIZONTAL);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_particles::set_default()
+
+  {
+    this->parameters->add_parameter("particles",PARAMETER_INT);
+    this->parameters->add_parameter("initial x",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("initial y",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("angle",PARAMETER_INT);
+    this->parameters->add_parameter("spread",PARAMETER_INT);
+    this->parameters->add_parameter("initial velocity",
+      PARAMETER_DOUBLE);
+    this->name = "particles";
+
+    this->parameters->set_int_value("particles",500);
+    this->parameters->set_double_value("initial x",0.5);
+    this->parameters->set_double_value("initial y",0.5);
+    this->parameters->set_int_value("angle",0);
+    this->parameters->set_int_value("spread",360);
+    this->parameters->set_double_value("initial velocity",5);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_circle_transform::set_default()
+
+  {
+    this->parameters->add_parameter("radius",PARAMETER_INT);
+    this->parameters->add_parameter("jumps",PARAMETER_INT);
+    this->name = "circle transform";
+
+    this->parameters->set_int_value("radius",5);
+    this->parameters->set_int_value("jumps",1);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_radius_transform::set_default()
+
+  {
+    this->parameters->add_parameter("radius min",PARAMETER_INT);
+    this->parameters->add_parameter("radius max",PARAMETER_INT);
+    this->parameters->add_parameter("rotate left",PARAMETER_BOOL);
+    this->parameters->add_parameter("horizontal",PARAMETER_BOOL);
+    this->name = "radius transform";
+
+    this->parameters->set_int_value("radius min",1);
+    this->parameters->set_int_value("radius max",20);
+    this->parameters->set_bool_value("rotate left",true);
+    this->parameters->set_bool_value("horizontal",true);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_invert::set_default()
+
+  {
+    this->name = "invert";
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_dither::set_default()
+
+  {
+    this->parameters->add_parameter("levels",PARAMETER_INT);
+    this->parameters->add_parameter("method",PARAMETER_INT);
+    this->name = "dither";
+
+    this->parameters->set_int_value("levels",8);
+    this->parameters->set_int_value("method",DITHERING_ORDERED);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_crop_amplitude::set_default()
+
+  {
+    this->parameters->add_parameter("lower limit",PARAMETER_INT);
+    this->parameters->add_parameter("upper limit",PARAMETER_INT);
+    this->name = "crop amplitude";
+
+    this->parameters->set_int_value("lower limit",50);
+    this->parameters->set_int_value("upper limit",200);
+  }
+
 //======================================================================
 // 'EXECUTE' FUNCTIONS:
 //======================================================================
+
+bool c_block_crop_amplitude::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_crop_amplitude(
+      &(this->buffer),
+      this->parameters->get_int_value("lower limit"),
+      this->parameters->get_int_value("upper limit"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_dither::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_dithering(
+      &(this->buffer),
+      this->parameters->get_int_value("levels"),
+      (t_dithering_method) this->parameters->get_int_value("method"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_invert::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_invert_colors(&(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_sine_transform::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    pt_transformation_sine(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      this->parameters->get_double_value("phase"),
+      this->parameters->get_int_value("periods"),
+      this->parameters->get_int_value("amplitude"),
+      &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_circle_transform::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    pt_transformation_circle(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      this->parameters->get_int_value("radius"),
+      this->parameters->get_int_value("jumps"),
+      &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_radius_transform::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    pt_transformation_radius(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      this->parameters->get_int_value("radius min"),
+      this->parameters->get_int_value("radius max"),
+      this->parameters->get_bool_value("rotate left"),
+      this->parameters->get_bool_value("horizontal"),
+      &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_wood::execute()
+
+  {
+    t_color_buffer *noise_buffer;
+
+    if (this->is_graphic_input(0))
+      noise_buffer =
+        ((c_graphic_block *) this->input_blocks[0])->get_color_buffer();
+    else
+      noise_buffer = NULL;
+
+    pt_wood(
+      this->get_random_seed(),
+      this->parameters->get_int_value("circles"),
+      this->parameters->get_int_value("hardness"),
+      this->parameters->get_int_value("intensity"),
+      (t_direction) this->parameters->get_int_value("direction"),
+      this->parameters->get_int_value("amplitude"),
+      &(this->buffer),
+      noise_buffer);
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_particles::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    pt_particle_movement(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      this->parameters->get_int_value("particles"),
+      this->parameters->get_double_value("initial x"),
+      this->parameters->get_double_value("initial y"),
+      this->parameters->get_int_value("angle"),
+      this->parameters->get_int_value("spread"),
+      this->parameters->get_double_value("initial velocity"),
+      &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_marble::execute()
+
+  {
+    t_color_buffer *noise_buffer;
+
+    if (this->is_graphic_input(0))
+      noise_buffer =
+        ((c_graphic_block *) this->input_blocks[0])->get_color_buffer();
+    else
+      noise_buffer = NULL;
+
+    pt_marble(
+      this->get_random_seed(),
+      this->parameters->get_int_value("periods"),
+      this->parameters->get_int_value("intensity"),
+      (t_direction) this->parameters->get_int_value("direction"),
+      this->parameters->get_int_value("amplitude"),
+      &(this->buffer),
+      noise_buffer);
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
 
 bool c_block_voronoi_diagram::execute()
 

@@ -976,9 +976,9 @@ class c_texture_graph
 
 ======================================================================*/
 
- /**
-  * Voronoi diagram block.
-  */
+  /**
+   * Voronoi diagram block.
+   */
 
 class c_block_voronoi_diagram: public c_graphic_block
 
@@ -990,9 +990,10 @@ class c_block_voronoi_diagram: public c_graphic_block
 
 //----------------------------------------------------------------------
 
- /**
-  * Color fill block that generates an image filled with constant color.
-  */
+  /**
+   * Color fill block that generates an image filled with constant
+   * color.
+   */
 
 class c_block_color_fill: public c_graphic_block
 
@@ -1004,9 +1005,9 @@ class c_block_color_fill: public c_graphic_block
 
 //----------------------------------------------------------------------
 
- /**
-  * Bump noise block.
-  */
+  /**
+   * Bump noise block.
+   */
 
 class c_block_bump_noise: public c_graphic_block
 
@@ -1032,9 +1033,9 @@ class c_block_fault_formation_noise: public c_graphic_block
 
 //----------------------------------------------------------------------
 
- /**
-  * Perlin noise block.
-  */
+  /**
+   * Perlin noise block.
+   */
 
 class c_block_perlin_noise: public c_graphic_block
 
@@ -1046,9 +1047,9 @@ class c_block_perlin_noise: public c_graphic_block
 
 //----------------------------------------------------------------------
 
- /**
-  * Channel mix block.
-  */
+  /**
+   * Channel mix block.
+   */
 
 class c_block_mix_channels: public c_graphic_block
 
@@ -1060,9 +1061,9 @@ class c_block_mix_channels: public c_graphic_block
 
 //----------------------------------------------------------------------
 
- /**
-  * RGB adjust block.
-  */
+  /**
+   * RGB adjust block.
+   */
 
 class c_block_rgb: public c_graphic_block
 
@@ -1074,9 +1075,9 @@ class c_block_rgb: public c_graphic_block
 
 //----------------------------------------------------------------------
 
- /**
-  * Substrate algorithm block.
-  */
+  /**
+   * Substrate algorithm block.
+   */
 
 class c_block_substrate: public c_graphic_block
 
@@ -1088,12 +1089,138 @@ class c_block_substrate: public c_graphic_block
 
 //----------------------------------------------------------------------
 
- /**
-  * Mixes or blends two images together with optional alpha channel
-  * spicified with third image.
-  */
+  /**
+   * Mixes or blends two images together with optional alpha channel
+   * spicified with third image.
+   */
 
 class c_block_mix: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Marble block.
+   */
+
+class c_block_marble: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Wood block.
+   */
+
+class c_block_wood: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Particle block.
+   */
+
+class c_block_particles: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Circle transform block.
+   */
+
+class c_block_circle_transform: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Sine transform block.
+   */
+
+class c_block_sine_transform: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Dither block.
+   */
+
+class c_block_dither: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Amplitude crop block.
+   */
+
+class c_block_crop_amplitude: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Color invert block.
+   */
+
+class c_block_invert: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Radius transform block.
+   */
+
+class c_block_radius_transform: public c_graphic_block
 
   {
     protected:
