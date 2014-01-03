@@ -1243,6 +1243,62 @@ class c_block_end: public c_graphic_block
 
 //----------------------------------------------------------------------
 
+  /**
+   * Normal map block.
+   */
+
+class c_block_normal_map: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Lighting block.
+   */
+
+class c_block_light: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Glass block.
+   */
+
+class c_block_glass: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Grayscale block.
+   */
+
+class c_block_grayscale: public c_graphic_block
+
+  {
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
  /**
   * Special block that saves its input to png file in set resolution
   * and with supersampling applied.

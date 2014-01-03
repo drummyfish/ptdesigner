@@ -15,16 +15,18 @@ int main()
     graph = new c_texture_graph();
 
     graph->add_block(new c_block_file_save());        // 0
-    graph->add_block(new c_block_perlin_noise());     // 1
-    graph->add_block(new c_block_sine_transform());   // 2
-    graph->add_block(new c_block_crop_amplitude());   // 3
+    graph->add_block(new c_block_voronoi_diagram());  // 1
+    graph->add_block(new c_block_normal_map());       // 2
+    graph->add_block(new c_block_light());            // 3
+    graph->add_block(new c_block_grayscale());        // 4
 
     cout << graph->connect_by_id(1,2,0) << endl;
-    cout << graph->connect_by_id(3,0,0) << endl;
     cout << graph->connect_by_id(2,3,0) << endl;
+    cout << graph->connect_by_id(3,4,0) << endl;
+    cout << graph->connect_by_id(4,0,0) << endl;
 
     graph->set_resolution(512,480);
-    graph->set_supersampling(1);
+    graph->set_supersampling(2);
 
 //    graph->load_from_file("texture.xml");
 

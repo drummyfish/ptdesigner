@@ -1234,6 +1234,14 @@ c_block *get_block_instance(string block_name)
       return new c_block_dither();
     else if (block_name.compare("crop amplitude") == 0)
       return new c_block_crop_amplitude();
+    else if (block_name.compare("normal map") == 0)
+      return new c_block_normal_map();
+    else if (block_name.compare("light") == 0)
+      return new c_block_light();
+    else if (block_name.compare("glass") == 0)
+      return new c_block_glass();
+    else if (block_name.compare("grayscale") == 0)
+      return new c_block_grayscale();
 
     return NULL;
   }
@@ -1827,9 +1835,172 @@ void c_block_crop_amplitude::set_default()
     this->parameters->set_int_value("upper limit",200);
   }
 
+//----------------------------------------------------------------------
+
+void c_block_normal_map::set_default()
+
+  {
+    this->parameters->add_parameter("neighbourhood size",PARAMETER_INT);
+    this->name = "normal map";
+
+    this->parameters->set_int_value("neighbourhood size",5);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_glass::set_default()
+
+  {
+    this->parameters->add_parameter("height",PARAMETER_DOUBLE);
+    this->name = "glass";
+
+    this->parameters->set_double_value("height",1.0);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_grayscale::set_default()
+
+  {
+    this->name = "grayscale";
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_light::set_default()
+
+  {
+    this->parameters->add_parameter("ambient red",PARAMETER_INT);
+    this->parameters->add_parameter("ambient green",PARAMETER_INT);
+    this->parameters->add_parameter("ambient blue",PARAMETER_INT);
+
+    this->parameters->add_parameter("diffuse red",PARAMETER_INT);
+    this->parameters->add_parameter("diffuse green",PARAMETER_INT);
+    this->parameters->add_parameter("diffuse blue",PARAMETER_INT);
+
+    this->parameters->add_parameter("specular red",PARAMETER_INT);
+    this->parameters->add_parameter("specular green",PARAMETER_INT);
+    this->parameters->add_parameter("specular blue",PARAMETER_INT);
+
+    this->parameters->add_parameter("reflection curve",PARAMETER_INT);
+    this->parameters->add_parameter("viewer height",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("phong exponent",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("direction vector x",
+      PARAMETER_DOUBLE);
+    this->parameters->add_parameter("direction vector y",
+      PARAMETER_DOUBLE);
+
+    this->name = "light";
+
+    this->parameters->set_int_value("ambient red",5);
+    this->parameters->set_int_value("ambient green",0);
+    this->parameters->set_int_value("ambient blue",10);
+
+    this->parameters->set_int_value("diffuse red",150);
+    this->parameters->set_int_value("diffuse green",100);
+    this->parameters->set_int_value("diffuse blue",100);
+
+    this->parameters->set_int_value("specular red",255);
+    this->parameters->set_int_value("specular green",245);
+    this->parameters->set_int_value("specular blue",240);
+
+    this->parameters->set_int_value("reflection curve",
+      REFLECTION_CURVE_COSINE_ABS);
+    this->parameters->set_double_value("viewer height",1.0);
+    this->parameters->set_double_value("phong exponent",2.0);
+    this->parameters->set_double_value("direction vector x",0.5);
+    this->parameters->set_double_value("direction vector y",0.5);
+  }
+
 //======================================================================
 // 'EXECUTE' FUNCTIONS:
 //======================================================================
+
+bool c_block_light::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_destroy(&(this->buffer));
+
+    pt_light(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer),
+      this->parameters->get_int_value("ambient red"),
+      this->parameters->get_int_value("ambient green"),
+      this->parameters->get_int_value("ambient blue"),
+      this->parameters->get_int_value("diffuse red"),
+      this->parameters->get_int_value("diffuse green"),
+      this->parameters->get_int_value("diffuse blue"),
+      this->parameters->get_int_value("specular red"),
+      this->parameters->get_int_value("specular green"),
+      this->parameters->get_int_value("specular blue"),
+      this->parameters->get_double_value("phong exponent"),
+      (t_reflection_curve)
+        this->parameters->get_int_value("reflection curve"),
+      this->parameters->get_double_value("viewer height"),
+      this->parameters->get_double_value("direction vector x"),
+      this->parameters->get_double_value("direction vector y"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_normal_map::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_destroy(&(this->buffer));
+
+    pt_normal_map(
+    ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+    this->parameters->get_int_value("neighbourhood size"),
+    &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_glass::execute()
+
+  {
+    if (!this->is_graphic_input(0) || !this->is_graphic_input(1))
+      return false;
+
+    color_buffer_destroy(&(this->buffer));
+
+    pt_glass(
+      ((c_graphic_block *) this->input_blocks[1])->get_color_buffer(),
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer),
+      this->parameters->get_double_value("height"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_grayscale::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_grayscale(&(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
 
 bool c_block_crop_amplitude::execute()
 
@@ -1894,6 +2065,8 @@ bool c_block_sine_transform::execute()
     if (!this->is_graphic_input(0))
       return false;
 
+    color_buffer_destroy(&(this->buffer));
+
     pt_transformation_sine(
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
       this->parameters->get_double_value("phase"),
@@ -1912,6 +2085,8 @@ bool c_block_circle_transform::execute()
     if (!this->is_graphic_input(0))
       return false;
 
+    color_buffer_destroy(&(this->buffer));
+
     pt_transformation_circle(
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
       this->parameters->get_int_value("radius"),
@@ -1928,6 +2103,8 @@ bool c_block_radius_transform::execute()
   {
     if (!this->is_graphic_input(0))
       return false;
+
+    color_buffer_destroy(&(this->buffer));
 
     pt_transformation_radius(
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
@@ -1973,6 +2150,8 @@ bool c_block_particles::execute()
   {
     if (!this->is_graphic_input(0))
       return false;
+
+    color_buffer_destroy(&(this->buffer));
 
     pt_particle_movement(
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
@@ -2083,6 +2262,8 @@ bool c_block_mix::execute()
     else
       alpha_buffer = NULL;
 
+    color_buffer_destroy(&(this->buffer));
+
     pt_mix_buffers(
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
       ((c_graphic_block *) this->input_blocks[1])->get_color_buffer(),
@@ -2150,6 +2331,8 @@ bool c_block_mix_channels::execute()
     if (!this->is_graphic_input(0) || !this->is_graphic_input(1) ||
       !this->is_graphic_input(2))
       return false;
+
+    color_buffer_destroy(&(this->buffer));
 
     pt_mix_channels(
       ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),

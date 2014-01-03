@@ -782,7 +782,7 @@ void pt_wood(int random, unsigned int circles, unsigned int hardness,
    * @param amplitude amplitude of the picture, must be less or equal to
    *        127
    * @param destination color buffer in which the result will be stored,
-   *        musr be initiated before this function is called
+   *        must be initiated before this function is called
    * @param noise_source external source of the noise, it may be NULL in
    *        which case perlin noise will be generated and used, if this
    *        parameter is used, the noise color buffer must be of the
@@ -1004,7 +1004,8 @@ void pt_transformation_radius(t_color_buffer *buffer,
    *        right
    * @param go_horizontal if true, the angle will change with horizontal
    *        movement, otherwise vertical
-   * @param destination output buffer of the operation
+   * @param destination output buffer of the operation, must be
+   *        deallocated
    */
 
 //----------------------------------------------------------------------
@@ -1135,7 +1136,7 @@ void pt_normal_map(t_color_buffer *buffer, unsigned int
   neighbourhood_size, t_color_buffer *destination);
 
   /**<
-   * The function sonsiders the input buffer as a grayscale heightmap
+   * The function considers the input buffer as a grayscale heightmap
    * and creates it's normal map.
    *
    * @param buffer input buffer, grayscale heightmap
