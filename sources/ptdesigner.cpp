@@ -430,11 +430,20 @@ c_block::c_block()
     this->set_id(0);
     this->parameters = new c_parameters(this);
     this->uses_global_seed = true;
+    this->is_end_block = false;
 
     for (i = 0; i < MAX_INPUT_BLOCKS; i++)
       {
         this->input_blocks[i] = NULL;
       }
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block::is_terminal()
+
+  {
+    return this->is_end_block;
   }
 
 //----------------------------------------------------------------------
@@ -1028,7 +1037,7 @@ bool c_texture_graph::is_error()
 bool c_block::connect(c_block *input_block, unsigned int slot_number)
 
   {
-    if (slot_number >= MAX_INPUT_BLOCKS)
+    if (slot_number >= MAX_INPUT_BLOCKS || input_block->is_terminal())
       return false;
 
     if (this->input_blocks[slot_number] == NULL)
@@ -1198,50 +1207,62 @@ string c_parameters::get_value_string(unsigned int index)
 c_block *get_block_instance(string block_name)
 
   {
-    if (block_name.compare("file save") == 0)
+    if (block_name.compare(FILE_SAVE_NAME) == 0)
       return new c_block_file_save();
-    else if (block_name.compare("bump noise") == 0)
+    if (block_name.compare(FILE_LOAD_NAME) == 0)
+      return new c_block_file_load();
+    else if (block_name.compare(BUMP_NOISE_NAME) == 0)
       return new c_block_bump_noise();
-    else if (block_name.compare("color fill") == 0)
+    else if (block_name.compare(COLOR_FILL_NAME) == 0)
       return new c_block_color_fill();
-    else if (block_name.compare("perlin noise") == 0)
+    else if (block_name.compare(PERLIN_NOISE_NAME) == 0)
       return new c_block_perlin_noise();
-    else if (block_name.compare("mix channels") == 0)
+    else if (block_name.compare(MIX_CHANNELS_NAME) == 0)
       return new c_block_mix_channels();
-    else if (block_name.compare("voronoi diagram") == 0)
+    else if (block_name.compare(VORONOI_DIAGRAM_NAME) == 0)
       return new c_block_voronoi_diagram();
-    else if (block_name.compare("fault formation noise") == 0)
+    else if (block_name.compare(RGB_NAME) == 0)
+      return new c_block_rgb();
+    else if (block_name.compare(HSL_NAME) == 0)
+      return new c_block_hsl();
+    else if (block_name.compare(FAULT_FORMATION_NOISE_NAME) == 0)
       return new c_block_fault_formation_noise();
-    else if (block_name.compare("substrate") == 0)
+    else if (block_name.compare(SUBSTRATE_NAME) == 0)
       return new c_block_substrate();
-    else if (block_name.compare("mix") == 0)
+    else if (block_name.compare(MIX_NAME) == 0)
       return new c_block_mix();
-    else if (block_name.compare("marble") == 0)
+    else if (block_name.compare(MARBLE_NAME) == 0)
       return new c_block_marble();
-    else if (block_name.compare("wood") == 0)
+    else if (block_name.compare(WOOD_NAME) == 0)
       return new c_block_wood();
-    else if (block_name.compare("particles") == 0)
+    else if (block_name.compare(PARTICLES_NAME) == 0)
       return new c_block_particles();
-    else if (block_name.compare("circle transform") == 0)
+    else if (block_name.compare(CIRCLE_TRANSFORM_NAME) == 0)
       return new c_block_circle_transform();
-    else if (block_name.compare("radius transform") == 0)
+    else if (block_name.compare(RADIUS_TRANSFORM_NAME) == 0)
       return new c_block_radius_transform();
-    else if (block_name.compare("sine transform") == 0)
+    else if (block_name.compare(SINE_TRANSFORM_NAME) == 0)
       return new c_block_sine_transform();
-    else if (block_name.compare("invert") == 0)
+    else if (block_name.compare(INVERT_NAME) == 0)
       return new c_block_invert();
-    else if (block_name.compare("dither") == 0)
+    else if (block_name.compare(DITHER_NAME) == 0)
       return new c_block_dither();
-    else if (block_name.compare("crop amplitude") == 0)
+    else if (block_name.compare(CROP_AMPLITUDE_NAME) == 0)
       return new c_block_crop_amplitude();
-    else if (block_name.compare("normal map") == 0)
+    else if (block_name.compare(NORMAL_MAP_NAME) == 0)
       return new c_block_normal_map();
-    else if (block_name.compare("light") == 0)
+    else if (block_name.compare(LIGHT_NAME) == 0)
       return new c_block_light();
-    else if (block_name.compare("glass") == 0)
+    else if (block_name.compare(GLASS_NAME) == 0)
       return new c_block_glass();
-    else if (block_name.compare("grayscale") == 0)
+    else if (block_name.compare(GRAYSCALE_NAME) == 0)
       return new c_block_grayscale();
+    else if (block_name.compare(COLOR_TRANSITION_NAME) == 0)
+      return new c_block_color_transition();
+    else if (block_name.compare(MAP_TRANSITION_NAME) == 0)
+      return new c_block_map_transition();
+    else if (block_name.compare(BRIGHTNESS_CONTRAST_NAME) == 0)
+      return new c_block_brightness_contrast();
 
     return NULL;
   }
@@ -1574,6 +1595,14 @@ bool c_texture_graph::save_to_file(string filename)
     return true;
   }
 
+//----------------------------------------------------------------------
+
+t_color_transition *c_block_color_transition::get_color_transition()
+
+  {
+    return &this->transition;
+  }
+
 //======================================================================
 // 'SET DEFAULT' FUNCTIONS:
 //======================================================================
@@ -1581,13 +1610,14 @@ bool c_texture_graph::save_to_file(string filename)
 void c_block_voronoi_diagram::set_default()
 
   {
+    this->name = VORONOI_DIAGRAM_NAME;
+
     this->parameters->add_parameter("type",PARAMETER_INT);
     this->parameters->add_parameter("metric",PARAMETER_INT);
     this->parameters->add_parameter("point place",PARAMETER_INT);
     this->parameters->add_parameter("width",PARAMETER_DOUBLE);
     this->parameters->add_parameter("point positions",PARAMETER_STRING);
     this->parameters->add_parameter("number of points",PARAMETER_INT);
-    this->name = "voronoi diagram";
 
     this->parameters->set_int_value("type",VORONOI_2_NEAREST_RATIO);
     this->parameters->set_int_value("metric",METRIC_EUCLIDEAN);
@@ -1602,10 +1632,11 @@ void c_block_voronoi_diagram::set_default()
 void c_block_color_fill::set_default()
 
   {
+    this->name = COLOR_FILL_NAME;
+
     this->parameters->add_parameter("red",PARAMETER_INT);
     this->parameters->add_parameter("green",PARAMETER_INT);
     this->parameters->add_parameter("blue",PARAMETER_INT);
-    this->name = "color fill";
 
     this->parameters->set_int_value("red",255);
     this->parameters->set_int_value("green",255);
@@ -1617,10 +1648,41 @@ void c_block_color_fill::set_default()
 void c_block_file_save::set_default()
 
   {
+    this->name = FILE_SAVE_NAME;
+    this->is_end_block = true;
     this->parameters->add_parameter("path",PARAMETER_STRING);
-    this->name = "file save";
-
     this->parameters->set_string_value("path",(char *) "texture.png");
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_file_load::set_default()
+
+  {
+    this->name = FILE_LOAD_NAME;
+
+    this->parameters->add_parameter("path",PARAMETER_STRING);
+    this->parameters->add_parameter("interpolation",PARAMETER_INT);
+
+    this->parameters->set_string_value("path",(char *) "image.png");
+    this->parameters->set_int_value("interpolation",
+      INTERPOLATION_LINEAR);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_hsl::set_default()
+
+  {
+    this->name = HSL_NAME;
+
+    this->parameters->add_parameter("hue",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("saturation",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("lightness",PARAMETER_DOUBLE);
+
+    this->parameters->set_double_value("hue",0.0);
+    this->parameters->set_double_value("saturation",0.0);
+    this->parameters->set_double_value("lightness",0.0);
   }
 
 //----------------------------------------------------------------------
@@ -1628,7 +1690,15 @@ void c_block_file_save::set_default()
 void c_block_rgb::set_default()
 
   {
-    this->name = "adjust rgb";
+    this->name = RGB_NAME;
+
+    this->parameters->add_parameter("red",PARAMETER_INT);
+    this->parameters->add_parameter("green",PARAMETER_INT);
+    this->parameters->add_parameter("blue",PARAMETER_INT);
+
+    this->parameters->set_int_value("red",0);
+    this->parameters->set_int_value("green",0);
+    this->parameters->set_int_value("blue",0);
   }
 
 //----------------------------------------------------------------------
@@ -1636,7 +1706,7 @@ void c_block_rgb::set_default()
 void c_block_fault_formation_noise::set_default()
 
   {
-    this->name = "fault formation noise";
+    this->name = FAULT_FORMATION_NOISE_NAME;
   }
 
 //----------------------------------------------------------------------
@@ -1644,11 +1714,12 @@ void c_block_fault_formation_noise::set_default()
 void c_block_bump_noise::set_default()
 
   {
+    this->name = BUMP_NOISE_NAME;
+
     this->parameters->add_parameter("bump size from",PARAMETER_DOUBLE);
     this->parameters->add_parameter("bump size to",PARAMETER_DOUBLE);
     this->parameters->add_parameter("quantity",PARAMETER_INT);
     this->parameters->add_parameter("alter amplitude",PARAMETER_BOOL);
-    this->name = "bump noise";
 
     this->parameters->set_double_value("bump size from",0.7);
     this->parameters->set_double_value("bump size to",0.01);
@@ -1661,10 +1732,11 @@ void c_block_bump_noise::set_default()
 void c_block_sine_transform::set_default()
 
   {
+    this->name = SINE_TRANSFORM_NAME;
+
     this->parameters->add_parameter("phase",PARAMETER_DOUBLE);
     this->parameters->add_parameter("periods",PARAMETER_INT);
     this->parameters->add_parameter("amplitude",PARAMETER_INT);
-    this->name = "sine transform";
 
     this->parameters->set_double_value("phase",0.0);
     this->parameters->set_int_value("periods",5);
@@ -1676,7 +1748,7 @@ void c_block_sine_transform::set_default()
 void c_block_mix_channels::set_default()
 
   {
-    this->name = "mix channels";
+    this->name = MIX_CHANNELS_NAME;
   }
 
 //----------------------------------------------------------------------
@@ -1684,13 +1756,14 @@ void c_block_mix_channels::set_default()
 void c_block_substrate::set_default()
 
   {
+    this->name = SUBSTRATE_NAME;
+
     this->parameters->add_parameter("number of iterations",
       PARAMETER_INT);
     this->parameters->add_parameter("number of lines",PARAMETER_INT);
     this->parameters->add_parameter("fill type",PARAMETER_INT);
     this->parameters->add_parameter("grayscale",PARAMETER_BOOL);
     this->parameters->add_parameter("iterate",PARAMETER_BOOL);
-    this->name = "substrate";
 
     this->parameters->set_int_value("number of iterations",10);
     this->parameters->set_int_value("number of lines",10);
@@ -1705,9 +1778,10 @@ void c_block_substrate::set_default()
 void c_block_mix::set_default()
 
   {
+    this->name = MIX_NAME;
+
     this->parameters->add_parameter("percentage",PARAMETER_INT);
     this->parameters->add_parameter("method",PARAMETER_INT);
-    this->name = "mix";
 
     this->parameters->set_int_value("percentage",50);
     this->parameters->set_int_value("method",MIX_AVERAGE);
@@ -1718,11 +1792,12 @@ void c_block_mix::set_default()
 void c_block_marble::set_default()
 
   {
+    this->name = MARBLE_NAME;
+
     this->parameters->add_parameter("periods",PARAMETER_INT);
     this->parameters->add_parameter("intensity",PARAMETER_INT);
     this->parameters->add_parameter("amplitude",PARAMETER_INT);
     this->parameters->add_parameter("direction",PARAMETER_INT);
-    this->name = "marble";
 
     this->parameters->set_int_value("periods",5);
     this->parameters->set_int_value("intensity",4);
@@ -1735,12 +1810,13 @@ void c_block_marble::set_default()
 void c_block_wood::set_default()
 
   {
+    this->name = WOOD_NAME;
+
     this->parameters->add_parameter("circles",PARAMETER_INT);
     this->parameters->add_parameter("hardness",PARAMETER_INT);
     this->parameters->add_parameter("intensity",PARAMETER_INT);
     this->parameters->add_parameter("amplitude",PARAMETER_INT);
     this->parameters->add_parameter("direction",PARAMETER_INT);
-    this->name = "wood";
 
     this->parameters->set_int_value("circles",4);
     this->parameters->set_int_value("hardness",8);
@@ -1754,6 +1830,8 @@ void c_block_wood::set_default()
 void c_block_particles::set_default()
 
   {
+    this->name = PARTICLES_NAME;
+
     this->parameters->add_parameter("particles",PARAMETER_INT);
     this->parameters->add_parameter("initial x",PARAMETER_DOUBLE);
     this->parameters->add_parameter("initial y",PARAMETER_DOUBLE);
@@ -1761,7 +1839,6 @@ void c_block_particles::set_default()
     this->parameters->add_parameter("spread",PARAMETER_INT);
     this->parameters->add_parameter("initial velocity",
       PARAMETER_DOUBLE);
-    this->name = "particles";
 
     this->parameters->set_int_value("particles",500);
     this->parameters->set_double_value("initial x",0.5);
@@ -1776,9 +1853,10 @@ void c_block_particles::set_default()
 void c_block_circle_transform::set_default()
 
   {
+    this->name = CIRCLE_TRANSFORM_NAME;
+
     this->parameters->add_parameter("radius",PARAMETER_INT);
     this->parameters->add_parameter("jumps",PARAMETER_INT);
-    this->name = "circle transform";
 
     this->parameters->set_int_value("radius",5);
     this->parameters->set_int_value("jumps",1);
@@ -1789,11 +1867,12 @@ void c_block_circle_transform::set_default()
 void c_block_radius_transform::set_default()
 
   {
+    this->name = RADIUS_TRANSFORM_NAME;
+
     this->parameters->add_parameter("radius min",PARAMETER_INT);
     this->parameters->add_parameter("radius max",PARAMETER_INT);
     this->parameters->add_parameter("rotate left",PARAMETER_BOOL);
     this->parameters->add_parameter("horizontal",PARAMETER_BOOL);
-    this->name = "radius transform";
 
     this->parameters->set_int_value("radius min",1);
     this->parameters->set_int_value("radius max",20);
@@ -1806,7 +1885,7 @@ void c_block_radius_transform::set_default()
 void c_block_invert::set_default()
 
   {
-    this->name = "invert";
+    this->name = INVERT_NAME;
   }
 
 //----------------------------------------------------------------------
@@ -1814,9 +1893,10 @@ void c_block_invert::set_default()
 void c_block_dither::set_default()
 
   {
+    this->name = DITHER_NAME;
+
     this->parameters->add_parameter("levels",PARAMETER_INT);
     this->parameters->add_parameter("method",PARAMETER_INT);
-    this->name = "dither";
 
     this->parameters->set_int_value("levels",8);
     this->parameters->set_int_value("method",DITHERING_ORDERED);
@@ -1827,9 +1907,10 @@ void c_block_dither::set_default()
 void c_block_crop_amplitude::set_default()
 
   {
+    this->name = CROP_AMPLITUDE_NAME;
+
     this->parameters->add_parameter("lower limit",PARAMETER_INT);
     this->parameters->add_parameter("upper limit",PARAMETER_INT);
-    this->name = "crop amplitude";
 
     this->parameters->set_int_value("lower limit",50);
     this->parameters->set_int_value("upper limit",200);
@@ -1840,9 +1921,8 @@ void c_block_crop_amplitude::set_default()
 void c_block_normal_map::set_default()
 
   {
+    this->name = NORMAL_MAP_NAME;
     this->parameters->add_parameter("neighbourhood size",PARAMETER_INT);
-    this->name = "normal map";
-
     this->parameters->set_int_value("neighbourhood size",5);
   }
 
@@ -1851,10 +1931,23 @@ void c_block_normal_map::set_default()
 void c_block_glass::set_default()
 
   {
+    this->name = GLASS_NAME;
     this->parameters->add_parameter("height",PARAMETER_DOUBLE);
-    this->name = "glass";
-
     this->parameters->set_double_value("height",1.0);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_brightness_contrast::set_default()
+
+  {
+    this->name = BRIGHTNESS_CONTRAST_NAME;
+
+    this->parameters->add_parameter("brightness",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("contrast",PARAMETER_DOUBLE);
+
+    this->parameters->set_double_value("brightness",0.0);
+    this->parameters->set_double_value("contrast",0.0);
   }
 
 //----------------------------------------------------------------------
@@ -1862,7 +1955,26 @@ void c_block_glass::set_default()
 void c_block_grayscale::set_default()
 
   {
-    this->name = "grayscale";
+    this->name = GRAYSCALE_NAME;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_color_transition::set_default()
+
+  {
+    this->name = COLOR_TRANSITION_NAME;
+    this->parameters->add_parameter("path",PARAMETER_STRING);
+    this->parameters->set_string_value("path",
+      (char *) "transition.txt");
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_map_transition::set_default()
+
+  {
+    this->name = MAP_TRANSITION_NAME;
   }
 
 //----------------------------------------------------------------------
@@ -1870,6 +1982,8 @@ void c_block_grayscale::set_default()
 void c_block_light::set_default()
 
   {
+    this->name = LIGHT_NAME;
+
     this->parameters->add_parameter("ambient red",PARAMETER_INT);
     this->parameters->add_parameter("ambient green",PARAMETER_INT);
     this->parameters->add_parameter("ambient blue",PARAMETER_INT);
@@ -1889,8 +2003,6 @@ void c_block_light::set_default()
       PARAMETER_DOUBLE);
     this->parameters->add_parameter("direction vector y",
       PARAMETER_DOUBLE);
-
-    this->name = "light";
 
     this->parameters->set_int_value("ambient red",5);
     this->parameters->set_int_value("ambient green",0);
@@ -1948,6 +2060,28 @@ bool c_block_light::execute()
 
 //----------------------------------------------------------------------
 
+bool c_block_map_transition::execute()
+
+  {
+    if (
+      !this->is_graphic_input(0) ||
+      this->input_blocks[1] == NULL ||
+      this->input_blocks[1]->get_name().compare("color transition")
+      != 0)
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_map_to_transition(&(this->buffer),
+      ((c_block_color_transition *) this->input_blocks[1])->get_color_transition());
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_block_normal_map::execute()
 
   {
@@ -1962,6 +2096,15 @@ bool c_block_normal_map::execute()
     &(this->buffer));
 
     return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_color_transition::execute()
+
+  {
+    return color_transition_load_from_file(&(this->transition),
+      (char *) this->parameters->get_string_value("path").c_str());
   }
 
 //----------------------------------------------------------------------
@@ -2307,6 +2450,44 @@ bool c_block_rgb::execute()
 
 //----------------------------------------------------------------------
 
+bool c_block_brightness_contrast::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(((c_graphic_block *)
+      this->input_blocks[0])->get_color_buffer(),&(this->buffer));
+
+    pt_add_brightness_contrast(
+      &(this->buffer),
+      this->parameters->get_double_value("brightness"),
+      this->parameters->get_double_value("contrast"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_hsl::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(((c_graphic_block *)
+      this->input_blocks[0])->get_color_buffer(),&(this->buffer));
+
+    pt_add_hsl(&(this->buffer),
+      this->parameters->get_double_value("hue"),
+      this->parameters->get_double_value("saturation"),
+      this->parameters->get_double_value("lightness"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_block_perlin_noise::execute()
 
   {
@@ -2383,6 +2564,26 @@ bool c_block_file_save::execute()
     color_buffer_destroy(&help_buffer);
 
     return success;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_file_load::execute()
+
+  {
+    t_color_buffer help_buffer;
+
+    if(!color_buffer_load_from_png(&help_buffer,
+      (char *) this->parameters->get_string_value("path").c_str()))
+      return false;
+
+    pt_resize(&help_buffer,&(this->buffer),
+      (t_interpolation_method)
+      this->parameters->get_int_value("interpolation"));
+
+    color_buffer_destroy(&help_buffer);
+
+    return true;
   }
 
 //----------------------------------------------------------------------

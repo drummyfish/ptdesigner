@@ -361,6 +361,7 @@ class c_block
   {
     protected:
       unsigned int id;          /// block id (unique within the graph)
+      bool is_end_block;        /// whether the block is terminal
       bool valid;               /// whether the block is currently valid
       bool error;               /// whether there was any error
       c_block *(input_blocks[MAX_INPUT_BLOCKS]); /// input blocks
@@ -379,6 +380,15 @@ class c_block
 
         /**<
          * Sets the error flag and invalidates the block.
+         */
+
+      bool is_terminal();
+
+        /**<
+         * Checks if the block is terminal, i.e. cannot serve as a
+         * input for another block.
+         *
+         * @return true if the block is terminal, false otherwise
          */
 
       bool is_graphic_input(unsigned int number);
@@ -983,6 +993,8 @@ class c_texture_graph
 class c_block_voronoi_diagram: public c_graphic_block
 
   {
+    #define VORONOI_DIAGRAM_NAME "voronoi diagram"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -998,6 +1010,8 @@ class c_block_voronoi_diagram: public c_graphic_block
 class c_block_color_fill: public c_graphic_block
 
   {
+    #define COLOR_FILL_NAME "color fill"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1012,6 +1026,8 @@ class c_block_color_fill: public c_graphic_block
 class c_block_bump_noise: public c_graphic_block
 
   {
+    #define BUMP_NOISE_NAME "bump noise"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1026,6 +1042,8 @@ class c_block_bump_noise: public c_graphic_block
 class c_block_fault_formation_noise: public c_graphic_block
 
   {
+    #define FAULT_FORMATION_NOISE_NAME "fault formation name"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1040,6 +1058,8 @@ class c_block_fault_formation_noise: public c_graphic_block
 class c_block_perlin_noise: public c_graphic_block
 
   {
+    #define PERLIN_NOISE_NAME "perlin noise"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1054,6 +1074,8 @@ class c_block_perlin_noise: public c_graphic_block
 class c_block_mix_channels: public c_graphic_block
 
   {
+    #define MIX_CHANNELS_NAME "mix channels"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1068,6 +1090,24 @@ class c_block_mix_channels: public c_graphic_block
 class c_block_rgb: public c_graphic_block
 
   {
+    #define RGB_NAME "adjust rgb"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * HSL adjust block.
+   */
+
+class c_block_hsl: public c_graphic_block
+
+  {
+    #define HSL_NAME "adjust hsl"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1082,6 +1122,8 @@ class c_block_rgb: public c_graphic_block
 class c_block_substrate: public c_graphic_block
 
   {
+    #define SUBSTRATE_NAME "substrate"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1097,6 +1139,8 @@ class c_block_substrate: public c_graphic_block
 class c_block_mix: public c_graphic_block
 
   {
+    #define MIX_NAME "mix"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1111,6 +1155,8 @@ class c_block_mix: public c_graphic_block
 class c_block_marble: public c_graphic_block
 
   {
+    #define MARBLE_NAME "marble"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1125,6 +1171,8 @@ class c_block_marble: public c_graphic_block
 class c_block_wood: public c_graphic_block
 
   {
+    #define WOOD_NAME "wood"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1139,6 +1187,8 @@ class c_block_wood: public c_graphic_block
 class c_block_particles: public c_graphic_block
 
   {
+    #define PARTICLES_NAME "particles"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1153,6 +1203,8 @@ class c_block_particles: public c_graphic_block
 class c_block_circle_transform: public c_graphic_block
 
   {
+    #define CIRCLE_TRANSFORM_NAME "circle transform"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1167,6 +1219,8 @@ class c_block_circle_transform: public c_graphic_block
 class c_block_sine_transform: public c_graphic_block
 
   {
+    #define SINE_TRANSFORM_NAME "sine transform"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1181,6 +1235,8 @@ class c_block_sine_transform: public c_graphic_block
 class c_block_dither: public c_graphic_block
 
   {
+    #define DITHER_NAME "dither"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1195,6 +1251,8 @@ class c_block_dither: public c_graphic_block
 class c_block_crop_amplitude: public c_graphic_block
 
   {
+    #define CROP_AMPLITUDE_NAME "crop amplitude"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1209,6 +1267,8 @@ class c_block_crop_amplitude: public c_graphic_block
 class c_block_invert: public c_graphic_block
 
   {
+    #define INVERT_NAME "invert"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1223,6 +1283,8 @@ class c_block_invert: public c_graphic_block
 class c_block_radius_transform: public c_graphic_block
 
   {
+    #define RADIUS_TRANSFORM_NAME "radius transform"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1250,6 +1312,8 @@ class c_block_end: public c_graphic_block
 class c_block_normal_map: public c_graphic_block
 
   {
+    #define NORMAL_MAP_NAME "normal map"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1264,6 +1328,8 @@ class c_block_normal_map: public c_graphic_block
 class c_block_light: public c_graphic_block
 
   {
+    #define LIGHT_NAME "light"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1278,6 +1344,8 @@ class c_block_light: public c_graphic_block
 class c_block_glass: public c_graphic_block
 
   {
+    #define GLASS_NAME "glass"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1292,6 +1360,56 @@ class c_block_glass: public c_graphic_block
 class c_block_grayscale: public c_graphic_block
 
   {
+    #define GRAYSCALE_NAME "grayscale"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Adjust brightness/contrast block.
+   */
+
+class c_block_brightness_contrast: public c_graphic_block
+
+  {
+    #define BRIGHTNESS_CONTRAST_NAME "brightness and contrast"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Map to color transition block.
+   */
+
+class c_block_map_transition: public c_graphic_block
+
+  {
+    #define MAP_TRANSITION_NAME "map transition"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * A block that loads an image from a file.
+  */
+
+class c_block_file_load: public c_graphic_block
+
+  {
+    #define FILE_LOAD_NAME "load file"
+
     protected:
       virtual void set_default();
       virtual bool execute();
@@ -1307,9 +1425,37 @@ class c_block_grayscale: public c_graphic_block
 class c_block_file_save: public c_special_block
 
   {
+    #define FILE_SAVE_NAME "save file"
+
     protected:
       virtual void set_default();
       virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * Special block that stores a color transition.
+  */
+
+class c_block_color_transition: public c_special_block
+
+  {
+    #define COLOR_TRANSITION_NAME "color transition"
+
+    protected:
+      t_color_transition transition;
+      virtual void set_default();
+      virtual bool execute();
+
+    public:
+      t_color_transition *get_color_transition();
+
+      /**<
+       * Returns a pointer to a color transition stored by this block.
+       *
+       * @return pointer to this block's color transition
+       */
   };
 
 //----------------------------------------------------------------------
