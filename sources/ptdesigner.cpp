@@ -85,6 +85,125 @@ string pt_to_string(double value)
 
 //----------------------------------------------------------------------
 
+string c_texture_graph::coordinations_to_string(
+  double coordination_list[][2], unsigned int length)
+
+  {
+    unsigned int i;
+    string result;
+    bool first;
+
+    result = "";
+    first = true;
+
+    for (i = 0; i < length; i++)
+      {
+        if (first)
+          first = false;
+        else
+          result += ",";
+
+        result = result + pt_to_string(coordination_list[i][0]) + ":" +
+          pt_to_string(coordination_list[i][1]);
+      }
+
+    return result;
+  }
+
+//----------------------------------------------------------------------
+
+string c_texture_graph::char_array_to_string(unsigned char char_array[],
+        unsigned int length)
+
+  {
+    unsigned int i;
+    string result;
+    bool first;
+
+    result = "";
+    first = true;
+
+    for (i = 0; i < length; i++)
+      {
+        if (first)
+          first = false;
+        else
+          result += ",";
+
+        result += pt_to_string((int) char_array[i]);
+      }
+
+    return result;
+  }
+
+//----------------------------------------------------------------------
+
+void c_texture_graph::string_to_coordinations(
+  double coordination_list[][2], string coordinations,
+  unsigned int *length, unsigned int max_length)
+
+  {
+    stringstream str_stream;
+    char character;
+    unsigned int position;
+    double value_x, value_y;
+
+    str_stream.str(coordinations);
+
+    position = 0;
+
+    if (!str_stream.eof())
+      do
+        {
+          if (position >= max_length - 1)
+            break;
+
+          str_stream >> value_x;
+          str_stream >> character;
+          str_stream >> value_y;
+          str_stream >> character;
+
+          coordination_list[position][0] = value_x;
+          coordination_list[position][1] = value_y;
+
+          position++;
+        } while (!str_stream.eof());
+
+    *length = position;
+  }
+
+//----------------------------------------------------------------------
+
+void c_texture_graph::string_to_char_array(unsigned char char_array[],
+  string char_string, unsigned int *length, unsigned int max_length)
+
+  {
+    stringstream str_stream;
+    unsigned int helper;
+    unsigned int position;
+
+    str_stream.str(char_string);
+
+    position = 0;
+
+    if (!str_stream.eof())
+      do
+        {
+          if (position >= max_length - 1)
+            break;
+
+          str_stream >> helper;
+
+          char_array[position] = helper;
+
+          position++;
+        } while (!str_stream.eof());
+
+    *length = position;
+  }
+
+//----------------------------------------------------------------------
+
 c_parameters::c_parameters(c_block *owner)
 
   {
@@ -1269,6 +1388,10 @@ c_block *get_block_instance(string block_name)
       return new c_block_l_system();
     else if (block_name.compare(TURTLE_NAME) == 0)
       return new c_block_turtle();
+    else if (block_name.compare(SIMPLE_NOISE_NAME) == 0)
+      return new c_block_simple_noise();
+    else if (block_name.compare(SQUARE_MOSAIC_NAME) == 0)
+      return new c_block_square_mosaic();
 
     return NULL;
   }
@@ -1695,6 +1818,65 @@ void c_block_color_fill::set_default()
     this->parameters->set_int_value("red",255);
     this->parameters->set_int_value("green",255);
     this->parameters->set_int_value("blue",255);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_simple_noise::set_default()
+
+  {
+    this->name = SIMPLE_NOISE_NAME;
+
+    this->parameters->add_parameter("amplitude",PARAMETER_INT);
+    this->parameters->add_parameter("grayscale",PARAMETER_BOOL);
+
+    this->parameters->set_int_value("amplitude",127);
+    this->parameters->set_bool_value("grayscale",true);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_square_mosaic::set_default()
+
+  {
+    this->name = SQUARE_MOSAIC_NAME;
+
+    this->parameters->add_parameter("side 1",PARAMETER_STRING);
+    this->parameters->add_parameter("side 2",PARAMETER_STRING);
+    this->parameters->add_parameter("side 3",PARAMETER_STRING);
+    this->parameters->add_parameter("side 4",PARAMETER_STRING);
+    this->parameters->add_parameter("transformation 1",PARAMETER_INT);
+    this->parameters->add_parameter("transformation 2",PARAMETER_INT);
+    this->parameters->add_parameter("transformation 3",PARAMETER_INT);
+    this->parameters->add_parameter("transformation 4",PARAMETER_INT);
+    this->parameters->add_parameter("tiles x",PARAMETER_INT);
+    this->parameters->add_parameter("tiles y",PARAMETER_INT);
+    this->parameters->add_parameter("fill type",PARAMETER_INT);
+    this->parameters->add_parameter("fill colors",PARAMETER_STRING);
+
+    this->parameters->set_string_value("side 1",
+      (char *) "0.1 0.1 0.2 0.15 0.3 0.20 0.4 0.15 0.5 0.0");
+    this->parameters->set_string_value("side 2",
+      (char *) "0.5 0.1");
+    this->parameters->set_string_value("side 3",
+      (char *) "0.19 0.0 0.2 0.2 0.4 0.2 0.41 0.0");
+    this->parameters->set_string_value("side 4",
+      (char *) "");
+
+    this->parameters->set_int_value("transformation 1",
+      MOSAIC_TRANSFORM_ROTATE_SIDE);
+    this->parameters->set_int_value("transformation 2",
+      MOSAIC_TRANSFORM_SHIFT);
+    this->parameters->set_int_value("transformation 3",
+      MOSAIC_TRANSFORM_ROTATE_SIDE);
+    this->parameters->set_int_value("transformation 4",
+      MOSAIC_TRANSFORM_SHIFT);
+
+    this->parameters->set_int_value("tiles x",2);
+    this->parameters->set_int_value("tiles y",2);
+    this->parameters->set_int_value("fill type",FILL_NO_BORDERS);
+    this->parameters->set_string_value("fill colors",
+      (char *) "255 0 0 255");
   }
 
 //----------------------------------------------------------------------
@@ -2199,6 +2381,20 @@ bool c_block_normal_map::execute()
 
 //----------------------------------------------------------------------
 
+bool c_block_simple_noise::execute()
+
+  {
+    pt_simple_noise(
+      this->get_random_seed(),
+      this->parameters->get_int_value("amplitude"),
+      this->parameters->get_bool_value("grayscale"),
+      &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_block_color_transition::execute()
 
   {
@@ -2223,6 +2419,59 @@ bool c_block_l_system::execute()
     grammar_generate_string(
       &(this->grammar),
       this->parameters->get_int_value("iterations"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_square_mosaic::execute()
+
+  {
+    t_square_mosaic mosaic;
+    unsigned char fill_colors[256];
+    unsigned int array_length;
+
+    // specify the mosaic:
+
+    mosaic.side_shape[0] =
+      (char *) this->parameters->get_string_value("side 1").c_str();
+    mosaic.side_shape[1] =
+      (char *) this->parameters->get_string_value("side 2").c_str();
+    mosaic.side_shape[2] =
+      (char *) this->parameters->get_string_value("side 3").c_str();
+    mosaic.side_shape[3] =
+      (char *) this->parameters->get_string_value("side 4").c_str();
+
+    mosaic.transformation[0] = (t_mosaic_transformation)
+      this->parameters->get_int_value("transformation 1");
+    mosaic.transformation[1] = (t_mosaic_transformation)
+      this->parameters->get_int_value("transformation 2");
+    mosaic.transformation[2] = (t_mosaic_transformation)
+      this->parameters->get_int_value("transformation 3");
+    mosaic.transformation[3] = (t_mosaic_transformation)
+      this->parameters->get_int_value("transformation 4");
+
+    mosaic.tiles_x = this->parameters->get_int_value("tiles x");
+    mosaic.tiles_y = this->parameters->get_int_value("tiles y");
+
+    // check the mosaic validity:
+
+    if (!square_mosaic_is_valid(&mosaic))
+      return false;
+
+    c_texture_graph::string_to_char_array(
+      fill_colors,
+      this->parameters->get_string_value("fill colors"),
+      &array_length,
+      256);
+
+    pt_mosaic_square(
+      &(this->buffer),
+      (t_fill_type) this->parameters->get_int_value("fill type"),
+      fill_colors,
+      array_length,
+      &mosaic);
 
     return true;
   }
@@ -2291,13 +2540,6 @@ bool c_block_turtle::execute()
     if (this->input_blocks[0] == NULL ||
       this->input_blocks[0]->get_name().compare(L_SYSTEM_NAME) != 0)
       return false;
-
-    cout <<
-      this->parameters->get_double_value("initial x") << " " <<
-      this->parameters->get_double_value("initial y") << " " <<
-      this->parameters->get_int_value("initial angle") << " " <<
-      this->parameters->get_double_value("noise intensity") << " " <<
-      this->parameters->get_double_value("particle density") << endl;
 
     pt_turtle_draw(
       &(this->buffer),
@@ -2488,6 +2730,7 @@ bool c_block_voronoi_diagram::execute()
 
   {
     unsigned int point_list[256][2];
+    double double_list[256][2];
     unsigned int list_length;
 
     if (this->input_blocks[0] != NULL &&
@@ -2543,7 +2786,23 @@ bool c_block_voronoi_diagram::execute()
             break;
 
           case PLACE_CUSTOM:
-            // TODOOOOOOOOOOOOOOOOO
+            c_texture_graph::string_to_coordinations(
+              double_list,
+              this->parameters->get_string_value("point positions"),
+              &list_length,
+              256);
+
+            coord_array_double_to_int(point_list,double_list,
+              list_length,this->buffer.width,this->buffer.height);
+
+            pt_voronoi_diagram(
+              (t_voronoi_type) this->parameters->get_int_value("type"),
+              (t_metric) this->parameters->get_int_value("metric"),
+              PLACE_CUSTOM,
+              list_length,
+              0,
+              point_list,
+              &(this->buffer));
             break;
         }
 

@@ -41,8 +41,6 @@ namespace pt_design
 class c_texture_graph;
 class c_block;
 
-//----------------------------------------------------------------------
-
   /**
    * Possible parameter data types.
    */
@@ -54,8 +52,6 @@ typedef enum
     PARAMETER_BOOL,
     PARAMETER_STRING
   } t_parameter_type;
-
-//----------------------------------------------------------------------
 
 typedef struct
   {
@@ -763,6 +759,66 @@ class c_texture_graph
          * Class constructor, initialises a new texture graph.
          */
 
+      static string coordinations_to_string(
+        double coordination_list[][2], unsigned int length);
+
+        /**
+          * Converts a list of coordinations to string representation.
+          *
+          * @param coordination_list array of [x,y] double values in
+          *        range <0,1>
+          * @param length length of the array (number of coordinations)
+          *
+          * @return string representation of the coordination list
+          */
+
+      static void string_to_coordinations(
+        double coordination_list[][2], string coordinations,
+        unsigned int *length, unsigned int max_length);
+
+        /**
+          * Converts a string representation of two-dimensional
+          * coordinations to double array.
+          *
+          * @param coordination_list array of [x,y] double values in
+          *        which the result will be stored
+          * @param coordinations string representation of the
+          *        coordination list
+          * @param length in this variable the length of the list loaded
+          *        will be stored
+          * @param max_length specifies the maximum length that should
+          *        be allowed to load
+          */
+
+      static string char_array_to_string(unsigned char char_array[],
+        unsigned int length);
+
+        /**
+          * Converts an array of unsigned char values to its string
+          * representation (decimal values separated by comma).
+          *
+          * @param char_array char array to be converted
+          * @param length length of the array
+          *
+          * @return string representation of the char array
+          */
+
+      static void string_to_char_array(unsigned char char_array[],
+        string char_string, unsigned int *length,
+        unsigned int max_length);
+
+        /**<
+         * Converts the string representation of array of unsigned char
+         * values (decimal values separated by comma) to char array.
+         *
+         * @param char_array in this variable the char array will be
+         *        returned
+         * @param char_string string representation to be converted
+         * @param length in this variable the length of the array loaded
+         *        will be returned
+         * @param max_length maximum allowed array length
+         */
+
       void update();
 
         /**<
@@ -1059,6 +1115,22 @@ class c_block_perlin_noise: public c_graphic_block
 
   {
     #define PERLIN_NOISE_NAME "perlin noise"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Simple white noise block.
+   */
+
+class c_block_simple_noise: public c_graphic_block
+
+  {
+    #define SIMPLE_NOISE_NAME "simple noise"
 
     protected:
       virtual void set_default();
@@ -1382,6 +1454,22 @@ class c_block_turtle: public c_graphic_block
 
   {
     #define TURTLE_NAME "turtle"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Square mosaic block.
+   */
+
+class c_block_square_mosaic: public c_graphic_block
+
+  {
+    #define SQUARE_MOSAIC_NAME "square mosaic"
 
     protected:
       virtual void set_default();

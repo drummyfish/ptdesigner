@@ -522,4 +522,25 @@ void make_bayer_matrix(t_matrix *matrix);
 
 //----------------------------------------------------------------------
 
+void coord_array_double_to_int(unsigned int destination[][2],
+  double source[][2], unsigned int length, unsigned int resolution_x,
+  unsigned int resolution_y);
+
+  /**<
+   * Converts a list of coordinations specified within space x = <0,1>,
+   * y = <0,1> width array of double values to list of integer
+   * coordinations in pixels for given bitmap space.
+   *
+   * @param destination array of [x,y] coordinations in which the result
+   *        will be stored
+   * @param source array of [x,y] coordinations in range <0,1> to be
+   *        converted
+   * @param length length of source array in number of coordinations,
+   *        the destination array must be at least of this length
+   * @param resolution_x width of the bitmap in pixels
+   * @param resolution_y height of the bitmap in pixels
+   */
+
+//----------------------------------------------------------------------
+
 #endif

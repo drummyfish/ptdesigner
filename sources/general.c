@@ -924,3 +924,21 @@ void make_bayer_matrix(t_matrix *matrix)
   }
 
 //----------------------------------------------------------------------
+
+void coord_array_double_to_int(unsigned int destination[][2],
+  double source[][2], unsigned int length, unsigned int resolution_x,
+  unsigned int resolution_y)
+
+  {
+    unsigned int i;
+
+    for (i = 0; i < length; i++)
+      {
+        destination[i][0] = transform_coordination(source[i][0] *
+          (resolution_x - 1),resolution_x);
+        destination[i][1] = transform_coordination(source[i][1] *
+          (resolution_y - 1),resolution_y);
+      }
+  }
+
+//----------------------------------------------------------------------

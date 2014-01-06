@@ -461,7 +461,9 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
    *        PLACE_CUSTOM - no meaning
    *
    * @param parameter3 array of point coordinations (0 ~ x, 1 ~ y), is
-   *        used only with PLACE_CUSTOM value of point_place parameter
+   *        used only with PLACE_CUSTOM value of point_place parameter,
+   *        for resolution-indipendent point specification use function
+   *        coord_array_double_to_int
    * @param destination buffer to store the diagram to, must be already
    *        initialized
    */
