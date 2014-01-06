@@ -775,7 +775,6 @@ int _pt_turtle_next_instruction(int *x1, int *y1, int *x2, int *y2)
 
      while (1)
        {
-
          if (turtle.instruction >= (unsigned int)
            turtle.grammar->string_length)
            return 0;   // no more instructions

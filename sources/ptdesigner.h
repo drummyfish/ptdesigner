@@ -1294,13 +1294,18 @@ class c_block_radius_transform: public c_graphic_block
 
   /**
    * End block, stores the final texture in set resolution and with
-   * supersampling applied.
+   * supersampling applied. It is mean to use in applications to
+   * access the final texture.
    */
 
 class c_block_end: public c_graphic_block
 
   {
-    // TODOOOOOOOOOOOOO
+    #define END_BLOCK_NAME "end"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
   };
 
 //----------------------------------------------------------------------
@@ -1361,6 +1366,22 @@ class c_block_grayscale: public c_graphic_block
 
   {
     #define GRAYSCALE_NAME "grayscale"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Turtle block. Can draw L-Systems.
+   */
+
+class c_block_turtle: public c_graphic_block
+
+  {
+    #define TURTLE_NAME "turtle"
 
     protected:
       virtual void set_default();
@@ -1449,12 +1470,42 @@ class c_block_color_transition: public c_special_block
       virtual bool execute();
 
     public:
+      c_block_color_transition();
+      ~c_block_color_transition();
       t_color_transition *get_color_transition();
 
       /**<
        * Returns a pointer to a color transition stored by this block.
        *
        * @return pointer to this block's color transition
+       */
+  };
+
+//----------------------------------------------------------------------
+
+ /**
+  * Special block that stores an L-system.
+  */
+
+class c_block_l_system: public c_special_block
+
+  {
+    #define L_SYSTEM_NAME "l-system"
+
+    protected:
+      t_grammar grammar;
+      virtual void set_default();
+      virtual bool execute();
+
+    public:
+      c_block_l_system();
+      ~c_block_l_system();
+      t_grammar *get_grammar();
+
+      /**<
+       * Returns a pointer to a grammar stored by this block.
+       *
+       * @return pointer to this block's grammar
        */
   };
 

@@ -1263,6 +1263,12 @@ c_block *get_block_instance(string block_name)
       return new c_block_map_transition();
     else if (block_name.compare(BRIGHTNESS_CONTRAST_NAME) == 0)
       return new c_block_brightness_contrast();
+    else if (block_name.compare(END_BLOCK_NAME) == 0)
+      return new c_block_end();
+    else if (block_name.compare(L_SYSTEM_NAME) == 0)
+      return new c_block_l_system();
+    else if (block_name.compare(TURTLE_NAME) == 0)
+      return new c_block_turtle();
 
     return NULL;
   }
@@ -1595,12 +1601,54 @@ bool c_texture_graph::save_to_file(string filename)
     return true;
   }
 
+//======================================================================
+// SPECIFIC BLOCK FUNCTIONS:
+//======================================================================
+
+c_block_color_transition::c_block_color_transition(): c_special_block()
+
+  {
+    color_transition_init(&(this->transition));
+  }
+
+//----------------------------------------------------------------------
+
+c_block_color_transition::~c_block_color_transition()
+
+  {
+    color_transition_destroy(&(this->transition));
+  }
+
+//----------------------------------------------------------------------
+
+c_block_l_system::c_block_l_system(): c_special_block()
+
+  {
+    grammar_init(&(this->grammar),(char *) "",0);
+  }
+
+//----------------------------------------------------------------------
+
+c_block_l_system::~c_block_l_system()
+
+  {
+    grammar_destroy(&(this->grammar));
+  }
+
 //----------------------------------------------------------------------
 
 t_color_transition *c_block_color_transition::get_color_transition()
 
   {
     return &this->transition;
+  }
+
+//----------------------------------------------------------------------
+
+t_grammar *c_block_l_system::get_grammar()
+
+  {
+    return &(this->grammar);
   }
 
 //======================================================================
@@ -1618,6 +1666,9 @@ void c_block_voronoi_diagram::set_default()
     this->parameters->add_parameter("width",PARAMETER_DOUBLE);
     this->parameters->add_parameter("point positions",PARAMETER_STRING);
     this->parameters->add_parameter("number of points",PARAMETER_INT);
+    this->parameters->add_parameter("initial x",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("initial y",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("initial angle",PARAMETER_INT);
 
     this->parameters->set_int_value("type",VORONOI_2_NEAREST_RATIO);
     this->parameters->set_int_value("metric",METRIC_EUCLIDEAN);
@@ -1625,6 +1676,9 @@ void c_block_voronoi_diagram::set_default()
     this->parameters->set_double_value("width",0.75);
     this->parameters->set_string_value("point positions",(char *) "");
     this->parameters->set_int_value("number of points",15);
+    this->parameters->set_double_value("initial x",0.5);
+    this->parameters->set_double_value("initial y",0.5);
+    this->parameters->set_int_value("initial angle",90);
   }
 
 //----------------------------------------------------------------------
@@ -1641,6 +1695,27 @@ void c_block_color_fill::set_default()
     this->parameters->set_int_value("red",255);
     this->parameters->set_int_value("green",255);
     this->parameters->set_int_value("blue",255);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_turtle::set_default()
+
+  {
+    this->name = TURTLE_NAME;
+
+    this->parameters->add_parameter("initial x",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("initial y",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("initial angle",PARAMETER_INT);
+    this->parameters->add_parameter("noise intensity",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("particle density",
+      PARAMETER_DOUBLE);
+
+    this->parameters->set_double_value("initial x",0.5);
+    this->parameters->set_double_value("initial y",0.5);
+    this->parameters->set_int_value("initial angle",90);
+    this->parameters->set_double_value("noise intensity",1.0);
+    this->parameters->set_double_value("particle density",1.0);
   }
 
 //----------------------------------------------------------------------
@@ -1707,6 +1782,15 @@ void c_block_fault_formation_noise::set_default()
 
   {
     this->name = FAULT_FORMATION_NOISE_NAME;
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_end::set_default()
+
+  {
+    this->name = END_BLOCK_NAME;
+    this->is_end_block = true;
   }
 
 //----------------------------------------------------------------------
@@ -1971,6 +2055,21 @@ void c_block_color_transition::set_default()
 
 //----------------------------------------------------------------------
 
+void c_block_l_system::set_default()
+
+  {
+    this->name = L_SYSTEM_NAME;
+
+    this->parameters->add_parameter("path",PARAMETER_STRING);
+    this->parameters->add_parameter("iterations",PARAMETER_INT);
+
+    this->parameters->set_string_value("path",
+      (char *) "grammar.txt");
+    this->parameters->set_int_value("iterations",10);
+  }
+
+//----------------------------------------------------------------------
+
 void c_block_map_transition::set_default()
 
   {
@@ -2103,8 +2202,29 @@ bool c_block_normal_map::execute()
 bool c_block_color_transition::execute()
 
   {
+    color_transition_destroy(&(this->transition));
+
     return color_transition_load_from_file(&(this->transition),
       (char *) this->parameters->get_string_value("path").c_str());
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_l_system::execute()
+
+  {
+    grammar_destroy(&(this->grammar));
+
+    if(!grammar_load_from_file(&(this->grammar),
+      (char *) this->parameters->get_string_value("path").c_str(),
+      this->get_random_seed()))
+      return false;
+
+    grammar_generate_string(
+      &(this->grammar),
+      this->parameters->get_int_value("iterations"));
+
+    return true;
   }
 
 //----------------------------------------------------------------------
@@ -2159,6 +2279,34 @@ bool c_block_crop_amplitude::execute()
       &(this->buffer),
       this->parameters->get_int_value("lower limit"),
       this->parameters->get_int_value("upper limit"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_turtle::execute()
+
+  {
+    if (this->input_blocks[0] == NULL ||
+      this->input_blocks[0]->get_name().compare(L_SYSTEM_NAME) != 0)
+      return false;
+
+    cout <<
+      this->parameters->get_double_value("initial x") << " " <<
+      this->parameters->get_double_value("initial y") << " " <<
+      this->parameters->get_int_value("initial angle") << " " <<
+      this->parameters->get_double_value("noise intensity") << " " <<
+      this->parameters->get_double_value("particle density") << endl;
+
+    pt_turtle_draw(
+      &(this->buffer),
+      ((c_block_l_system *) this->input_blocks[0])->get_grammar(),
+      this->parameters->get_double_value("initial x"),
+      this->parameters->get_double_value("initial y"),
+      this->parameters->get_int_value("initial angle"),
+      this->parameters->get_double_value("noise intensity"),
+      this->parameters->get_double_value("particle density"));
 
     return true;
   }
@@ -2339,37 +2487,65 @@ bool c_block_marble::execute()
 bool c_block_voronoi_diagram::execute()
 
   {
-    switch (this->parameters->get_int_value("point place"))
+    unsigned int point_list[256][2];
+    unsigned int list_length;
+
+    if (this->input_blocks[0] != NULL &&
+      this->input_blocks[0]->get_name().compare(L_SYSTEM_NAME) == 0)
       {
-        case PLACE_RANDOM:
-          pt_voronoi_diagram(
-            (t_voronoi_type) this->parameters->get_int_value("type"),
-            (t_metric) this->parameters->get_int_value("metric"),
-            PLACE_RANDOM,
-            this->get_random_seed(),
-            this->parameters->get_int_value("number of points"),
-            NULL,
-            &(this->buffer));
-          break;
+        // placing points with l-system:
 
-        case PLACE_SQUARE:
-        case PLACE_CIRCLE:
-        case PLACE_CROSS_HORIZONTAL:
-        case PLACE_CROSS_DIAGONAL:
-          pt_voronoi_diagram(
-            (t_voronoi_type) this->parameters->get_int_value("type"),
-            (t_metric) this->parameters->get_int_value("metric"),
-            PLACE_SQUARE,
-            this->parameters->get_double_value("width"),
-            this->parameters->get_int_value("number of points"),
-            NULL,
-            &(this->buffer));
-          break;
+        pt_turtle_get_point_list(
+          &(this->buffer),
+          ((c_block_l_system *) this->input_blocks[0])->get_grammar(),
+          this->parameters->get_double_value("initial x"),
+          this->parameters->get_double_value("initial y"),
+          this->parameters->get_int_value("initial angle"),
+          point_list,
+          &list_length,
+          256);
 
-        case PLACE_CUSTOM:
-          // TODOOOOOOOOOOOOOOOOO
-          break;
+        pt_voronoi_diagram(
+          (t_voronoi_type) this->parameters->get_int_value("type"),
+          (t_metric) this->parameters->get_int_value("metric"),
+          PLACE_CUSTOM,
+          list_length,
+          0,
+          point_list,
+          &(this->buffer));
       }
+    else
+      switch (this->parameters->get_int_value("point place"))
+        {
+          case PLACE_RANDOM:
+            pt_voronoi_diagram(
+              (t_voronoi_type) this->parameters->get_int_value("type"),
+              (t_metric) this->parameters->get_int_value("metric"),
+              PLACE_RANDOM,
+              this->get_random_seed(),
+              this->parameters->get_int_value("number of points"),
+              NULL,
+              &(this->buffer));
+            break;
+
+          case PLACE_SQUARE:
+          case PLACE_CIRCLE:
+          case PLACE_CROSS_HORIZONTAL:
+          case PLACE_CROSS_DIAGONAL:
+            pt_voronoi_diagram(
+              (t_voronoi_type) this->parameters->get_int_value("type"),
+              (t_metric) this->parameters->get_int_value("metric"),
+              PLACE_SQUARE,
+              this->parameters->get_double_value("width"),
+              this->parameters->get_int_value("number of points"),
+              NULL,
+              &(this->buffer));
+            break;
+
+          case PLACE_CUSTOM:
+            // TODOOOOOOOOOOOOOOOOO
+            break;
+        }
 
     return true;
   }
@@ -2564,6 +2740,22 @@ bool c_block_file_save::execute()
     color_buffer_destroy(&help_buffer);
 
     return success;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_end::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    pt_supersampling(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      this->graph->get_supersampling(),
+      &(this->buffer));
+
+    return true;
   }
 
 //----------------------------------------------------------------------
