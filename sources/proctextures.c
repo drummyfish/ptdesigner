@@ -4212,7 +4212,9 @@ void pt_replace_colors(t_color_buffer *buffer,
             if (r == colors[k][0] && g == colors[k][1]
               && b == colors[k][2])
               {
-                color_buffer_get_pixel(buffers[k],i,j,&r,&g,&b);
+                if (buffers[k] != NULL)
+                  color_buffer_get_pixel(buffers[k],i,j,&r,&g,&b);
+
                 break;
               }
 

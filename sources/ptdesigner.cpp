@@ -184,6 +184,9 @@ void c_texture_graph::string_to_char_array(unsigned char char_array[],
 
     str_stream.str(char_string);
 
+    for (position = 0; position < max_length; position++)
+      char_array[position] = 0;
+
     position = 0;
 
     if (!str_stream.eof())
@@ -1392,6 +1395,24 @@ c_block *get_block_instance(string block_name)
       return new c_block_simple_noise();
     else if (block_name.compare(SQUARE_MOSAIC_NAME) == 0)
       return new c_block_square_mosaic();
+    else if (block_name.compare(CELLULAR_RPS_NAME) == 0)
+      return new c_block_cellular_automaton_rps();
+    else if (block_name.compare(CELLULAR_CYCLIC_NAME) == 0)
+      return new c_block_cellular_automaton_cyclic();
+    else if (block_name.compare(CELLULAR_GENERAL_NAME) == 0)
+      return new c_block_cellular_automaton_general();
+    else if (block_name.compare(BLUR_NAME) == 0)
+      return new c_block_blur();
+    else if (block_name.compare(REPLACE_COLORS_NAME) == 0)
+      return new c_block_replace_colors();
+    else if (block_name.compare(TILE_NAME) == 0)
+      return new c_block_tile();
+    else if (block_name.compare(EDGE_DETECTION_NAME) == 0)
+      return new c_block_edge_detection();
+    else if (block_name.compare(SHARPEN_NAME) == 0)
+      return new c_block_sharpen();
+    else if (block_name.compare(EMBOSS_NAME) == 0)
+      return new c_block_emboss();
 
     return NULL;
   }
@@ -1806,6 +1827,40 @@ void c_block_voronoi_diagram::set_default()
 
 //----------------------------------------------------------------------
 
+void c_block_replace_colors::set_default()
+
+  {
+    this->name = REPLACE_COLORS_NAME;
+
+    this->parameters->add_parameter("color 1 red",PARAMETER_INT);
+    this->parameters->add_parameter("color 1 green",PARAMETER_INT);
+    this->parameters->add_parameter("color 1 blue",PARAMETER_INT);
+    this->parameters->add_parameter("color 2 red",PARAMETER_INT);
+    this->parameters->add_parameter("color 2 green",PARAMETER_INT);
+    this->parameters->add_parameter("color 2 blue",PARAMETER_INT);
+    this->parameters->add_parameter("color 3 red",PARAMETER_INT);
+    this->parameters->add_parameter("color 3 green",PARAMETER_INT);
+    this->parameters->add_parameter("color 3 blue",PARAMETER_INT);
+    this->parameters->add_parameter("color 4 red",PARAMETER_INT);
+    this->parameters->add_parameter("color 4 green",PARAMETER_INT);
+    this->parameters->add_parameter("color 4 blue",PARAMETER_INT);
+
+    this->parameters->set_int_value("color 1 red",255);
+    this->parameters->set_int_value("color 1 green",255);
+    this->parameters->set_int_value("color 1 blue",255);
+    this->parameters->set_int_value("color 2 red",0);
+    this->parameters->set_int_value("color 2 green",0);
+    this->parameters->set_int_value("color 2 blue",0);
+    this->parameters->set_int_value("color 3 red",170);
+    this->parameters->set_int_value("color 3 green",170);
+    this->parameters->set_int_value("color 3 blue",170);
+    this->parameters->set_int_value("color 4 red",85);
+    this->parameters->set_int_value("color 4 green",85);
+    this->parameters->set_int_value("color 4 blue",85);
+  }
+
+//----------------------------------------------------------------------
+
 void c_block_color_fill::set_default()
 
   {
@@ -1818,6 +1873,66 @@ void c_block_color_fill::set_default()
     this->parameters->set_int_value("red",255);
     this->parameters->set_int_value("green",255);
     this->parameters->set_int_value("blue",255);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_sharpen::set_default()
+
+  {
+    this->name = SHARPEN_NAME;
+    this->parameters->add_parameter("intensity",PARAMETER_INT);
+    this->parameters->set_int_value("intensity",3);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_emboss::set_default()
+
+  {
+    this->name = EMBOSS_NAME;
+    this->parameters->add_parameter("intensity",PARAMETER_INT);
+    this->parameters->set_int_value("intensity",3);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_blur::set_default()
+
+  {
+    this->name = BLUR_NAME;
+
+    this->parameters->add_parameter("intensity",PARAMETER_INT);
+    this->parameters->add_parameter("motion",PARAMETER_BOOL);
+    this->parameters->add_parameter("direction",PARAMETER_INT);
+
+    this->parameters->set_int_value("intensity",10);
+    this->parameters->set_bool_value("motion",false);
+    this->parameters->set_int_value("direction",DIRECTION_HORIZONTAL);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_edge_detection::set_default()
+
+  {
+    this->name = EDGE_DETECTION_NAME;
+
+    this->parameters->add_parameter("intensity",PARAMETER_INT);
+    this->parameters->add_parameter("type",PARAMETER_INT);
+
+    this->parameters->set_int_value("intensity",3);
+    this->parameters->set_int_value("type",DETECTION_BOTH);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_tile::set_default()
+
+  {
+    this->name = TILE_NAME;
+    this->parameters->add_parameter("times",PARAMETER_INT);
+    this->parameters->set_int_value("times",2);
   }
 
 //----------------------------------------------------------------------
@@ -2204,6 +2319,62 @@ void c_block_glass::set_default()
 
 //----------------------------------------------------------------------
 
+void c_block_cellular_automaton_rps::set_default()
+
+  {
+    this->name = CELLULAR_RPS_NAME;
+
+    this->parameters->add_parameter("iterations",PARAMETER_INT);
+    this->parameters->add_parameter("neighbourhood",PARAMETER_INT);
+    this->parameters->add_parameter("neighbourhood size",PARAMETER_INT);
+    this->parameters->add_parameter("players",PARAMETER_INT);
+
+    this->parameters->set_int_value("iterations",50);
+    this->parameters->set_int_value("neighbourhood",
+      NEIGHBOURHOOD_MOORE);
+    this->parameters->set_int_value("neighbourhood size",5);
+    this->parameters->set_int_value("players",3);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_cellular_automaton_cyclic::set_default()
+
+  {
+    this->name = CELLULAR_CYCLIC_NAME;
+
+    this->parameters->add_parameter("iterations",PARAMETER_INT);
+    this->parameters->add_parameter("neighbourhood",PARAMETER_INT);
+    this->parameters->add_parameter("neighbourhood size",PARAMETER_INT);
+    this->parameters->add_parameter("states",PARAMETER_INT);
+    this->parameters->add_parameter("threshold",PARAMETER_INT);
+
+    this->parameters->set_int_value("iterations",30);
+    this->parameters->set_int_value("neighbourhood",
+      NEIGHBOURHOOD_VON_NEUMANN);
+    this->parameters->set_int_value("neighbourhood size",2);
+    this->parameters->set_int_value("states",6);
+    this->parameters->set_int_value("threshold",2);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_cellular_automaton_general::set_default()
+
+  {
+    this->name = CELLULAR_GENERAL_NAME;
+
+    this->parameters->add_parameter("iterations",PARAMETER_INT);
+    this->parameters->add_parameter("rules",PARAMETER_STRING);
+    this->parameters->add_parameter("states",PARAMETER_INT);
+
+    this->parameters->set_int_value("iterations",20);
+    this->parameters->set_string_value("rules",(char *) "");
+    this->parameters->set_int_value("states",2);
+  }
+
+//----------------------------------------------------------------------
+
 void c_block_brightness_contrast::set_default()
 
   {
@@ -2363,6 +2534,89 @@ bool c_block_map_transition::execute()
 
 //----------------------------------------------------------------------
 
+bool c_block_edge_detection::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_edge_detection(
+      &(this->buffer),
+      (t_edge_detection_type) this->parameters->get_int_value("type"),
+      this->parameters->get_int_value("intensity"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_tile::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_destroy(&(this->buffer));
+
+    pt_tile(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      this->parameters->get_int_value("times"),
+      &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_replace_colors::execute()
+
+  {
+    unsigned int i;
+    t_color_buffer *buffers[4];
+    unsigned char colors[4][3];
+
+    if (!this->is_graphic_input(0))
+      return false;
+
+    for (i = 1; i < 5; i++)
+      if (this->is_graphic_input(i))
+        {
+          buffers[i - 1] = ((c_graphic_block *)
+            this->input_blocks[i])->get_color_buffer();
+        }
+      else
+        {
+          buffers[i - 1] = NULL;
+        }
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    colors[0][0] = this->parameters->get_int_value("color 1 red");
+    colors[0][1] = this->parameters->get_int_value("color 1 green");
+    colors[0][2] = this->parameters->get_int_value("color 1 blue");
+    colors[1][0] = this->parameters->get_int_value("color 2 red");
+    colors[1][1] = this->parameters->get_int_value("color 2 green");
+    colors[1][2] = this->parameters->get_int_value("color 2 blue");
+    colors[2][0] = this->parameters->get_int_value("color 3 red");
+    colors[2][1] = this->parameters->get_int_value("color 3 green");
+    colors[2][2] = this->parameters->get_int_value("color 3 blue");
+    colors[3][0] = this->parameters->get_int_value("color 4 red");
+    colors[3][1] = this->parameters->get_int_value("color 4 green");
+    colors[3][2] = this->parameters->get_int_value("color 4 blue");
+
+    pt_replace_colors(&(this->buffer),colors,buffers,5);
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_block_normal_map::execute()
 
   {
@@ -2372,9 +2626,153 @@ bool c_block_normal_map::execute()
     color_buffer_destroy(&(this->buffer));
 
     pt_normal_map(
-    ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
-    this->parameters->get_int_value("neighbourhood size"),
-    &(this->buffer));
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      this->parameters->get_int_value("neighbourhood size"),
+      &(this->buffer));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_blur::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    if (this->parameters->get_bool_value("motion"))
+      pt_motion_blur(
+        &(this->buffer),
+        (t_direction) this->parameters->get_int_value("direction"),
+        this->parameters->get_int_value("intensity"));
+    else
+      pt_blur(
+        &(this->buffer),
+        this->parameters->get_int_value("intensity"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_sharpen::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_sharpen(
+      &(this->buffer),
+      this->parameters->get_int_value("intensity"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_emboss::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_emboss(
+      &(this->buffer),
+      this->parameters->get_int_value("intensity"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_cellular_automaton_rps::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_cellular_automaton_rps(
+      &(this->buffer),
+      (t_neighbourhood_type)
+        this->parameters->get_int_value("neighbourhood"),
+      this->parameters->get_int_value("neighbourhood size"),
+      this->parameters->get_int_value("players"),
+      this->get_random_seed(),
+      this->parameters->get_int_value("iterations"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_cellular_automaton_cyclic::execute()
+
+  {
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    pt_cellular_automaton_cyclic(
+      &(this->buffer),
+      (t_neighbourhood_type)
+        this->parameters->get_int_value("neighbourhood"),
+      this->parameters->get_int_value("neighbourhood size"),
+      this->parameters->get_int_value("states"),
+      this->parameters->get_int_value("threshold"),
+      this->parameters->get_int_value("iterations"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_cellular_automaton_general::execute()
+
+  {
+    int rules[256];
+    unsigned char rules_char[256];
+    unsigned int length, i;
+
+    if (!this->is_graphic_input(0))
+      return false;
+
+    c_texture_graph::string_to_char_array(
+      rules_char,
+      this->parameters->get_string_value("rules"),
+      &length,
+      256);
+
+    for (i = 0; i < length; i++)  // convert char array to int array
+      {
+        rules[i] = ((char) rules_char[i]);
+        cout << rules[i] << endl;
+      }
+
+    pt_cellular_automaton_general(
+      &(this->buffer),
+      this->parameters->get_int_value("states"),
+      rules,
+      this->parameters->get_int_value("iterations"));
 
     return true;
   }

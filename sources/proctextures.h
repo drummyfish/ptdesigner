@@ -369,7 +369,9 @@ void pt_replace_colors(t_color_buffer *buffer,
    *        one color buffer of buffers array at the same index.
    * @param buffers array of pointers to color buffers, each one matches
    *        one color from colors array and replaces that color in the
-   *        destination buffer with it's content
+   *        destination buffer with it's content, the array may contain
+   *        NULL values which mean the corresponding color won't be
+   *        replaced
    * @param length length of colors and buffers arrays
    */
 

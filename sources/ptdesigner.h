@@ -812,7 +812,8 @@ class c_texture_graph
          * values (decimal values separated by comma) to char array.
          *
          * @param char_array in this variable the char array will be
-         *        returned
+         *        returned, the whole array will be filles with zeros
+         *        initially within the max_length length
          * @param char_string string representation to be converted
          * @param length in this variable the length of the array loaded
          *        will be returned
@@ -1124,6 +1125,22 @@ class c_block_perlin_noise: public c_graphic_block
 //----------------------------------------------------------------------
 
   /**
+   * Blur block.
+   */
+
+class c_block_blur: public c_graphic_block
+
+  {
+    #define BLUR_NAME "blur"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
    * Simple white noise block.
    */
 
@@ -1131,6 +1148,38 @@ class c_block_simple_noise: public c_graphic_block
 
   {
     #define SIMPLE_NOISE_NAME "simple noise"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Replace colors block.
+   */
+
+class c_block_replace_colors: public c_graphic_block
+
+  {
+    #define REPLACE_COLORS_NAME "replace colors"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Tile block.
+   */
+
+class c_block_tile: public c_graphic_block
+
+  {
+    #define TILE_NAME "tile"
 
     protected:
       virtual void set_default();
@@ -1292,6 +1341,54 @@ class c_block_sine_transform: public c_graphic_block
 
   {
     #define SINE_TRANSFORM_NAME "sine transform"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Rock paper scissors cellular automaton block.
+   */
+
+class c_block_cellular_automaton_rps: public c_graphic_block
+
+  {
+    #define CELLULAR_RPS_NAME "cellular automaton rps"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Cyclic cellular automaton block.
+   */
+
+class c_block_cellular_automaton_cyclic: public c_graphic_block
+
+  {
+    #define CELLULAR_CYCLIC_NAME "cellular automaton cyclic"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * General cellular automaton block.
+   */
+
+class c_block_cellular_automaton_general: public c_graphic_block
+
+  {
+    #define CELLULAR_GENERAL_NAME "cellular automaton general"
 
     protected:
       virtual void set_default();
@@ -1479,6 +1576,22 @@ class c_block_square_mosaic: public c_graphic_block
 //----------------------------------------------------------------------
 
   /**
+   * Edge detection block.
+   */
+
+class c_block_edge_detection: public c_graphic_block
+
+  {
+    #define EDGE_DETECTION_NAME "edge detection"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
    * Adjust brightness/contrast block.
    */
 
@@ -1486,6 +1599,38 @@ class c_block_brightness_contrast: public c_graphic_block
 
   {
     #define BRIGHTNESS_CONTRAST_NAME "brightness and contrast"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Sharpen block.
+   */
+
+class c_block_sharpen: public c_graphic_block
+
+  {
+    #define SHARPEN_NAME "sharpen"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Emboss block.
+   */
+
+class c_block_emboss: public c_graphic_block
+
+  {
+    #define EMBOSS_NAME "emboss"
 
     protected:
       virtual void set_default();
