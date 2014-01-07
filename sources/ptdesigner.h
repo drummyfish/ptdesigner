@@ -820,6 +820,23 @@ class c_texture_graph
          * @param max_length maximum allowed array length
          */
 
+      static void string_to_double_array(double double_array[],
+        string double_string, unsigned int *length,
+        unsigned int max_length);
+
+        /**<
+         * Converts the string representation of array of double values
+         * (decimal values separated by comma) to double array.
+         *
+         * @param double_array in this variable the double array will be
+         *        returned, the whole array will be filles with zeros
+         *        initially within the max_length length
+         * @param double_string string representation to be converted
+         * @param length in this variable the length of the array loaded
+         *        will be returned
+         * @param max_length maximum allowed array length
+         */
+
       void update();
 
         /**<
@@ -1567,6 +1584,22 @@ class c_block_square_mosaic: public c_graphic_block
 
   {
     #define SQUARE_MOSAIC_NAME "square mosaic"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Convolution block.
+   */
+
+class c_block_convolution: public c_graphic_block
+
+  {
+    #define CONVOLUTION_NAME "convolution"
 
     protected:
       virtual void set_default();

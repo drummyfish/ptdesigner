@@ -207,6 +207,39 @@ void c_texture_graph::string_to_char_array(unsigned char char_array[],
 
 //----------------------------------------------------------------------
 
+void c_texture_graph::string_to_double_array(double double_array[],
+  string double_string, unsigned int *length, unsigned int max_length)
+
+  {
+    stringstream str_stream;
+    double helper;
+    unsigned int position;
+
+    str_stream.str(double_string);
+
+    for (position = 0; position < max_length; position++)
+      double_array[position] = 0;
+
+    position = 0;
+
+    if (!str_stream.eof())
+      do
+        {
+          if (position >= max_length - 1)
+            break;
+
+          str_stream >> helper;
+
+          double_array[position] = helper;
+
+          position++;
+        } while (!str_stream.eof());
+
+    *length = position;
+  }
+
+//----------------------------------------------------------------------
+
 c_parameters::c_parameters(c_block *owner)
 
   {
@@ -645,6 +678,12 @@ bool c_block::compute(bool force)
     bool change_occured, error_occured;
     unsigned int i;
 
+    if (this->inputs < this->min_inputs)
+      {
+        this->invalidate();
+        this->error = true;
+      }
+
     change_occured = false;
     error_occured = false;
 
@@ -838,30 +877,6 @@ bool c_block::is_user_of(c_block *block)
 void c_block::set_default()
 
   {
-  }
-
-//----------------------------------------------------------------------
-
-void c_block_perlin_noise::set_default()
-
-  {
-    if (!this->parameters->is_locked())
-      {
-        this->parameters->add_parameter("amplitude",PARAMETER_INT);
-        this->parameters->add_parameter("frequency",PARAMETER_INT);
-        this->parameters->add_parameter("max iterations",PARAMETER_INT);
-        this->parameters->add_parameter("interpolation",PARAMETER_INT);
-        this->parameters->add_parameter("smooth",PARAMETER_BOOL);
-        this->parameters->lock();
-      }
-
-    this->parameters->set_int_value("amplitude",127);
-    this->parameters->set_int_value("frequency",6);
-    this->parameters->set_int_value("max iterations",-1);
-    this->parameters->set_int_value("interpolation",INTERPOLATION_LINEAR);
-    this->parameters->set_bool_value("smooth",true);
-
-    this->name = "perlin noise";
   }
 
 //----------------------------------------------------------------------
@@ -1159,11 +1174,14 @@ bool c_texture_graph::is_error()
 bool c_block::connect(c_block *input_block, unsigned int slot_number)
 
   {
-    if (slot_number >= MAX_INPUT_BLOCKS || input_block->is_terminal())
+    if (slot_number >= MAX_INPUT_BLOCKS || input_block->is_terminal()
+      || this->inputs >= this->max_inputs)
       return false;
 
-    if (this->input_blocks[slot_number] == NULL)
-      this->inputs++;
+    this->inputs++;
+
+    if (this->input_blocks[slot_number] != NULL)
+      this->disconnect(slot_number);
 
     this->input_blocks[slot_number] = input_block;
 
@@ -1171,7 +1189,7 @@ bool c_block::connect(c_block *input_block, unsigned int slot_number)
       {
         // if the block is its own ancestor then there is a cycle
 
-        this->input_blocks[slot_number] = NULL;  // disconnect
+        this->disconnect(slot_number);
         return false;
       }
 
@@ -1413,6 +1431,8 @@ c_block *get_block_instance(string block_name)
       return new c_block_sharpen();
     else if (block_name.compare(EMBOSS_NAME) == 0)
       return new c_block_emboss();
+    else if (block_name.compare(CONVOLUTION_NAME) == 0)
+      return new c_block_convolution();
 
     return NULL;
   }
@@ -1799,10 +1819,35 @@ t_grammar *c_block_l_system::get_grammar()
 // 'SET DEFAULT' FUNCTIONS:
 //======================================================================
 
+void c_block_perlin_noise::set_default()
+
+  {
+    this->name = PERLIN_NOISE_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
+
+    this->parameters->add_parameter("amplitude",PARAMETER_INT);
+    this->parameters->add_parameter("frequency",PARAMETER_INT);
+    this->parameters->add_parameter("max iterations",PARAMETER_INT);
+    this->parameters->add_parameter("interpolation",PARAMETER_INT);
+    this->parameters->add_parameter("smooth",PARAMETER_BOOL);
+    this->parameters->lock();
+
+    this->parameters->set_int_value("amplitude",127);
+    this->parameters->set_int_value("frequency",6);
+    this->parameters->set_int_value("max iterations",-1);
+    this->parameters->set_int_value("interpolation",INTERPOLATION_LINEAR);
+    this->parameters->set_bool_value("smooth",true);
+  }
+
+//----------------------------------------------------------------------
+
 void c_block_voronoi_diagram::set_default()
 
   {
     this->name = VORONOI_DIAGRAM_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("type",PARAMETER_INT);
     this->parameters->add_parameter("metric",PARAMETER_INT);
@@ -1831,6 +1876,8 @@ void c_block_replace_colors::set_default()
 
   {
     this->name = REPLACE_COLORS_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 5;
 
     this->parameters->add_parameter("color 1 red",PARAMETER_INT);
     this->parameters->add_parameter("color 1 green",PARAMETER_INT);
@@ -1865,6 +1912,8 @@ void c_block_color_fill::set_default()
 
   {
     this->name = COLOR_FILL_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("red",PARAMETER_INT);
     this->parameters->add_parameter("green",PARAMETER_INT);
@@ -1877,10 +1926,31 @@ void c_block_color_fill::set_default()
 
 //----------------------------------------------------------------------
 
+void c_block_convolution::set_default()
+
+  {
+    this->name = CONVOLUTION_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
+
+    this->parameters->add_parameter("matrix width",PARAMETER_INT);
+    this->parameters->add_parameter("matrix height",PARAMETER_INT);
+    this->parameters->add_parameter("matrix data",PARAMETER_STRING);
+
+    this->parameters->set_int_value("matrix width",5);
+    this->parameters->set_int_value("matrix height",5);
+    this->parameters->set_string_value("matrix data",(char *) "");
+  }
+
+//----------------------------------------------------------------------
+
 void c_block_sharpen::set_default()
 
   {
     this->name = SHARPEN_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
+
     this->parameters->add_parameter("intensity",PARAMETER_INT);
     this->parameters->set_int_value("intensity",3);
   }
@@ -1891,6 +1961,9 @@ void c_block_emboss::set_default()
 
   {
     this->name = EMBOSS_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
+
     this->parameters->add_parameter("intensity",PARAMETER_INT);
     this->parameters->set_int_value("intensity",3);
   }
@@ -1901,6 +1974,8 @@ void c_block_blur::set_default()
 
   {
     this->name = BLUR_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("intensity",PARAMETER_INT);
     this->parameters->add_parameter("motion",PARAMETER_BOOL);
@@ -1917,6 +1992,8 @@ void c_block_edge_detection::set_default()
 
   {
     this->name = EDGE_DETECTION_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("intensity",PARAMETER_INT);
     this->parameters->add_parameter("type",PARAMETER_INT);
@@ -1931,6 +2008,9 @@ void c_block_tile::set_default()
 
   {
     this->name = TILE_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
+
     this->parameters->add_parameter("times",PARAMETER_INT);
     this->parameters->set_int_value("times",2);
   }
@@ -1941,6 +2021,8 @@ void c_block_simple_noise::set_default()
 
   {
     this->name = SIMPLE_NOISE_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("amplitude",PARAMETER_INT);
     this->parameters->add_parameter("grayscale",PARAMETER_BOOL);
@@ -1955,6 +2037,8 @@ void c_block_square_mosaic::set_default()
 
   {
     this->name = SQUARE_MOSAIC_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("side 1",PARAMETER_STRING);
     this->parameters->add_parameter("side 2",PARAMETER_STRING);
@@ -2000,6 +2084,8 @@ void c_block_turtle::set_default()
 
   {
     this->name = TURTLE_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("initial x",PARAMETER_DOUBLE);
     this->parameters->add_parameter("initial y",PARAMETER_DOUBLE);
@@ -2022,6 +2108,9 @@ void c_block_file_save::set_default()
   {
     this->name = FILE_SAVE_NAME;
     this->is_end_block = true;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
+
     this->parameters->add_parameter("path",PARAMETER_STRING);
     this->parameters->set_string_value("path",(char *) "texture.png");
   }
@@ -2032,6 +2121,8 @@ void c_block_file_load::set_default()
 
   {
     this->name = FILE_LOAD_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("path",PARAMETER_STRING);
     this->parameters->add_parameter("interpolation",PARAMETER_INT);
@@ -2047,6 +2138,8 @@ void c_block_hsl::set_default()
 
   {
     this->name = HSL_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("hue",PARAMETER_DOUBLE);
     this->parameters->add_parameter("saturation",PARAMETER_DOUBLE);
@@ -2063,6 +2156,8 @@ void c_block_rgb::set_default()
 
   {
     this->name = RGB_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("red",PARAMETER_INT);
     this->parameters->add_parameter("green",PARAMETER_INT);
@@ -2079,6 +2174,8 @@ void c_block_fault_formation_noise::set_default()
 
   {
     this->name = FAULT_FORMATION_NOISE_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
   }
 
 //----------------------------------------------------------------------
@@ -2088,6 +2185,8 @@ void c_block_end::set_default()
   {
     this->name = END_BLOCK_NAME;
     this->is_end_block = true;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
   }
 
 //----------------------------------------------------------------------
@@ -2096,6 +2195,8 @@ void c_block_bump_noise::set_default()
 
   {
     this->name = BUMP_NOISE_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("bump size from",PARAMETER_DOUBLE);
     this->parameters->add_parameter("bump size to",PARAMETER_DOUBLE);
@@ -2114,6 +2215,8 @@ void c_block_sine_transform::set_default()
 
   {
     this->name = SINE_TRANSFORM_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("phase",PARAMETER_DOUBLE);
     this->parameters->add_parameter("periods",PARAMETER_INT);
@@ -2130,6 +2233,8 @@ void c_block_mix_channels::set_default()
 
   {
     this->name = MIX_CHANNELS_NAME;
+    this->min_inputs = 3;
+    this->max_inputs = 3;
   }
 
 //----------------------------------------------------------------------
@@ -2138,6 +2243,8 @@ void c_block_substrate::set_default()
 
   {
     this->name = SUBSTRATE_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("number of iterations",
       PARAMETER_INT);
@@ -2160,6 +2267,8 @@ void c_block_mix::set_default()
 
   {
     this->name = MIX_NAME;
+    this->min_inputs = 2;
+    this->max_inputs = 2;
 
     this->parameters->add_parameter("percentage",PARAMETER_INT);
     this->parameters->add_parameter("method",PARAMETER_INT);
@@ -2174,6 +2283,8 @@ void c_block_marble::set_default()
 
   {
     this->name = MARBLE_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("periods",PARAMETER_INT);
     this->parameters->add_parameter("intensity",PARAMETER_INT);
@@ -2192,6 +2303,8 @@ void c_block_wood::set_default()
 
   {
     this->name = WOOD_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("circles",PARAMETER_INT);
     this->parameters->add_parameter("hardness",PARAMETER_INT);
@@ -2212,6 +2325,8 @@ void c_block_particles::set_default()
 
   {
     this->name = PARTICLES_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("particles",PARAMETER_INT);
     this->parameters->add_parameter("initial x",PARAMETER_DOUBLE);
@@ -2235,6 +2350,8 @@ void c_block_circle_transform::set_default()
 
   {
     this->name = CIRCLE_TRANSFORM_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("radius",PARAMETER_INT);
     this->parameters->add_parameter("jumps",PARAMETER_INT);
@@ -2249,6 +2366,8 @@ void c_block_radius_transform::set_default()
 
   {
     this->name = RADIUS_TRANSFORM_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("radius min",PARAMETER_INT);
     this->parameters->add_parameter("radius max",PARAMETER_INT);
@@ -2267,6 +2386,8 @@ void c_block_invert::set_default()
 
   {
     this->name = INVERT_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
   }
 
 //----------------------------------------------------------------------
@@ -2275,6 +2396,8 @@ void c_block_dither::set_default()
 
   {
     this->name = DITHER_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("levels",PARAMETER_INT);
     this->parameters->add_parameter("method",PARAMETER_INT);
@@ -2289,6 +2412,8 @@ void c_block_crop_amplitude::set_default()
 
   {
     this->name = CROP_AMPLITUDE_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("lower limit",PARAMETER_INT);
     this->parameters->add_parameter("upper limit",PARAMETER_INT);
@@ -2303,6 +2428,9 @@ void c_block_normal_map::set_default()
 
   {
     this->name = NORMAL_MAP_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
+
     this->parameters->add_parameter("neighbourhood size",PARAMETER_INT);
     this->parameters->set_int_value("neighbourhood size",5);
   }
@@ -2313,6 +2441,9 @@ void c_block_glass::set_default()
 
   {
     this->name = GLASS_NAME;
+    this->min_inputs = 2;
+    this->max_inputs = 2;
+
     this->parameters->add_parameter("height",PARAMETER_DOUBLE);
     this->parameters->set_double_value("height",1.0);
   }
@@ -2323,6 +2454,8 @@ void c_block_cellular_automaton_rps::set_default()
 
   {
     this->name = CELLULAR_RPS_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("iterations",PARAMETER_INT);
     this->parameters->add_parameter("neighbourhood",PARAMETER_INT);
@@ -2342,6 +2475,8 @@ void c_block_cellular_automaton_cyclic::set_default()
 
   {
     this->name = CELLULAR_CYCLIC_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("iterations",PARAMETER_INT);
     this->parameters->add_parameter("neighbourhood",PARAMETER_INT);
@@ -2363,6 +2498,8 @@ void c_block_cellular_automaton_general::set_default()
 
   {
     this->name = CELLULAR_GENERAL_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("iterations",PARAMETER_INT);
     this->parameters->add_parameter("rules",PARAMETER_STRING);
@@ -2379,6 +2516,8 @@ void c_block_brightness_contrast::set_default()
 
   {
     this->name = BRIGHTNESS_CONTRAST_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("brightness",PARAMETER_DOUBLE);
     this->parameters->add_parameter("contrast",PARAMETER_DOUBLE);
@@ -2393,6 +2532,8 @@ void c_block_grayscale::set_default()
 
   {
     this->name = GRAYSCALE_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
   }
 
 //----------------------------------------------------------------------
@@ -2401,6 +2542,9 @@ void c_block_color_transition::set_default()
 
   {
     this->name = COLOR_TRANSITION_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
+
     this->parameters->add_parameter("path",PARAMETER_STRING);
     this->parameters->set_string_value("path",
       (char *) "transition.txt");
@@ -2412,6 +2556,8 @@ void c_block_l_system::set_default()
 
   {
     this->name = L_SYSTEM_NAME;
+    this->min_inputs = 0;
+    this->max_inputs = 0;
 
     this->parameters->add_parameter("path",PARAMETER_STRING);
     this->parameters->add_parameter("iterations",PARAMETER_INT);
@@ -2427,6 +2573,8 @@ void c_block_map_transition::set_default()
 
   {
     this->name = MAP_TRANSITION_NAME;
+    this->min_inputs = 2;
+    this->max_inputs = 2;
   }
 
 //----------------------------------------------------------------------
@@ -2435,6 +2583,8 @@ void c_block_light::set_default()
 
   {
     this->name = LIGHT_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("ambient red",PARAMETER_INT);
     this->parameters->add_parameter("ambient green",PARAMETER_INT);
@@ -2548,6 +2698,52 @@ bool c_block_edge_detection::execute()
       &(this->buffer),
       (t_edge_detection_type) this->parameters->get_int_value("type"),
       this->parameters->get_int_value("intensity"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_convolution::execute()
+
+  {
+    t_matrix matrix;
+    double number_buffer[256];
+    unsigned int length,i,j,position;
+    int width,height;
+
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    width =
+      saturate_int(this->parameters->get_int_value("matrix width"),1,16);
+    height =
+      saturate_int(this->parameters->get_int_value("matrix height"),1,16);
+
+    matrix_init(&matrix,width,height);
+
+    c_texture_graph::string_to_double_array(
+      number_buffer,
+      this->parameters->get_string_value("matrix data"),
+      &length,
+      256);
+
+    position = 0;
+
+    for (j = 0; j < matrix.height; j++)
+      for (i = 0; i < matrix.width; i++)
+        {
+          matrix_set_value(&matrix,i,j,number_buffer[position]);
+          position++;
+        }
+
+    pt_convolution(&(this->buffer),&matrix);
+
+    matrix_destroy(&matrix);
 
     return true;
   }
@@ -3446,6 +3642,9 @@ bool c_block_substrate::execute()
       number = this->parameters->get_int_value("number of iterations");
     else
       number = this->parameters->get_int_value("number of lines");
+
+    if (number < 0)
+      number = 0;
 
     pt_substrate(
       this->get_random_seed(),
