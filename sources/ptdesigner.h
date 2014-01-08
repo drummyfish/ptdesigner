@@ -759,6 +759,19 @@ class c_texture_graph
          * Class constructor, initialises a new texture graph.
          */
 
+      ~c_texture_graph();
+
+        /**<
+         * Class destrucotr, deletes all the blocks and frees the
+         * memory.
+         */
+
+      void clear();
+
+        /**<
+         * Deletes all block so that the graph is empty.
+         */
+
       static string coordinations_to_string(
         double coordination_list[][2], unsigned int length);
 
@@ -842,13 +855,6 @@ class c_texture_graph
         /**<
          * Updates the texture graph. Should be called after connect or
          * disconnect functions has been called.
-         */
-
-      ~c_texture_graph();
-
-        /**<
-         * Class destructor, frees all the memory and destroys all the
-         * graph block.
          */
 
       bool compute(bool force);
@@ -1149,6 +1155,23 @@ class c_block_blur: public c_graphic_block
 
   {
     #define BLUR_NAME "blur"
+
+    protected:
+      virtual void set_default();
+      virtual bool execute();
+  };
+
+//----------------------------------------------------------------------
+
+  /**
+   * Geometric transformation block. Performs rotation, shift and flip
+   * operations in this order.
+   */
+
+class c_block_geometric_transform: public c_graphic_block
+
+  {
+    #define GEOMETRIC_TRANSFORM_NAME "geometric transformation"
 
     protected:
       virtual void set_default();

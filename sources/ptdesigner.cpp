@@ -846,20 +846,6 @@ bool c_block::is_graphic_input(unsigned int number)
 
 //----------------------------------------------------------------------
 
-c_texture_graph::~c_texture_graph()
-
-  {
-    unsigned int i;
-
-    for (i = 0; i < this->blocks->size(); i++) // destroy all block
-      delete this->blocks->at(i);
-
-    delete this->blocks;
-    delete this->end_blocks;
-  }
-
-//----------------------------------------------------------------------
-
 bool c_block::is_user_of(c_block *block)
 
   {
@@ -1144,6 +1130,21 @@ void c_texture_graph::remove_block(unsigned int block_number)
 
 //----------------------------------------------------------------------
 
+void c_texture_graph::delete_block(unsigned int block_number)
+
+  {
+    c_block *block;
+
+    if (block_number >= this->blocks->size())
+      return;
+
+    block = this->blocks->at(block_number);
+    this->blocks->erase(this->blocks->begin() + block_number);
+    delete block;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_texture_graph::compute(bool force)
 
   {
@@ -1175,7 +1176,8 @@ bool c_block::connect(c_block *input_block, unsigned int slot_number)
 
   {
     if (slot_number >= MAX_INPUT_BLOCKS || input_block->is_terminal()
-      || this->inputs >= this->max_inputs)
+      || this->inputs >= this->max_inputs ||
+      slot_number >= this->max_inputs)
       return false;
 
     this->inputs++;
@@ -1433,6 +1435,8 @@ c_block *get_block_instance(string block_name)
       return new c_block_emboss();
     else if (block_name.compare(CONVOLUTION_NAME) == 0)
       return new c_block_convolution();
+    else if (block_name.compare(GEOMETRIC_TRANSFORM_NAME) == 0)
+      return new c_block_geometric_transform();
 
     return NULL;
   }
@@ -1451,9 +1455,29 @@ bool c_texture_graph::connect_by_id(int id_input, int id_to,
     if (block1 == NULL || block2 == NULL || slot >= MAX_INPUT_BLOCKS)
       return false;
 
-    block2->connect(block1,slot);
+    return block2->connect(block1,slot);
+  }
 
-    return true;
+//----------------------------------------------------------------------
+
+void c_texture_graph::clear()
+
+  {
+    while (this->blocks->size() > 0)
+      {
+        this->delete_block(0);
+      }
+  }
+
+//----------------------------------------------------------------------
+
+c_texture_graph::~c_texture_graph()
+
+  {
+    this->clear();
+
+    delete this->blocks;
+    delete this->end_blocks;
   }
 
 //----------------------------------------------------------------------
@@ -1474,6 +1498,8 @@ bool c_texture_graph::load_from_file(string filename)
 
     if (!myfile.is_open())
       return false;
+
+    this->clear();
 
     while (getline(myfile,line))
       {
@@ -1838,6 +1864,29 @@ void c_block_perlin_noise::set_default()
     this->parameters->set_int_value("max iterations",-1);
     this->parameters->set_int_value("interpolation",INTERPOLATION_LINEAR);
     this->parameters->set_bool_value("smooth",true);
+  }
+
+//----------------------------------------------------------------------
+
+void c_block_geometric_transform::set_default()
+
+  {
+    this->name = GEOMETRIC_TRANSFORM_NAME;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
+
+    this->parameters->add_parameter("shift x",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("shift y",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("flip horizontal",PARAMETER_BOOL);
+    this->parameters->add_parameter("flip vertical",PARAMETER_BOOL);
+    this->parameters->add_parameter("angle",PARAMETER_INT);
+
+    this->parameters->set_double_value("shift x",0);
+    this->parameters->set_double_value("shift y",0);
+    this->parameters->set_int_value("frequency",6);
+    this->parameters->set_bool_value("flip horizontal",false);
+    this->parameters->set_bool_value("flip vertical",false);
+    this->parameters->set_int_value("angle",0);
   }
 
 //----------------------------------------------------------------------
@@ -2656,6 +2705,45 @@ bool c_block_light::execute()
       this->parameters->get_double_value("viewer height"),
       this->parameters->get_double_value("direction vector x"),
       this->parameters->get_double_value("direction vector y"));
+
+    return true;
+  }
+
+//----------------------------------------------------------------------
+
+bool c_block_geometric_transform::execute()
+
+  {
+    int angle;
+
+    if (!this->is_graphic_input(0))
+      return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
+
+    angle = this->parameters->get_int_value("angle");
+
+    if (angle != 0)
+      pt_rotate(
+        &(this->buffer),
+        degrees_to_radians(angle));
+
+    pt_shift(
+      &(this->buffer),
+      this->parameters->get_double_value("shift x") * this->buffer.width,
+      this->parameters->get_double_value("shift y") * this->buffer.height);
+
+    if (this->parameters->get_bool_value("flip horizontal"))
+      pt_flip(
+        &(this->buffer),
+        DIRECTION_HORIZONTAL);
+
+    if (this->parameters->get_bool_value("flip vertical"))
+      pt_flip(
+        &(this->buffer),
+        DIRECTION_VERTICAL);
 
     return true;
   }
