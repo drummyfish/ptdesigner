@@ -1335,18 +1335,7 @@ string c_parameters::get_value_string(unsigned int index)
 
 //----------------------------------------------------------------------
 
-  /**
-   * Private function - creates an instance of concrete c_block subclass
-   * depending on provided string name of the block.
-   *
-   * @param block_name identifies which instance subclass instance
-   *        should be created
-   *
-   * @return concrete newly allocated c_block subclass or NULL if the
-   *         string does not identify any subclass
-   */
-
-c_block *get_block_instance(string block_name)
+c_block *c_block::get_block_instance(string block_name)
 
   {
     if (block_name.compare(FILE_SAVE_NAME) == 0)
@@ -1536,7 +1525,7 @@ bool c_texture_graph::load_from_file(string filename)
         block_id =
           atoi(node->first_attribute("id")->value());
 
-        block = get_block_instance(block_name);
+        block = c_block::get_block_instance(block_name);
 
         help_attribute = node->first_attribute("seed");
 
@@ -2374,7 +2363,7 @@ void c_block_particles::set_default()
 
   {
     this->name = PARTICLES_NAME;
-    this->min_inputs = 0;
+    this->min_inputs = 1;
     this->max_inputs = 1;
 
     this->parameters->add_parameter("particles",PARAMETER_INT);
@@ -2503,8 +2492,8 @@ void c_block_cellular_automaton_rps::set_default()
 
   {
     this->name = CELLULAR_RPS_NAME;
-    this->min_inputs = 0;
-    this->max_inputs = 0;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("iterations",PARAMETER_INT);
     this->parameters->add_parameter("neighbourhood",PARAMETER_INT);
@@ -2524,8 +2513,8 @@ void c_block_cellular_automaton_cyclic::set_default()
 
   {
     this->name = CELLULAR_CYCLIC_NAME;
-    this->min_inputs = 0;
-    this->max_inputs = 0;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("iterations",PARAMETER_INT);
     this->parameters->add_parameter("neighbourhood",PARAMETER_INT);
@@ -2547,8 +2536,8 @@ void c_block_cellular_automaton_general::set_default()
 
   {
     this->name = CELLULAR_GENERAL_NAME;
-    this->min_inputs = 0;
-    this->max_inputs = 0;
+    this->min_inputs = 1;
+    this->max_inputs = 1;
 
     this->parameters->add_parameter("iterations",PARAMETER_INT);
     this->parameters->add_parameter("rules",PARAMETER_STRING);

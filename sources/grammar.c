@@ -431,7 +431,8 @@ int _grammar_determine_rule(t_grammar *grammar, t_grammar_char *symbol)
 
   {
     int probability_sum;
-    int satisfactory_rules[grammar->number_of_rules];
+    int *satisfactory_rules;
+    int result;
     int satisfactory_rules_length;
     int i, j;
     int success;
@@ -441,6 +442,12 @@ int _grammar_determine_rule(t_grammar *grammar, t_grammar_char *symbol)
 
     probability_sum = 0;
     satisfactory_rules_length = 0;
+
+    satisfactory_rules = (int *)
+      malloc(grammar->number_of_rules * sizeof(int));
+
+    if (satisfactory_rules == NULL)
+      return -2;
 
     for (i = 0; i < grammar->number_of_rules; i++)
       {
@@ -484,10 +491,17 @@ int _grammar_determine_rule(t_grammar *grammar, t_grammar_char *symbol)
       }
 
     if (satisfactory_rules_length == 0)
-      return -1;
+      {
+        free(satisfactory_rules);
+        return -1;
+      }
 
     if (satisfactory_rules_length == 1)
-      return satisfactory_rules[0];
+      {
+        result = satisfactory_rules[0];
+        free(satisfactory_rules);
+        return result;
+      }
 
     // here the rule must be chosen randomly:
 
@@ -501,9 +515,14 @@ int _grammar_determine_rule(t_grammar *grammar, t_grammar_char *symbol)
         random_number -= grammar->rules[satisfactory_rules[i]].chance;
 
         if (random_number <= 0)
-          return satisfactory_rules[i];
+          {
+            result = satisfactory_rules[i];
+            free(satisfactory_rules);
+            return result;
+          }
       }
 
+    free(satisfactory_rules);
     return -1; // the program should never get here
   }
 

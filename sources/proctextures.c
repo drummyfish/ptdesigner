@@ -1878,6 +1878,7 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
     double shortest_distance, shortest_distance2, distance_ratio,
       help_distance, angle;
     unsigned char color;
+    int (*point_array)[2];
     int help_x, help_y;
     int help_color;
     t_kd_tree search_tree;        /* for faster nearest neighbour search
@@ -1895,7 +1896,10 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
     else if (point_place == PLACE_SQUARE)
       number_of_points = (parameter2 - 1) * 4;
 
-    int point_array[number_of_points][2];
+    point_array = malloc(number_of_points * 2 * sizeof(int));
+
+    if (point_array == NULL)
+      return;
 
     center_x = destination->width / 2;   // center pixel coordinaitons
     center_y = destination->height / 2;
@@ -2151,6 +2155,8 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
 
     if (use_tree)
       kd_tree_destroy(&search_tree);
+
+    free(point_array);
   }
 
 //----------------------------------------------------------------------
@@ -2819,15 +2825,35 @@ void pt_particle_movement(t_color_buffer *noise_buffer,
 
   {
     unsigned int i, j;
-    int particle_coordinations[particles][2];
-    double particle_angles[particles];
-    double particle_velocities[particles];
+    int (*particle_coordinations)[2];     // array of coordinations
+    double *particle_angles;              // array of angles
+    double *particle_velocities;          // array of velocities
     double initial_angle, angle_difference;
     int continue_computing, x, y;
     unsigned char red, green, blue;
 
     if (noise_buffer == NULL)
       return;
+
+    particle_angles = (double *) malloc(particles * sizeof(double));
+    particle_velocities = (double *) malloc(particles * sizeof(double));
+    particle_coordinations = (int **)
+      malloc(particles * 2 * sizeof(int));
+
+    if (particle_angles == NULL || particle_velocities == NULL ||
+      particle_coordinations == NULL)
+      {
+        if (particle_angles != NULL)
+          free(particle_angles);
+
+        if (particle_velocities != NULL)
+          free(particle_velocities);
+
+        if (particle_coordinations != NULL)
+          free(particle_coordinations);
+
+        return;
+      }
 
     position_x = saturate_double(position_x,0.0,1.0);
     position_y = saturate_double(position_y,0.0,1.0);
@@ -2843,7 +2869,13 @@ void pt_particle_movement(t_color_buffer *noise_buffer,
     pt_color_fill(destination,0,0,0);
 
     if (particles == 0)
-      return;
+      {
+        free(particle_angles);
+        free(particle_velocities);
+        free(particle_coordinations);
+
+        return;
+      }
 
     velocity = velocity * 0.01 * noise_buffer->width;
 
@@ -2909,6 +2941,10 @@ void pt_particle_movement(t_color_buffer *noise_buffer,
               continue_computing = 1;
           }
       }
+
+    free(particle_angles);
+    free(particle_velocities);
+    free(particle_coordinations);
   }
 
 //----------------------------------------------------------------------

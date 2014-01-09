@@ -94,9 +94,10 @@ double noise(int x)
 
   {
     /* those are just some random operations that make good noise */
+    double result;
 
     x = x ^ (x<<13);
-    double result = (1.0 - (((x * (x * x * 15731 + 789221) +
+    result = (1.0 - (((x * (x * x * 15731 + 789221) +
       1376312589) & 0x7fffffff) / 1073741824.0));
     return result;
   }

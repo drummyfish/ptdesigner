@@ -1,0 +1,34 @@
+﻿Build started 9.1.2014 9:53:10.
+     1>Project "C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\pt designer\pt designer.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\pt designer.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\..\sources\grammar.c
+         grammar.c
+     1>c:\users\tastyfish\documents\github\proctextures\sources\grammar.c(377): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(188) : see declaration of 'strncpy'
+     1>c:\users\tastyfish\documents\github\proctextures\sources\grammar.c(760): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\string.h(188) : see declaration of 'strncpy'
+     1>c:\users\tastyfish\documents\github\proctextures\sources\grammar.c(1035): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+     1>c:\users\tastyfish\documents\github\proctextures\sources\grammar.c(1085): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
+       Lib:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\Debug\pt designer.lib" /NOLOGO Debug\colorbuffer.obj
+         Debug\colortransition.obj
+         Debug\general.obj
+         Debug\grammar.obj
+         Debug\kdtree.obj
+         Debug\linelist.obj
+         Debug\lodepng.obj
+         Debug\matrix.obj
+         Debug\proctextures.obj
+         pt designer.vcxproj -> C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\Debug\pt designer.lib
+       FinalizeBuildStatus:
+         Deleting file "Debug\pt designer.unsuccessfulbuild".
+         Touching "Debug\pt designer.lastbuildstate".
+     1>Done Building Project "C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\pt designer\pt designer.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.82

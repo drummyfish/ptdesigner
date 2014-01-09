@@ -425,6 +425,19 @@ class c_block
          * be used before it's added to a texture graph.
          */
 
+      static c_block *get_block_instance(string block_name);
+
+        /**
+         * Creates an instance of concrete c_block subclass depending
+         * on provided string name of the block.
+         *
+         * @param block_name identifies which instance subclass instance
+         *        should be created
+         *
+         * @return concrete newly allocated c_block subclass or NULL if
+         *         the string does not identify any subclass
+         */
+
       virtual bool load_parameters(string parameters);
 
         /**<
