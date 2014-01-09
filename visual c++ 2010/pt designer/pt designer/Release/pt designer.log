@@ -1,12 +1,12 @@
-﻿Build started 9.1.2014 9:54:05.
+﻿Build started 9.1.2014 13:30:31.
      1>Project "C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\pt designer\pt designer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Release\pt_designer.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Creating "Release\libptdesigner.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
        Lib:
          All outputs are up-to-date.
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\Release\pt_designer.lib" /NOLOGO /LTCG Release\colorbuffer.obj
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\Release\libptdesigner.lib" /NOLOGO /LTCG Release\colorbuffer.obj
          Release\colortransition.obj
          Release\general.obj
          Release\grammar.obj
@@ -15,12 +15,12 @@
          Release\lodepng.obj
          Release\matrix.obj
          Release\proctextures.obj
-         pt designer.vcxproj -> C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\Release\pt_designer.lib
+         pt designer.vcxproj -> C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\Release\libptdesigner.lib
        FinalizeBuildStatus:
-         Deleting file "Release\pt_designer.unsuccessfulbuild".
-         Touching "Release\pt_designer.lastbuildstate".
+         Deleting file "Release\libptdesigner.unsuccessfulbuild".
+         Touching "Release\libptdesigner.lastbuildstate".
      1>Done Building Project "C:\Users\tastyfish\Documents\GitHub\proctextures\visual c++ 2010\pt designer\pt designer\pt designer.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.14
+Time Elapsed 00:00:02.55

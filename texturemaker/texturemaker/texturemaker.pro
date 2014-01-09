@@ -17,6 +17,18 @@ SOURCES += main.cpp\
     editareaframe.cpp
 
 HEADERS  += mainwindow.h \
-    editareaframe.h
+    editareaframe.h \
+    ../../sources/proctextures.h \
+    ../../sources/ptdesigner.h
 
 FORMS    += mainwindow.ui
+
+INCLUDEPATH += $$PWD/../../sources
+
+INCLUDEPATH += $$PWD/../../sources
+DEPENDPATH += $$PWD/../../sources
+
+LIBS += -L$$PWD/../../lib/win32/ -lptdesigner
+
+INCLUDEPATH += $$PWD/../../sources
+DEPENDPATH += $$PWD/../../sources

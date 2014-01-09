@@ -14,7 +14,7 @@
     <ProjectGuid>{678875EF-7472-4497-A55D-0E2F704654EE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ptdesigner</RootNamespace>
-    <ProjectName>pt_designer</ProjectName>
+    <ProjectName>libptdesigner</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
