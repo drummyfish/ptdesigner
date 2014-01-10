@@ -1658,7 +1658,7 @@ void pt_mix_buffers(t_color_buffer *buffer1, t_color_buffer *buffer2,
     unsigned int i,j;
     unsigned char red1, green1, blue1, red2, green2, blue2;
     int red3, green3, blue3;
-    double percentage_double, percentage_double2;
+    double percentage_double, percentage_double2, divide_by;
 
     if (buffer1->width != buffer2->width ||
         buffer1->height != buffer2->height)
@@ -1685,7 +1685,12 @@ void pt_mix_buffers(t_color_buffer *buffer1, t_color_buffer *buffer2,
     for (j = 0; j < buffer1->height; j++)
       for (i = 0; i < buffer1->width; i++)
         {
-          if (alpha != NULL)
+          if (type == MIX_MULTIPLY)
+            { // don't use percentages with multiply:
+              percentage_double = 1.0;
+              percentage_double2 = 1.0;
+            }
+          else if (alpha != NULL)
             {
               color_buffer_get_pixel(alpha,i,j,&red1,&green1,&blue1);
               percentage = (red1 / 255.0) * 100;
@@ -1728,9 +1733,11 @@ void pt_mix_buffers(t_color_buffer *buffer1, t_color_buffer *buffer2,
                 break;
 
               case MIX_AVERAGE:
-                red3 = (red1 + red2) / 2;
-                green3 = (green1 + green2) / 2;
-                blue3 = (blue1 + blue2) / 2;
+                divide_by = percentage_double + percentage_double2;
+
+                red3 = (red1 + red2) / divide_by;
+                green3 = (green1 + green2) / divide_by;
+                blue3 = (blue1 + blue2) / divide_by;
                 break;
 
               case MIX_MULTIPLY:
@@ -1740,17 +1747,10 @@ void pt_mix_buffers(t_color_buffer *buffer1, t_color_buffer *buffer2,
                 break;
             }
 
-          red3 = red3 > 255 ? 255 : red3;
-          red3 = red3 < 0 ? 0 : red3;
-
-          green3 = green3 > 255 ? 255 : green3;
-          green3 = green3 < 0 ? 0 : green3;
-
-          blue3 = blue3 > 255 ? 255 : blue3;
-          blue3 = blue3 < 0 ? 0 : blue3;
-
-          color_buffer_set_pixel(destination,i,j,(unsigned char) red3,
-            (unsigned char) green3,(unsigned char) blue3);
+          color_buffer_set_pixel(destination,i,j,
+            round_to_char(red3),
+            round_to_char(green3),
+            round_to_char(blue3));
         }
 
     return;
