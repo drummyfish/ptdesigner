@@ -1,0 +1,19 @@
+<!ELEMENT texturegraph (block*)>
+<!ELEMENT block ((input | parameter)*)>
+<!ELEMENT input EMPTY>
+<!ELEMENT parameter EMPTY>
+
+<!ATTLIST texturegraph width NMTOKEN #REQUIRED>
+<!ATTLIST texturegraph height NMTOKEN #REQUIRED>
+<!ATTLIST texturegraph seed NMTOKEN #REQUIRED>
+<!ATTLIST texturegraph supersampling NMTOKEN #REQUIRED>
+
+<!ATTLIST block id ID #REQUIRED>
+<!ATTLIST block type CDATA #REQUIRED>
+
+<!ATTLIST input id NMTOKEN #REQUIRED>
+<!ATTLIST input slot NMTOKEN #REQUIRED>
+
+<!ATTLIST parameter name CDATA #REQUIRED>
+<!ATTLIST parameter type (int | double | string | bool) #REQUIRED>
+<!ATTLIST parameter value CDATA #REQUIRED>

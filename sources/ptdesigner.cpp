@@ -1637,6 +1637,15 @@ bool c_texture_graph::save_to_file(string filename)
 
     if (save_file.is_open())
       {
+        // doctype node:
+
+        node = document.allocate_node(node_doctype,(char *) "",
+          (char *) "ptgraph");
+
+        document.append_node(node);
+
+        // graph node:
+
         node = document.allocate_node(node_element,"texturegraph");
 
         // texture graph attributes:
@@ -1767,8 +1776,7 @@ bool c_texture_graph::save_to_file(string filename)
                 node->append_node(node2);
               }
 
-            document.first_node()->append_node(node);
-
+            document.first_node("texturegraph")->append_node(node);
           }
 
         save_file << document;
