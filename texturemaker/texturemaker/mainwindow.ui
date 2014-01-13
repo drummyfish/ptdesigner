@@ -15,7 +15,16 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <property name="margin">
+    <property name="leftMargin">
+     <number>2</number>
+    </property>
+    <property name="topMargin">
+     <number>2</number>
+    </property>
+    <property name="rightMargin">
+     <number>2</number>
+    </property>
+    <property name="bottomMargin">
      <number>2</number>
     </property>
     <item row="0" column="0">
@@ -60,8 +69,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>178</width>
-           <height>263</height>
+           <width>161</width>
+           <height>221</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -74,7 +83,16 @@
           <property name="spacing">
            <number>2</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
            <number>2</number>
           </property>
           <item>
@@ -83,7 +101,16 @@
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -158,7 +185,7 @@
            <x>0</x>
            <y>0</y>
            <width>373</width>
-           <height>263</height>
+           <height>213</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -177,7 +204,16 @@
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -200,7 +236,6 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <zorder>scrollArea</zorder>
            </widget>
           </item>
          </layout>
@@ -214,13 +249,19 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>100</height>
+        <height>150</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>100</height>
+        <height>150</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
       <property name="frameShape">
@@ -235,39 +276,39 @@
          <x>0</x>
          <y>0</y>
          <width>556</width>
-         <height>98</height>
+         <height>148</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="addBlockButton" name="pushButton_2">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
           <property name="text">
-           <string>PushButton</string>
+           <string>voronoi diagram</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_3">
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton_5">
-          <property name="text">
-           <string>PushButton</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -279,6 +320,31 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="2" column="0">
+         <widget class="addBlockButton" name="pushButton_4">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>perlin noise</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -376,6 +442,11 @@
    <extends>QFrame</extends>
    <header location="global">editareaframe.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>addBlockButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">addblockbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

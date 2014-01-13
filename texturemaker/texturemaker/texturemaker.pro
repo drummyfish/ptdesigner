@@ -14,12 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    editareaframe.cpp
+    editareaframe.cpp \
+    addblockbutton.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
     ../../sources/proctextures.h \
-    ../../sources/ptdesigner.h
+    ../../sources/ptdesigner.h \
+    addblockbutton.h
 
 FORMS    += mainwindow.ui
 
@@ -32,3 +34,6 @@ LIBS += -L$$PWD/../../lib/win32/ -lptdesigner
 
 INCLUDEPATH += $$PWD/../../sources
 DEPENDPATH += $$PWD/../../sources
+
+RESOURCES += \
+    resources.qrc

@@ -47,3 +47,8 @@ void MainWindow::dragMoveEvent(QDragMoveEvent *de)
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+
+}

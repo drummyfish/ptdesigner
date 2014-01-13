@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/button voronoi diagram.png</file>
+        <file>resources/button perlin noise.png</file>
+    </qresource>
+</RCC>

@@ -28,6 +28,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <addblockbutton.h>
 #include <editareaframe.h>
 
 QT_BEGIN_NAMESPACE
@@ -60,11 +61,9 @@ public:
     QScrollArea *blockArea;
     QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout_2;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_4;
-    QPushButton *pushButton_5;
+    addBlockButton *pushButton_2;
     QSpacerItem *horizontalSpacer;
+    addBlockButton *pushButton_4;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -95,8 +94,9 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(2, 2, 2, 2);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setContentsMargins(2, 2, 2, 2);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(1);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
@@ -115,7 +115,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 178, 263));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 161, 221));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -123,14 +123,16 @@ public:
         scrollAreaWidgetContents_2->setSizePolicy(sizePolicy1);
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout->setSpacing(2);
-        verticalLayout->setContentsMargins(2, 2, 2, 2);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(2, 2, 2, 2);
         widget = new QWidget(scrollAreaWidgetContents_2);
         widget->setObjectName(QStringLiteral("widget"));
         horizontalLayout_3 = new QHBoxLayout(widget);
         horizontalLayout_3->setSpacing(0);
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
         frame = new QFrame(widget);
         frame->setObjectName(QStringLiteral("frame"));
         QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -173,7 +175,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QStringLiteral("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 373, 263));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 373, 213));
         QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);
@@ -182,8 +184,9 @@ public:
         scrollAreaWidgetContents_3->setSizeIncrement(QSize(0, 0));
         horizontalLayout_2 = new QHBoxLayout(scrollAreaWidgetContents_3);
         horizontalLayout_2->setSpacing(0);
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         editArea = new editAreaFrame(scrollAreaWidgetContents_3);
         editArea->setObjectName(QStringLiteral("editArea"));
         sizePolicy4.setHeightForWidth(editArea->sizePolicy().hasHeightForWidth());
@@ -191,7 +194,6 @@ public:
         editArea->setMinimumSize(QSize(0, 0));
         editArea->setFrameShape(QFrame::StyledPanel);
         editArea->setFrameShadow(QFrame::Raised);
-        scrollArea->raise();
 
         horizontalLayout_2->addWidget(editArea);
 
@@ -204,40 +206,37 @@ public:
 
         blockArea = new QScrollArea(centralWidget);
         blockArea->setObjectName(QStringLiteral("blockArea"));
-        blockArea->setMinimumSize(QSize(0, 100));
-        blockArea->setMaximumSize(QSize(16777215, 100));
+        blockArea->setMinimumSize(QSize(0, 150));
+        blockArea->setMaximumSize(QSize(16777215, 150));
+        blockArea->setBaseSize(QSize(0, 0));
         blockArea->setFrameShape(QFrame::StyledPanel);
         blockArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 556, 98));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 556, 148));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        pushButton_2 = new QPushButton(scrollAreaWidgetContents);
+        pushButton_2 = new addBlockButton(scrollAreaWidgetContents);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setMinimumSize(QSize(53, 53));
+        pushButton_2->setMaximumSize(QSize(53, 53));
+        pushButton_2->setBaseSize(QSize(53, 53));
 
         gridLayout_2->addWidget(pushButton_2, 1, 0, 1, 1);
 
-        pushButton_3 = new QPushButton(scrollAreaWidgetContents);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-
-        gridLayout_2->addWidget(pushButton_3, 1, 1, 1, 1);
-
-        pushButton_4 = new QPushButton(scrollAreaWidgetContents);
-        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
-
-        gridLayout_2->addWidget(pushButton_4, 2, 0, 1, 1);
-
-        pushButton_5 = new QPushButton(scrollAreaWidgetContents);
-        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
-
-        gridLayout_2->addWidget(pushButton_5, 2, 1, 1, 1);
-
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_2->addItem(horizontalSpacer, 1, 2, 1, 1);
+        gridLayout_2->addItem(horizontalSpacer, 1, 1, 1, 1);
+
+        pushButton_4 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        pushButton_4->setMinimumSize(QSize(53, 53));
+        pushButton_4->setMaximumSize(QSize(53, 53));
+        pushButton_4->setBaseSize(QSize(53, 53));
+
+        gridLayout_2->addWidget(pushButton_4, 2, 0, 1, 1);
 
         blockArea->setWidget(scrollAreaWidgetContents);
 
@@ -289,10 +288,11 @@ public:
         actionAbout->setText(QApplication::translate("MainWindow", "about", 0));
         pushButton->setText(QApplication::translate("MainWindow", "display full size", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "block settings", 0));
-        pushButton_2->setText(QApplication::translate("MainWindow", "PushButton", 0));
-        pushButton_3->setText(QApplication::translate("MainWindow", "PushButton", 0));
-        pushButton_4->setText(QApplication::translate("MainWindow", "PushButton", 0));
-        pushButton_5->setText(QApplication::translate("MainWindow", "PushButton", 0));
+#ifndef QT_NO_TOOLTIP
+        pushButton_2->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+        pushButton_2->setText(QApplication::translate("MainWindow", "voronoi diagram", 0));
+        pushButton_4->setText(QApplication::translate("MainWindow", "perlin noise", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "Fi&le", 0));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
