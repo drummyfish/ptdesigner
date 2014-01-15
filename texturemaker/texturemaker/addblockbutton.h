@@ -7,6 +7,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QIcon>
+#include <QMouseEvent>
 
 using namespace std;
 
@@ -16,6 +17,8 @@ class addBlockButton : public QPushButton
 public:
     explicit addBlockButton(QWidget *parent = 0);
     void paintEvent(QPaintEvent *);
+
+    void mousePressEvent(QMouseEvent *event);
 
 signals:
 

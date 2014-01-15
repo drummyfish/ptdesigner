@@ -3,6 +3,10 @@
 
 #include <QFrame>
 #include <QPainter>
+#include <QMouseEvent>
+#include <iostream>
+
+using namespace std;
 
 class editAreaFrame : public QFrame
 {
@@ -10,6 +14,8 @@ class editAreaFrame : public QFrame
 public:
     explicit editAreaFrame(QWidget *parent = 0);
     void paintEvent(QPaintEvent *);
+    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
 
 signals:
     

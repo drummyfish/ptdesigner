@@ -27,12 +27,11 @@ FORMS    += mainwindow.ui
 
 INCLUDEPATH += $$PWD/../../sources
 
-INCLUDEPATH += $$PWD/../../sources
 DEPENDPATH += $$PWD/../../sources
 
-LIBS += -L$$PWD/../../lib/win32/ -lptdesigner
+win32:LIBS += -L$$PWD/../../lib/win32/ -lptdesigner
+!win32:LIBS += -L$$PWD/../../lib/linux64/ -lptdesigner
 
-INCLUDEPATH += $$PWD/../../sources
 DEPENDPATH += $$PWD/../../sources
 
 RESOURCES += \
