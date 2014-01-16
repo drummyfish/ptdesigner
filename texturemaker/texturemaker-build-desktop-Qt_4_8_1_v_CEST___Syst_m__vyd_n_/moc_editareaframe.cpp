@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'editareaframe.h'
 **
-** Created: Wed Jan 15 09:51:58 2014
+** Created: Thu Jan 16 10:40:23 2014
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

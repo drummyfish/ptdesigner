@@ -1,9 +1,13 @@
 #include "addblockbutton.h"
 
+//-----------------------------------------------------
+
 addBlockButton::addBlockButton(QWidget *parent) :
     QPushButton(parent)
  {
  }
+
+//-----------------------------------------------------
 
 void addBlockButton::paintEvent(QPaintEvent *)
  {
@@ -14,6 +18,8 @@ void addBlockButton::paintEvent(QPaintEvent *)
    painter.fillRect(0,0,this->width(),this->height(),QColor::fromRgb(0,0,0));
    painter.drawPixmap(1,1,51,51,pixmap);
  }
+
+//-----------------------------------------------------
 
 void addBlockButton::mousePressEvent(QMouseEvent *event)
  {
@@ -28,3 +34,5 @@ void addBlockButton::mousePressEvent(QMouseEvent *event)
        Qt::DropAction dropAction = drag->exec();
      }
  }
+
+//-----------------------------------------------------

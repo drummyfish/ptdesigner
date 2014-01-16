@@ -11,6 +11,8 @@
 
 using namespace std;
 
+//-----------------------------------------------------
+
 class addBlockButton : public QPushButton
 {
     Q_OBJECT
@@ -25,5 +27,7 @@ signals:
 public slots:
 
 };
+
+//-----------------------------------------------------
 
 #endif // ADDBLOCKBUTTON_H

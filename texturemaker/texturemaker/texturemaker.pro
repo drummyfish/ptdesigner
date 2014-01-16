@@ -21,7 +21,8 @@ HEADERS  += mainwindow.h \
     editareaframe.h \
     ../../sources/proctextures.h \
     ../../sources/ptdesigner.h \
-    addblockbutton.h
+    addblockbutton.h \
+    ../../sources/general.h
 
 FORMS    += mainwindow.ui
 
