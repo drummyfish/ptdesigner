@@ -15,16 +15,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <property name="leftMargin">
-     <number>2</number>
-    </property>
-    <property name="topMargin">
-     <number>2</number>
-    </property>
-    <property name="rightMargin">
-     <number>2</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>2</number>
     </property>
     <item row="0" column="0">
@@ -69,8 +60,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>161</width>
-           <height>221</height>
+           <width>162</width>
+           <height>225</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -83,16 +74,7 @@
           <property name="spacing">
            <number>2</number>
           </property>
-          <property name="leftMargin">
-           <number>2</number>
-          </property>
-          <property name="topMargin">
-           <number>2</number>
-          </property>
-          <property name="rightMargin">
-           <number>2</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>2</number>
           </property>
           <item>
@@ -101,16 +83,7 @@
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -166,7 +139,7 @@
              </size>
             </property>
             <property name="title">
-             <string>block settings</string>
+             <string>block</string>
             </property>
            </widget>
           </item>
@@ -185,7 +158,7 @@
            <x>0</x>
            <y>0</y>
            <width>373</width>
-           <height>213</height>
+           <height>190</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -204,16 +177,7 @@
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
           <item>
@@ -358,7 +322,7 @@
      <x>0</x>
      <y>0</y>
      <width>562</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -375,6 +339,9 @@
     <property name="title">
      <string>Edit</string>
     </property>
+    <addaction name="actionRotate_CW"/>
+    <addaction name="actionRotate_CCW"/>
+    <addaction name="actionDelete"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -396,8 +363,11 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
+   <addaction name="actionRotate_CW"/>
+   <addaction name="actionRotate_CCW"/>
+   <addaction name="actionDelete"/>
   </widget>
   <action name="actionNew_texture">
    <property name="text">
@@ -432,6 +402,21 @@
   <action name="actionAbout">
    <property name="text">
     <string>about</string>
+   </property>
+  </action>
+  <action name="actionRotate_CW">
+   <property name="text">
+    <string>rotate CW</string>
+   </property>
+  </action>
+  <action name="actionRotate_CCW">
+   <property name="text">
+    <string>rotate CCW</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>delete</string>
    </property>
   </action>
  </widget>

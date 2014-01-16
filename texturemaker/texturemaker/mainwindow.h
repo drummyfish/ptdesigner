@@ -42,6 +42,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+//-----------------------------------------------------
+
     void set_block_position(t_block_position position);
 
     /**<
@@ -53,6 +55,8 @@ public:
              a new element is created
       */
 
+//-----------------------------------------------------
+
     void delete_block_position(int block_id);
 
     /**<
@@ -62,6 +66,8 @@ public:
              deleted, if such block doesn't exist, nothing
              happens
       */
+
+//-----------------------------------------------------
 
     t_block_position *get_block_position(int block_id);
 
@@ -76,6 +82,33 @@ public:
               given id doesn't exist
       */
 
+//-----------------------------------------------------
+
+    int get_block_by_position(int x, int y);
+
+    /**<
+      Gets block at given position.
+
+      @param x x position
+      @param y y position
+
+      @return id of the block placed at [x,y] position
+              or -1 if there is no block
+      */
+
+//-----------------------------------------------------
+
+    void delete_block_by_id(int id);
+
+    /**<
+      Deletes a block with given id from the texture
+      graph.
+
+      @param id id of the block to be deleted
+      */
+
+//-----------------------------------------------------
+
     c_texture_graph *get_texture_graph();
 
     /**<
@@ -84,6 +117,8 @@ public:
       @return pointer to global texture graph
       */
 
+//-----------------------------------------------------
+
     void dropEvent(QDropEvent *de);
     void dragMoveEvent(QDragMoveEvent *de);
     void dragEnterEvent(QDragEnterEvent *event);
@@ -91,6 +126,8 @@ public:
 private slots:
 
     void on_pushButton_2_clicked();
+
+    void on_actionDelete_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -18,8 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   this->graph->add_block(new c_block_voronoi_diagram());
   pos.block_id = 0;
-  pos.x = 50;
-  pos.y = 100;
+  pos.x = 5;
+  pos.y = 10;
   pos.direction = 0;
   this->set_block_position(pos);
 
@@ -41,6 +41,39 @@ MainWindow::~MainWindow()
 {
   delete this->graph;
   delete ui;
+}
+
+//-----------------------------------------------------
+
+int MainWindow::get_block_by_position(int x, int y)
+
+{
+  unsigned int i;
+  int block_x, block_y;
+
+  for (i = 0; i < this->block_positions.size(); i++)
+    {
+      block_x = this->block_positions.at(i).x;
+      block_y = this->block_positions.at(i).y;
+
+      if (x >= block_x && x <= block_x + 52 &&
+          y >= block_y && y <= block_y + 52)
+        return this->block_positions.at(i).block_id;
+    }
+
+  return -1;
+}
+
+//-----------------------------------------------------
+
+void MainWindow::delete_block_by_id(int id)
+
+{
+  if (id < 0)
+    return;
+
+  this->delete_block_position(id);
+  this->graph->delete_block(id);
 }
 
 //-----------------------------------------------------
@@ -75,6 +108,7 @@ void MainWindow::delete_block_position(int block_id)
 }
 
 //-----------------------------------------------------
+
 t_block_position *MainWindow::get_block_position(int block_id)
 
 {
@@ -126,3 +160,9 @@ c_texture_graph *MainWindow::get_texture_graph()
 }
 
 //-----------------------------------------------------
+
+void MainWindow::on_actionDelete_triggered()
+{
+  this->delete_block_by_id(ui->editArea->get_selected_id());
+  this->ui->editArea->update();
+}

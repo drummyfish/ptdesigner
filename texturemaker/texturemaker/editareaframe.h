@@ -17,6 +17,8 @@ class editAreaFrame : public QFrame
 
 protected:
     MainWindow *main_window;
+    int selected_id;          /// id of currently selected block, negative = none
+    bool moving;              /// whether the block moving state is on
 
 public:
     explicit editAreaFrame(QWidget *parent = 0);
@@ -36,9 +38,24 @@ public:
 
 //-----------------------------------------------------
 
+    int get_selected_id();
+
+    /**
+      Returns an id of the currently selected block.
+
+      @return id of the selected block or -1 if none
+              is selected
+      */
+
+//-----------------------------------------------------
+
     void paintEvent(QPaintEvent *);
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 signals:
     

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jan 16 10:39:25 2014
+** Created: Thu Jan 16 14:14:24 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -44,6 +44,9 @@ public:
     QAction *actionExit;
     QAction *actionHelp_topics;
     QAction *actionAbout;
+    QAction *actionRotate_CW;
+    QAction *actionRotate_CCW;
+    QAction *actionDelete;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout;
@@ -91,13 +94,18 @@ public:
         actionHelp_topics->setObjectName(QString::fromUtf8("actionHelp_topics"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
+        actionRotate_CW = new QAction(MainWindow);
+        actionRotate_CW->setObjectName(QString::fromUtf8("actionRotate_CW"));
+        actionRotate_CCW = new QAction(MainWindow);
+        actionRotate_CCW->setObjectName(QString::fromUtf8("actionRotate_CCW"));
+        actionDelete = new QAction(MainWindow);
+        actionDelete->setObjectName(QString::fromUtf8("actionDelete"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(2, 2, 2, 2);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(1);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -116,7 +124,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 161, 221));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 162, 225));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -124,16 +132,14 @@ public:
         scrollAreaWidgetContents_2->setSizePolicy(sizePolicy1);
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout->setSpacing(2);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(2, 2, 2, 2);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         widget = new QWidget(scrollAreaWidgetContents_2);
         widget->setObjectName(QString::fromUtf8("widget"));
         horizontalLayout_3 = new QHBoxLayout(widget);
         horizontalLayout_3->setSpacing(0);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         frame = new QFrame(widget);
         frame->setObjectName(QString::fromUtf8("frame"));
         QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -176,7 +182,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 373, 213));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 373, 190));
         QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);
@@ -185,9 +191,8 @@ public:
         scrollAreaWidgetContents_3->setSizeIncrement(QSize(0, 0));
         horizontalLayout_2 = new QHBoxLayout(scrollAreaWidgetContents_3);
         horizontalLayout_2->setSpacing(0);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         editArea = new editAreaFrame(scrollAreaWidgetContents_3);
         editArea->setObjectName(QString::fromUtf8("editArea"));
         sizePolicy4.setHeightForWidth(editArea->sizePolicy().hasHeightForWidth());
@@ -246,7 +251,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 562, 21));
+        menuBar->setGeometry(QRect(0, 0, 562, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -260,6 +265,7 @@ public:
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QString::fromUtf8("toolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
+        MainWindow->insertToolBarBreak(toolBar);
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuEdit->menuAction());
@@ -269,8 +275,14 @@ public:
         menuFile->addAction(actionSave);
         menuFile->addAction(actionSave_as);
         menuFile->addAction(actionExit);
+        menuEdit->addAction(actionRotate_CW);
+        menuEdit->addAction(actionRotate_CCW);
+        menuEdit->addAction(actionDelete);
         menuHelp->addAction(actionHelp_topics);
         menuHelp->addAction(actionAbout);
+        toolBar->addAction(actionRotate_CW);
+        toolBar->addAction(actionRotate_CCW);
+        toolBar->addAction(actionDelete);
 
         retranslateUi(MainWindow);
 
@@ -287,8 +299,11 @@ public:
         actionExit->setText(QApplication::translate("MainWindow", "exit", 0, QApplication::UnicodeUTF8));
         actionHelp_topics->setText(QApplication::translate("MainWindow", "help topics", 0, QApplication::UnicodeUTF8));
         actionAbout->setText(QApplication::translate("MainWindow", "about", 0, QApplication::UnicodeUTF8));
+        actionRotate_CW->setText(QApplication::translate("MainWindow", "rotate CW", 0, QApplication::UnicodeUTF8));
+        actionRotate_CCW->setText(QApplication::translate("MainWindow", "rotate CCW", 0, QApplication::UnicodeUTF8));
+        actionDelete->setText(QApplication::translate("MainWindow", "delete", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "display full size", 0, QApplication::UnicodeUTF8));
-        groupBox->setTitle(QApplication::translate("MainWindow", "block settings", 0, QApplication::UnicodeUTF8));
+        groupBox->setTitle(QApplication::translate("MainWindow", "block", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         pushButton_2->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
