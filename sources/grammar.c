@@ -678,7 +678,7 @@ int grammar_add_rule(t_grammar *grammar, char *rule_string)
     int error;
 
     if (grammar == NULL || rule_string == NULL || rule_string[0] == 0)
-      return 1;
+      return 0;
 
     error = 0;
 
@@ -757,7 +757,10 @@ int grammar_add_rule(t_grammar *grammar, char *rule_string)
               error = 1;
 
             if (!error)
-              strncpy(rule.condition,rule_string + help_position,help_length);
+              {
+                strncpy(rule.condition,rule_string + help_position,help_length);
+                rule.condition[help_length] = 0;
+              }
           }
       }
 
