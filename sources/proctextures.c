@@ -2837,7 +2837,7 @@ void pt_particle_movement(t_color_buffer *noise_buffer,
 
     particle_angles = (double *) malloc(particles * sizeof(double));
     particle_velocities = (double *) malloc(particles * sizeof(double));
-    particle_coordinations = (int **)
+    particle_coordinations = (int (*)[2])
       malloc(particles * 2 * sizeof(int));
 
     if (particle_angles == NULL || particle_velocities == NULL ||

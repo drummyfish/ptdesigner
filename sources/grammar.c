@@ -377,7 +377,7 @@ int _read_parameter_expressions(t_grammar_rule_char *symbol,
               string + start,length);
 
             symbol->parameter_expressions[expression_number]
-              [start + length] = 0;  // terminate the string
+              [length] = 0;  // terminate the string
 
             expression_number++;
 
