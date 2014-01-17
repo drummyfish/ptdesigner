@@ -18,7 +18,7 @@
     <property name="margin">
      <number>2</number>
     </property>
-    <item row="0" column="0">
+    <item row="0" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
        <number>1</number>
@@ -158,7 +158,7 @@
            <x>0</x>
            <y>0</y>
            <width>373</width>
-           <height>190</height>
+           <height>174</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -200,6 +200,8 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
+            <zorder>blockArea</zorder>
+            <zorder>blockArea</zorder>
            </widget>
           </item>
          </layout>
@@ -208,12 +210,12 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
+    <item row="1" column="1">
      <widget class="QScrollArea" name="blockArea">
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>150</height>
+        <height>155</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -239,12 +241,834 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>556</width>
-         <height>148</height>
+         <width>1316</width>
+         <height>137</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="0">
+        <item row="1" column="20">
+         <widget class="addBlockButton" name="pushButton_33">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>sine transform</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="42">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="24">
+         <widget class="addBlockButton" name="pushButton_16">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>brightness and contrast</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="addBlockButton" name="pushButton_3">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>bump noise</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="addBlockButton" name="pushButton_11">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>load file</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="addBlockButton" name="pushButton_10">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>save file</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="8">
+         <widget class="addBlockButton" name="pushButton_21">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>grayscale</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="31">
+         <widget class="addBlockButton" name="pushButton_39">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>replace colors</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="8">
+         <widget class="addBlockButton" name="pushButton_17">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>edge detection</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="18">
+         <widget class="addBlockButton" name="pushButton_37">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>marble</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="16">
+         <widget class="addBlockButton" name="pushButton_36">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>wood</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="19">
+         <widget class="addBlockButton" name="pushButton_40">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>geometric transform</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="6">
+         <widget class="addBlockButton" name="pushButton_38">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>substrate</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="9">
+         <widget class="addBlockButton" name="pushButton_18">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>convolution</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="7">
+         <widget class="addBlockButton" name="pushButton_14">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>sharpen</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="16">
+         <widget class="addBlockButton" name="pushButton_23">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>light</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="10">
+         <widget class="addBlockButton" name="pushButton_29">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>dither</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="7">
+         <widget class="addBlockButton" name="pushButton_27">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>invert</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="21">
+         <widget class="addBlockButton" name="pushButton_34">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>circle transform</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="41">
+         <widget class="addBlockButton" name="pushButton_28">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>crop amplitude</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="4">
+         <widget class="addBlockButton" name="pushButton_6">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>mix channels</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="addBlockButton" name="pushButton_42">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>fault formation noise</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="9">
+         <widget class="addBlockButton" name="pushButton_22">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>glass</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="addBlockButton" name="pushButton_25">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>end</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="24">
+         <widget class="addBlockButton" name="pushButton_8">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>l-system</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="6">
+         <widget class="addBlockButton" name="pushButton_13">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>emboss</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="addBlockButton" name="pushButton_7">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>mix</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="addBlockButton" name="pushButton_5">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>simple noise</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="29">
+         <widget class="addBlockButton" name="pushButton_26">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>radius transform</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="addBlockButton" name="pushButton_4">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>perlin noise</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
          <widget class="addBlockButton" name="pushButton_2">
           <property name="minimumSize">
            <size>
@@ -272,21 +1096,8 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="2" column="0">
-         <widget class="addBlockButton" name="pushButton_4">
+        <item row="2" column="5">
+         <widget class="addBlockButton" name="pushButton_15">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -305,8 +1116,347 @@
             <height>53</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string/>
+          </property>
           <property name="text">
-           <string>perlin noise</string>
+           <string>blur</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="addBlockButton" name="pushButton_43">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>color fill</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="25">
+         <widget class="addBlockButton" name="pushButton_44">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>radius transform</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="21">
+         <widget class="addBlockButton" name="pushButton_35">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>particles</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="25">
+         <widget class="addBlockButton" name="pushButton_20">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>turtle</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="10">
+         <widget class="addBlockButton" name="pushButton_24">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>normal map</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="18">
+         <widget class="addBlockButton" name="pushButton_31">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>cellular automaton cyclic</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="19">
+         <widget class="addBlockButton" name="pushButton_30">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>cellular automaton general</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="20">
+         <widget class="addBlockButton" name="pushButton_32">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>cellular automaton rps</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="29">
+         <widget class="addBlockButton" name="pushButton_41">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>tile</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="30">
+         <widget class="addBlockButton" name="pushButton_19">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>square mosaic</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="30">
+         <widget class="addBlockButton" name="pushButton_9">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>color transition</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="31">
+         <widget class="addBlockButton" name="pushButton_12">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>map transition</string>
           </property>
          </widget>
         </item>
@@ -342,6 +1492,7 @@
     <addaction name="actionRotate_CW"/>
     <addaction name="actionRotate_CCW"/>
     <addaction name="actionDelete"/>
+    <addaction name="actionExecute"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -363,11 +1514,13 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
+   <addaction name="actionSave"/>
    <addaction name="actionRotate_CW"/>
    <addaction name="actionRotate_CCW"/>
    <addaction name="actionDelete"/>
+   <addaction name="actionExecute"/>
   </widget>
   <action name="actionNew_texture">
    <property name="text">
@@ -380,6 +1533,10 @@
    </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/action save.png</normaloff>:/resources/action save.png</iconset>
+   </property>
    <property name="text">
     <string>save</string>
    </property>
@@ -405,18 +1562,39 @@
    </property>
   </action>
   <action name="actionRotate_CW">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/action rotate cw.png</normaloff>:/resources/action rotate cw.png</iconset>
+   </property>
    <property name="text">
     <string>rotate CW</string>
    </property>
   </action>
   <action name="actionRotate_CCW">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/action rotate ccw.png</normaloff>:/resources/action rotate ccw.png</iconset>
+   </property>
    <property name="text">
     <string>rotate CCW</string>
    </property>
   </action>
   <action name="actionDelete">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/action delete.png</normaloff>:/resources/action delete.png</iconset>
+   </property>
    <property name="text">
     <string>delete</string>
+   </property>
+  </action>
+  <action name="actionExecute">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/action execute.png</normaloff>:/resources/action execute.png</iconset>
+   </property>
+   <property name="text">
+    <string>execute</string>
    </property>
   </action>
  </widget>
@@ -434,6 +1612,8 @@
    <header location="global">addblockbutton.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

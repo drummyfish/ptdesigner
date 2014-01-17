@@ -2,5 +2,59 @@
     <qresource prefix="/">
         <file>resources/button voronoi diagram.png</file>
         <file>resources/button perlin noise.png</file>
+        <file>resources/action delete.png</file>
+        <file>resources/action execute.png</file>
+        <file>resources/action redo.png</file>
+        <file>resources/action rotate ccw.png</file>
+        <file>resources/action rotate cw.png</file>
+        <file>resources/action save.png</file>
+        <file>resources/action undo.png</file>
+        <file>resources/block.png</file>
+        <file>resources/button adjust hsl.png</file>
+        <file>resources/button adjust rgb.png</file>
+        <file>resources/button blur.png</file>
+        <file>resources/button brightness and contrast.png</file>
+        <file>resources/button bump noise.png</file>
+        <file>resources/button cellular automaton cyclic.png</file>
+        <file>resources/button cellular automaton general.png</file>
+        <file>resources/button cellular automaton rps.png</file>
+        <file>resources/button circle transform.png</file>
+        <file>resources/button color fill.png</file>
+        <file>resources/button color transition.png</file>
+        <file>resources/button convolution.png</file>
+        <file>resources/button crop amplitude.png</file>
+        <file>resources/button dither.png</file>
+        <file>resources/button edge detection.png</file>
+        <file>resources/button emboss.png</file>
+        <file>resources/button end.png</file>
+        <file>resources/button fault formation noise.png</file>
+        <file>resources/button geometric transform.png</file>
+        <file>resources/button glass.png</file>
+        <file>resources/button grayscale.png</file>
+        <file>resources/button invert.png</file>
+        <file>resources/button light.png</file>
+        <file>resources/button load file.png</file>
+        <file>resources/button l-system.png</file>
+        <file>resources/button map transition.png</file>
+        <file>resources/button marble.png</file>
+        <file>resources/button mix.png</file>
+        <file>resources/button mix channels.png</file>
+        <file>resources/button normal map.png</file>
+        <file>resources/button particles.png</file>
+        <file>resources/button radius transform.png</file>
+        <file>resources/button replace colors.png</file>
+        <file>resources/button save file.png</file>
+        <file>resources/button sharpen.png</file>
+        <file>resources/button simple noise.png</file>
+        <file>resources/button sine transform.png</file>
+        <file>resources/button square mosaic.png</file>
+        <file>resources/button substrate.png</file>
+        <file>resources/button tile.png</file>
+        <file>resources/button turtle.png</file>
+        <file>resources/button wood.png</file>
+        <file>resources/slot down.png</file>
+        <file>resources/slot left.png</file>
+        <file>resources/slot right.png</file>
+        <file>resources/slot up.png</file>
     </qresource>
 </RCC>
