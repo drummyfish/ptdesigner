@@ -770,7 +770,7 @@ void _pt_turtle_destroy()
 int _pt_turtle_next_instruction(int *x1, int *y1, int *x2, int *y2)
 
    {
-     int dx,dy;
+     int dx,dy,helper;
      t_grammar_char *symbol;
 
      while (1)
@@ -889,9 +889,14 @@ int _pt_turtle_next_instruction(int *x1, int *y1, int *x2, int *y2)
 
              case 'W': // set line width to length unit
                if (symbol->number_of_parameters >= 1)
-                 {
+                 { 
+                   helper = symbol->parameter_values[0];
+                   
+                   if (helper < 0)
+                     helper = helper * -1;
+
                    turtle.state.line_width = turtle.image_width *
-                   symbol->parameter_values[0] * 0.001;
+                     helper * 0.001;
 
                    if (turtle.state.line_width <= 0)
                      turtle.state.line_width = 1;
