@@ -875,15 +875,27 @@ int _pt_turtle_next_instruction(int *x1, int *y1, int *x2, int *y2)
 
              case 'P': // multiply step length by percentage
                if (symbol->number_of_parameters >= 1)
-                 turtle.state.step_length =
-                   turtle.state.step_length *
-                   symbol->parameter_values[0] * 0.01;
+                 {
+				   helper = symbol->parameter_values[0];
+				   
+				   if (helper < 0)
+				     helper = 0;
+					 
+                   turtle.state.step_length =
+                     turtle.state.step_length * helper * 0.01;
+                 }
+                   
                break;
 
              case 'B': // set step length to length unit
                if (symbol->number_of_parameters >= 1)
-                 turtle.state.step_length = turtle.image_width *
-                 symbol->parameter_values[0] * 0.001;
+                 {
+                   turtle.state.step_length = turtle.image_width *
+                   symbol->parameter_values[0] * 0.001;
+                   
+                   if (turtle.state.step_length < 0)
+                     turtle.state.step_length = 0;
+                 }
 
                break;
 
@@ -946,20 +958,37 @@ int _pt_turtle_next_instruction(int *x1, int *y1, int *x2, int *y2)
 
              case 'I': // increase step length by pixels
                if (symbol->number_of_parameters >= 1)
-                 turtle.state.step_length +=
-                   symbol->parameter_values[0];
+                 {
+                   turtle.state.step_length +=
+                     symbol->parameter_values[0];
+				 
+				   if (turtle.state.step_length < 0)
+				     turtle.state.step_length = 0;
+				 }
 
                break;
 
              case 'M': // set step length in pixels
                if (symbol->number_of_parameters >= 1)
-                 turtle.state.step_length = symbol->parameter_values[0];
+                 {
+                   turtle.state.step_length =
+                     symbol->parameter_values[0];
+				 
+				   if (turtle.state.step_length < 0)
+				     turtle.state.step_length = 0;
+				 }
 
                break;
 
              case 'F': // set line width in pixels
                if (symbol->number_of_parameters >= 1)
-                 turtle.state.line_width = symbol->parameter_values[0];
+                 {
+                   turtle.state.line_width =
+                     symbol->parameter_values[0];
+                     
+                   if (turtle.state.line_width <= 0)
+                     turtle.state.line_width = 1;
+				 }
 
                break;
 
