@@ -129,6 +129,10 @@ private slots:
 
     void on_actionDelete_triggered();
 
+    void on_actionRotate_CW_triggered();
+
+    void on_actionRotate_CCW_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

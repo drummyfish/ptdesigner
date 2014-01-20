@@ -378,15 +378,6 @@ class c_block
          * Sets the error flag and invalidates the block.
          */
 
-      bool is_terminal();
-
-        /**<
-         * Checks if the block is terminal, i.e. cannot serve as a
-         * input for another block.
-         *
-         * @return true if the block is terminal, false otherwise
-         */
-
       bool is_graphic_input(unsigned int number);
 
         /**<
@@ -425,6 +416,15 @@ class c_block
          * be used before it's added to a texture graph.
          */
 
+      bool is_terminal();
+
+        /**<
+         * Checks if the block is terminal, i.e. cannot serve as a
+         * input for another block.
+         *
+         * @return true if the block is terminal, false otherwise
+         */
+
       static c_block *get_block_instance(string block_name);
 
         /**
@@ -448,6 +448,23 @@ class c_block
          * @return true if the parameters were set succesfully, false
          *         otherwise
          */
+
+      unsigned int get_min_inputs();
+      
+        /**<
+         * Returns a minimum number of inputs for this block.
+         * 
+         * @return minimum number of input blocks for this block
+         */
+         
+      unsigned int get_max_inputs();
+      
+        /**<
+         * Returns a maximum number of inputs for this block.
+         * 
+         * @return maximum number of input blocks for this block
+         */
+
 
       c_parameters *get_parameters();
 
@@ -1135,7 +1152,7 @@ class c_block_bump_noise: public c_graphic_block
 class c_block_fault_formation_noise: public c_graphic_block
 
   {
-    #define FAULT_FORMATION_NOISE_NAME "fault formation name"
+    #define FAULT_FORMATION_NOISE_NAME "fault formation noise"
 
     protected:
       virtual void set_default();
@@ -1184,7 +1201,7 @@ class c_block_blur: public c_graphic_block
 class c_block_geometric_transform: public c_graphic_block
 
   {
-    #define GEOMETRIC_TRANSFORM_NAME "geometric transformation"
+    #define GEOMETRIC_TRANSFORM_NAME "geometric transform"
 
     protected:
       virtual void set_default();

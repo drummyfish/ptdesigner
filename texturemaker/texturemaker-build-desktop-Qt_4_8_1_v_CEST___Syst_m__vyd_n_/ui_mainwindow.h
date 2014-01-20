@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Jan 17 12:51:54 2014
+** Created: Mon Jan 20 09:51:20 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -85,7 +85,6 @@ public:
     addBlockButton *pushButton_29;
     addBlockButton *pushButton_27;
     addBlockButton *pushButton_34;
-    addBlockButton *pushButton_28;
     addBlockButton *pushButton_6;
     addBlockButton *pushButton_42;
     addBlockButton *pushButton_22;
@@ -94,7 +93,6 @@ public:
     addBlockButton *pushButton_13;
     addBlockButton *pushButton_7;
     addBlockButton *pushButton_5;
-    addBlockButton *pushButton_26;
     addBlockButton *pushButton_4;
     addBlockButton *pushButton_2;
     addBlockButton *pushButton_15;
@@ -110,6 +108,7 @@ public:
     addBlockButton *pushButton_19;
     addBlockButton *pushButton_9;
     addBlockButton *pushButton_12;
+    addBlockButton *pushButton_28;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -278,7 +277,7 @@ public:
         blockArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1316, 137));
+        scrollAreaWidgetContents->setGeometry(QRect(-701, 0, 1257, 137));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -431,14 +430,6 @@ public:
 
         gridLayout_2->addWidget(pushButton_34, 1, 21, 1, 1);
 
-        pushButton_28 = new addBlockButton(scrollAreaWidgetContents);
-        pushButton_28->setObjectName(QString::fromUtf8("pushButton_28"));
-        pushButton_28->setMinimumSize(QSize(53, 53));
-        pushButton_28->setMaximumSize(QSize(53, 53));
-        pushButton_28->setBaseSize(QSize(53, 53));
-
-        gridLayout_2->addWidget(pushButton_28, 1, 41, 1, 1);
-
         pushButton_6 = new addBlockButton(scrollAreaWidgetContents);
         pushButton_6->setObjectName(QString::fromUtf8("pushButton_6"));
         pushButton_6->setMinimumSize(QSize(53, 53));
@@ -502,14 +493,6 @@ public:
         pushButton_5->setBaseSize(QSize(53, 53));
 
         gridLayout_2->addWidget(pushButton_5, 1, 4, 1, 1);
-
-        pushButton_26 = new addBlockButton(scrollAreaWidgetContents);
-        pushButton_26->setObjectName(QString::fromUtf8("pushButton_26"));
-        pushButton_26->setMinimumSize(QSize(53, 53));
-        pushButton_26->setMaximumSize(QSize(53, 53));
-        pushButton_26->setBaseSize(QSize(53, 53));
-
-        gridLayout_2->addWidget(pushButton_26, 1, 29, 1, 1);
 
         pushButton_4 = new addBlockButton(scrollAreaWidgetContents);
         pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
@@ -621,7 +604,7 @@ public:
         pushButton_9->setMaximumSize(QSize(53, 53));
         pushButton_9->setBaseSize(QSize(53, 53));
 
-        gridLayout_2->addWidget(pushButton_9, 1, 30, 1, 1);
+        gridLayout_2->addWidget(pushButton_9, 1, 29, 1, 1);
 
         pushButton_12 = new addBlockButton(scrollAreaWidgetContents);
         pushButton_12->setObjectName(QString::fromUtf8("pushButton_12"));
@@ -629,7 +612,15 @@ public:
         pushButton_12->setMaximumSize(QSize(53, 53));
         pushButton_12->setBaseSize(QSize(53, 53));
 
-        gridLayout_2->addWidget(pushButton_12, 1, 31, 1, 1);
+        gridLayout_2->addWidget(pushButton_12, 1, 30, 1, 1);
+
+        pushButton_28 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_28->setObjectName(QString::fromUtf8("pushButton_28"));
+        pushButton_28->setMinimumSize(QSize(53, 53));
+        pushButton_28->setMaximumSize(QSize(53, 53));
+        pushButton_28->setBaseSize(QSize(53, 53));
+
+        gridLayout_2->addWidget(pushButton_28, 1, 31, 1, 1);
 
         blockArea->setWidget(scrollAreaWidgetContents);
 
@@ -767,10 +758,6 @@ public:
 #endif // QT_NO_TOOLTIP
         pushButton_34->setText(QApplication::translate("MainWindow", "circle transform", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        pushButton_28->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButton_28->setText(QApplication::translate("MainWindow", "crop amplitude", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
         pushButton_6->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         pushButton_6->setText(QApplication::translate("MainWindow", "mix channels", 0, QApplication::UnicodeUTF8));
@@ -802,10 +789,6 @@ public:
         pushButton_5->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         pushButton_5->setText(QApplication::translate("MainWindow", "simple noise", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        pushButton_26->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButton_26->setText(QApplication::translate("MainWindow", "radius transform", 0, QApplication::UnicodeUTF8));
         pushButton_4->setText(QApplication::translate("MainWindow", "perlin noise", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         pushButton_2->setToolTip(QString());
@@ -863,6 +846,10 @@ public:
         pushButton_12->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         pushButton_12->setText(QApplication::translate("MainWindow", "map transition", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_28->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+        pushButton_28->setText(QApplication::translate("MainWindow", "crop amplitude", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "Fi&le", 0, QApplication::UnicodeUTF8));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0, QApplication::UnicodeUTF8));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0, QApplication::UnicodeUTF8));

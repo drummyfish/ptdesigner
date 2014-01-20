@@ -166,3 +166,50 @@ void MainWindow::on_actionDelete_triggered()
   this->delete_block_by_id(ui->editArea->get_selected_id());
   this->ui->editArea->update();
 }
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionRotate_CW_triggered()
+{
+  t_block_position *position;
+  int id;
+
+  id = ui->editArea->get_selected_id();
+
+  if (id < 0)
+    return;
+
+  position = this->get_block_position(id);
+
+  (position->direction)++;
+
+  if (position->direction >= 4)
+    position->direction = 0;
+
+  ui->editArea->update();  // redraw
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionRotate_CCW_triggered()
+{
+  t_block_position *position;
+  int id;
+
+  id = ui->editArea->get_selected_id();
+
+  if (id < 0)
+    return;
+
+  position = this->get_block_position(id);
+
+  if (position->direction == 0)
+    position->direction = 3;
+  else
+    position->direction--;
+
+  ui->editArea->update();
+}
+
+
+//-----------------------------------------------------

@@ -431,6 +431,22 @@ bool c_parameters::set_int_value(string parameter_name, int value)
 
 //----------------------------------------------------------------------
 
+unsigned int c_block::get_min_inputs()
+
+  {
+	 return this->min_inputs;
+  }
+  
+//----------------------------------------------------------------------
+
+unsigned int c_block::get_max_inputs()
+
+  {
+	 return this->max_inputs;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_parameters::set_double_value(string parameter_name, double value)
 
   {

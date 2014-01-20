@@ -200,8 +200,6 @@
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <zorder>blockArea</zorder>
-            <zorder>blockArea</zorder>
            </widget>
           </item>
          </layout>
@@ -239,9 +237,9 @@
       <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>-701</x>
          <y>0</y>
-         <width>1316</width>
+         <width>1257</width>
          <height>137</height>
         </rect>
        </property>
@@ -763,34 +761,6 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="41">
-         <widget class="addBlockButton" name="pushButton_28">
-          <property name="minimumSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string/>
-          </property>
-          <property name="text">
-           <string>crop amplitude</string>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="4">
          <widget class="addBlockButton" name="pushButton_6">
           <property name="minimumSize">
@@ -1012,34 +982,6 @@
           </property>
           <property name="text">
            <string>simple noise</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="29">
-         <widget class="addBlockButton" name="pushButton_26">
-          <property name="minimumSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string/>
-          </property>
-          <property name="text">
-           <string>radius transform</string>
           </property>
          </widget>
         </item>
@@ -1404,7 +1346,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="30">
+        <item row="1" column="29">
          <widget class="addBlockButton" name="pushButton_9">
           <property name="minimumSize">
            <size>
@@ -1432,7 +1374,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="31">
+        <item row="1" column="30">
          <widget class="addBlockButton" name="pushButton_12">
           <property name="minimumSize">
            <size>
@@ -1457,6 +1399,34 @@
           </property>
           <property name="text">
            <string>map transition</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="31">
+         <widget class="addBlockButton" name="pushButton_28">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>crop amplitude</string>
           </property>
          </widget>
         </item>
