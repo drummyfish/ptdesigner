@@ -30,6 +30,16 @@ MainWindow::MainWindow(QWidget *parent) :
   pos.direction = 0;
   this->set_block_position(pos);
 
+  this->graph->add_block(new c_block_mix());
+  pos.block_id = 2;
+  pos.x = 200;
+  pos.y = 300;
+  pos.direction = 0;
+  this->set_block_position(pos);
+
+  this->graph->connect_by_id(0,2,0);
+  this->graph->connect_by_id(1,2,1);
+
   ui->setupUi(this);
   ui->editArea->set_main_window(this);
 }
@@ -232,6 +242,62 @@ void MainWindow::on_actionExecute_triggered()
   this->graph->compute(false);
   ui->editArea->update();
   ui->preview->update();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::global_settings_changed()
+
+{
+  if (ui->width->value() < 1)
+    ui->width->setValue(1);
+
+  if (ui->height->value() < 1)
+    ui->height->setValue(1);
+
+  if (ui->supersampling->value() < 1)
+    ui->supersampling->setValue(1);
+
+  if (ui->supersampling->value() > 5)
+    ui->supersampling->setValue(5);
+
+  if (ui->seed->value() < 0)
+    ui->seed->setValue(0);
+
+  this->graph->set_random_seed(ui->seed->value());
+  this->graph->set_supersampling(ui->supersampling->value());
+  this->graph->set_resolution(ui->width->value(),ui->height->value());
+
+  ui->editArea->update();
+  ui->preview->update();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_width_valueChanged(int arg1)
+{
+  this->global_settings_changed();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_height_valueChanged(int arg1)
+{
+  this->global_settings_changed();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_supersampling_valueChanged(int arg1)
+{
+  this->global_settings_changed();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_seed_valueChanged(int arg1)
+{
+  this->global_settings_changed();
 }
 
 //-----------------------------------------------------

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Jan 20 11:06:32 2014
+** Created: Mon Jan 20 13:03:46 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -18,12 +18,14 @@
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QScrollArea>
 #include <QtGui/QSpacerItem>
+#include <QtGui/QSpinBox>
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
 #include <QtGui/QVBoxLayout>
@@ -50,19 +52,6 @@ public:
     QAction *actionExecute;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QHBoxLayout *horizontalLayout;
-    QScrollArea *scrollArea;
-    QWidget *scrollAreaWidgetContents_2;
-    QVBoxLayout *verticalLayout;
-    QWidget *widget;
-    QHBoxLayout *horizontalLayout_3;
-    colorBufferDisplay *preview;
-    QPushButton *pushButton;
-    QGroupBox *groupBox;
-    QScrollArea *scrollArea_2;
-    QWidget *scrollAreaWidgetContents_3;
-    QHBoxLayout *horizontalLayout_2;
-    editAreaFrame *editArea;
     QScrollArea *blockArea;
     QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout_2;
@@ -109,6 +98,29 @@ public:
     addBlockButton *pushButton_9;
     addBlockButton *pushButton_12;
     addBlockButton *pushButton_28;
+    QHBoxLayout *horizontalLayout;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents_2;
+    QVBoxLayout *verticalLayout;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_3;
+    colorBufferDisplay *preview;
+    QPushButton *pushButton;
+    QGroupBox *groupBox_3;
+    QGridLayout *gridLayout_3;
+    QLabel *label;
+    QSpinBox *width;
+    QLabel *label_2;
+    QLabel *label_3;
+    QSpinBox *height;
+    QSpacerItem *verticalSpacer;
+    QSpinBox *supersampling;
+    QLabel *label_4;
+    QSpinBox *seed;
+    QScrollArea *scrollArea_2;
+    QWidget *scrollAreaWidgetContents_3;
+    QHBoxLayout *horizontalLayout_2;
+    editAreaFrame *editArea;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -164,110 +176,6 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(2, 2, 2, 2);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(1);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        scrollArea = new QScrollArea(centralWidget);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
-        scrollArea->setSizePolicy(sizePolicy);
-        scrollArea->setMinimumSize(QSize(180, 0));
-        scrollArea->setMaximumSize(QSize(160, 16777215));
-        scrollArea->setFrameShape(QFrame::StyledPanel);
-        scrollArea->setFrameShadow(QFrame::Sunken);
-        scrollArea->setWidgetResizable(true);
-        scrollArea->setAlignment(Qt::AlignCenter);
-        scrollAreaWidgetContents_2 = new QWidget();
-        scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 178, 262));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(scrollAreaWidgetContents_2->sizePolicy().hasHeightForWidth());
-        scrollAreaWidgetContents_2->setSizePolicy(sizePolicy1);
-        verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
-        verticalLayout->setSpacing(2);
-        verticalLayout->setContentsMargins(2, 2, 2, 2);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        widget = new QWidget(scrollAreaWidgetContents_2);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        horizontalLayout_3 = new QHBoxLayout(widget);
-        horizontalLayout_3->setSpacing(0);
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        preview = new colorBufferDisplay(widget);
-        preview->setObjectName(QString::fromUtf8("preview"));
-        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(preview->sizePolicy().hasHeightForWidth());
-        preview->setSizePolicy(sizePolicy2);
-        preview->setMinimumSize(QSize(140, 140));
-        preview->setFrameShape(QFrame::StyledPanel);
-        preview->setFrameShadow(QFrame::Raised);
-
-        horizontalLayout_3->addWidget(preview);
-
-
-        verticalLayout->addWidget(widget);
-
-        pushButton = new QPushButton(scrollAreaWidgetContents_2);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-
-        verticalLayout->addWidget(pushButton);
-
-        groupBox = new QGroupBox(scrollAreaWidgetContents_2);
-        groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
-        groupBox->setSizePolicy(sizePolicy3);
-        groupBox->setMinimumSize(QSize(0, 50));
-        groupBox->setSizeIncrement(QSize(0, 0));
-
-        verticalLayout->addWidget(groupBox);
-
-        scrollArea->setWidget(scrollAreaWidgetContents_2);
-
-        horizontalLayout->addWidget(scrollArea);
-
-        scrollArea_2 = new QScrollArea(centralWidget);
-        scrollArea_2->setObjectName(QString::fromUtf8("scrollArea_2"));
-        scrollArea_2->setWidgetResizable(true);
-        scrollAreaWidgetContents_3 = new QWidget();
-        scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 373, 262));
-        QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(scrollAreaWidgetContents_3->sizePolicy().hasHeightForWidth());
-        scrollAreaWidgetContents_3->setSizePolicy(sizePolicy4);
-        scrollAreaWidgetContents_3->setSizeIncrement(QSize(0, 0));
-        horizontalLayout_2 = new QHBoxLayout(scrollAreaWidgetContents_3);
-        horizontalLayout_2->setSpacing(0);
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        editArea = new editAreaFrame(scrollAreaWidgetContents_3);
-        editArea->setObjectName(QString::fromUtf8("editArea"));
-        sizePolicy4.setHeightForWidth(editArea->sizePolicy().hasHeightForWidth());
-        editArea->setSizePolicy(sizePolicy4);
-        editArea->setMinimumSize(QSize(0, 0));
-        editArea->setFrameShape(QFrame::StyledPanel);
-        editArea->setFrameShadow(QFrame::Raised);
-
-        horizontalLayout_2->addWidget(editArea);
-
-        scrollArea_2->setWidget(scrollAreaWidgetContents_3);
-
-        horizontalLayout->addWidget(scrollArea_2);
-
-
-        gridLayout->addLayout(horizontalLayout, 0, 1, 1, 1);
-
         blockArea = new QScrollArea(centralWidget);
         blockArea->setObjectName(QString::fromUtf8("blockArea"));
         blockArea->setMinimumSize(QSize(0, 155));
@@ -626,6 +534,175 @@ public:
 
         gridLayout->addWidget(blockArea, 1, 1, 1, 1);
 
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(1);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        scrollArea = new QScrollArea(centralWidget);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
+        scrollArea->setSizePolicy(sizePolicy);
+        scrollArea->setMinimumSize(QSize(210, 0));
+        scrollArea->setMaximumSize(QSize(160, 16777215));
+        scrollArea->setFrameShape(QFrame::StyledPanel);
+        scrollArea->setFrameShadow(QFrame::Sunken);
+        scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        scrollArea->setWidgetResizable(true);
+        scrollArea->setAlignment(Qt::AlignCenter);
+        scrollAreaWidgetContents_2 = new QWidget();
+        scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, -123, 192, 385));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(scrollAreaWidgetContents_2->sizePolicy().hasHeightForWidth());
+        scrollAreaWidgetContents_2->setSizePolicy(sizePolicy1);
+        verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
+        verticalLayout->setSpacing(2);
+        verticalLayout->setContentsMargins(2, 2, 2, 2);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        widget = new QWidget(scrollAreaWidgetContents_2);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy2);
+        widget->setMinimumSize(QSize(0, 200));
+        horizontalLayout_3 = new QHBoxLayout(widget);
+        horizontalLayout_3->setSpacing(0);
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        preview = new colorBufferDisplay(widget);
+        preview->setObjectName(QString::fromUtf8("preview"));
+        QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(preview->sizePolicy().hasHeightForWidth());
+        preview->setSizePolicy(sizePolicy3);
+        preview->setMinimumSize(QSize(140, 140));
+        preview->setFrameShape(QFrame::StyledPanel);
+        preview->setFrameShadow(QFrame::Raised);
+
+        horizontalLayout_3->addWidget(preview);
+
+
+        verticalLayout->addWidget(widget);
+
+        pushButton = new QPushButton(scrollAreaWidgetContents_2);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
+        groupBox_3 = new QGroupBox(scrollAreaWidgetContents_2);
+        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(groupBox_3->sizePolicy().hasHeightForWidth());
+        groupBox_3->setSizePolicy(sizePolicy4);
+        groupBox_3->setMinimumSize(QSize(0, 150));
+        groupBox_3->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+        groupBox_3->setFlat(false);
+        groupBox_3->setCheckable(false);
+        gridLayout_3 = new QGridLayout(groupBox_3);
+        gridLayout_3->setSpacing(6);
+        gridLayout_3->setContentsMargins(11, 11, 11, 11);
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        gridLayout_3->setContentsMargins(0, 10, 0, 0);
+        label = new QLabel(groupBox_3);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        gridLayout_3->addWidget(label, 0, 0, 1, 1);
+
+        width = new QSpinBox(groupBox_3);
+        width->setObjectName(QString::fromUtf8("width"));
+        width->setMinimum(1);
+        width->setMaximum(65536);
+
+        gridLayout_3->addWidget(width, 0, 1, 1, 1);
+
+        label_2 = new QLabel(groupBox_3);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        gridLayout_3->addWidget(label_2, 1, 0, 1, 1);
+
+        label_3 = new QLabel(groupBox_3);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        gridLayout_3->addWidget(label_3, 2, 0, 1, 1);
+
+        height = new QSpinBox(groupBox_3);
+        height->setObjectName(QString::fromUtf8("height"));
+        height->setMinimum(1);
+        height->setMaximum(65536);
+
+        gridLayout_3->addWidget(height, 1, 1, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_3->addItem(verticalSpacer, 4, 0, 1, 1);
+
+        supersampling = new QSpinBox(groupBox_3);
+        supersampling->setObjectName(QString::fromUtf8("supersampling"));
+        supersampling->setMinimum(1);
+        supersampling->setMaximum(5);
+
+        gridLayout_3->addWidget(supersampling, 2, 1, 1, 1);
+
+        label_4 = new QLabel(groupBox_3);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        gridLayout_3->addWidget(label_4, 3, 0, 1, 1);
+
+        seed = new QSpinBox(groupBox_3);
+        seed->setObjectName(QString::fromUtf8("seed"));
+        seed->setMaximum(65536);
+
+        gridLayout_3->addWidget(seed, 3, 1, 1, 1);
+
+
+        verticalLayout->addWidget(groupBox_3);
+
+        scrollArea->setWidget(scrollAreaWidgetContents_2);
+
+        horizontalLayout->addWidget(scrollArea);
+
+        scrollArea_2 = new QScrollArea(centralWidget);
+        scrollArea_2->setObjectName(QString::fromUtf8("scrollArea_2"));
+        scrollArea_2->setWidgetResizable(true);
+        scrollAreaWidgetContents_3 = new QWidget();
+        scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 343, 262));
+        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(scrollAreaWidgetContents_3->sizePolicy().hasHeightForWidth());
+        scrollAreaWidgetContents_3->setSizePolicy(sizePolicy5);
+        scrollAreaWidgetContents_3->setSizeIncrement(QSize(0, 0));
+        horizontalLayout_2 = new QHBoxLayout(scrollAreaWidgetContents_3);
+        horizontalLayout_2->setSpacing(0);
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        editArea = new editAreaFrame(scrollAreaWidgetContents_3);
+        editArea->setObjectName(QString::fromUtf8("editArea"));
+        sizePolicy5.setHeightForWidth(editArea->sizePolicy().hasHeightForWidth());
+        editArea->setSizePolicy(sizePolicy5);
+        editArea->setMinimumSize(QSize(0, 0));
+        editArea->setFrameShape(QFrame::StyledPanel);
+        editArea->setFrameShadow(QFrame::Raised);
+
+        horizontalLayout_2->addWidget(editArea);
+
+        scrollArea_2->setWidget(scrollAreaWidgetContents_3);
+
+        horizontalLayout->addWidget(scrollArea_2);
+
+
+        gridLayout->addLayout(horizontalLayout, 0, 1, 1, 1);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -683,8 +760,6 @@ public:
         actionRotate_CCW->setText(QApplication::translate("MainWindow", "rotate CCW", 0, QApplication::UnicodeUTF8));
         actionDelete->setText(QApplication::translate("MainWindow", "delete", 0, QApplication::UnicodeUTF8));
         actionExecute->setText(QApplication::translate("MainWindow", "execute", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("MainWindow", "display full size", 0, QApplication::UnicodeUTF8));
-        groupBox->setTitle(QApplication::translate("MainWindow", "block", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         pushButton_33->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
@@ -850,6 +925,12 @@ public:
         pushButton_28->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         pushButton_28->setText(QApplication::translate("MainWindow", "crop amplitude", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindow", "display full size", 0, QApplication::UnicodeUTF8));
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "global settings", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "width", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("MainWindow", "height", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("MainWindow", "supersampling", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("MainWindow", "seed", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "Fi&le", 0, QApplication::UnicodeUTF8));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0, QApplication::UnicodeUTF8));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0, QApplication::UnicodeUTF8));

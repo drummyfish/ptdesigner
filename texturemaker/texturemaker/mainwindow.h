@@ -134,12 +134,25 @@ public:
 
 //-----------------------------------------------------
 
+    void global_settings_changed();
+
+    /**<
+      Handles global settings change (resolution,
+      supersampling or global seed).
+      */
+
+//-----------------------------------------------------
+
 private slots:
     void on_pushButton_2_clicked();
     void on_actionDelete_triggered();
     void on_actionRotate_CW_triggered();
     void on_actionRotate_CCW_triggered();
     void on_actionExecute_triggered();
+    void on_width_valueChanged(int arg1);
+    void on_height_valueChanged(int arg1);
+    void on_supersampling_valueChanged(int arg1);
+    void on_seed_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

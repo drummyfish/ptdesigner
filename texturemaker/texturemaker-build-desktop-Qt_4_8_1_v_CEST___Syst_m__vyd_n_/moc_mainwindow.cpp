@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Mon Jan 20 10:56:50 2014
+** Created: Mon Jan 20 13:03:48 2014
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,6 +36,10 @@ static const uint qt_meta_data_MainWindow[] = {
       66,   11,   11,   11, 0x08,
       97,   11,   11,   11, 0x08,
      129,   11,   11,   11, 0x08,
+     163,  158,   11,   11, 0x08,
+     190,  158,   11,   11, 0x08,
+     218,  158,   11,   11, 0x08,
+     253,  158,   11,   11, 0x08,
 
        0        // eod
 };
@@ -45,7 +49,11 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_actionDelete_triggered()\0"
     "on_actionRotate_CW_triggered()\0"
     "on_actionRotate_CCW_triggered()\0"
-    "on_actionExecute_triggered()\0"
+    "on_actionExecute_triggered()\0arg1\0"
+    "on_width_valueChanged(int)\0"
+    "on_height_valueChanged(int)\0"
+    "on_supersampling_valueChanged(int)\0"
+    "on_seed_valueChanged(int)\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -59,10 +67,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->on_actionRotate_CW_triggered(); break;
         case 3: _t->on_actionRotate_CCW_triggered(); break;
         case 4: _t->on_actionExecute_triggered(); break;
+        case 5: _t->on_width_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->on_height_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->on_supersampling_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->on_seed_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData MainWindow::staticMetaObjectExtraData = {
@@ -97,9 +108,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 9;
     }
     return _id;
 }
