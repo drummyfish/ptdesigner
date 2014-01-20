@@ -106,6 +106,8 @@ void MainWindow::delete_block_by_id(int id)
   if (id < 0)
     return;
 
+  ui->preview->set_block(NULL);
+
   this->delete_block_position(id);
   this->graph->delete_block(id);
 }
@@ -298,6 +300,17 @@ void MainWindow::global_settings_changed()
 
 //-----------------------------------------------------
 
+void MainWindow::canvas_resolution_changed()
+
+{
+  ui->editArea->resize(ui->cwidth->value(),ui->cheight->value());
+  ui->editArea->setMinimumSize(ui->cwidth->value(),ui->cheight->value());
+  ui->editArea->setMaximumSize(ui->cwidth->value(),ui->cheight->value());
+  ui->editArea->update();
+}
+
+//-----------------------------------------------------
+
 void MainWindow::on_width_valueChanged(int arg1)
 {
   this->global_settings_changed();
@@ -325,3 +338,17 @@ void MainWindow::on_seed_valueChanged(int arg1)
 }
 
 //-----------------------------------------------------
+
+void MainWindow::on_cwidth_valueChanged(int arg1)
+{
+  this->canvas_resolution_changed();
+}
+
+//----------------------------------------------------
+
+void MainWindow::on_cheight_valueChanged(int arg1)
+{
+  this->canvas_resolution_changed();
+}
+
+//----------------------------------------------------

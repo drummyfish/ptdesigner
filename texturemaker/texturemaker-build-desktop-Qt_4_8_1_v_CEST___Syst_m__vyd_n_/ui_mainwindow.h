@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Jan 20 13:55:06 2014
+** Created: Mon Jan 20 17:07:52 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -55,6 +55,8 @@ public:
     QScrollArea *blockArea;
     QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout_2;
+    addBlockButton *pushButton_28;
+    addBlockButton *pushButton_17;
     addBlockButton *pushButton_33;
     QSpacerItem *horizontalSpacer;
     addBlockButton *pushButton_16;
@@ -63,7 +65,6 @@ public:
     addBlockButton *pushButton_10;
     addBlockButton *pushButton_21;
     addBlockButton *pushButton_39;
-    addBlockButton *pushButton_17;
     addBlockButton *pushButton_37;
     addBlockButton *pushButton_36;
     addBlockButton *pushButton_40;
@@ -97,7 +98,6 @@ public:
     addBlockButton *pushButton_19;
     addBlockButton *pushButton_9;
     addBlockButton *pushButton_12;
-    addBlockButton *pushButton_28;
     QHBoxLayout *horizontalLayout;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents_2;
@@ -109,18 +109,24 @@ public:
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_3;
     QLabel *label;
+    QLabel *label_4;
     QSpinBox *width;
+    QSpinBox *seed;
     QLabel *label_2;
     QLabel *label_3;
+    QLabel *label_5;
     QSpinBox *height;
     QSpacerItem *verticalSpacer;
     QSpinBox *supersampling;
-    QLabel *label_4;
-    QSpinBox *seed;
+    QLabel *label_6;
+    QSpinBox *cwidth;
+    QSpinBox *cheight;
     QScrollArea *scrollArea_2;
     QWidget *scrollAreaWidgetContents_3;
-    QHBoxLayout *horizontalLayout_2;
+    QGridLayout *gridLayout_4;
+    QSpacerItem *horizontalSpacer_2;
     editAreaFrame *editArea;
+    QSpacerItem *verticalSpacer_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -190,6 +196,22 @@ public:
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        pushButton_28 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_28->setObjectName(QString::fromUtf8("pushButton_28"));
+        pushButton_28->setMinimumSize(QSize(53, 53));
+        pushButton_28->setMaximumSize(QSize(53, 53));
+        pushButton_28->setBaseSize(QSize(53, 53));
+
+        gridLayout_2->addWidget(pushButton_28, 1, 31, 1, 1);
+
+        pushButton_17 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_17->setObjectName(QString::fromUtf8("pushButton_17"));
+        pushButton_17->setMinimumSize(QSize(53, 53));
+        pushButton_17->setMaximumSize(QSize(53, 53));
+        pushButton_17->setBaseSize(QSize(53, 53));
+
+        gridLayout_2->addWidget(pushButton_17, 2, 8, 1, 1);
+
         pushButton_33 = new addBlockButton(scrollAreaWidgetContents);
         pushButton_33->setObjectName(QString::fromUtf8("pushButton_33"));
         pushButton_33->setMinimumSize(QSize(53, 53));
@@ -249,14 +271,6 @@ public:
         pushButton_39->setBaseSize(QSize(53, 53));
 
         gridLayout_2->addWidget(pushButton_39, 2, 31, 1, 1);
-
-        pushButton_17 = new addBlockButton(scrollAreaWidgetContents);
-        pushButton_17->setObjectName(QString::fromUtf8("pushButton_17"));
-        pushButton_17->setMinimumSize(QSize(53, 53));
-        pushButton_17->setMaximumSize(QSize(53, 53));
-        pushButton_17->setBaseSize(QSize(53, 53));
-
-        gridLayout_2->addWidget(pushButton_17, 2, 8, 1, 1);
 
         pushButton_37 = new addBlockButton(scrollAreaWidgetContents);
         pushButton_37->setObjectName(QString::fromUtf8("pushButton_37"));
@@ -522,14 +536,6 @@ public:
 
         gridLayout_2->addWidget(pushButton_12, 1, 30, 1, 1);
 
-        pushButton_28 = new addBlockButton(scrollAreaWidgetContents);
-        pushButton_28->setObjectName(QString::fromUtf8("pushButton_28"));
-        pushButton_28->setMinimumSize(QSize(53, 53));
-        pushButton_28->setMaximumSize(QSize(53, 53));
-        pushButton_28->setBaseSize(QSize(53, 53));
-
-        gridLayout_2->addWidget(pushButton_28, 1, 31, 1, 1);
-
         blockArea->setWidget(scrollAreaWidgetContents);
 
         gridLayout->addWidget(blockArea, 1, 1, 1, 1);
@@ -553,7 +559,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, -123, 192, 385));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, -173, 192, 435));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -603,7 +609,7 @@ public:
         sizePolicy4.setVerticalStretch(0);
         sizePolicy4.setHeightForWidth(groupBox_3->sizePolicy().hasHeightForWidth());
         groupBox_3->setSizePolicy(sizePolicy4);
-        groupBox_3->setMinimumSize(QSize(0, 150));
+        groupBox_3->setMinimumSize(QSize(0, 200));
         groupBox_3->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         groupBox_3->setFlat(false);
         groupBox_3->setCheckable(false);
@@ -617,12 +623,24 @@ public:
 
         gridLayout_3->addWidget(label, 0, 0, 1, 1);
 
+        label_4 = new QLabel(groupBox_3);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        gridLayout_3->addWidget(label_4, 3, 0, 1, 1);
+
         width = new QSpinBox(groupBox_3);
         width->setObjectName(QString::fromUtf8("width"));
         width->setMinimum(1);
         width->setMaximum(65536);
+        width->setValue(256);
 
         gridLayout_3->addWidget(width, 0, 1, 1, 1);
+
+        seed = new QSpinBox(groupBox_3);
+        seed->setObjectName(QString::fromUtf8("seed"));
+        seed->setMaximum(65536);
+
+        gridLayout_3->addWidget(seed, 3, 1, 1, 1);
 
         label_2 = new QLabel(groupBox_3);
         label_2->setObjectName(QString::fromUtf8("label_2"));
@@ -634,16 +652,22 @@ public:
 
         gridLayout_3->addWidget(label_3, 2, 0, 1, 1);
 
+        label_5 = new QLabel(groupBox_3);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+
+        gridLayout_3->addWidget(label_5, 4, 0, 1, 1);
+
         height = new QSpinBox(groupBox_3);
         height->setObjectName(QString::fromUtf8("height"));
         height->setMinimum(1);
         height->setMaximum(65536);
+        height->setValue(256);
 
         gridLayout_3->addWidget(height, 1, 1, 1, 1);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout_3->addItem(verticalSpacer, 4, 0, 1, 1);
+        gridLayout_3->addItem(verticalSpacer, 6, 0, 1, 1);
 
         supersampling = new QSpinBox(groupBox_3);
         supersampling->setObjectName(QString::fromUtf8("supersampling"));
@@ -652,16 +676,26 @@ public:
 
         gridLayout_3->addWidget(supersampling, 2, 1, 1, 1);
 
-        label_4 = new QLabel(groupBox_3);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_6 = new QLabel(groupBox_3);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
 
-        gridLayout_3->addWidget(label_4, 3, 0, 1, 1);
+        gridLayout_3->addWidget(label_6, 5, 0, 1, 1);
 
-        seed = new QSpinBox(groupBox_3);
-        seed->setObjectName(QString::fromUtf8("seed"));
-        seed->setMaximum(65536);
+        cwidth = new QSpinBox(groupBox_3);
+        cwidth->setObjectName(QString::fromUtf8("cwidth"));
+        cwidth->setMinimum(640);
+        cwidth->setMaximum(65536);
+        cwidth->setValue(640);
 
-        gridLayout_3->addWidget(seed, 3, 1, 1, 1);
+        gridLayout_3->addWidget(cwidth, 4, 1, 1, 1);
+
+        cheight = new QSpinBox(groupBox_3);
+        cheight->setObjectName(QString::fromUtf8("cheight"));
+        cheight->setMinimum(480);
+        cheight->setMaximum(65536);
+        cheight->setValue(480);
+
+        gridLayout_3->addWidget(cheight, 5, 1, 1, 1);
 
 
         verticalLayout->addWidget(groupBox_3);
@@ -672,29 +706,55 @@ public:
 
         scrollArea_2 = new QScrollArea(centralWidget);
         scrollArea_2->setObjectName(QString::fromUtf8("scrollArea_2"));
+        scrollArea_2->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         scrollArea_2->setWidgetResizable(true);
+        scrollArea_2->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 343, 262));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 646, 486));
         QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy5.setHorizontalStretch(0);
         sizePolicy5.setVerticalStretch(0);
         sizePolicy5.setHeightForWidth(scrollAreaWidgetContents_3->sizePolicy().hasHeightForWidth());
         scrollAreaWidgetContents_3->setSizePolicy(sizePolicy5);
         scrollAreaWidgetContents_3->setSizeIncrement(QSize(0, 0));
-        horizontalLayout_2 = new QHBoxLayout(scrollAreaWidgetContents_3);
-        horizontalLayout_2->setSpacing(0);
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        QPalette palette;
+        QBrush brush(QColor(255, 255, 255, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Base, brush);
+        QBrush brush1(QColor(147, 147, 147, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Window, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Window, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
+        scrollAreaWidgetContents_3->setPalette(palette);
+        gridLayout_4 = new QGridLayout(scrollAreaWidgetContents_3);
+        gridLayout_4->setSpacing(6);
+        gridLayout_4->setContentsMargins(0, 0, 0, 0);
+        gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_4->addItem(horizontalSpacer_2, 0, 1, 1, 1);
+
         editArea = new editAreaFrame(scrollAreaWidgetContents_3);
         editArea->setObjectName(QString::fromUtf8("editArea"));
-        sizePolicy5.setHeightForWidth(editArea->sizePolicy().hasHeightForWidth());
-        editArea->setSizePolicy(sizePolicy5);
-        editArea->setMinimumSize(QSize(0, 0));
+        QSizePolicy sizePolicy6(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(64);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(editArea->sizePolicy().hasHeightForWidth());
+        editArea->setSizePolicy(sizePolicy6);
+        editArea->setMinimumSize(QSize(640, 480));
+        editArea->setBaseSize(QSize(640, 480));
         editArea->setFrameShape(QFrame::StyledPanel);
         editArea->setFrameShadow(QFrame::Raised);
 
-        horizontalLayout_2->addWidget(editArea);
+        gridLayout_4->addWidget(editArea, 0, 0, 1, 1);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_4->addItem(verticalSpacer_2, 1, 0, 1, 1);
 
         scrollArea_2->setWidget(scrollAreaWidgetContents_3);
 
@@ -761,6 +821,14 @@ public:
         actionDelete->setText(QApplication::translate("MainWindow", "delete", 0, QApplication::UnicodeUTF8));
         actionExecute->setText(QApplication::translate("MainWindow", "execute", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
+        pushButton_28->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+        pushButton_28->setText(QApplication::translate("MainWindow", "crop amplitude", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_17->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+        pushButton_17->setText(QApplication::translate("MainWindow", "edge detection", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
         pushButton_33->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         pushButton_33->setText(QApplication::translate("MainWindow", "sine transform", 0, QApplication::UnicodeUTF8));
@@ -788,10 +856,6 @@ public:
         pushButton_39->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         pushButton_39->setText(QApplication::translate("MainWindow", "replace colors", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        pushButton_17->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButton_17->setText(QApplication::translate("MainWindow", "edge detection", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         pushButton_37->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
@@ -921,16 +985,14 @@ public:
         pushButton_12->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         pushButton_12->setText(QApplication::translate("MainWindow", "map transition", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        pushButton_28->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButton_28->setText(QApplication::translate("MainWindow", "crop amplitude", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "display full size", 0, QApplication::UnicodeUTF8));
         groupBox_3->setTitle(QApplication::translate("MainWindow", "global settings", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("MainWindow", "width", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("MainWindow", "height", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("MainWindow", "supersampling", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "texture width", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("MainWindow", "seed", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("MainWindow", "texture height", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("MainWindow", "supersampling", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("MainWindow", "canvas width", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("MainWindow", "canvas height", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "Fi&le", 0, QApplication::UnicodeUTF8));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0, QApplication::UnicodeUTF8));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0, QApplication::UnicodeUTF8));

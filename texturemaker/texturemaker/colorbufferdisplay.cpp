@@ -30,6 +30,7 @@ void colorBufferDisplay::paintEvent(QPaintEvent *)
   if (this->block == NULL || !this->block->has_image() || this->block->is_error())
     {
       painter.fillRect(0,0,this->width(),this->height(),QColor::fromRgb(255,255,255));
+      painter.drawRect(0,0,this->width() - 1,this->height() - 1);
       return;
     }
 
@@ -46,6 +47,10 @@ void colorBufferDisplay::paintEvent(QPaintEvent *)
         painter.setPen(pen);
         painter.drawPoint(i,j);
       }
+
+  pen.setColor(QColor::fromRgb(0,0,0));
+  painter.setPen(pen);
+  painter.drawRect(0,0,this->width() - 1,this->height() - 1);
 
   color_buffer_destroy(&buffer);
 }

@@ -27,9 +27,13 @@ void editAreaFrame::paintEvent(QPaintEvent *)
   int draw_from[2],draw_through1[2],draw_through2[2],draw_to[2];  // helper coordinations
   c_block *block,*block2;
   c_texture_graph *graph;
+  QPen pen;
+  QFont font;
+  QPainterPath path;
   QString filename;
   QPixmap pixmap;
   QPixmap pixmap_block;
+  QPixmap pixmap_shadow;
   QPixmap pixmap_slot[4];                     // all four directions
   int output_position[2],input_position[2];   // position differences for drawing slots
   t_block_position *position,*position2;
@@ -40,6 +44,7 @@ void editAreaFrame::paintEvent(QPaintEvent *)
   graph = this->main_window->get_texture_graph();
 
   pixmap_block.load(":/resources/block.png");
+  pixmap_shadow.load(":/resources/shadow.png");
 
   pixmap_slot[0].load(":/resources/slot up.png");
   pixmap_slot[1].load(":/resources/slot right.png");
@@ -61,9 +66,6 @@ void editAreaFrame::paintEvent(QPaintEvent *)
             continue;
 
           position2 = this->main_window->get_block_position(block2->get_id());
-
-          QPen pen;
-          QPainterPath path;
 
           pen.setWidth(3);
           painter.setPen(pen);
@@ -156,9 +158,8 @@ void editAreaFrame::paintEvent(QPaintEvent *)
 
       if (((int) block->get_id()) == this->selected_id)                        // draw selection
         {
-          QPen pen;
-
           pen.setColor(Qt::black);
+          pen.setWidth(1);
           pen.setStyle(Qt::DashLine);
 
           painter.setPen(pen);
@@ -223,8 +224,6 @@ void editAreaFrame::paintEvent(QPaintEvent *)
 
       if (block->is_valid())
         {
-          QPen pen;
-          QFont font;
           font.setPixelSize(10);
           pen.setColor(qRgb(20,200,0));
           painter.setPen(pen);
@@ -233,8 +232,6 @@ void editAreaFrame::paintEvent(QPaintEvent *)
         }
       else if (block->is_error())
         {
-          QPen pen;
-          QFont font;
           font.setPixelSize(10);
           pen.setColor(qRgb(200,20,0));
           painter.setPen(pen);
@@ -336,6 +333,16 @@ void editAreaFrame::mouseMoveEvent(QMouseEvent *event)
 
       position->x = event->pos().x() - 25;
       position->y = event->pos().y() - 25;
+
+      if (position->x < 0)
+        position->x = 0;
+      else if (position->x >= this->width() - 25)
+        position->x = this->width() - 25;
+
+      if (position->y < 0)
+        position->y = 0;
+      else if (position->y >= this->height() - 25)
+        position->y = this->height() - 25;
 
       this->update();
     }

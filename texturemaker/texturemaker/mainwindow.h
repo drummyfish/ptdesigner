@@ -143,6 +143,14 @@ public:
 
 //-----------------------------------------------------
 
+    void canvas_resolution_changed();
+
+    /**<
+      Handles canvas resolution change.
+      */
+
+//-----------------------------------------------------
+
 private slots:
     void on_pushButton_2_clicked();
     void on_actionDelete_triggered();
@@ -153,6 +161,8 @@ private slots:
     void on_height_valueChanged(int arg1);
     void on_supersampling_valueChanged(int arg1);
     void on_seed_valueChanged(int arg1);
+    void on_cwidth_valueChanged(int arg1);
+    void on_cheight_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
