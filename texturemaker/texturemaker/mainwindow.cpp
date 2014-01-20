@@ -30,15 +30,39 @@ MainWindow::MainWindow(QWidget *parent) :
   pos.direction = 0;
   this->set_block_position(pos);
 
-  this->graph->add_block(new c_block_mix());
+  this->graph->add_block(new c_block_replace_colors());
   pos.block_id = 2;
   pos.x = 200;
   pos.y = 300;
   pos.direction = 0;
   this->set_block_position(pos);
 
+  this->graph->add_block(new c_block_voronoi_diagram());
+  pos.block_id = 3;
+  pos.x = 5;
+  pos.y = 10;
+  pos.direction = 0;
+  this->set_block_position(pos);
+
+  this->graph->add_block(new c_block_voronoi_diagram());
+  pos.block_id = 4;
+  pos.x = 5;
+  pos.y = 10;
+  pos.direction = 0;
+  this->set_block_position(pos);
+
+  this->graph->add_block(new c_block_voronoi_diagram());
+  pos.block_id = 5;
+  pos.x = 5;
+  pos.y = 10;
+  pos.direction = 0;
+  this->set_block_position(pos);
+
   this->graph->connect_by_id(0,2,0);
   this->graph->connect_by_id(1,2,1);
+  this->graph->connect_by_id(3,2,2);
+  this->graph->connect_by_id(4,2,3);
+  this->graph->connect_by_id(5,2,4);
 
   ui->setupUi(this);
   ui->editArea->set_main_window(this);

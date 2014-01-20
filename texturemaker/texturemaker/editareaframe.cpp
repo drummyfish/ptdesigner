@@ -24,14 +24,15 @@ void editAreaFrame::set_main_window(MainWindow *main_window)
 void editAreaFrame::paintEvent(QPaintEvent *)
 {
   unsigned int i,j;
-  c_block *block;
+  int draw_from[2],draw_through1[2],draw_through2[2],draw_to[2];  // helper coordinations
+  c_block *block,*block2;
   c_texture_graph *graph;
   QString filename;
   QPixmap pixmap;
   QPixmap pixmap_block;
   QPixmap pixmap_slot[4];                     // all four directions
   int output_position[2],input_position[2];   // position differences for drawing slots
-  t_block_position *position;
+  t_block_position *position,*position2;
 
   QPainter painter(this);
   painter.fillRect(0,0,this->width(),this->height(),QColor::fromRgb(255,255,255));
@@ -45,7 +46,104 @@ void editAreaFrame::paintEvent(QPaintEvent *)
   pixmap_slot[2].load(":/resources/slot down.png");
   pixmap_slot[3].load(":/resources/slot left.png");
 
-  for (i = 0; i < graph->get_number_of_blocks(); i++)
+  painter.setRenderHints(QPainter::Antialiasing,true);
+
+  for (i = 0; i < graph->get_number_of_blocks(); i++)      // draw connections
+    {
+      block = graph->get_block(i);
+      position = this->main_window->get_block_position(block->get_id());
+
+      for (j = 0; j < MAX_INPUT_BLOCKS; j++)
+        {
+          block2 = block->get_input(j);
+
+          if (block2 == NULL)
+            continue;
+
+          position2 = this->main_window->get_block_position(block2->get_id());
+
+          QPen pen;
+          QPainterPath path;
+
+          pen.setWidth(3);
+          painter.setPen(pen);
+
+          switch(position2->direction)
+            {
+              case 0:  // up
+                draw_from[0] = position2->x + 26;
+                draw_from[1] = position2->y + 5;
+                draw_through1[0] = draw_from[0];
+                draw_through1[1] = draw_from[1] - 150;
+                break;
+
+              case 1:  // right
+                draw_from[0] = position2->x + 56;
+                draw_from[1] = position2->y + 29;
+                draw_through1[0] = draw_from[0] + 150;
+                draw_through1[1] = draw_from[1];
+                break;
+
+              case 2:  // down
+                draw_from[0] = position2->x + 26;
+                draw_from[1] = position2->y + 56;
+                draw_through1[0] = draw_from[0];
+                draw_through1[1] = draw_from[1] + 150;
+                break;
+
+              case 3:  // left
+                draw_from[0] = position2->x - 9;
+                draw_from[1] = position2->y + 29;
+                draw_through1[0] = draw_from[0] - 150;
+                draw_through1[1] = draw_from[1];
+                break;
+
+              default:
+                break;
+            }
+
+          switch(position->direction)
+            {
+              case 0:  // up
+                draw_to[0] = position->x + 10 + j * 8;
+                draw_to[1] = position->y + 58;
+                draw_through2[0] = draw_to[0];
+                draw_through2[1] = draw_to[1] + 150;
+                break;
+
+              case 1:  // right
+                draw_to[0] = position->x - 9;
+                draw_to[1] = position->y + 11 + j * 9;
+                draw_through2[0] = draw_to[0] - 150;
+                draw_through2[1] = draw_to[1];
+                break;
+
+              case 2:  // down
+                draw_to[0] = position->x + 10 + j * 8;
+                draw_to[1] = position->y + 3;
+                draw_through2[0] = draw_to[0];
+                draw_through2[1] = draw_to[1] - 150;
+                break;
+
+              case 3:  // left
+                draw_to[0] = position->x + 59;
+                draw_to[1] = position->y + 11 + j * 9;
+                draw_through2[0] = draw_to[0] + 150;
+                draw_through2[1] = draw_to[1];
+                break;
+
+              default:
+                break;
+            }
+
+          path.moveTo(draw_from[0],draw_from[1]);
+          path.cubicTo(draw_through1[0],draw_through1[1],draw_through2[0],draw_through2[1],draw_to[0],draw_to[1]);
+
+          painter.drawPath(path);
+        }
+    }
+
+  for (i = 0; i < graph->get_number_of_blocks(); i++)      // draw blocks
     {
       block = graph->get_block(i);
       filename = QString::fromStdString(":/resources/button " + block->get_name() + ".png");
