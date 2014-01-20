@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'editareaframe.h'
+** Meta object code from reading C++ file 'colorbufferdisplay.h'
 **
-** Created: Mon Jan 20 10:56:51 2014
+** Created: Mon Jan 20 11:06:34 2014
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../texturemaker/editareaframe.h"
+#include "../texturemaker/colorbufferdisplay.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'editareaframe.h' doesn't include <QObject>."
+#error "The header file 'colorbufferdisplay.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
 #error "This file was generated using the moc from 4.8.1. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_editAreaFrame[] = {
+static const uint qt_meta_data_colorBufferDisplay[] = {
 
  // content:
        6,       // revision
@@ -33,11 +33,11 @@ static const uint qt_meta_data_editAreaFrame[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_editAreaFrame[] = {
-    "editAreaFrame\0"
+static const char qt_meta_stringdata_colorBufferDisplay[] = {
+    "colorBufferDisplay\0"
 };
 
-void editAreaFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void colorBufferDisplay::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -45,33 +45,33 @@ void editAreaFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData editAreaFrame::staticMetaObjectExtraData = {
+const QMetaObjectExtraData colorBufferDisplay::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject editAreaFrame::staticMetaObject = {
-    { &QFrame::staticMetaObject, qt_meta_stringdata_editAreaFrame,
-      qt_meta_data_editAreaFrame, &staticMetaObjectExtraData }
+const QMetaObject colorBufferDisplay::staticMetaObject = {
+    { &QFrame::staticMetaObject, qt_meta_stringdata_colorBufferDisplay,
+      qt_meta_data_colorBufferDisplay, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &editAreaFrame::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &colorBufferDisplay::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *editAreaFrame::metaObject() const
+const QMetaObject *colorBufferDisplay::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *editAreaFrame::qt_metacast(const char *_clname)
+void *colorBufferDisplay::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_editAreaFrame))
-        return static_cast<void*>(const_cast< editAreaFrame*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_colorBufferDisplay))
+        return static_cast<void*>(const_cast< colorBufferDisplay*>(this));
     return QFrame::qt_metacast(_clname);
 }
 
-int editAreaFrame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int colorBufferDisplay::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QFrame::qt_metacall(_c, _id, _a);
     if (_id < 0)

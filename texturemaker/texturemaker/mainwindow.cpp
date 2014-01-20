@@ -191,6 +191,19 @@ void MainWindow::on_actionRotate_CW_triggered()
 
 //-----------------------------------------------------
 
+void MainWindow::set_block_for_preview(int id)
+
+{
+  if (id < 0)
+    ui->preview->set_block(NULL);
+  else
+    ui->preview->set_block(this->graph->get_block_by_id((unsigned int) id));
+
+  ui->preview->update();
+}
+
+//-----------------------------------------------------
+
 void MainWindow::on_actionRotate_CCW_triggered()
 {
   t_block_position *position;
@@ -211,5 +224,14 @@ void MainWindow::on_actionRotate_CCW_triggered()
   ui->editArea->update();
 }
 
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionExecute_triggered()
+{
+  this->graph->compute(false);
+  ui->editArea->update();
+  ui->preview->update();
+}
 
 //-----------------------------------------------------

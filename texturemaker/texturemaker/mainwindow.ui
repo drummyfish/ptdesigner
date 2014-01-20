@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>562</width>
-    <height>430</height>
+    <height>518</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,8 +60,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>162</width>
-           <height>225</height>
+           <width>178</width>
+           <height>262</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -87,7 +87,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QFrame" name="frame">
+              <widget class="colorBufferDisplay" name="preview">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -158,7 +158,7 @@
            <x>0</x>
            <y>0</y>
            <width>373</width>
-           <height>174</height>
+           <height>262</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -1580,6 +1580,12 @@
    <class>addBlockButton</class>
    <extends>QPushButton</extends>
    <header location="global">addblockbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>colorBufferDisplay</class>
+   <extends>QFrame</extends>
+   <header location="global">colorbufferdisplay.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

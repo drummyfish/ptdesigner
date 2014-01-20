@@ -11,6 +11,11 @@ using namespace std;
 
 //-----------------------------------------------------
 
+  /**
+    Edit area of the application, displays the texture graph
+    and allows its editing.
+    */
+
 class editAreaFrame : public QFrame
 {
     Q_OBJECT
@@ -22,6 +27,13 @@ protected:
 
 public:
     explicit editAreaFrame(QWidget *parent = 0);
+    void paintEvent(QPaintEvent *);
+    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 //-----------------------------------------------------
 
@@ -48,14 +60,6 @@ public:
       */
 
 //-----------------------------------------------------
-
-    void paintEvent(QPaintEvent *);
-    void dropEvent(QDropEvent *event);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void keyPressEvent(QKeyEvent *event);
 
 signals:
     

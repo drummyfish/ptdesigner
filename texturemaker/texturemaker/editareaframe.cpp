@@ -120,6 +120,29 @@ void editAreaFrame::paintEvent(QPaintEvent *)
           painter.drawPixmap(position->x + input_position[0] + 8 * j,position->y + input_position[1],pixmap_slot[(position->direction + 2) % 4]);
         else
           painter.drawPixmap(position->x + input_position[0],position->y + input_position[1] + 9 * j,pixmap_slot[(position->direction + 2) % 4]);
+
+      // draw the status text:
+
+      if (block->is_valid())
+        {
+          QPen pen;
+          QFont font;
+          font.setPixelSize(10);
+          pen.setColor(qRgb(20,200,0));
+          painter.setPen(pen);
+          painter.setFont(font);
+          painter.drawText(position->x + 55,position->y - 3,"ok");
+        }
+      else if (block->is_error())
+        {
+          QPen pen;
+          QFont font;
+          font.setPixelSize(10);
+          pen.setColor(qRgb(200,20,0));
+          painter.setPen(pen);
+          painter.setFont(font);
+          painter.drawText(position->x + 55,position->y - 3,"error");
+        }
     }
 }
 
@@ -168,6 +191,7 @@ void editAreaFrame::mousePressEvent(QMouseEvent *event)
   y = event->pos().y();
 
   this->selected_id = this->main_window->get_block_by_position(x,y);
+  this->main_window->set_block_for_preview(this->selected_id);
 
   if (this->selected_id >= 0)
     this->moving = true;

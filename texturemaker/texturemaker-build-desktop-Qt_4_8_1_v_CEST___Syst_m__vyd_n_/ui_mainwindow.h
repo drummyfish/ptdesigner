@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Jan 20 09:51:20 2014
+** Created: Mon Jan 20 11:06:32 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,7 +14,6 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
-#include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
@@ -30,6 +29,7 @@
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 #include <addblockbutton.h>
+#include <colorbufferdisplay.h>
 #include <editareaframe.h>
 
 QT_BEGIN_NAMESPACE
@@ -56,7 +56,7 @@ public:
     QVBoxLayout *verticalLayout;
     QWidget *widget;
     QHBoxLayout *horizontalLayout_3;
-    QFrame *frame;
+    colorBufferDisplay *preview;
     QPushButton *pushButton;
     QGroupBox *groupBox;
     QScrollArea *scrollArea_2;
@@ -120,7 +120,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(562, 430);
+        MainWindow->resize(562, 518);
         actionNew_texture = new QAction(MainWindow);
         actionNew_texture->setObjectName(QString::fromUtf8("actionNew_texture"));
         actionOpen = new QAction(MainWindow);
@@ -182,7 +182,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 162, 225));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 178, 262));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -198,18 +198,18 @@ public:
         horizontalLayout_3->setSpacing(0);
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        frame = new QFrame(widget);
-        frame->setObjectName(QString::fromUtf8("frame"));
+        preview = new colorBufferDisplay(widget);
+        preview->setObjectName(QString::fromUtf8("preview"));
         QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
-        frame->setSizePolicy(sizePolicy2);
-        frame->setMinimumSize(QSize(140, 140));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
+        sizePolicy2.setHeightForWidth(preview->sizePolicy().hasHeightForWidth());
+        preview->setSizePolicy(sizePolicy2);
+        preview->setMinimumSize(QSize(140, 140));
+        preview->setFrameShape(QFrame::StyledPanel);
+        preview->setFrameShadow(QFrame::Raised);
 
-        horizontalLayout_3->addWidget(frame);
+        horizontalLayout_3->addWidget(preview);
 
 
         verticalLayout->addWidget(widget);
@@ -240,7 +240,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 373, 174));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 373, 262));
         QSizePolicy sizePolicy4(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);

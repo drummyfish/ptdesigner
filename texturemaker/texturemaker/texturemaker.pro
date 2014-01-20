@@ -15,14 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     editareaframe.cpp \
-    addblockbutton.cpp
+    addblockbutton.cpp \
+    colorbufferdisplay.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
     ../../sources/proctextures.h \
     ../../sources/ptdesigner.h \
     addblockbutton.h \
-    ../../sources/general.h
+    ../../sources/general.h \
+    colorbufferdisplay.h
 
 FORMS    += mainwindow.ui
 

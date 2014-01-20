@@ -41,6 +41,9 @@ protected:
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void dropEvent(QDropEvent *de);
+    void dragMoveEvent(QDragMoveEvent *de);
+    void dragEnterEvent(QDragEnterEvent *event);
 
 //-----------------------------------------------------
 
@@ -119,19 +122,24 @@ public:
 
 //-----------------------------------------------------
 
-    void dropEvent(QDropEvent *de);
-    void dragMoveEvent(QDragMoveEvent *de);
-    void dragEnterEvent(QDragEnterEvent *event);
+    void set_block_for_preview(int id);
+
+    /**<
+      Sets a block whose color buffer should be previed in
+      the preview window.
+
+      @param id id of the block to be previewed or a
+             negative value if nothing should be displayed
+      */
+
+//-----------------------------------------------------
 
 private slots:
-
     void on_pushButton_2_clicked();
-
     void on_actionDelete_triggered();
-
     void on_actionRotate_CW_triggered();
-
     void on_actionRotate_CCW_triggered();
+    void on_actionExecute_triggered();
 
 private:
     Ui::MainWindow *ui;
