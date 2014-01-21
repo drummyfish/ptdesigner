@@ -16,6 +16,13 @@ void colorBufferDisplay::set_block(c_block *block)
   this->block = block;
 }
 
+//----------------------------------------------------
+
+void colorBufferDisplay::set_main_window(MainWindow *main_window)
+{
+  this->main_window = main_window;
+}
+
 //-----------------------------------------------------
 
 void colorBufferDisplay::paintEvent(QPaintEvent *)

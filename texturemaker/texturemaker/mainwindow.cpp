@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   ui->setupUi(this);
   ui->editArea->set_main_window(this);
+  ui->preview->set_main_window(this);
 }
 
 //-----------------------------------------------------
@@ -106,8 +107,6 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           break;
         }
     }
-
-  cout << found << " " << dx << " " << dy << endl;
 
   *slot = -1;
 
@@ -202,10 +201,20 @@ void MainWindow::delete_block_by_id(int id)
   if (id < 0)
     return;
 
-  ui->preview->set_block(NULL);
+  this->graph_mutex.lock();
 
+  ui->preview->set_block(NULL);
   this->delete_block_position(id);
-  this->graph->delete_block(id);
+  this->graph->delete_block_with_id(id);
+
+  this->graph_mutex.unlock();
+}
+
+//-----------------------------------------------------
+
+QMutex *MainWindow::get_graph_mutex()
+{
+  return &this->graph_mutex;
 }
 
 //-----------------------------------------------------
@@ -360,7 +369,7 @@ void MainWindow::on_actionRotate_CCW_triggered()
 
 void MainWindow::on_actionExecute_triggered()
 {
-  this->graph->compute(false);
+  this->graph->compute(ui->force->isChecked());
   ui->editArea->update();
   ui->preview->update();
 }

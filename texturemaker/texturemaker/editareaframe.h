@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QString>
+#include <QMutex>
 #include <iostream>
 #include "mainwindow.h"
 

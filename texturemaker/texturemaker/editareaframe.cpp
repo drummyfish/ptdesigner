@@ -76,6 +76,13 @@ void editAreaFrame::paintEvent(QPaintEvent *)
           pen.setWidth(3);
           painter.setPen(pen);
 
+          draw_through1[0] = 0;  // so that the compiler doesn't complain
+          draw_through1[1] = 0;
+          draw_through2[0] = 0;
+          draw_through2[1] = 0;
+          draw_to[0] = 0;
+          draw_to[1] = 0;
+
           switch(position2->direction)   // coming from output
             {
               case 0:  // up

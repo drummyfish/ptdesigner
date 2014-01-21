@@ -1150,13 +1150,35 @@ void c_texture_graph::delete_block(unsigned int block_number)
 
   {
     c_block *block;
+    unsigned int i,j;
 
     if (block_number >= this->blocks->size())
       return;
 
     block = this->blocks->at(block_number);
+    
+    for (i = 0; i < this->blocks->size(); i++)  // cancel connections
+      for (j = 0; j < MAX_INPUT_BLOCKS; j++)
+        if (this->blocks->at(i)->get_input(j) == block)
+          this->blocks->at(i)->disconnect(j);
+    
     this->blocks->erase(this->blocks->begin() + block_number);
     delete block;
+  }
+  
+//----------------------------------------------------------------------
+
+void c_texture_graph::delete_block_with_id(unsigned int block_id)
+
+  {
+	unsigned int i;
+	
+	for (i = 0; i < this->blocks->size(); i++)
+	  if (this->blocks->at(i)->get_id() == block_id)
+	    {
+	      this->delete_block(i);
+		  break;
+		}
   }
 
 //----------------------------------------------------------------------
@@ -1256,7 +1278,7 @@ void c_block::disconnect(unsigned int slot_number)
       this->inputs--;
 
     this->input_blocks[slot_number] = NULL;
-
+    this->invalidate();
     this->graph->update();
   }
 

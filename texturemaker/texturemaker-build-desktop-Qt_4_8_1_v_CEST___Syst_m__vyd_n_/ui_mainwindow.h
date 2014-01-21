@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Jan 21 11:10:10 2014
+** Created: Tue Jan 21 12:46:13 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
 #include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
@@ -121,6 +122,8 @@ public:
     QLabel *label_6;
     QSpinBox *cwidth;
     QSpinBox *cheight;
+    QLabel *label_7;
+    QCheckBox *force;
     QScrollArea *scrollArea_2;
     QWidget *scrollAreaWidgetContents_3;
     QGridLayout *gridLayout_4;
@@ -191,7 +194,7 @@ public:
         blockArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(-701, 0, 1257, 137));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1257, 137));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -559,7 +562,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, -173, 192, 435));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, -193, 192, 455));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -609,7 +612,7 @@ public:
         sizePolicy4.setVerticalStretch(0);
         sizePolicy4.setHeightForWidth(groupBox_3->sizePolicy().hasHeightForWidth());
         groupBox_3->setSizePolicy(sizePolicy4);
-        groupBox_3->setMinimumSize(QSize(0, 200));
+        groupBox_3->setMinimumSize(QSize(0, 220));
         groupBox_3->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         groupBox_3->setFlat(false);
         groupBox_3->setCheckable(false);
@@ -667,7 +670,7 @@ public:
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout_3->addItem(verticalSpacer, 6, 0, 1, 1);
+        gridLayout_3->addItem(verticalSpacer, 7, 0, 1, 1);
 
         supersampling = new QSpinBox(groupBox_3);
         supersampling->setObjectName(QString::fromUtf8("supersampling"));
@@ -696,6 +699,16 @@ public:
         cheight->setValue(480);
 
         gridLayout_3->addWidget(cheight, 5, 1, 1, 1);
+
+        label_7 = new QLabel(groupBox_3);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+
+        gridLayout_3->addWidget(label_7, 6, 0, 1, 1);
+
+        force = new QCheckBox(groupBox_3);
+        force->setObjectName(QString::fromUtf8("force"));
+
+        gridLayout_3->addWidget(force, 6, 1, 1, 1);
 
 
         verticalLayout->addWidget(groupBox_3);
@@ -993,6 +1006,8 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "supersampling", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("MainWindow", "canvas width", 0, QApplication::UnicodeUTF8));
         label_6->setText(QApplication::translate("MainWindow", "canvas height", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QApplication::translate("MainWindow", "force compute", 0, QApplication::UnicodeUTF8));
+        force->setText(QString());
         menuFile->setTitle(QApplication::translate("MainWindow", "Fi&le", 0, QApplication::UnicodeUTF8));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0, QApplication::UnicodeUTF8));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0, QApplication::UnicodeUTF8));

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMutex>
 #include "ptdesigner.h"
 
 using namespace pt_design;
@@ -37,6 +38,7 @@ class MainWindow : public QMainWindow
 protected:
     c_texture_graph *graph;                   ///< global texture graph
     vector<t_block_position> block_positions; ///< keeps position information about blocks
+    QMutex graph_mutex;                       ///< protexts the texture graph from race conditions
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -44,6 +46,16 @@ public:
     void dropEvent(QDropEvent *de);
     void dragMoveEvent(QDragMoveEvent *de);
     void dragEnterEvent(QDragEnterEvent *event);
+
+//-----------------------------------------------------
+
+    QMutex *get_graph_mutex();
+
+    /**<
+      Gets the mutex sddociated to the texture graph.
+
+      @return texture graph mutex
+      */
 
 //-----------------------------------------------------
 

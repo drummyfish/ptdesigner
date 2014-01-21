@@ -1059,6 +1059,15 @@ class c_texture_graph
          *
          * @param block_number index of block to be removed and deleted
          */
+         
+      void delete_block_with_id(unsigned int block_id);
+
+        /**<
+         * Removes block with given id from texture graph and deletes
+         * it.
+         *
+         * @param block_number index of block to be removed and deleted
+         */
 
       bool load_from_file(string filename);
 
