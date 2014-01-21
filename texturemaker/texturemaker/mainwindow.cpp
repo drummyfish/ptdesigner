@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
   pos.direction = 0;
   this->set_block_position(pos);
 
-  this->graph->add_block(new c_block_replace_colors());
+  this->graph->add_block(new c_block_mix_channels());
   pos.block_id = 2;
   pos.x = 200;
   pos.y = 300;
@@ -61,8 +61,8 @@ MainWindow::MainWindow(QWidget *parent) :
   this->graph->connect_by_id(0,2,0);
   this->graph->connect_by_id(1,2,1);
   this->graph->connect_by_id(3,2,2);
-  this->graph->connect_by_id(4,2,3);
-  this->graph->connect_by_id(5,2,4);
+//  this->graph->connect_by_id(4,2,3);
+//  this->graph->connect_by_id(5,2,4);
 
   ui->setupUi(this);
   ui->editArea->set_main_window(this);
@@ -79,23 +79,119 @@ MainWindow::~MainWindow()
 
 //-----------------------------------------------------
 
-int MainWindow::get_block_by_position(int x, int y)
+int MainWindow::get_block_by_position(int x, int y, int *slot)
 
 {
   unsigned int i;
-  int block_x, block_y;
+  int block_x, block_y, dx, dy, result, direction;
+  bool found;
+  c_block *block;
+
+  result = -1;
+  found = false;
 
   for (i = 0; i < this->block_positions.size(); i++)
     {
       block_x = this->block_positions.at(i).x;
       block_y = this->block_positions.at(i).y;
+      direction = this->block_positions.at(i).direction;
 
-      if (x >= block_x && x <= block_x + 52 &&
-          y >= block_y && y <= block_y + 52)
-        return this->block_positions.at(i).block_id;
+      if (x >= block_x - 8 && x <= block_x + 64 &&
+          y >= block_y - 5 && y <= block_y + 64)
+        {
+          result = this->block_positions.at(i).block_id;
+          dx = x - block_x;
+          dy = y - block_y;
+          found = true;
+          break;
+        }
     }
 
-  return -1;
+  cout << found << " " << dx << " " << dy << endl;
+
+  *slot = -1;
+
+  if (found)
+    switch (direction)
+      {
+        case 0: // up
+          if (dx >= 24 && dy >= -4 && dx <= 34 && dy <= 1)
+            *slot = MAX_INPUT_BLOCKS;
+          else
+            {
+              for (i = 0; i < MAX_INPUT_BLOCKS; i++)
+                if (dx >= (i + 1) * 7 && dy >= 58 && dx <= (i + 2) * 8 && dy <= 64)
+                  {
+                    *slot = i;
+                    break;
+                  }
+            }
+
+          break;
+
+        case 1: // right
+          if (dx >= 57 && dy >= 27 && dx <= 62 && dy <= 35)
+            *slot = MAX_INPUT_BLOCKS;
+          else
+            {
+              for (i = 0; i < MAX_INPUT_BLOCKS; i++)
+                if (dx >= -8 && dy >= 9 + i * 9 && dx <= -1 && dy <= 9 + (i + 1) * 9)
+                  {
+                    *slot = i;
+                    break;
+                  }
+            }
+
+          break;
+
+        case 2: // down
+          if (dx >= 23 && dy >= 59 && dx <= 31 && dy <= 64)
+            *slot = MAX_INPUT_BLOCKS;
+          else
+            {
+              for (i = 0; i < MAX_INPUT_BLOCKS; i++)
+                if (dx >= (i + 1) * 7 && dy >= -4 && dx <= (i + 2) * 8 && dy <= 1)
+                  {
+                    *slot = MAX_INPUT_BLOCKS - i - 1;
+                    break;
+                  }
+            }
+
+          break;
+
+        case 3: // left
+          if (dx >= -8 && dy >= 27 && dx <= 1 && dy <= 36)
+            *slot = MAX_INPUT_BLOCKS;
+          else
+            {
+              for (i = 0; i < MAX_INPUT_BLOCKS; i++)
+                if (dx >= 56 && dy >= 9 + i * 9 && dx <= 63 && dy <= 9 + (i + 1) * 9)
+                  {
+                    *slot = MAX_INPUT_BLOCKS - i - 1;
+                    break;
+                  }
+            }
+
+          break;
+
+        default:
+          break;
+      }
+
+  if (found)
+    {
+      block = this->graph->get_block_by_id(result);
+
+      if (*slot == MAX_INPUT_BLOCKS)
+        {
+          if (block->is_terminal())
+            *slot = -1;
+        }
+      else if (*slot >= block->get_max_inputs())
+        *slot = -1;
+    }
+
+  return result;
 }
 
 //-----------------------------------------------------
@@ -190,7 +286,6 @@ void MainWindow::on_pushButton_2_clicked()
 //-----------------------------------------------------
 
 c_texture_graph *MainWindow::get_texture_graph()
-
 {
   return this->graph;
 }

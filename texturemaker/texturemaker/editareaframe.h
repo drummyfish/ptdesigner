@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QPainter>
 #include <QMouseEvent>
+#include <QString>
 #include <iostream>
 #include "mainwindow.h"
 
@@ -22,8 +23,12 @@ class editAreaFrame : public QFrame
 
 protected:
     MainWindow *main_window;
-    int selected_id;          /// id of currently selected block, negative = none
-    bool moving;              /// whether the block moving state is on
+    int selected_id;            /// id of currently selected block, negative = none
+    bool moving;                /// whether the block moving state is on
+    int connecting_id;          /// id of the block being currently connected
+    int mouse_coordinations[2]; /// stores mouse coordinations when needed
+    QString mouse_string;       /// string displayed by the mouse pointer
+    bool display_mouse_string;  /// whether to display the mouse string
 
 public:
     explicit editAreaFrame(QWidget *parent = 0);

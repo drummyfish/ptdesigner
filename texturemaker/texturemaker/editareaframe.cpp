@@ -8,6 +8,11 @@ editAreaFrame::editAreaFrame(QWidget *parent) :
    this->setAcceptDrops(true);
    this->selected_id = -1;
    this->moving = false;
+   this->connecting_id = -1;
+   this->mouse_coordinations[0] = 0;
+   this->mouse_coordinations[1] = 0;
+   this->display_mouse_string = false;
+   this->setMouseTracking(true);
    this->setFocusPolicy(Qt::StrongFocus);  // to accept key events
 }
 
@@ -25,6 +30,7 @@ void editAreaFrame::paintEvent(QPaintEvent *)
 {
   unsigned int i,j;
   int draw_from[2],draw_through1[2],draw_through2[2],draw_to[2];  // helper coordinations
+  int helper;
   c_block *block,*block2;
   c_texture_graph *graph;
   QPen pen;
@@ -70,7 +76,7 @@ void editAreaFrame::paintEvent(QPaintEvent *)
           pen.setWidth(3);
           painter.setPen(pen);
 
-          switch(position2->direction)
+          switch(position2->direction)   // coming from output
             {
               case 0:  // up
                 draw_from[0] = position2->x + 26;
@@ -104,7 +110,7 @@ void editAreaFrame::paintEvent(QPaintEvent *)
                 break;
             }
 
-          switch(position->direction)
+          switch(position->direction)  // coming to input slot
             {
               case 0:  // up
                 draw_to[0] = position->x + 10 + j * 8;
@@ -121,7 +127,7 @@ void editAreaFrame::paintEvent(QPaintEvent *)
                 break;
 
               case 2:  // down
-                draw_to[0] = position->x + 10 + j * 8;
+                draw_to[0] = position->x + 10 + (MAX_INPUT_BLOCKS - j - 1) * 8;
                 draw_to[1] = position->y + 3;
                 draw_through2[0] = draw_to[0];
                 draw_through2[1] = draw_to[1] - 150;
@@ -129,7 +135,7 @@ void editAreaFrame::paintEvent(QPaintEvent *)
 
               case 3:  // left
                 draw_to[0] = position->x + 59;
-                draw_to[1] = position->y + 11 + j * 9;
+                draw_to[1] = position->y + 11 + (MAX_INPUT_BLOCKS - j - 1) * 9;
                 draw_through2[0] = draw_to[0] + 150;
                 draw_through2[1] = draw_to[1];
                 break;
@@ -216,9 +222,23 @@ void editAreaFrame::paintEvent(QPaintEvent *)
 
       for (j = 0; j < block->get_max_inputs(); j++)
         if (position->direction == 0 || position->direction == 2) // up or down
-          painter.drawPixmap(position->x + input_position[0] + 8 * j,position->y + input_position[1],pixmap_slot[(position->direction + 2) % 4]);
-        else
-          painter.drawPixmap(position->x + input_position[0],position->y + input_position[1] + 9 * j,pixmap_slot[(position->direction + 2) % 4]);
+          {
+            if (position->direction == 2)
+              helper = MAX_INPUT_BLOCKS - j - 1;  // draw slots on top in reversed order due to rotation
+            else
+              helper = j;
+
+            painter.drawPixmap(position->x + input_position[0] + 8 * helper,position->y + input_position[1],pixmap_slot[(position->direction + 2) % 4]);
+          }
+        else   // left or right
+          {
+            if (position->direction == 3)
+              helper = MAX_INPUT_BLOCKS - j - 1;  // draw slots in the right in reversed order due to rotation
+            else
+              helper = j;
+
+            painter.drawPixmap(position->x + input_position[0],position->y + input_position[1] + 9 * helper,pixmap_slot[(position->direction + 2) % 4]);
+          }
 
       // draw the status text:
 
@@ -238,6 +258,14 @@ void editAreaFrame::paintEvent(QPaintEvent *)
           painter.setFont(font);
           painter.drawText(position->x + 55,position->y - 3,"error");
         }
+    }
+
+  if (this->display_mouse_string)  // draw the mouse string
+    {
+      font.setPixelSize(10);
+      pen.setColor(qRgb(50,50,50));
+      painter.setPen(pen);
+      painter.drawText(this->mouse_coordinations[0] + 15,this->mouse_coordinations[1] + 15,this->mouse_string);
     }
 }
 
@@ -281,15 +309,29 @@ void editAreaFrame::mousePressEvent(QMouseEvent *event)
 
 {
   int x, y;
+  int slot;
 
   x = event->pos().x();
   y = event->pos().y();
 
-  this->selected_id = this->main_window->get_block_by_position(x,y);
+  this->selected_id = this->main_window->get_block_by_position(x,y,&slot);
+
   this->main_window->set_block_for_preview(this->selected_id);
 
-  if (this->selected_id >= 0)
-    this->moving = true;
+  if (this->selected_id >= 0)  // a block was clicked
+    {
+      if (slot < 0)            // no slot clicked => moving the block
+        this->moving = true;
+      else if (this->connecting_id < 0 && slot == MAX_INPUT_BLOCKS)  // starting connecting blocks
+        this->connecting_id = this->selected_id;
+      else if (this->connecting_id >= 0 && slot < MAX_INPUT_BLOCKS && slot >= 0) // connection in progres
+        {
+          this->main_window->get_texture_graph()->connect_by_id(this->connecting_id,this->selected_id,slot);
+          this->connecting_id = -1;
+        }
+      else
+        this->connecting_id = -1;
+    }
 
   this->update();
 }
@@ -326,6 +368,8 @@ void editAreaFrame::mouseMoveEvent(QMouseEvent *event)
     {
       t_block_position *position;
 
+      this->display_mouse_string = false;
+
       position = this->main_window->get_block_position(this->selected_id);
 
       if (position == NULL)
@@ -345,6 +389,32 @@ void editAreaFrame::mouseMoveEvent(QMouseEvent *event)
         position->y = this->height() - 25;
 
       this->update();
+    }
+  else
+    {
+      int slot,id;
+
+      id = this->main_window->get_block_by_position(event->pos().x(),event->pos().y(),&slot);
+
+      if (id >= 0 && slot >= 0)
+        {
+          this->mouse_coordinations[0] = event->pos().x();  // update the mouse coordinations
+          this->mouse_coordinations[1] = event->pos().y();
+
+          this->display_mouse_string = true;
+
+          if (slot == MAX_INPUT_BLOCKS)
+            this->mouse_string = "output";
+          else
+            this->mouse_string = "slot " + QString::number(slot);
+
+          this->update();
+        }
+      else if (this->display_mouse_string)
+        {
+          this->display_mouse_string = false;
+          this->update();
+        }
     }
 }
 

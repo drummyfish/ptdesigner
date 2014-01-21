@@ -87,13 +87,17 @@ public:
 
 //-----------------------------------------------------
 
-    int get_block_by_position(int x, int y);
+    int get_block_by_position(int x, int y, int *slot);
 
     /**<
-      Gets block at given position.
+      Gets block (and its slot) at given position.
 
       @param x x position
       @param y y position
+      @param slot in this variable the slot number at given
+             position will be returned, numbers 0 to
+             MAX_INPT_BLOCKS - 1 are input slots, MAX_INPT_BLOCKS
+             is the output slot and -1 is no slot
 
       @return id of the block placed at [x,y] position
               or -1 if there is no block
