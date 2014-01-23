@@ -35,7 +35,7 @@ DEPENDPATH += $$PWD/../../sources
 win32:LIBS += -L$$PWD/../../lib/win32/ -lptdesigner
 !win32:LIBS += -L$$PWD/../../lib/linux64/ -lptdesigner
 
-DEPENDPATH += $$PWD/../../sources
+LIBS += -lm
 
 RESOURCES += \
     resources.qrc

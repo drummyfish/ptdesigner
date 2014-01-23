@@ -7,6 +7,8 @@
 #include <QString>
 #include <QMutex>
 #include <iostream>
+#include <QMimeData>
+#include "math.h"
 #include "mainwindow.h"
 
 using namespace std;

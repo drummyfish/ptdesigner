@@ -7,6 +7,8 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QIcon>
+#include <QDrag>
+#include <QMimeData>
 #include <QMouseEvent>
 
 using namespace std;

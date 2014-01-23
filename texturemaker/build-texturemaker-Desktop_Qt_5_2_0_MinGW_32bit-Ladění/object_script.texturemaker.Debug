@@ -1,0 +1,12 @@
+INPUT(
+./debug\main.o
+./debug\mainwindow.o
+./debug\editareaframe.o
+./debug\addblockbutton.o
+./debug\colorbufferdisplay.o
+./debug\qrc_resources.o
+./debug\moc_mainwindow.o
+./debug\moc_editareaframe.o
+./debug\moc_addblockbutton.o
+./debug\moc_colorbufferdisplay.o
+);

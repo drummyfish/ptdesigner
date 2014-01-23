@@ -30,7 +30,7 @@ void editAreaFrame::paintEvent(QPaintEvent *)
 {
   unsigned int i,j;
   int draw_from[2],draw_through1[2],draw_through2[2],draw_to[2];  // helper coordinations
-  int helper;
+  int helper,block_distance,dx,dy;
   c_block *block,*block2;
   c_texture_graph *graph;
   QPen pen;
@@ -83,19 +83,37 @@ void editAreaFrame::paintEvent(QPaintEvent *)
           draw_to[0] = 0;
           draw_to[1] = 0;
 
+          dx = position->x - position2->x;
+          dy = position->y - position2->y;
+
+          if (dx < 0)
+            dx *= -1;
+
+          if (dy < 0)
+            dy *= -1;
+
+          block_distance = (int) sqrt(dx * dx + dy * dy);  // determines how curved the connection will be
+
+          block_distance -= 50;
+
+          if (block_distance < 50)   // limits
+            block_distance = 50;
+          else if (block_distance > 150)
+            block_distance = 150;
+
           switch(position2->direction)   // coming from output
             {
               case 0:  // up
                 draw_from[0] = position2->x + 26;
                 draw_from[1] = position2->y + 5;
                 draw_through1[0] = draw_from[0];
-                draw_through1[1] = draw_from[1] - 150;
+                draw_through1[1] = draw_from[1] - block_distance;
                 break;
 
               case 1:  // right
                 draw_from[0] = position2->x + 56;
                 draw_from[1] = position2->y + 29;
-                draw_through1[0] = draw_from[0] + 150;
+                draw_through1[0] = draw_from[0] + block_distance;
                 draw_through1[1] = draw_from[1];
                 break;
 
@@ -103,13 +121,13 @@ void editAreaFrame::paintEvent(QPaintEvent *)
                 draw_from[0] = position2->x + 26;
                 draw_from[1] = position2->y + 56;
                 draw_through1[0] = draw_from[0];
-                draw_through1[1] = draw_from[1] + 150;
+                draw_through1[1] = draw_from[1] + block_distance;
                 break;
 
               case 3:  // left
                 draw_from[0] = position2->x - 9;
                 draw_from[1] = position2->y + 29;
-                draw_through1[0] = draw_from[0] - 150;
+                draw_through1[0] = draw_from[0] - block_distance;
                 draw_through1[1] = draw_from[1];
                 break;
 
@@ -123,13 +141,13 @@ void editAreaFrame::paintEvent(QPaintEvent *)
                 draw_to[0] = position->x + 10 + j * 8;
                 draw_to[1] = position->y + 58;
                 draw_through2[0] = draw_to[0];
-                draw_through2[1] = draw_to[1] + 150;
+                draw_through2[1] = draw_to[1] + block_distance;
                 break;
 
               case 1:  // right
                 draw_to[0] = position->x - 9;
                 draw_to[1] = position->y + 11 + j * 9;
-                draw_through2[0] = draw_to[0] - 150;
+                draw_through2[0] = draw_to[0] - block_distance;
                 draw_through2[1] = draw_to[1];
                 break;
 
@@ -137,13 +155,13 @@ void editAreaFrame::paintEvent(QPaintEvent *)
                 draw_to[0] = position->x + 10 + (MAX_INPUT_BLOCKS - j - 1) * 8;
                 draw_to[1] = position->y + 3;
                 draw_through2[0] = draw_to[0];
-                draw_through2[1] = draw_to[1] - 150;
+                draw_through2[1] = draw_to[1] - block_distance;
                 break;
 
               case 3:  // left
                 draw_to[0] = position->x + 59;
                 draw_to[1] = position->y + 11 + (MAX_INPUT_BLOCKS - j - 1) * 9;
-                draw_through2[0] = draw_to[0] + 150;
+                draw_through2[0] = draw_to[0] + block_distance;
                 draw_through2[1] = draw_to[1];
                 break;
 
@@ -156,6 +174,41 @@ void editAreaFrame::paintEvent(QPaintEvent *)
 
           painter.drawPath(path);
         }
+    }
+
+  if (this->connecting_id >= 0)    // draw the line if connecting
+    {
+      position = this->main_window->get_block_position(this->connecting_id);
+
+      switch (position->direction)
+        {
+          case 0: // up
+            dx = 26;
+            dy = 5;
+            break;
+
+          case 1: // right
+            dx = 56;
+            dy = 29;
+            break;
+
+          case 2: // down
+            dx = 26;
+            dy = 56;
+            break;
+
+          case 3: // left
+            dx = -9;
+            dy = 29;
+            break;
+
+          default:
+            dx = 0;
+            dy = 0;
+            break;
+        }
+
+      painter.drawLine(position->x + dx,position->y + dy,this->mouse_coordinations[0],this->mouse_coordinations[1]);
     }
 
   for (i = 0; i < graph->get_number_of_blocks(); i++)      // draw blocks
@@ -172,7 +225,7 @@ void editAreaFrame::paintEvent(QPaintEvent *)
       if (((int) block->get_id()) == this->selected_id)                        // draw selection
         {
           pen.setColor(Qt::black);
-          pen.setWidth(1);
+          pen.setWidth(0);
           pen.setStyle(Qt::DashLine);
 
           painter.setPen(pen);
@@ -336,9 +389,9 @@ void editAreaFrame::mousePressEvent(QMouseEvent *event)
           this->main_window->get_texture_graph()->connect_by_id(this->connecting_id,this->selected_id,slot);
           this->connecting_id = -1;
         }
-      else
-        this->connecting_id = -1;
     }
+  else
+    this->connecting_id = -1;
 
   this->update();
 }
@@ -371,7 +424,15 @@ void editAreaFrame::mouseReleaseEvent(QMouseEvent *event)
 void editAreaFrame::mouseMoveEvent(QMouseEvent *event)
 
 {
-  if (this->moving)
+  int slot,id;
+
+  if (this->connecting_id >= 0)
+    {
+      this->mouse_coordinations[0] = event->pos().x();
+      this->mouse_coordinations[1] = event->pos().y();
+      this->update();
+    }
+  else if (this->moving)
     {
       t_block_position *position;
 
@@ -397,32 +458,28 @@ void editAreaFrame::mouseMoveEvent(QMouseEvent *event)
 
       this->update();
     }
-  else
-    {
-      int slot,id;
 
-      id = this->main_window->get_block_by_position(event->pos().x(),event->pos().y(),&slot);
+    id = this->main_window->get_block_by_position(event->pos().x(),event->pos().y(),&slot);
 
-      if (id >= 0 && slot >= 0)
-        {
-          this->mouse_coordinations[0] = event->pos().x();  // update the mouse coordinations
-          this->mouse_coordinations[1] = event->pos().y();
+    if (id >= 0 && slot >= 0)
+      {
+        this->mouse_coordinations[0] = event->pos().x();  // update the mouse coordinations
+        this->mouse_coordinations[1] = event->pos().y();
 
-          this->display_mouse_string = true;
+        this->display_mouse_string = true;
 
-          if (slot == MAX_INPUT_BLOCKS)
-            this->mouse_string = "output";
-          else
-            this->mouse_string = "slot " + QString::number(slot);
+        if (slot == MAX_INPUT_BLOCKS)
+          this->mouse_string = "output";
+        else
+          this->mouse_string = "slot " + QString::number(slot);
 
-          this->update();
-        }
-      else if (this->display_mouse_string)
-        {
-          this->display_mouse_string = false;
-          this->update();
-        }
-    }
+        this->update();
+      }
+    else if (this->display_mouse_string)
+      {
+        this->display_mouse_string = false;
+        this->update();
+      }
 }
 
 //-----------------------------------------------------
