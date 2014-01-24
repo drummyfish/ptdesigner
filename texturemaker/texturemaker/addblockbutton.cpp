@@ -2,14 +2,14 @@
 
 //-----------------------------------------------------
 
-addBlockButton::addBlockButton(QWidget *parent) :
+AddBlockButton::AddBlockButton(QWidget *parent) :
     QPushButton(parent)
  {
  }
 
 //-----------------------------------------------------
 
-void addBlockButton::paintEvent(QPaintEvent *)
+void AddBlockButton::paintEvent(QPaintEvent *)
  {
    QPainter painter(this);
    QPixmap pixmap(":/resources/button " + this->text() + ".png");
@@ -21,7 +21,7 @@ void addBlockButton::paintEvent(QPaintEvent *)
 
 //-----------------------------------------------------
 
-void addBlockButton::mousePressEvent(QMouseEvent *event)
+void AddBlockButton::mousePressEvent(QMouseEvent *event)
  {
    if (event->button() == Qt::LeftButton)
      {

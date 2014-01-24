@@ -18,24 +18,24 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_editAreaFrame_t {
+struct qt_meta_stringdata_EditAreaFrame_t {
     QByteArrayData data[1];
     char stringdata[15];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    offsetof(qt_meta_stringdata_editAreaFrame_t, stringdata) + ofs \
+    offsetof(qt_meta_stringdata_EditAreaFrame_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData) \
     )
-static const qt_meta_stringdata_editAreaFrame_t qt_meta_stringdata_editAreaFrame = {
+static const qt_meta_stringdata_EditAreaFrame_t qt_meta_stringdata_EditAreaFrame = {
     {
 QT_MOC_LITERAL(0, 0, 13)
     },
-    "editAreaFrame\0"
+    "EditAreaFrame\0"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_editAreaFrame[] = {
+static const uint qt_meta_data_EditAreaFrame[] = {
 
  // content:
        7,       // revision
@@ -51,7 +51,7 @@ static const uint qt_meta_data_editAreaFrame[] = {
        0        // eod
 };
 
-void editAreaFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void EditAreaFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -59,26 +59,26 @@ void editAreaFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     Q_UNUSED(_a);
 }
 
-const QMetaObject editAreaFrame::staticMetaObject = {
-    { &QFrame::staticMetaObject, qt_meta_stringdata_editAreaFrame.data,
-      qt_meta_data_editAreaFrame,  qt_static_metacall, 0, 0}
+const QMetaObject EditAreaFrame::staticMetaObject = {
+    { &QFrame::staticMetaObject, qt_meta_stringdata_EditAreaFrame.data,
+      qt_meta_data_EditAreaFrame,  qt_static_metacall, 0, 0}
 };
 
 
-const QMetaObject *editAreaFrame::metaObject() const
+const QMetaObject *EditAreaFrame::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *editAreaFrame::qt_metacast(const char *_clname)
+void *EditAreaFrame::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_editAreaFrame.stringdata))
-        return static_cast<void*>(const_cast< editAreaFrame*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_EditAreaFrame.stringdata))
+        return static_cast<void*>(const_cast< EditAreaFrame*>(this));
     return QFrame::qt_metacast(_clname);
 }
 
-int editAreaFrame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int EditAreaFrame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QFrame::qt_metacall(_c, _id, _a);
     if (_id < 0)

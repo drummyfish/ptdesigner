@@ -364,14 +364,31 @@ void MainWindow::on_actionRotate_CCW_triggered()
   ui->editArea->update();
 }
 
+//-----------------------------------------------------
+
+void MainWindow::update_graphics()
+{
+  ui->editArea->update();
+  ui->preview->update();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::compute_thread(MainWindow *window, bool force)
+{
+  window->get_graph_mutex()->lock();
+  window->graph->compute(force);
+  window->get_graph_mutex()->unlock();
+  window->update_graphics();
+}
 
 //-----------------------------------------------------
 
 void MainWindow::on_actionExecute_triggered()
 {
-  this->graph->compute(ui->force->isChecked());
-  ui->editArea->update();
-  ui->preview->update();
+  QFuture<void> future;
+
+  future = QtConcurrent::run(MainWindow::compute_thread,this,ui->force->isChecked());   // run the computation in separate thread with one parameter
 }
 
 //-----------------------------------------------------
@@ -455,4 +472,4 @@ void MainWindow::on_cheight_valueChanged(int arg1)
   this->canvas_resolution_changed();
 }
 
-//----------------------------------------------------
+//-----------------------------------------------------

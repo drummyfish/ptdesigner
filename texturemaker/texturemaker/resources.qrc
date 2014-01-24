@@ -56,5 +56,6 @@
         <file>resources/slot left.png</file>
         <file>resources/slot right.png</file>
         <file>resources/slot up.png</file>
+        <file>resources/hourglass3.png</file>
     </qresource>
 </RCC>

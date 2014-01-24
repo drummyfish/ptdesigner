@@ -18,24 +18,24 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_addBlockButton_t {
+struct qt_meta_stringdata_AddBlockButton_t {
     QByteArrayData data[1];
     char stringdata[16];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    offsetof(qt_meta_stringdata_addBlockButton_t, stringdata) + ofs \
+    offsetof(qt_meta_stringdata_AddBlockButton_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData) \
     )
-static const qt_meta_stringdata_addBlockButton_t qt_meta_stringdata_addBlockButton = {
+static const qt_meta_stringdata_AddBlockButton_t qt_meta_stringdata_AddBlockButton = {
     {
 QT_MOC_LITERAL(0, 0, 14)
     },
-    "addBlockButton\0"
+    "AddBlockButton\0"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_addBlockButton[] = {
+static const uint qt_meta_data_AddBlockButton[] = {
 
  // content:
        7,       // revision
@@ -51,7 +51,7 @@ static const uint qt_meta_data_addBlockButton[] = {
        0        // eod
 };
 
-void addBlockButton::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void AddBlockButton::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -59,26 +59,26 @@ void addBlockButton::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     Q_UNUSED(_a);
 }
 
-const QMetaObject addBlockButton::staticMetaObject = {
-    { &QPushButton::staticMetaObject, qt_meta_stringdata_addBlockButton.data,
-      qt_meta_data_addBlockButton,  qt_static_metacall, 0, 0}
+const QMetaObject AddBlockButton::staticMetaObject = {
+    { &QPushButton::staticMetaObject, qt_meta_stringdata_AddBlockButton.data,
+      qt_meta_data_AddBlockButton,  qt_static_metacall, 0, 0}
 };
 
 
-const QMetaObject *addBlockButton::metaObject() const
+const QMetaObject *AddBlockButton::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *addBlockButton::qt_metacast(const char *_clname)
+void *AddBlockButton::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_addBlockButton.stringdata))
-        return static_cast<void*>(const_cast< addBlockButton*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_AddBlockButton.stringdata))
+        return static_cast<void*>(const_cast< AddBlockButton*>(this));
     return QPushButton::qt_metacast(_clname);
 }
 
-int addBlockButton::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int AddBlockButton::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QPushButton::qt_metacall(_c, _id, _a);
     if (_id < 0)

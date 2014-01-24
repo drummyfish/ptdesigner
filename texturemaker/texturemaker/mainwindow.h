@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QMutex>
+#include <QFuture>
+#include <QTimer>
+#include <QtConcurrent/QtConcurrent>
 #include "ptdesigner.h"
 
 using namespace pt_design;
@@ -46,6 +49,32 @@ public:
     void dropEvent(QDropEvent *de);
     void dragMoveEvent(QDragMoveEvent *de);
     void dragEnterEvent(QDragEnterEvent *event);
+
+//-----------------------------------------------------
+
+    static void compute_thread(MainWindow *window, bool force);
+
+    /**<
+      This method contains a code for recomputing the
+      texture graph and should be run in separate thread.
+      It executes the recomputation and when it's done,
+      updates the texture preview and the edit area.
+      The function locks the graph mutext itself.
+
+      @param window window whose texture graph will be
+             recomputed
+      @param force if true, every block will be forced
+             to recompute, otherwise only necessary
+             computations will be done
+      */
+
+//-----------------------------------------------------
+
+    void update_graphics();
+
+    /**<
+     Updates all graphics elements.
+     */
 
 //-----------------------------------------------------
 

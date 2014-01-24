@@ -2,7 +2,7 @@
 
 //-----------------------------------------------------
 
-editAreaFrame::editAreaFrame(QWidget *parent) :
+EditAreaFrame::EditAreaFrame(QWidget *parent) :
     QFrame(parent)
 {
    this->setAcceptDrops(true);
@@ -18,7 +18,7 @@ editAreaFrame::editAreaFrame(QWidget *parent) :
 
 //-----------------------------------------------------
 
-void editAreaFrame::set_main_window(MainWindow *main_window)
+void EditAreaFrame::set_main_window(MainWindow *main_window)
 
 {
   this->main_window = main_window;
@@ -26,7 +26,7 @@ void editAreaFrame::set_main_window(MainWindow *main_window)
 
 //-----------------------------------------------------
 
-void editAreaFrame::paintEvent(QPaintEvent *)
+void EditAreaFrame::paintEvent(QPaintEvent *)
 {
   unsigned int i,j;
   int draw_from[2],draw_through1[2],draw_through2[2],draw_to[2];  // helper coordinations
@@ -43,6 +43,15 @@ void editAreaFrame::paintEvent(QPaintEvent *)
   QPixmap pixmap_slot[4];                     // all four directions
   int output_position[2],input_position[2];   // position differences for drawing slots
   t_block_position *position,*position2;
+
+  if (!this->main_window->get_graph_mutex()->tryLock())
+    {
+      QPainter painter(this);
+      painter.fillRect(0,0,this->width(),this->height(),QColor::fromRgb(255,255,255));
+      return;
+    }
+
+  // mutex locked here:
 
   QPainter painter(this);
   painter.fillRect(0,0,this->width(),this->height(),QColor::fromRgb(255,255,255));
@@ -327,15 +336,22 @@ void editAreaFrame::paintEvent(QPaintEvent *)
       painter.setPen(pen);
       painter.drawText(this->mouse_coordinations[0] + 15,this->mouse_coordinations[1] + 15,this->mouse_string);
     }
+
+  this->main_window->get_graph_mutex()->unlock();
 }
 
 //-----------------------------------------------------
 
-void editAreaFrame::dropEvent(QDropEvent *event)
+void EditAreaFrame::dropEvent(QDropEvent *event)
 {
   string mime_string = event->mimeData()->text().toUtf8().constData();
   c_block *block;
   t_block_position position;
+
+  if (!this->main_window->get_graph_mutex()->tryLock())
+    return;
+
+  // mutex locked here:
 
   block = c_block::get_block_instance(mime_string);
 
@@ -349,6 +365,8 @@ void editAreaFrame::dropEvent(QDropEvent *event)
   position.direction = 0;
   this->main_window->set_block_position(position);
 
+  this->main_window->get_graph_mutex()->unlock();
+
   this->update();    // repaint
 
   event->acceptProposedAction();
@@ -356,7 +374,7 @@ void editAreaFrame::dropEvent(QDropEvent *event)
 
 //-----------------------------------------------------
 
-void editAreaFrame::dragEnterEvent(QDragEnterEvent *event)
+void EditAreaFrame::dragEnterEvent(QDragEnterEvent *event)
 
 {
   if (event->mimeData()->hasFormat("text/plain"))
@@ -365,11 +383,16 @@ void editAreaFrame::dragEnterEvent(QDragEnterEvent *event)
 
 //-----------------------------------------------------
 
-void editAreaFrame::mousePressEvent(QMouseEvent *event)
+void EditAreaFrame::mousePressEvent(QMouseEvent *event)
 
 {
   int x, y;
   int slot;
+
+  if (!this->main_window->get_graph_mutex()->tryLock())
+    return;
+
+  // mutex locked here:
 
   x = event->pos().x();
   y = event->pos().y();
@@ -393,12 +416,14 @@ void editAreaFrame::mousePressEvent(QMouseEvent *event)
   else
     this->connecting_id = -1;
 
+  this->main_window->get_graph_mutex()->unlock();
+
   this->update();
 }
 
 //-----------------------------------------------------
 
-void editAreaFrame::keyPressEvent(QKeyEvent *event)
+void EditAreaFrame::keyPressEvent(QKeyEvent *event)
 
 {
   if (this->selected_id < 0)
@@ -413,7 +438,7 @@ void editAreaFrame::keyPressEvent(QKeyEvent *event)
 
 //-----------------------------------------------------
 
-void editAreaFrame::mouseReleaseEvent(QMouseEvent *event)
+void EditAreaFrame::mouseReleaseEvent(QMouseEvent *event)
 
 {
   this->moving = false;
@@ -421,10 +446,15 @@ void editAreaFrame::mouseReleaseEvent(QMouseEvent *event)
 
 //-----------------------------------------------------
 
-void editAreaFrame::mouseMoveEvent(QMouseEvent *event)
+void EditAreaFrame::mouseMoveEvent(QMouseEvent *event)
 
 {
   int slot,id;
+
+  if (!this->main_window->get_graph_mutex()->tryLock())
+    return;
+
+  // mutex locked here:
 
   if (this->connecting_id >= 0)
     {
@@ -441,7 +471,10 @@ void editAreaFrame::mouseMoveEvent(QMouseEvent *event)
       position = this->main_window->get_block_position(this->selected_id);
 
       if (position == NULL)
-        return;
+        {
+          this->main_window->get_graph_mutex()->unlock();
+          return;
+        }
 
       position->x = event->pos().x() - 25;
       position->y = event->pos().y() - 25;
@@ -480,11 +513,13 @@ void editAreaFrame::mouseMoveEvent(QMouseEvent *event)
         this->display_mouse_string = false;
         this->update();
       }
+
+   this->main_window->get_graph_mutex()->unlock();
 }
 
 //-----------------------------------------------------
 
-int editAreaFrame::get_selected_id()
+int EditAreaFrame::get_selected_id()
 
 {
   return this->selected_id;

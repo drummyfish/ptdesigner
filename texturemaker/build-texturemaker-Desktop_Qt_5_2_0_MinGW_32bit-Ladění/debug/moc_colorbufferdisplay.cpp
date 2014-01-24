@@ -18,24 +18,24 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_colorBufferDisplay_t {
+struct qt_meta_stringdata_ColorBufferDisplay_t {
     QByteArrayData data[1];
     char stringdata[20];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    offsetof(qt_meta_stringdata_colorBufferDisplay_t, stringdata) + ofs \
+    offsetof(qt_meta_stringdata_ColorBufferDisplay_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData) \
     )
-static const qt_meta_stringdata_colorBufferDisplay_t qt_meta_stringdata_colorBufferDisplay = {
+static const qt_meta_stringdata_ColorBufferDisplay_t qt_meta_stringdata_ColorBufferDisplay = {
     {
 QT_MOC_LITERAL(0, 0, 18)
     },
-    "colorBufferDisplay\0"
+    "ColorBufferDisplay\0"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_colorBufferDisplay[] = {
+static const uint qt_meta_data_ColorBufferDisplay[] = {
 
  // content:
        7,       // revision
@@ -51,7 +51,7 @@ static const uint qt_meta_data_colorBufferDisplay[] = {
        0        // eod
 };
 
-void colorBufferDisplay::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void ColorBufferDisplay::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -59,26 +59,26 @@ void colorBufferDisplay::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
     Q_UNUSED(_a);
 }
 
-const QMetaObject colorBufferDisplay::staticMetaObject = {
-    { &QFrame::staticMetaObject, qt_meta_stringdata_colorBufferDisplay.data,
-      qt_meta_data_colorBufferDisplay,  qt_static_metacall, 0, 0}
+const QMetaObject ColorBufferDisplay::staticMetaObject = {
+    { &QFrame::staticMetaObject, qt_meta_stringdata_ColorBufferDisplay.data,
+      qt_meta_data_ColorBufferDisplay,  qt_static_metacall, 0, 0}
 };
 
 
-const QMetaObject *colorBufferDisplay::metaObject() const
+const QMetaObject *ColorBufferDisplay::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *colorBufferDisplay::qt_metacast(const char *_clname)
+void *ColorBufferDisplay::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_colorBufferDisplay.stringdata))
-        return static_cast<void*>(const_cast< colorBufferDisplay*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_ColorBufferDisplay.stringdata))
+        return static_cast<void*>(const_cast< ColorBufferDisplay*>(this));
     return QFrame::qt_metacast(_clname);
 }
 
-int colorBufferDisplay::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int ColorBufferDisplay::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QFrame::qt_metacall(_c, _id, _a);
     if (_id < 0)

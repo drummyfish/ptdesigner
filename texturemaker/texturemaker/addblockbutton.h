@@ -21,11 +21,11 @@ using namespace std;
   be clicked.
   */
 
-class addBlockButton : public QPushButton
+class AddBlockButton : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit addBlockButton(QWidget *parent = 0);
+    explicit AddBlockButton(QWidget *parent = 0);
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *event);
 

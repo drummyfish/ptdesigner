@@ -20,7 +20,7 @@ using namespace pt_design;
     as a preview.
     */
 
-class colorBufferDisplay : public QFrame
+class ColorBufferDisplay : public QFrame
 {
     Q_OBJECT
 
@@ -29,7 +29,7 @@ private:
     MainWindow *main_window; /// pointer to the main window
 
 public:
-    explicit colorBufferDisplay(QWidget *parent = 0);
+    explicit ColorBufferDisplay(QWidget *parent = 0);
     void paintEvent(QPaintEvent *);
 
 //-----------------------------------------------------

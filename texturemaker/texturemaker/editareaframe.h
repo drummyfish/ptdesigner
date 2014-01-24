@@ -20,7 +20,7 @@ using namespace std;
     and allows its editing.
     */
 
-class editAreaFrame : public QFrame
+class EditAreaFrame : public QFrame
 {
     Q_OBJECT
 
@@ -34,7 +34,7 @@ protected:
     bool display_mouse_string;  /// whether to display the mouse string
 
 public:
-    explicit editAreaFrame(QWidget *parent = 0);
+    explicit EditAreaFrame(QWidget *parent = 0);
     void paintEvent(QPaintEvent *);
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);

@@ -9,6 +9,9 @@
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
+#include <AddBlockButton.h>
+#include <ColorBufferDisplay.h>
+#include <EditAreaFrame.h>
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
@@ -30,9 +33,6 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include <addblockbutton.h>
-#include <colorbufferdisplay.h>
-#include <editareaframe.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -55,56 +55,56 @@ public:
     QScrollArea *blockArea;
     QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout_2;
-    addBlockButton *pushButton_28;
-    addBlockButton *pushButton_17;
-    addBlockButton *pushButton_33;
+    AddBlockButton *pushButton_28;
+    AddBlockButton *pushButton_17;
+    AddBlockButton *pushButton_33;
     QSpacerItem *horizontalSpacer;
-    addBlockButton *pushButton_16;
-    addBlockButton *pushButton_3;
-    addBlockButton *pushButton_11;
-    addBlockButton *pushButton_10;
-    addBlockButton *pushButton_21;
-    addBlockButton *pushButton_39;
-    addBlockButton *pushButton_37;
-    addBlockButton *pushButton_36;
-    addBlockButton *pushButton_40;
-    addBlockButton *pushButton_38;
-    addBlockButton *pushButton_18;
-    addBlockButton *pushButton_14;
-    addBlockButton *pushButton_23;
-    addBlockButton *pushButton_29;
-    addBlockButton *pushButton_27;
-    addBlockButton *pushButton_34;
-    addBlockButton *pushButton_6;
-    addBlockButton *pushButton_42;
-    addBlockButton *pushButton_22;
-    addBlockButton *pushButton_25;
-    addBlockButton *pushButton_8;
-    addBlockButton *pushButton_13;
-    addBlockButton *pushButton_7;
-    addBlockButton *pushButton_5;
-    addBlockButton *pushButton_4;
-    addBlockButton *pushButton_2;
-    addBlockButton *pushButton_15;
-    addBlockButton *pushButton_43;
-    addBlockButton *pushButton_44;
-    addBlockButton *pushButton_35;
-    addBlockButton *pushButton_20;
-    addBlockButton *pushButton_24;
-    addBlockButton *pushButton_31;
-    addBlockButton *pushButton_30;
-    addBlockButton *pushButton_32;
-    addBlockButton *pushButton_41;
-    addBlockButton *pushButton_19;
-    addBlockButton *pushButton_9;
-    addBlockButton *pushButton_12;
+    AddBlockButton *pushButton_16;
+    AddBlockButton *pushButton_3;
+    AddBlockButton *pushButton_11;
+    AddBlockButton *pushButton_10;
+    AddBlockButton *pushButton_21;
+    AddBlockButton *pushButton_39;
+    AddBlockButton *pushButton_37;
+    AddBlockButton *pushButton_36;
+    AddBlockButton *pushButton_40;
+    AddBlockButton *pushButton_38;
+    AddBlockButton *pushButton_18;
+    AddBlockButton *pushButton_14;
+    AddBlockButton *pushButton_23;
+    AddBlockButton *pushButton_29;
+    AddBlockButton *pushButton_27;
+    AddBlockButton *pushButton_34;
+    AddBlockButton *pushButton_6;
+    AddBlockButton *pushButton_42;
+    AddBlockButton *pushButton_22;
+    AddBlockButton *pushButton_25;
+    AddBlockButton *pushButton_8;
+    AddBlockButton *pushButton_13;
+    AddBlockButton *pushButton_7;
+    AddBlockButton *pushButton_5;
+    AddBlockButton *pushButton_4;
+    AddBlockButton *pushButton_2;
+    AddBlockButton *pushButton_15;
+    AddBlockButton *pushButton_43;
+    AddBlockButton *pushButton_44;
+    AddBlockButton *pushButton_35;
+    AddBlockButton *pushButton_20;
+    AddBlockButton *pushButton_24;
+    AddBlockButton *pushButton_31;
+    AddBlockButton *pushButton_30;
+    AddBlockButton *pushButton_32;
+    AddBlockButton *pushButton_41;
+    AddBlockButton *pushButton_19;
+    AddBlockButton *pushButton_9;
+    AddBlockButton *pushButton_12;
     QHBoxLayout *horizontalLayout;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents_2;
     QVBoxLayout *verticalLayout;
     QWidget *widget;
     QHBoxLayout *horizontalLayout_3;
-    colorBufferDisplay *preview;
+    ColorBufferDisplay *preview;
     QPushButton *pushButton;
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_3;
@@ -127,7 +127,7 @@ public:
     QWidget *scrollAreaWidgetContents_3;
     QGridLayout *gridLayout_4;
     QSpacerItem *horizontalSpacer_2;
-    editAreaFrame *editArea;
+    EditAreaFrame *editArea;
     QSpacerItem *verticalSpacer_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -198,7 +198,7 @@ public:
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        pushButton_28 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_28 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_28->setObjectName(QStringLiteral("pushButton_28"));
         pushButton_28->setMinimumSize(QSize(53, 53));
         pushButton_28->setMaximumSize(QSize(53, 53));
@@ -206,7 +206,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_28, 1, 31, 1, 1);
 
-        pushButton_17 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_17 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_17->setObjectName(QStringLiteral("pushButton_17"));
         pushButton_17->setMinimumSize(QSize(53, 53));
         pushButton_17->setMaximumSize(QSize(53, 53));
@@ -214,7 +214,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_17, 2, 8, 1, 1);
 
-        pushButton_33 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_33 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_33->setObjectName(QStringLiteral("pushButton_33"));
         pushButton_33->setMinimumSize(QSize(53, 53));
         pushButton_33->setMaximumSize(QSize(53, 53));
@@ -226,7 +226,7 @@ public:
 
         gridLayout_2->addItem(horizontalSpacer, 1, 42, 1, 1);
 
-        pushButton_16 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_16 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_16->setObjectName(QStringLiteral("pushButton_16"));
         pushButton_16->setMinimumSize(QSize(53, 53));
         pushButton_16->setMaximumSize(QSize(53, 53));
@@ -234,7 +234,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_16, 1, 24, 1, 1);
 
-        pushButton_3 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_3 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
         pushButton_3->setMinimumSize(QSize(53, 53));
         pushButton_3->setMaximumSize(QSize(53, 53));
@@ -242,7 +242,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_3, 1, 2, 1, 1);
 
-        pushButton_11 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_11 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_11->setObjectName(QStringLiteral("pushButton_11"));
         pushButton_11->setMinimumSize(QSize(53, 53));
         pushButton_11->setMaximumSize(QSize(53, 53));
@@ -250,7 +250,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_11, 2, 2, 1, 1);
 
-        pushButton_10 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_10 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_10->setObjectName(QStringLiteral("pushButton_10"));
         pushButton_10->setMinimumSize(QSize(53, 53));
         pushButton_10->setMaximumSize(QSize(53, 53));
@@ -258,7 +258,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_10, 2, 1, 1, 1);
 
-        pushButton_21 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_21 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_21->setObjectName(QStringLiteral("pushButton_21"));
         pushButton_21->setMinimumSize(QSize(53, 53));
         pushButton_21->setMaximumSize(QSize(53, 53));
@@ -266,7 +266,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_21, 1, 8, 1, 1);
 
-        pushButton_39 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_39 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_39->setObjectName(QStringLiteral("pushButton_39"));
         pushButton_39->setMinimumSize(QSize(53, 53));
         pushButton_39->setMaximumSize(QSize(53, 53));
@@ -274,7 +274,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_39, 2, 31, 1, 1);
 
-        pushButton_37 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_37 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_37->setObjectName(QStringLiteral("pushButton_37"));
         pushButton_37->setMinimumSize(QSize(53, 53));
         pushButton_37->setMaximumSize(QSize(53, 53));
@@ -282,7 +282,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_37, 1, 18, 1, 1);
 
-        pushButton_36 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_36 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_36->setObjectName(QStringLiteral("pushButton_36"));
         pushButton_36->setMinimumSize(QSize(53, 53));
         pushButton_36->setMaximumSize(QSize(53, 53));
@@ -290,7 +290,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_36, 1, 16, 1, 1);
 
-        pushButton_40 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_40 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_40->setObjectName(QStringLiteral("pushButton_40"));
         pushButton_40->setMinimumSize(QSize(53, 53));
         pushButton_40->setMaximumSize(QSize(53, 53));
@@ -298,7 +298,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_40, 1, 19, 1, 1);
 
-        pushButton_38 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_38 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_38->setObjectName(QStringLiteral("pushButton_38"));
         pushButton_38->setMinimumSize(QSize(53, 53));
         pushButton_38->setMaximumSize(QSize(53, 53));
@@ -306,7 +306,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_38, 1, 6, 1, 1);
 
-        pushButton_18 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_18 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_18->setObjectName(QStringLiteral("pushButton_18"));
         pushButton_18->setMinimumSize(QSize(53, 53));
         pushButton_18->setMaximumSize(QSize(53, 53));
@@ -314,7 +314,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_18, 2, 9, 1, 1);
 
-        pushButton_14 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_14 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_14->setObjectName(QStringLiteral("pushButton_14"));
         pushButton_14->setMinimumSize(QSize(53, 53));
         pushButton_14->setMaximumSize(QSize(53, 53));
@@ -322,7 +322,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_14, 2, 7, 1, 1);
 
-        pushButton_23 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_23 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_23->setObjectName(QStringLiteral("pushButton_23"));
         pushButton_23->setMinimumSize(QSize(53, 53));
         pushButton_23->setMaximumSize(QSize(53, 53));
@@ -330,7 +330,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_23, 2, 16, 1, 1);
 
-        pushButton_29 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_29 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_29->setObjectName(QStringLiteral("pushButton_29"));
         pushButton_29->setMinimumSize(QSize(53, 53));
         pushButton_29->setMaximumSize(QSize(53, 53));
@@ -338,7 +338,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_29, 1, 10, 1, 1);
 
-        pushButton_27 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_27 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_27->setObjectName(QStringLiteral("pushButton_27"));
         pushButton_27->setMinimumSize(QSize(53, 53));
         pushButton_27->setMaximumSize(QSize(53, 53));
@@ -346,7 +346,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_27, 1, 7, 1, 1);
 
-        pushButton_34 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_34 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_34->setObjectName(QStringLiteral("pushButton_34"));
         pushButton_34->setMinimumSize(QSize(53, 53));
         pushButton_34->setMaximumSize(QSize(53, 53));
@@ -354,7 +354,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_34, 1, 21, 1, 1);
 
-        pushButton_6 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_6 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
         pushButton_6->setMinimumSize(QSize(53, 53));
         pushButton_6->setMaximumSize(QSize(53, 53));
@@ -362,7 +362,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_6, 2, 4, 1, 1);
 
-        pushButton_42 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_42 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_42->setObjectName(QStringLiteral("pushButton_42"));
         pushButton_42->setMinimumSize(QSize(53, 53));
         pushButton_42->setMaximumSize(QSize(53, 53));
@@ -370,7 +370,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_42, 1, 5, 1, 1);
 
-        pushButton_22 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_22 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_22->setObjectName(QStringLiteral("pushButton_22"));
         pushButton_22->setMinimumSize(QSize(53, 53));
         pushButton_22->setMaximumSize(QSize(53, 53));
@@ -378,7 +378,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_22, 1, 9, 1, 1);
 
-        pushButton_25 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_25 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_25->setObjectName(QStringLiteral("pushButton_25"));
         pushButton_25->setMinimumSize(QSize(53, 53));
         pushButton_25->setMaximumSize(QSize(53, 53));
@@ -386,7 +386,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_25, 2, 0, 1, 1);
 
-        pushButton_8 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_8 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_8->setObjectName(QStringLiteral("pushButton_8"));
         pushButton_8->setMinimumSize(QSize(53, 53));
         pushButton_8->setMaximumSize(QSize(53, 53));
@@ -394,7 +394,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_8, 2, 24, 1, 1);
 
-        pushButton_13 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_13 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_13->setObjectName(QStringLiteral("pushButton_13"));
         pushButton_13->setMinimumSize(QSize(53, 53));
         pushButton_13->setMaximumSize(QSize(53, 53));
@@ -402,7 +402,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_13, 2, 6, 1, 1);
 
-        pushButton_7 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_7 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_7->setObjectName(QStringLiteral("pushButton_7"));
         pushButton_7->setMinimumSize(QSize(53, 53));
         pushButton_7->setMaximumSize(QSize(53, 53));
@@ -410,7 +410,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_7, 2, 3, 1, 1);
 
-        pushButton_5 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_5 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
         pushButton_5->setMinimumSize(QSize(53, 53));
         pushButton_5->setMaximumSize(QSize(53, 53));
@@ -418,7 +418,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_5, 1, 4, 1, 1);
 
-        pushButton_4 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_4 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
         pushButton_4->setMinimumSize(QSize(53, 53));
         pushButton_4->setMaximumSize(QSize(53, 53));
@@ -426,7 +426,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_4, 1, 3, 1, 1);
 
-        pushButton_2 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_2 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setMinimumSize(QSize(53, 53));
         pushButton_2->setMaximumSize(QSize(53, 53));
@@ -434,7 +434,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_2, 1, 1, 1, 1);
 
-        pushButton_15 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_15 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_15->setObjectName(QStringLiteral("pushButton_15"));
         pushButton_15->setMinimumSize(QSize(53, 53));
         pushButton_15->setMaximumSize(QSize(53, 53));
@@ -442,7 +442,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_15, 2, 5, 1, 1);
 
-        pushButton_43 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_43 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_43->setObjectName(QStringLiteral("pushButton_43"));
         pushButton_43->setMinimumSize(QSize(53, 53));
         pushButton_43->setMaximumSize(QSize(53, 53));
@@ -450,7 +450,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_43, 1, 0, 1, 1);
 
-        pushButton_44 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_44 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_44->setObjectName(QStringLiteral("pushButton_44"));
         pushButton_44->setMinimumSize(QSize(53, 53));
         pushButton_44->setMaximumSize(QSize(53, 53));
@@ -458,7 +458,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_44, 1, 25, 1, 1);
 
-        pushButton_35 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_35 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_35->setObjectName(QStringLiteral("pushButton_35"));
         pushButton_35->setMinimumSize(QSize(53, 53));
         pushButton_35->setMaximumSize(QSize(53, 53));
@@ -466,7 +466,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_35, 2, 21, 1, 1);
 
-        pushButton_20 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_20 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_20->setObjectName(QStringLiteral("pushButton_20"));
         pushButton_20->setMinimumSize(QSize(53, 53));
         pushButton_20->setMaximumSize(QSize(53, 53));
@@ -474,7 +474,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_20, 2, 25, 1, 1);
 
-        pushButton_24 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_24 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_24->setObjectName(QStringLiteral("pushButton_24"));
         pushButton_24->setMinimumSize(QSize(53, 53));
         pushButton_24->setMaximumSize(QSize(53, 53));
@@ -482,7 +482,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_24, 2, 10, 1, 1);
 
-        pushButton_31 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_31 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_31->setObjectName(QStringLiteral("pushButton_31"));
         pushButton_31->setMinimumSize(QSize(53, 53));
         pushButton_31->setMaximumSize(QSize(53, 53));
@@ -490,7 +490,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_31, 2, 18, 1, 1);
 
-        pushButton_30 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_30 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_30->setObjectName(QStringLiteral("pushButton_30"));
         pushButton_30->setMinimumSize(QSize(53, 53));
         pushButton_30->setMaximumSize(QSize(53, 53));
@@ -498,7 +498,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_30, 2, 19, 1, 1);
 
-        pushButton_32 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_32 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_32->setObjectName(QStringLiteral("pushButton_32"));
         pushButton_32->setMinimumSize(QSize(53, 53));
         pushButton_32->setMaximumSize(QSize(53, 53));
@@ -506,7 +506,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_32, 2, 20, 1, 1);
 
-        pushButton_41 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_41 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_41->setObjectName(QStringLiteral("pushButton_41"));
         pushButton_41->setMinimumSize(QSize(53, 53));
         pushButton_41->setMaximumSize(QSize(53, 53));
@@ -514,7 +514,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_41, 2, 29, 1, 1);
 
-        pushButton_19 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_19 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_19->setObjectName(QStringLiteral("pushButton_19"));
         pushButton_19->setMinimumSize(QSize(53, 53));
         pushButton_19->setMaximumSize(QSize(53, 53));
@@ -522,7 +522,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_19, 2, 30, 1, 1);
 
-        pushButton_9 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_9 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
         pushButton_9->setMinimumSize(QSize(53, 53));
         pushButton_9->setMaximumSize(QSize(53, 53));
@@ -530,7 +530,7 @@ public:
 
         gridLayout_2->addWidget(pushButton_9, 1, 29, 1, 1);
 
-        pushButton_12 = new addBlockButton(scrollAreaWidgetContents);
+        pushButton_12 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_12->setObjectName(QStringLiteral("pushButton_12"));
         pushButton_12->setMinimumSize(QSize(53, 53));
         pushButton_12->setMaximumSize(QSize(53, 53));
@@ -583,7 +583,7 @@ public:
         horizontalLayout_3->setSpacing(0);
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        preview = new colorBufferDisplay(widget);
+        preview = new ColorBufferDisplay(widget);
         preview->setObjectName(QStringLiteral("preview"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy3.setHorizontalStretch(0);
@@ -750,7 +750,7 @@ public:
 
         gridLayout_4->addItem(horizontalSpacer_2, 0, 1, 1, 1);
 
-        editArea = new editAreaFrame(scrollAreaWidgetContents_3);
+        editArea = new EditAreaFrame(scrollAreaWidgetContents_3);
         editArea->setObjectName(QStringLiteral("editArea"));
         QSizePolicy sizePolicy6(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy6.setHorizontalStretch(64);

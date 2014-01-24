@@ -55,7 +55,7 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="1" column="31">
-         <widget class="addBlockButton" name="pushButton_28">
+         <widget class="AddBlockButton" name="pushButton_28">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -83,7 +83,7 @@
          </widget>
         </item>
         <item row="2" column="8">
-         <widget class="addBlockButton" name="pushButton_17">
+         <widget class="AddBlockButton" name="pushButton_17">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -111,7 +111,7 @@
          </widget>
         </item>
         <item row="1" column="20">
-         <widget class="addBlockButton" name="pushButton_33">
+         <widget class="AddBlockButton" name="pushButton_33">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -152,7 +152,7 @@
          </spacer>
         </item>
         <item row="1" column="24">
-         <widget class="addBlockButton" name="pushButton_16">
+         <widget class="AddBlockButton" name="pushButton_16">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -180,7 +180,7 @@
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="addBlockButton" name="pushButton_3">
+         <widget class="AddBlockButton" name="pushButton_3">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -208,7 +208,7 @@
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="addBlockButton" name="pushButton_11">
+         <widget class="AddBlockButton" name="pushButton_11">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -236,7 +236,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="addBlockButton" name="pushButton_10">
+         <widget class="AddBlockButton" name="pushButton_10">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -264,7 +264,7 @@
          </widget>
         </item>
         <item row="1" column="8">
-         <widget class="addBlockButton" name="pushButton_21">
+         <widget class="AddBlockButton" name="pushButton_21">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -292,7 +292,7 @@
          </widget>
         </item>
         <item row="2" column="31">
-         <widget class="addBlockButton" name="pushButton_39">
+         <widget class="AddBlockButton" name="pushButton_39">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -320,7 +320,7 @@
          </widget>
         </item>
         <item row="1" column="18">
-         <widget class="addBlockButton" name="pushButton_37">
+         <widget class="AddBlockButton" name="pushButton_37">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -348,7 +348,7 @@
          </widget>
         </item>
         <item row="1" column="16">
-         <widget class="addBlockButton" name="pushButton_36">
+         <widget class="AddBlockButton" name="pushButton_36">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -376,7 +376,7 @@
          </widget>
         </item>
         <item row="1" column="19">
-         <widget class="addBlockButton" name="pushButton_40">
+         <widget class="AddBlockButton" name="pushButton_40">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -404,7 +404,7 @@
          </widget>
         </item>
         <item row="1" column="6">
-         <widget class="addBlockButton" name="pushButton_38">
+         <widget class="AddBlockButton" name="pushButton_38">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -432,7 +432,7 @@
          </widget>
         </item>
         <item row="2" column="9">
-         <widget class="addBlockButton" name="pushButton_18">
+         <widget class="AddBlockButton" name="pushButton_18">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -460,7 +460,7 @@
          </widget>
         </item>
         <item row="2" column="7">
-         <widget class="addBlockButton" name="pushButton_14">
+         <widget class="AddBlockButton" name="pushButton_14">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -488,7 +488,7 @@
          </widget>
         </item>
         <item row="2" column="16">
-         <widget class="addBlockButton" name="pushButton_23">
+         <widget class="AddBlockButton" name="pushButton_23">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -516,7 +516,7 @@
          </widget>
         </item>
         <item row="1" column="10">
-         <widget class="addBlockButton" name="pushButton_29">
+         <widget class="AddBlockButton" name="pushButton_29">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -544,7 +544,7 @@
          </widget>
         </item>
         <item row="1" column="7">
-         <widget class="addBlockButton" name="pushButton_27">
+         <widget class="AddBlockButton" name="pushButton_27">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -572,7 +572,7 @@
          </widget>
         </item>
         <item row="1" column="21">
-         <widget class="addBlockButton" name="pushButton_34">
+         <widget class="AddBlockButton" name="pushButton_34">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -600,7 +600,7 @@
          </widget>
         </item>
         <item row="2" column="4">
-         <widget class="addBlockButton" name="pushButton_6">
+         <widget class="AddBlockButton" name="pushButton_6">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -628,7 +628,7 @@
          </widget>
         </item>
         <item row="1" column="5">
-         <widget class="addBlockButton" name="pushButton_42">
+         <widget class="AddBlockButton" name="pushButton_42">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -656,7 +656,7 @@
          </widget>
         </item>
         <item row="1" column="9">
-         <widget class="addBlockButton" name="pushButton_22">
+         <widget class="AddBlockButton" name="pushButton_22">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -684,7 +684,7 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="addBlockButton" name="pushButton_25">
+         <widget class="AddBlockButton" name="pushButton_25">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -712,7 +712,7 @@
          </widget>
         </item>
         <item row="2" column="24">
-         <widget class="addBlockButton" name="pushButton_8">
+         <widget class="AddBlockButton" name="pushButton_8">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -740,7 +740,7 @@
          </widget>
         </item>
         <item row="2" column="6">
-         <widget class="addBlockButton" name="pushButton_13">
+         <widget class="AddBlockButton" name="pushButton_13">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -768,7 +768,7 @@
          </widget>
         </item>
         <item row="2" column="3">
-         <widget class="addBlockButton" name="pushButton_7">
+         <widget class="AddBlockButton" name="pushButton_7">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -796,7 +796,7 @@
          </widget>
         </item>
         <item row="1" column="4">
-         <widget class="addBlockButton" name="pushButton_5">
+         <widget class="AddBlockButton" name="pushButton_5">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -824,7 +824,7 @@
          </widget>
         </item>
         <item row="1" column="3">
-         <widget class="addBlockButton" name="pushButton_4">
+         <widget class="AddBlockButton" name="pushButton_4">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -849,7 +849,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="addBlockButton" name="pushButton_2">
+         <widget class="AddBlockButton" name="pushButton_2">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -877,7 +877,7 @@
          </widget>
         </item>
         <item row="2" column="5">
-         <widget class="addBlockButton" name="pushButton_15">
+         <widget class="AddBlockButton" name="pushButton_15">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -905,7 +905,7 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="addBlockButton" name="pushButton_43">
+         <widget class="AddBlockButton" name="pushButton_43">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -933,7 +933,7 @@
          </widget>
         </item>
         <item row="1" column="25">
-         <widget class="addBlockButton" name="pushButton_44">
+         <widget class="AddBlockButton" name="pushButton_44">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -961,7 +961,7 @@
          </widget>
         </item>
         <item row="2" column="21">
-         <widget class="addBlockButton" name="pushButton_35">
+         <widget class="AddBlockButton" name="pushButton_35">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -989,7 +989,7 @@
          </widget>
         </item>
         <item row="2" column="25">
-         <widget class="addBlockButton" name="pushButton_20">
+         <widget class="AddBlockButton" name="pushButton_20">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1017,7 +1017,7 @@
          </widget>
         </item>
         <item row="2" column="10">
-         <widget class="addBlockButton" name="pushButton_24">
+         <widget class="AddBlockButton" name="pushButton_24">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1045,7 +1045,7 @@
          </widget>
         </item>
         <item row="2" column="18">
-         <widget class="addBlockButton" name="pushButton_31">
+         <widget class="AddBlockButton" name="pushButton_31">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1073,7 +1073,7 @@
          </widget>
         </item>
         <item row="2" column="19">
-         <widget class="addBlockButton" name="pushButton_30">
+         <widget class="AddBlockButton" name="pushButton_30">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1101,7 +1101,7 @@
          </widget>
         </item>
         <item row="2" column="20">
-         <widget class="addBlockButton" name="pushButton_32">
+         <widget class="AddBlockButton" name="pushButton_32">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1129,7 +1129,7 @@
          </widget>
         </item>
         <item row="2" column="29">
-         <widget class="addBlockButton" name="pushButton_41">
+         <widget class="AddBlockButton" name="pushButton_41">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1157,7 +1157,7 @@
          </widget>
         </item>
         <item row="2" column="30">
-         <widget class="addBlockButton" name="pushButton_19">
+         <widget class="AddBlockButton" name="pushButton_19">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1185,7 +1185,7 @@
          </widget>
         </item>
         <item row="1" column="29">
-         <widget class="addBlockButton" name="pushButton_9">
+         <widget class="AddBlockButton" name="pushButton_9">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1213,7 +1213,7 @@
          </widget>
         </item>
         <item row="1" column="30">
-         <widget class="addBlockButton" name="pushButton_12">
+         <widget class="AddBlockButton" name="pushButton_12">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1328,7 +1328,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="colorBufferDisplay" name="preview">
+              <widget class="ColorBufferDisplay" name="preview">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -1657,7 +1657,7 @@
            </spacer>
           </item>
           <item row="0" column="0">
-           <widget class="editAreaFrame" name="editArea">
+           <widget class="EditAreaFrame" name="editArea">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>64</horstretch>
@@ -1840,20 +1840,20 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>editAreaFrame</class>
+   <class>EditAreaFrame</class>
    <extends>QFrame</extends>
-   <header location="global">editareaframe.h</header>
+   <header location="global">EditAreaFrame.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>addBlockButton</class>
+   <class>AddBlockButton</class>
    <extends>QPushButton</extends>
-   <header location="global">addblockbutton.h</header>
+   <header location="global">AddBlockButton.h</header>
   </customwidget>
   <customwidget>
-   <class>colorBufferDisplay</class>
+   <class>ColorBufferDisplay</class>
    <extends>QFrame</extends>
-   <header location="global">colorbufferdisplay.h</header>
+   <header location="global">ColorBufferDisplay.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
