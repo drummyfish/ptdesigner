@@ -806,8 +806,8 @@ unsigned int c_block::get_id()
 void c_texture_graph::get_resolution(unsigned int *x, unsigned int *y)
 
   {
-    *x = this->resolution_x / this->supersampling_level;
-    *y = this->resolution_y / this->supersampling_level;
+    *x = this->resolution_x;
+    *y = this->resolution_y;
   }
 
 //----------------------------------------------------------------------
@@ -1015,8 +1015,6 @@ int c_texture_graph::get_random_seed()
 void c_texture_graph::set_supersampling(unsigned int level)
 
   {
-    unsigned int base_resolution_x,base_resolution_y;
-
     if (level == 0)    // zero makes no sense
       level = 1;
 
@@ -1026,17 +1024,7 @@ void c_texture_graph::set_supersampling(unsigned int level)
     if (level == this->supersampling_level)
       return;    // no need to change anything
 
-    // division by zero shouldn't occur
-    base_resolution_x = this->resolution_x / this->supersampling_level;
-    base_resolution_y = this->resolution_y / this->supersampling_level;
-
     this->supersampling_level = level;  // set the new level
-
-    /* the image must be generated larger in order to perform
-       supersampling => increase resolution: */
-
-    this->resolution_x = base_resolution_x * level;
-    this->resolution_y = base_resolution_y * level;
 
     this->adjust_all();
   }
@@ -1078,8 +1066,8 @@ void c_graphic_block::adjust()
 
         // compute the real resolution (with supersampling):
 
-        resolution_x *= supersampling;
-        resolution_y *= supersampling;
+        resolution_x = resolution_x * supersampling;
+        resolution_y = resolution_y * supersampling;
       }
 
     if (!this->initialised || this->buffer.width != resolution_x ||
@@ -1163,6 +1151,16 @@ void c_texture_graph::delete_block(unsigned int block_number)
           this->blocks->at(i)->disconnect(j);
     
     this->blocks->erase(this->blocks->begin() + block_number);
+    
+    // now delete the block from the end block list if it is there:
+    
+    for (i = 0; i < this->end_blocks->size(); i++) 
+      if (this->end_blocks->at(i) == block)
+        {
+          this->end_blocks->erase(this->end_blocks->begin() + i);
+          break;
+        }
+    
     delete block;
   }
   

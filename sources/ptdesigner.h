@@ -773,8 +773,10 @@ class c_texture_graph
   {
     protected:
       unsigned int supersampling_level; /// supersampling level, 1 = off
-      unsigned int resolution_x;        /// x resolution of the testure
-      unsigned int resolution_y;        /// y resolution of the texture
+      unsigned int resolution_x;        /** x resolution of the texture
+                                            (final, supersampled) */
+      unsigned int resolution_y;        /** y resolution of the texture
+                                            (final, supersampled) */
       unsigned int last_id;             /// id to be assigned
       int random_seed;                  /// random number generator seed
       vector<c_block *> *blocks;        /// all the graph blocks

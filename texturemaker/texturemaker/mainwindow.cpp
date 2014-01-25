@@ -207,6 +207,8 @@ void MainWindow::delete_block_by_id(int id)
   this->delete_block_position(id);
   this->graph->delete_block_with_id(id);
 
+this->graph->print_as_text();
+
   this->graph_mutex.unlock();
 }
 
