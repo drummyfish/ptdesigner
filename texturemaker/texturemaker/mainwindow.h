@@ -229,6 +229,10 @@ private slots:
 
     void on_radio_custom_seed_toggled(bool checked);
 
+    void on_custom_seed_valueChanged(int arg1);
+
+    void on_actionDisconnect_changed();
+
 private:
     Ui::MainWindow *ui;
 };

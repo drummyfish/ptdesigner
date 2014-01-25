@@ -32,6 +32,7 @@ protected:
     int mouse_coordinations[2]; /// stores mouse coordinations when needed
     QString mouse_string;       /// string displayed by the mouse pointer
     bool display_mouse_string;  /// whether to display the mouse string
+    bool disconnecting_mode;    /// whether the disconnecting state is on
 
 public:
     explicit EditAreaFrame(QWidget *parent = 0);
@@ -55,6 +56,18 @@ public:
 
       @param main_window pointer to a window to be set
              as the main window for this object
+      */
+
+//-----------------------------------------------------
+
+    void set_disconnecting_mode(bool value);
+
+    /**
+      Turns disconnecting mode on or off. In this mode
+      the user can delete block connections.
+
+      @param value true to turn the mode on, false to
+             turn it off
       */
 
 //-----------------------------------------------------

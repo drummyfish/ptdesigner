@@ -304,7 +304,7 @@ c_texture_graph *MainWindow::get_texture_graph()
 void MainWindow::on_actionDelete_triggered()
 {
   this->delete_block_by_id(ui->editArea->get_selected_id());
-  this->ui->editArea->update();
+  this->update_graphics();
 }
 
 //-----------------------------------------------------
@@ -477,12 +477,10 @@ void MainWindow::on_cheight_valueChanged(int arg1)
 void MainWindow::block_selected(int block_id)
 {
   c_block *block;
-  t_block_position *position;
 
   if (block_id >= 0)
     {
       block = this->graph->get_block_by_id(block_id);
-      position = this->get_block_position(block_id);
 
       if (block == NULL)
         return;
@@ -490,7 +488,6 @@ void MainWindow::block_selected(int block_id)
       ui->block_name->setText(QString::fromStdString(block->get_name()));
       ui->block_id->setText(QString::number(block->get_id()));
       ui->block_inputs->setText(QString::number(block->get_min_inputs()) + " - " + QString::number(block->get_max_inputs()));
-      ui->block_position->setText(QString::number(position->x) + ":" + QString::number(position->y));
 
       if (block->is_error())
         ui->block_state->setText("error");
@@ -501,15 +498,15 @@ void MainWindow::block_selected(int block_id)
 
       if (block->is_using_global_seed())
         {
-          ui->radio_global_seed->setChecked(true);
-          ui->radio_custom_seed->setChecked(false);
           ui->custom_seed->setValue(block->get_random_seed());
+          ui->radio_global_seed->setChecked(true);
+          ui->radio_custom_seed->setChecked(false);          
         }
       else
         {
+          ui->custom_seed->setValue(block->get_random_seed());
           ui->radio_global_seed->setChecked(false);
           ui->radio_custom_seed->setChecked(true);
-          ui->custom_seed->setValue(block->get_random_seed());
         }
     }
 }
@@ -561,8 +558,7 @@ void MainWindow::on_radio_custom_seed_toggled(bool checked)
 {
   c_block *block;
 
-  if (!this->graph_mutex.tryLock())
-    return;
+  this->graph_mutex.lock();
 
   // mutex locked here:
 
@@ -573,6 +569,33 @@ void MainWindow::on_radio_custom_seed_toggled(bool checked)
 
   this->graph_mutex.unlock();
   this->update_graphics();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_custom_seed_valueChanged(int arg1)
+{
+  c_block *block;
+
+  if (ui->radio_custom_seed->isChecked())
+    {
+      this->graph_mutex.lock();
+
+      block = this->graph->get_block_by_id(ui->editArea->get_selected_id());
+
+      if (block != NULL)
+        block->use_custom_seed(ui->custom_seed->value());
+
+      this->graph_mutex.unlock();
+      this->update_graphics();
+    }
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionDisconnect_changed()
+{
+  ui->editArea->set_disconnecting_mode(ui->actionDisconnect->isChecked());
 }
 
 //-----------------------------------------------------

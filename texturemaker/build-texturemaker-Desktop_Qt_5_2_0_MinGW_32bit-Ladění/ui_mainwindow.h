@@ -52,6 +52,7 @@ public:
     QAction *actionRotate_CCW;
     QAction *actionDelete;
     QAction *actionExecute;
+    QAction *actionDisconnect;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QScrollArea *blockArea;
@@ -134,8 +135,6 @@ public:
     QRadioButton *radio_global_seed;
     QLabel *label_8;
     QLabel *label_10;
-    QLineEdit *block_position;
-    QLabel *label_12;
     QPushButton *pushButton_26;
     QLineEdit *block_state;
     QLabel *label_13;
@@ -197,6 +196,12 @@ public:
         QIcon icon4;
         icon4.addFile(QStringLiteral(":/resources/action execute.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionExecute->setIcon(icon4);
+        actionDisconnect = new QAction(MainWindow);
+        actionDisconnect->setObjectName(QStringLiteral("actionDisconnect"));
+        actionDisconnect->setCheckable(true);
+        QIcon icon5;
+        icon5.addFile(QStringLiteral(":/resources/action disconnect.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDisconnect->setIcon(icon5);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -750,7 +755,7 @@ public:
         radio_custom_seed = new QRadioButton(groupBox_4);
         radio_custom_seed->setObjectName(QStringLiteral("radio_custom_seed"));
 
-        gridLayout_6->addWidget(radio_custom_seed, 6, 0, 1, 1);
+        gridLayout_6->addWidget(radio_custom_seed, 5, 0, 1, 1);
 
         label_9 = new QLabel(groupBox_4);
         label_9->setObjectName(QStringLiteral("label_9"));
@@ -773,7 +778,7 @@ public:
         radio_global_seed->setObjectName(QStringLiteral("radio_global_seed"));
         radio_global_seed->setChecked(true);
 
-        gridLayout_6->addWidget(radio_global_seed, 5, 0, 1, 1);
+        gridLayout_6->addWidget(radio_global_seed, 4, 0, 1, 1);
 
         label_8 = new QLabel(groupBox_4);
         label_8->setObjectName(QStringLiteral("label_8"));
@@ -785,38 +790,27 @@ public:
 
         gridLayout_6->addWidget(label_10, 2, 0, 1, 1);
 
-        block_position = new QLineEdit(groupBox_4);
-        block_position->setObjectName(QStringLiteral("block_position"));
-        block_position->setReadOnly(true);
-
-        gridLayout_6->addWidget(block_position, 3, 1, 1, 1);
-
-        label_12 = new QLabel(groupBox_4);
-        label_12->setObjectName(QStringLiteral("label_12"));
-
-        gridLayout_6->addWidget(label_12, 3, 0, 1, 1);
-
         pushButton_26 = new QPushButton(groupBox_4);
         pushButton_26->setObjectName(QStringLiteral("pushButton_26"));
 
-        gridLayout_6->addWidget(pushButton_26, 7, 0, 1, 2);
+        gridLayout_6->addWidget(pushButton_26, 6, 0, 1, 2);
 
         block_state = new QLineEdit(groupBox_4);
         block_state->setObjectName(QStringLiteral("block_state"));
         block_state->setReadOnly(true);
 
-        gridLayout_6->addWidget(block_state, 4, 1, 1, 1);
+        gridLayout_6->addWidget(block_state, 3, 1, 1, 1);
 
         label_13 = new QLabel(groupBox_4);
         label_13->setObjectName(QStringLiteral("label_13"));
 
-        gridLayout_6->addWidget(label_13, 4, 0, 1, 1);
+        gridLayout_6->addWidget(label_13, 3, 0, 1, 1);
 
         custom_seed = new QSpinBox(groupBox_4);
         custom_seed->setObjectName(QStringLiteral("custom_seed"));
         custom_seed->setMaximum(9999999);
 
-        gridLayout_6->addWidget(custom_seed, 6, 1, 1, 1);
+        gridLayout_6->addWidget(custom_seed, 5, 1, 1, 1);
 
         block_name = new QLineEdit(groupBox_4);
         block_name->setObjectName(QStringLiteral("block_name"));
@@ -826,7 +820,7 @@ public:
 
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout_6->addItem(verticalSpacer_3, 8, 0, 1, 1);
+        gridLayout_6->addItem(verticalSpacer_3, 7, 0, 1, 1);
 
 
         verticalLayout->addWidget(groupBox_4);
@@ -925,6 +919,7 @@ public:
         menuEdit->addAction(actionRotate_CCW);
         menuEdit->addAction(actionDelete);
         menuEdit->addAction(actionExecute);
+        menuEdit->addAction(actionDisconnect);
         menuHelp->addAction(actionHelp_topics);
         menuHelp->addAction(actionAbout);
         toolBar->addAction(actionSave);
@@ -932,6 +927,7 @@ public:
         toolBar->addAction(actionRotate_CCW);
         toolBar->addAction(actionDelete);
         toolBar->addAction(actionExecute);
+        toolBar->addAction(actionDisconnect);
 
         retranslateUi(MainWindow);
 
@@ -952,6 +948,7 @@ public:
         actionRotate_CCW->setText(QApplication::translate("MainWindow", "rotate CCW", 0));
         actionDelete->setText(QApplication::translate("MainWindow", "delete", 0));
         actionExecute->setText(QApplication::translate("MainWindow", "execute", 0));
+        actionDisconnect->setText(QApplication::translate("MainWindow", "disconnect", 0));
 #ifndef QT_NO_TOOLTIP
         pushButton_28->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
@@ -1133,7 +1130,6 @@ public:
         radio_global_seed->setText(QApplication::translate("MainWindow", "use global seed", 0));
         label_8->setText(QApplication::translate("MainWindow", "name", 0));
         label_10->setText(QApplication::translate("MainWindow", "inputs", 0));
-        label_12->setText(QApplication::translate("MainWindow", "position", 0));
         pushButton_26->setText(QApplication::translate("MainWindow", "edit parameters", 0));
         label_13->setText(QApplication::translate("MainWindow", "state", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "Fi&le", 0));

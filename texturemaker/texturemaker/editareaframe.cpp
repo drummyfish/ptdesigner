@@ -7,6 +7,7 @@ EditAreaFrame::EditAreaFrame(QWidget *parent) :
     QFrame(parent)
 {
    this->setAcceptDrops(true);
+   this->disconnecting_mode = false;
    this->selected_id = -1;
    this->moving = false;
    this->connecting_id = -1;
@@ -15,6 +16,14 @@ EditAreaFrame::EditAreaFrame(QWidget *parent) :
    this->display_mouse_string = false;
    this->setMouseTracking(true);
    this->setFocusPolicy(Qt::StrongFocus);  // to accept key events
+}
+
+//-----------------------------------------------------
+
+void EditAreaFrame::set_disconnecting_mode(bool value)
+
+{
+  this->disconnecting_mode = value;
 }
 
 //-----------------------------------------------------
@@ -416,6 +425,7 @@ void EditAreaFrame::mousePressEvent(QMouseEvent *event)
 {
   int x, y;
   int slot;
+  c_block *block;
 
   if (!this->main_window->get_graph_mutex()->tryLock())
     return;
@@ -426,6 +436,18 @@ void EditAreaFrame::mousePressEvent(QMouseEvent *event)
   y = event->pos().y();
 
   this->selected_id = this->main_window->get_block_by_position(x,y,&slot);
+
+  if (this->disconnecting_mode)
+    {
+      if (this->selected_id >= 0 && slot < MAX_INPUT_BLOCKS && slot >= 0)
+        {
+          block = this->main_window->get_texture_graph()->get_block_by_id(this->selected_id);
+          block->disconnect(slot);
+        }
+
+      this->main_window->get_graph_mutex()->unlock();
+      return;
+    }
 
   this->main_window->set_block_for_preview(this->selected_id);
 
