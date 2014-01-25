@@ -447,6 +447,7 @@ void EditAreaFrame::mousePressEvent(QMouseEvent *event)
   this->main_window->get_graph_mutex()->unlock();
 
   this->update();
+  this->main_window->block_selected(this->selected_id);
 }
 
 //-----------------------------------------------------

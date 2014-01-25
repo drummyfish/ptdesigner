@@ -8,6 +8,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include "ptdesigner.h"
 #include "defaultblockdialog.h"
+#include "previewdialog.h"
 
 using namespace pt_design;
 
@@ -197,6 +198,18 @@ public:
 
 //-----------------------------------------------------
 
+    void block_selected(int block_id);
+
+    /**<
+       Updates the block info.
+
+       @param block_id id of the selected block or -1
+              if no block is selected (the info will be
+              cleared)
+     */
+
+//-----------------------------------------------------
+
 private slots:
     void on_pushButton_2_clicked();
     void on_actionDelete_triggered();
@@ -209,6 +222,12 @@ private slots:
     void on_seed_valueChanged(int arg1);
     void on_cwidth_valueChanged(int arg1);
     void on_cheight_valueChanged(int arg1);
+
+    void on_pushButton_clicked();
+
+    void on_radio_global_seed_toggled(bool checked);
+
+    void on_radio_custom_seed_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;

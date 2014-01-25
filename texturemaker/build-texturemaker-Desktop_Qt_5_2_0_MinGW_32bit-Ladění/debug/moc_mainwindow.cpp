@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[14];
-    char stringdata[297];
+    QByteArrayData data[18];
+    char stringdata[385];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,7 +42,11 @@ QT_MOC_LITERAL(9, 175, 22),
 QT_MOC_LITERAL(10, 198, 29),
 QT_MOC_LITERAL(11, 228, 20),
 QT_MOC_LITERAL(12, 249, 22),
-QT_MOC_LITERAL(13, 272, 23)
+QT_MOC_LITERAL(13, 272, 23),
+QT_MOC_LITERAL(14, 296, 21),
+QT_MOC_LITERAL(15, 318, 28),
+QT_MOC_LITERAL(16, 347, 7),
+QT_MOC_LITERAL(17, 355, 28)
     },
     "MainWindow\0on_pushButton_2_clicked\0\0"
     "on_actionDelete_triggered\0"
@@ -53,7 +57,9 @@ QT_MOC_LITERAL(13, 272, 23)
     "on_height_valueChanged\0"
     "on_supersampling_valueChanged\0"
     "on_seed_valueChanged\0on_cwidth_valueChanged\0"
-    "on_cheight_valueChanged\0"
+    "on_cheight_valueChanged\0on_pushButton_clicked\0"
+    "on_radio_global_seed_toggled\0checked\0"
+    "on_radio_custom_seed_toggled\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,7 +69,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,17 +77,20 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   69,    2, 0x08,
-       3,    0,   70,    2, 0x08,
-       4,    0,   71,    2, 0x08,
-       5,    0,   72,    2, 0x08,
-       6,    0,   73,    2, 0x08,
-       7,    1,   74,    2, 0x08,
-       9,    1,   77,    2, 0x08,
-      10,    1,   80,    2, 0x08,
-      11,    1,   83,    2, 0x08,
-      12,    1,   86,    2, 0x08,
-      13,    1,   89,    2, 0x08,
+       1,    0,   84,    2, 0x08,
+       3,    0,   85,    2, 0x08,
+       4,    0,   86,    2, 0x08,
+       5,    0,   87,    2, 0x08,
+       6,    0,   88,    2, 0x08,
+       7,    1,   89,    2, 0x08,
+       9,    1,   92,    2, 0x08,
+      10,    1,   95,    2, 0x08,
+      11,    1,   98,    2, 0x08,
+      12,    1,  101,    2, 0x08,
+      13,    1,  104,    2, 0x08,
+      14,    0,  107,    2, 0x08,
+      15,    1,  108,    2, 0x08,
+      17,    1,  111,    2, 0x08,
 
  // slots: parameters
     QMetaType::Void,
@@ -95,6 +104,9 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::Int,    8,
     QMetaType::Void, QMetaType::Int,    8,
     QMetaType::Void, QMetaType::Int,    8,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,   16,
+    QMetaType::Void, QMetaType::Bool,   16,
 
        0        // eod
 };
@@ -115,6 +127,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->on_seed_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 9: _t->on_cwidth_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 10: _t->on_cheight_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->on_pushButton_clicked(); break;
+        case 12: _t->on_radio_global_seed_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 13: _t->on_radio_custom_seed_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -145,13 +160,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 14;
     }
     return _id;
 }

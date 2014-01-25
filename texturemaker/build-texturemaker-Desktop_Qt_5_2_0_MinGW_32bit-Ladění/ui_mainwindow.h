@@ -22,10 +22,12 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
@@ -123,6 +125,23 @@ public:
     QSpinBox *cheight;
     QLabel *label_7;
     QCheckBox *force;
+    QGroupBox *groupBox_4;
+    QGridLayout *gridLayout_6;
+    QRadioButton *radio_custom_seed;
+    QLabel *label_9;
+    QLineEdit *block_inputs;
+    QLineEdit *block_id;
+    QRadioButton *radio_global_seed;
+    QLabel *label_8;
+    QLabel *label_10;
+    QLineEdit *block_position;
+    QLabel *label_12;
+    QPushButton *pushButton_26;
+    QLineEdit *block_state;
+    QLabel *label_13;
+    QSpinBox *custom_seed;
+    QLineEdit *block_name;
+    QSpacerItem *verticalSpacer_3;
     QScrollArea *scrollArea_2;
     QWidget *scrollAreaWidgetContents_3;
     QGridLayout *gridLayout_4;
@@ -182,8 +201,9 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(2, 2, 2, 2);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setContentsMargins(2, 2, 2, 2);
         blockArea = new QScrollArea(centralWidget);
         blockArea->setObjectName(QStringLiteral("blockArea"));
         blockArea->setMinimumSize(QSize(0, 155));
@@ -193,7 +213,7 @@ public:
         blockArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1257, 137));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1257, 136));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -561,7 +581,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, -193, 192, 455));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, -456, 192, 713));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -569,8 +589,9 @@ public:
         scrollAreaWidgetContents_2->setSizePolicy(sizePolicy1);
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout->setSpacing(2);
-        verticalLayout->setContentsMargins(2, 2, 2, 2);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(2, 2, 2, 2);
         widget = new QWidget(scrollAreaWidgetContents_2);
         widget->setObjectName(QStringLiteral("widget"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -581,8 +602,9 @@ public:
         widget->setMinimumSize(QSize(0, 200));
         horizontalLayout_3 = new QHBoxLayout(widget);
         horizontalLayout_3->setSpacing(0);
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
         preview = new ColorBufferDisplay(widget);
         preview->setObjectName(QStringLiteral("preview"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -619,7 +641,7 @@ public:
         gridLayout_3->setSpacing(6);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
-        gridLayout_3->setContentsMargins(0, 10, 0, 0);
+        gridLayout_3->setContentsMargins(5, 10, 5, 0);
         label = new QLabel(groupBox_3);
         label->setObjectName(QStringLiteral("label"));
 
@@ -712,6 +734,103 @@ public:
 
         verticalLayout->addWidget(groupBox_3);
 
+        groupBox_4 = new QGroupBox(scrollAreaWidgetContents_2);
+        groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
+        sizePolicy4.setHeightForWidth(groupBox_4->sizePolicy().hasHeightForWidth());
+        groupBox_4->setSizePolicy(sizePolicy4);
+        groupBox_4->setMinimumSize(QSize(0, 260));
+        groupBox_4->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+        groupBox_4->setFlat(false);
+        groupBox_4->setCheckable(false);
+        gridLayout_6 = new QGridLayout(groupBox_4);
+        gridLayout_6->setSpacing(6);
+        gridLayout_6->setContentsMargins(11, 11, 11, 11);
+        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
+        gridLayout_6->setContentsMargins(5, 10, 5, 0);
+        radio_custom_seed = new QRadioButton(groupBox_4);
+        radio_custom_seed->setObjectName(QStringLiteral("radio_custom_seed"));
+
+        gridLayout_6->addWidget(radio_custom_seed, 6, 0, 1, 1);
+
+        label_9 = new QLabel(groupBox_4);
+        label_9->setObjectName(QStringLiteral("label_9"));
+
+        gridLayout_6->addWidget(label_9, 1, 0, 1, 1);
+
+        block_inputs = new QLineEdit(groupBox_4);
+        block_inputs->setObjectName(QStringLiteral("block_inputs"));
+        block_inputs->setReadOnly(true);
+
+        gridLayout_6->addWidget(block_inputs, 2, 1, 1, 1);
+
+        block_id = new QLineEdit(groupBox_4);
+        block_id->setObjectName(QStringLiteral("block_id"));
+        block_id->setReadOnly(true);
+
+        gridLayout_6->addWidget(block_id, 1, 1, 1, 1);
+
+        radio_global_seed = new QRadioButton(groupBox_4);
+        radio_global_seed->setObjectName(QStringLiteral("radio_global_seed"));
+        radio_global_seed->setChecked(true);
+
+        gridLayout_6->addWidget(radio_global_seed, 5, 0, 1, 1);
+
+        label_8 = new QLabel(groupBox_4);
+        label_8->setObjectName(QStringLiteral("label_8"));
+
+        gridLayout_6->addWidget(label_8, 0, 0, 1, 1);
+
+        label_10 = new QLabel(groupBox_4);
+        label_10->setObjectName(QStringLiteral("label_10"));
+
+        gridLayout_6->addWidget(label_10, 2, 0, 1, 1);
+
+        block_position = new QLineEdit(groupBox_4);
+        block_position->setObjectName(QStringLiteral("block_position"));
+        block_position->setReadOnly(true);
+
+        gridLayout_6->addWidget(block_position, 3, 1, 1, 1);
+
+        label_12 = new QLabel(groupBox_4);
+        label_12->setObjectName(QStringLiteral("label_12"));
+
+        gridLayout_6->addWidget(label_12, 3, 0, 1, 1);
+
+        pushButton_26 = new QPushButton(groupBox_4);
+        pushButton_26->setObjectName(QStringLiteral("pushButton_26"));
+
+        gridLayout_6->addWidget(pushButton_26, 7, 0, 1, 2);
+
+        block_state = new QLineEdit(groupBox_4);
+        block_state->setObjectName(QStringLiteral("block_state"));
+        block_state->setReadOnly(true);
+
+        gridLayout_6->addWidget(block_state, 4, 1, 1, 1);
+
+        label_13 = new QLabel(groupBox_4);
+        label_13->setObjectName(QStringLiteral("label_13"));
+
+        gridLayout_6->addWidget(label_13, 4, 0, 1, 1);
+
+        custom_seed = new QSpinBox(groupBox_4);
+        custom_seed->setObjectName(QStringLiteral("custom_seed"));
+        custom_seed->setMaximum(9999999);
+
+        gridLayout_6->addWidget(custom_seed, 6, 1, 1, 1);
+
+        block_name = new QLineEdit(groupBox_4);
+        block_name->setObjectName(QStringLiteral("block_name"));
+        block_name->setReadOnly(true);
+
+        gridLayout_6->addWidget(block_name, 0, 1, 1, 1);
+
+        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_6->addItem(verticalSpacer_3, 8, 0, 1, 1);
+
+
+        verticalLayout->addWidget(groupBox_4);
+
         scrollArea->setWidget(scrollAreaWidgetContents_2);
 
         horizontalLayout->addWidget(scrollArea);
@@ -744,8 +863,9 @@ public:
         scrollAreaWidgetContents_3->setPalette(palette);
         gridLayout_4 = new QGridLayout(scrollAreaWidgetContents_3);
         gridLayout_4->setSpacing(6);
-        gridLayout_4->setContentsMargins(0, 0, 0, 0);
+        gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        gridLayout_4->setContentsMargins(0, 0, 0, 0);
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         gridLayout_4->addItem(horizontalSpacer_2, 0, 1, 1, 1);
@@ -778,7 +898,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 562, 25));
+        menuBar->setGeometry(QRect(0, 0, 562, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -1007,6 +1127,15 @@ public:
         label_6->setText(QApplication::translate("MainWindow", "canvas height", 0));
         label_7->setText(QApplication::translate("MainWindow", "force compute", 0));
         force->setText(QString());
+        groupBox_4->setTitle(QApplication::translate("MainWindow", "block", 0));
+        radio_custom_seed->setText(QApplication::translate("MainWindow", "use custom seed", 0));
+        label_9->setText(QApplication::translate("MainWindow", "ID", 0));
+        radio_global_seed->setText(QApplication::translate("MainWindow", "use global seed", 0));
+        label_8->setText(QApplication::translate("MainWindow", "name", 0));
+        label_10->setText(QApplication::translate("MainWindow", "inputs", 0));
+        label_12->setText(QApplication::translate("MainWindow", "position", 0));
+        pushButton_26->setText(QApplication::translate("MainWindow", "edit parameters", 0));
+        label_13->setText(QApplication::translate("MainWindow", "state", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "Fi&le", 0));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));

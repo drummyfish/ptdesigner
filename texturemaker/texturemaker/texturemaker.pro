@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     editareaframe.cpp \
     addblockbutton.cpp \
     colorbufferdisplay.cpp \
-    defaultblockdialog.cpp
+    defaultblockdialog.cpp \
+    previewdialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -26,10 +27,12 @@ HEADERS  += mainwindow.h \
     addblockbutton.h \
     ../../sources/general.h \
     colorbufferdisplay.h \
-    defaultblockdialog.h
+    defaultblockdialog.h \
+    previewdialog.h
 
 FORMS    += mainwindow.ui \
-    defaultblockdialog.ui
+    defaultblockdialog.ui \
+    previewdialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 
