@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 #include "ptdesigner.h"
+#include "defaultblockdialog.h"
 
 using namespace pt_design;
 

@@ -1,4 +1,5 @@
 #include "editareaframe.h"
+#include "defaultblockdialog.h"
 
 //-----------------------------------------------------
 
@@ -379,6 +380,33 @@ void EditAreaFrame::dragEnterEvent(QDragEnterEvent *event)
 {
   if (event->mimeData()->hasFormat("text/plain"))
     event->acceptProposedAction();
+}
+
+//-----------------------------------------------------
+
+void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
+{
+  c_block *block;
+  int slot,block_id;
+
+  block_id = this->main_window->get_block_by_position(event->pos().x(),event->pos().y(),&slot);
+
+  if (block_id < 0)
+    return;
+
+  block = this->main_window->get_texture_graph()->get_block_by_id(block_id);
+
+  if (block == NULL)
+    return;
+
+  {
+    DefaultBlockDialog dialog(block);
+    dialog.exec();
+  }
+
+  this->moving = false;      // so that double click doesn't trigger block move
+  this->connecting_id = -1;
+  this->main_window->update_graphics();
 }
 
 //-----------------------------------------------------

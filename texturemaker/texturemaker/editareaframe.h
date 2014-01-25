@@ -39,6 +39,7 @@ public:
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
     void mousePressEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
@@ -65,6 +66,15 @@ public:
 
       @return id of the selected block or -1 if none
               is selected
+      */
+
+//-----------------------------------------------------
+
+    void open_block_setting(c_block *block);
+
+    /**
+
+
       */
 
 //-----------------------------------------------------

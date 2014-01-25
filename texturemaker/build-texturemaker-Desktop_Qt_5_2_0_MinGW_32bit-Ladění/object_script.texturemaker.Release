@@ -4,9 +4,11 @@ INPUT(
 ./release\editareaframe.o
 ./release\addblockbutton.o
 ./release\colorbufferdisplay.o
+./release\defaultblockdialog.o
 ./release\qrc_resources.o
 ./release\moc_mainwindow.o
 ./release\moc_editareaframe.o
 ./release\moc_addblockbutton.o
 ./release\moc_colorbufferdisplay.o
+./release\moc_defaultblockdialog.o
 );
