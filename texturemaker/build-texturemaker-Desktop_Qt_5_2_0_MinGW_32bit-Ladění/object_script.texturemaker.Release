@@ -6,6 +6,8 @@ INPUT(
 ./release\colorbufferdisplay.o
 ./release\defaultblockdialog.o
 ./release\previewdialog.o
+./release\colorfilldialog.o
+./release\lightdialog.o
 ./release\qrc_resources.o
 ./release\moc_mainwindow.o
 ./release\moc_editareaframe.o
@@ -13,4 +15,6 @@ INPUT(
 ./release\moc_colorbufferdisplay.o
 ./release\moc_defaultblockdialog.o
 ./release\moc_previewdialog.o
+./release\moc_colorfilldialog.o
+./release\moc_lightdialog.o
 );

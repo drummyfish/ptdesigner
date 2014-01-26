@@ -6,6 +6,8 @@ INPUT(
 ./debug\colorbufferdisplay.o
 ./debug\defaultblockdialog.o
 ./debug\previewdialog.o
+./debug\colorfilldialog.o
+./debug\lightdialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -13,4 +15,6 @@ INPUT(
 ./debug\moc_colorbufferdisplay.o
 ./debug\moc_defaultblockdialog.o
 ./debug\moc_previewdialog.o
+./debug\moc_colorfilldialog.o
+./debug\moc_lightdialog.o
 );

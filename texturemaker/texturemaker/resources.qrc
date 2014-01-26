@@ -58,5 +58,9 @@
         <file>resources/slot up.png</file>
         <file>resources/hourglass3.png</file>
         <file>resources/action disconnect.png</file>
+        <file>resources/curve linear full.png</file>
+        <file>resources/curve linear half.png</file>
+        <file>resources/curve cos abs.png</file>
+        <file>resources/curve cos smooth.png</file>
     </qresource>
 </RCC>

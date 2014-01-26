@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   ui->editArea->set_main_window(this);
   ui->preview->set_main_window(this);
+  ui->group_block->hide();
 }
 
 //-----------------------------------------------------
@@ -206,8 +207,6 @@ void MainWindow::delete_block_by_id(int id)
   ui->preview->set_block(NULL);
   this->delete_block_position(id);
   this->graph->delete_block_with_id(id);
-
-this->graph->print_as_text();
 
   this->graph_mutex.unlock();
 }
@@ -482,6 +481,8 @@ void MainWindow::block_selected(int block_id)
 
   if (block_id >= 0)
     {
+      ui->group_block->show();
+
       block = this->graph->get_block_by_id(block_id);
 
       if (block == NULL)
@@ -510,6 +511,10 @@ void MainWindow::block_selected(int block_id)
           ui->radio_global_seed->setChecked(false);
           ui->radio_custom_seed->setChecked(true);
         }
+    }
+  else
+    {
+      ui->group_block->hide();
     }
 }
 

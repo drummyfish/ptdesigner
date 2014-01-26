@@ -1,5 +1,7 @@
 #include "editareaframe.h"
 #include "defaultblockdialog.h"
+#include "colorfilldialog.h"
+#include "lightdialog.h"
 
 //-----------------------------------------------------
 
@@ -408,10 +410,23 @@ void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
   if (block == NULL)
     return;
 
-  {
-    DefaultBlockDialog dialog(block);
-    dialog.exec();
-  }
+  // choose the right dialog:
+
+  if (block->get_name().compare(COLOR_FILL_NAME) == 0)
+    {
+      ColorFillDialog dialog((c_block_color_fill *) block,this);
+      dialog.exec();
+    }
+  else if (block->get_name().compare(LIGHT_NAME) == 0)
+    {
+      LightDialog dialog((c_block_light *) block,this);
+      dialog.exec();
+    }
+  else   // default dialog
+    {
+      DefaultBlockDialog dialog(block);
+      dialog.exec();
+    }
 
   this->moving = false;      // so that double click doesn't trigger block move
   this->connecting_id = -1;
