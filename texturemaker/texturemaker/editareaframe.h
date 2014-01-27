@@ -33,9 +33,11 @@ protected:
     QString mouse_string;       /// string displayed by the mouse pointer
     bool display_mouse_string;  /// whether to display the mouse string
     bool disconnecting_mode;    /// whether the disconnecting state is on
+    QPixmap *pixel_buffer;      /// serves as a canvas for painting the widget
 
 public:
     explicit EditAreaFrame(QWidget *parent = 0);
+    ~EditAreaFrame();
     void paintEvent(QPaintEvent *);
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);

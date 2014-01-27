@@ -3,6 +3,7 @@
 #include "colorfilldialog.h"
 #include "lightdialog.h"
 #include "voronoidialog.h"
+#include "perlindialog.h"
 
 //-----------------------------------------------------
 
@@ -19,6 +20,15 @@ EditAreaFrame::EditAreaFrame(QWidget *parent) :
    this->display_mouse_string = false;
    this->setMouseTracking(true);
    this->setFocusPolicy(Qt::StrongFocus);  // to accept key events
+
+   this->pixel_buffer = new QPixmap(this->width(),this->height());
+}
+
+//-----------------------------------------------------
+
+EditAreaFrame::~EditAreaFrame()
+{
+  delete this->pixel_buffer;
 }
 
 //-----------------------------------------------------
@@ -59,14 +69,25 @@ void EditAreaFrame::paintEvent(QPaintEvent *)
 
   if (!this->main_window->get_graph_mutex()->tryLock())
     {
+      // the texture graph isn't available, draw the previous frame
+
       QPainter painter(this);
-      painter.fillRect(0,0,this->width(),this->height(),QColor::fromRgb(255,255,255));
+      painter.drawPixmap(0,0,this->width(),this->height(),*(this->pixel_buffer));
       return;
     }
 
   // mutex locked here:
 
-  QPainter painter(this);
+  // resize the canvas if needed:
+
+  if (this->width() != this->pixel_buffer->width() || this->height() != this->pixel_buffer->height())
+    {
+      delete this->pixel_buffer;
+      this->pixel_buffer = new QPixmap(this->width(),this->height());
+    }
+
+  QPainter painter(this->pixel_buffer);
+
   painter.fillRect(0,0,this->width(),this->height(),QColor::fromRgb(255,255,255));
 
   graph = this->main_window->get_texture_graph();
@@ -351,6 +372,16 @@ void EditAreaFrame::paintEvent(QPaintEvent *)
     }
 
   this->main_window->get_graph_mutex()->unlock();
+
+  painter.end();
+
+  // now put the drawn bitmap on the widget:
+
+  QPainter painter2(this);
+  painter2.fillRect(0,0,50,50,QColor::fromRgb(255,255,255));
+  painter2.drawPixmap(0,0,this->width(),this->height(),*(this->pixel_buffer));
+  cout << this->pixel_buffer->width() << " " << this->pixel_buffer->height() << endl;
+
 }
 
 //-----------------------------------------------------
@@ -423,6 +454,11 @@ void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
   else if (block->get_name().compare(LIGHT_NAME) == 0)
     {
       LightDialog dialog((c_block_light *) block,this);
+      dialog.exec();
+    }
+  else if (block->get_name().compare(PERLIN_NOISE_NAME) == 0)
+    {
+      PerlinDialog dialog((c_block_perlin_noise *) block,this);
       dialog.exec();
     }
   else if (block->get_name().compare(VORONOI_DIAGRAM_NAME) == 0)

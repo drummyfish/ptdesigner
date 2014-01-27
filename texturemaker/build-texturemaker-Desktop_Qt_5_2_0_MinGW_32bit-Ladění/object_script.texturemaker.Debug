@@ -10,6 +10,7 @@ INPUT(
 ./debug\lightdialog.o
 ./debug\voronoidialog.o
 ./debug\pointeditframe.o
+./debug\perlindialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -21,4 +22,5 @@ INPUT(
 ./debug\moc_lightdialog.o
 ./debug\moc_voronoidialog.o
 ./debug\moc_pointeditframe.o
+./debug\moc_perlindialog.o
 );
