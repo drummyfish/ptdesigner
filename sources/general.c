@@ -79,7 +79,7 @@ double get_distance(t_metric metric, int x1, int y1, int x2, int y2,
           return (double) x_distance + y_distance;
           break;
 
-        case METRIC_CHEBISHEV:
+        case METRIC_CHEBYSHEV:
           return (double)
             (x_distance > y_distance ? x_distance : y_distance);
           break;

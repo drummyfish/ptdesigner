@@ -26,7 +26,7 @@ typedef enum
   {
     METRIC_EUCLIDEAN = 0,///< distance = sqrt((x1 - x2)^2 + (y1 - y2)^2)
     METRIC_TAXICAB,      ///< distance = abs(x1 - x2) + abs(y1 - y2)
-    METRIC_CHEBISHEV     ///< distance = max((x1 - x2),(y1 - y2))
+    METRIC_CHEBYSHEV     ///< distance = max((x1 - x2),(y1 - y2))
   } t_metric;
 
                             /** ways in which two values can be

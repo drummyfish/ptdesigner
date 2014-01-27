@@ -2,6 +2,7 @@
 #include "defaultblockdialog.h"
 #include "colorfilldialog.h"
 #include "lightdialog.h"
+#include "voronoidialog.h"
 
 //-----------------------------------------------------
 
@@ -412,6 +413,8 @@ void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
 
   // choose the right dialog:
 
+  this->main_window->get_graph_mutex()->lock();
+
   if (block->get_name().compare(COLOR_FILL_NAME) == 0)
     {
       ColorFillDialog dialog((c_block_color_fill *) block,this);
@@ -422,11 +425,18 @@ void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
       LightDialog dialog((c_block_light *) block,this);
       dialog.exec();
     }
+  else if (block->get_name().compare(VORONOI_DIAGRAM_NAME) == 0)
+    {
+      VoronoiDialog dialog((c_block_voronoi_diagram *) block,this);
+      dialog.exec();
+    }
   else   // default dialog
     {
       DefaultBlockDialog dialog(block);
       dialog.exec();
     }
+
+  this->main_window->get_graph_mutex()->unlock();
 
   this->moving = false;      // so that double click doesn't trigger block move
   this->connecting_id = -1;

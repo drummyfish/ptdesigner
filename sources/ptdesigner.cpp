@@ -1934,7 +1934,7 @@ void c_block_voronoi_diagram::set_default()
     this->parameters->add_parameter("type",PARAMETER_INT);
     this->parameters->add_parameter("metric",PARAMETER_INT);
     this->parameters->add_parameter("point place",PARAMETER_INT);
-    this->parameters->add_parameter("width",PARAMETER_DOUBLE);
+    this->parameters->add_parameter("width",PARAMETER_INT);
     this->parameters->add_parameter("point positions",PARAMETER_STRING);
     this->parameters->add_parameter("number of points",PARAMETER_INT);
     this->parameters->add_parameter("initial x",PARAMETER_DOUBLE);
@@ -1944,7 +1944,7 @@ void c_block_voronoi_diagram::set_default()
     this->parameters->set_int_value("type",VORONOI_2_NEAREST_RATIO);
     this->parameters->set_int_value("metric",METRIC_EUCLIDEAN);
     this->parameters->set_int_value("point place",PLACE_RANDOM);
-    this->parameters->set_double_value("width",0.75);
+    this->parameters->set_int_value("width",75);
     this->parameters->set_string_value("point positions",(char *) "");
     this->parameters->set_int_value("number of points",15);
     this->parameters->set_double_value("initial x",0.5);
@@ -3493,8 +3493,8 @@ bool c_block_voronoi_diagram::execute()
             pt_voronoi_diagram(
               (t_voronoi_type) this->parameters->get_int_value("type"),
               (t_metric) this->parameters->get_int_value("metric"),
-              PLACE_SQUARE,
-              this->parameters->get_double_value("width"),
+              (t_point_place_type) this->parameters->get_int_value("point place"),
+              this->parameters->get_int_value("width"),
               this->parameters->get_int_value("number of points"),
               NULL,
               &(this->buffer));

@@ -7,7 +7,7 @@ CFLAGS=-std=c99 -g -pedantic -Wall -Wextra
 CFLAGS2=-Wall -pedantic -g -std=c++0x
 SOURCEDIR=sources
 
-test: test.o colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.0 ptdesigner.o
+test: test.o colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.o ptdesigner.o
 	$(CC2) $(CFLAGS2) -lm -o test test.o colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.o ptdesigner.o
 
 ptdesigner.o: $(SOURCEDIR)/ptdesigner.cpp $(SOURCEDIR)/ptdesigner.h
@@ -42,6 +42,9 @@ general.o: $(SOURCEDIR)/general.h $(SOURCEDIR)/general.c
 
 linelist.o: $(SOURCEDIR)/linelist.h $(SOURCEDIR)/linelist.c
 	$(CC) $(CFLAGS) -c -o linelist.o $(SOURCEDIR)/linelist.c
+	
+lib: colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.o ptdesigner.o
+	ar -cvq libptdesigner.a colorbuffer.o lodepng.o proctextures.o matrix.o colortransition.o kdtree.o general.o linelist.o grammar.o ptdesigner.o
 
 
 

@@ -8,6 +8,8 @@ INPUT(
 ./debug\previewdialog.o
 ./debug\colorfilldialog.o
 ./debug\lightdialog.o
+./debug\voronoidialog.o
+./debug\pointeditframe.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -17,4 +19,6 @@ INPUT(
 ./debug\moc_previewdialog.o
 ./debug\moc_colorfilldialog.o
 ./debug\moc_lightdialog.o
+./debug\moc_voronoidialog.o
+./debug\moc_pointeditframe.o
 );

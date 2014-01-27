@@ -1,6 +1,8 @@
 #include "previewdialog.h"
 #include "ui_previewdialog.h"
 
+//-----------------------------------------------------
+
 PreviewDialog::PreviewDialog(c_block *block, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PreviewDialog)
@@ -24,7 +26,11 @@ PreviewDialog::PreviewDialog(c_block *block, QWidget *parent) :
   ui->preview->update();
 }
 
+//-----------------------------------------------------
+
 PreviewDialog::~PreviewDialog()
 {
     delete ui;
 }
+
+//-----------------------------------------------------

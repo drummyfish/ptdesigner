@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     defaultblockdialog.cpp \
     previewdialog.cpp \
     colorfilldialog.cpp \
-    lightdialog.cpp
+    lightdialog.cpp \
+    voronoidialog.cpp \
+    pointeditframe.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -32,13 +34,16 @@ HEADERS  += mainwindow.h \
     defaultblockdialog.h \
     previewdialog.h \
     colorfilldialog.h \
-    lightdialog.h
+    lightdialog.h \
+    voronoidialog.h \
+    pointeditframe.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
     previewdialog.ui \
     colorfilldialog.ui \
-    lightdialog.ui
+    lightdialog.ui \
+    voronoidialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 
