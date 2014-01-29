@@ -380,8 +380,6 @@ void EditAreaFrame::paintEvent(QPaintEvent *)
   QPainter painter2(this);
   painter2.fillRect(0,0,50,50,QColor::fromRgb(255,255,255));
   painter2.drawPixmap(0,0,this->width(),this->height(),*(this->pixel_buffer));
-  cout << this->pixel_buffer->width() << " " << this->pixel_buffer->height() << endl;
-
 }
 
 //-----------------------------------------------------

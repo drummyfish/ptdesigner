@@ -3595,6 +3595,7 @@ void pt_normal_map(t_color_buffer *buffer, unsigned int
 
   {
     unsigned int x,y,i;
+    int j;
     int sum_of_differences;
     unsigned char vector_char[3];
     unsigned char r,g,b;
@@ -3612,32 +3613,34 @@ void pt_normal_map(t_color_buffer *buffer, unsigned int
           // mean difference in x direction neighbourhood:
           sum_of_differences = 0;
 
-          for (i = 0; i < neighbourhood_size; i++)
-            {
-              color_buffer_get_pixel(buffer,x + i,y,&r,&g,&b);
-              difference = r;
-              color_buffer_get_pixel(buffer,x + i + 1,y,&r,&g,&b);
-              difference -= r;
-              sum_of_differences += difference;
-            }
+          for (j = -1 * neighbourhood_size; j <= (int) neighbourhood_size; j++)
+            for (i = 1; i <= neighbourhood_size; i++)
+              {
+                color_buffer_get_pixel(buffer,x - i,y + j,&r,&g,&b);
+                difference = r;
+                color_buffer_get_pixel(buffer,x + i,y + j,&r,&g,&b);
+                difference -= r;
+                sum_of_differences += difference;
+              }
 
           vector_double[0] = sum_of_differences /
-            ((double) neighbourhood_size);
+            ((double) (neighbourhood_size * (neighbourhood_size * 2 + 1)));
 
           // mean difference in y direction neighbourhood:
           sum_of_differences = 0;
 
-          for (i = 0; i < neighbourhood_size; i++)
-            {
-              color_buffer_get_pixel(buffer,x,y + i,&r,&g,&b);
-              difference = r;
-              color_buffer_get_pixel(buffer,x,y + i + 1,&r,&g,&b);
-              difference -= r;
-              sum_of_differences += difference;
-            }
+          for (j = -1 * neighbourhood_size; j <= (int) neighbourhood_size; j++)
+            for (i = 1; i <= neighbourhood_size; i++)
+              {
+                color_buffer_get_pixel(buffer,x + j,y - i,&r,&g,&b);
+                difference = r;
+                color_buffer_get_pixel(buffer,x + j,y + i,&r,&g,&b);
+                difference -= r;
+                sum_of_differences += difference;
+              }
 
           vector_double[1] = sum_of_differences /
-            ((double) neighbourhood_size);
+            ((double) (neighbourhood_size * (neighbourhood_size * 2 + 1)));
 
           vector_double[2] = 1.0;   // we consider this 1
 
