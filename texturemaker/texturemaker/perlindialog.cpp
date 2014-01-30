@@ -3,15 +3,14 @@
 
 //-----------------------------------------------------
 
-PerlinDialog::PerlinDialog(c_block_perlin_noise *block, QWidget *parent) :
-    QDialog(parent),
+PerlinDialog::PerlinDialog(c_block *block, QWidget *parent) :
+    CustomBlockDialog(block,parent),
     ui(new Ui::PerlinDialog)
 {
     c_parameters *parameters;
 
     ui->setupUi(this);
-    this->setWindowTitle(PERLIN_NOISE_NAME);
-    this->block = block;
+    this->setWindowTitle(QString::fromStdString(block->get_name()));
 
     parameters = block->get_parameters();
 

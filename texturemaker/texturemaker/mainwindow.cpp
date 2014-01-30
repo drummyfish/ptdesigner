@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <iostream>
 #include "ptdesigner.h"
+#include "aboutdialog.h"
 
 using namespace std;
 using namespace pt_design;
@@ -135,7 +136,7 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           else
             {
               for (i = 0; i < MAX_INPUT_BLOCKS; i++)
-                if (dx >= -8 && dy >= 9 + i * 9 && dx <= -1 && dy <= 9 + (i + 1) * 9)
+                if ((int) dx >= -8 && dy >= 9 + i * 9 && (int) dx <= -1 && dy <= 9 + (i + 1) * 9)
                   {
                     *slot = i;
                     break;
@@ -150,7 +151,7 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           else
             {
               for (i = 0; i < MAX_INPUT_BLOCKS; i++)
-                if (dx >= (i + 1) * 7 && dy >= -4 && dx <= (i + 2) * 8 && dy <= 1)
+                if ((int) dx >= (i + 1) * 7 && (int) dy >= -4 && (int) dx <= (i + 2) * 8 && (int) dy <= 1)
                   {
                     *slot = MAX_INPUT_BLOCKS - i - 1;
                     break;
@@ -160,7 +161,7 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           break;
 
         case 3: // left
-          if (dx >= -8 && dy >= 27 && dx <= 1 && dy <= 36)
+          if ((int) dx >= -8 && (int) dy >= 27 && (int) dx <= 1 && dy <= 36)
             *slot = MAX_INPUT_BLOCKS;
           else
             {
@@ -187,7 +188,7 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           if (block->is_terminal())
             *slot = -1;
         }
-      else if (*slot >= block->get_max_inputs())
+      else if ((unsigned int) *slot >= block->get_max_inputs())
         *slot = -1;
     }
 
@@ -603,6 +604,15 @@ void MainWindow::on_custom_seed_valueChanged(int arg1)
 void MainWindow::on_actionDisconnect_changed()
 {
   ui->editArea->set_disconnecting_mode(ui->actionDisconnect->isChecked());
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionAbout_triggered()
+{
+  AboutDialog dialog;
+
+  dialog.exec();
 }
 
 //-----------------------------------------------------

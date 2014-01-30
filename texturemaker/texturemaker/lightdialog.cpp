@@ -1,12 +1,14 @@
 #include "lightdialog.h"
 #include "ui_lightdialog.h"
 
-LightDialog::LightDialog(c_block_light *block, QWidget *parent) :
-    QDialog(parent),
+//-----------------------------------------------------
+
+LightDialog::LightDialog(c_block *block, QWidget *parent) :
+    CustomBlockDialog(block,parent),
     ui(new Ui::LightDialog)
 {
   ui->setupUi(this);
-  this->block = block;
+  this->setWindowTitle(QString::fromStdString(block->get_name()));
 
   this->dialog_ambient.setCurrentColor(QColor::fromRgb(
     block->get_parameters()->get_int_value("ambient red"),
@@ -30,6 +32,8 @@ LightDialog::LightDialog(c_block_light *block, QWidget *parent) :
 
   this->update_graphics();
 }
+
+//-----------------------------------------------------
 
 void LightDialog::update_graphics()
 {
@@ -72,10 +76,14 @@ void LightDialog::update_graphics()
   ui->frame_curve->setStyleSheet("QFrame {background-image: url(:/resources/curve " + curve_image + ".png)}");
 }
 
+//-----------------------------------------------------
+
 LightDialog::~LightDialog()
 {
   delete ui;
 }
+
+//-----------------------------------------------------
 
 void LightDialog::on_pick_ambient_clicked()
 {
@@ -83,11 +91,15 @@ void LightDialog::on_pick_ambient_clicked()
   this->update_graphics();
 }
 
+//-----------------------------------------------------
+
 void LightDialog::on_pick_diffuse_clicked()
 {
   this->dialog_diffuse.exec();
   this->update_graphics();
 }
+
+//-----------------------------------------------------
 
 void LightDialog::on_pick_specular_clicked()
 {
@@ -95,10 +107,14 @@ void LightDialog::on_pick_specular_clicked()
   this->update_graphics();
 }
 
+//-----------------------------------------------------
+
 void LightDialog::on_curve_selection_currentIndexChanged(int index)
 {
   this->update_graphics();
 }
+
+//-----------------------------------------------------
 
 void LightDialog::on_buttonBox_accepted()
 {
@@ -138,3 +154,5 @@ void LightDialog::on_buttonBox_accepted()
         break;
     }
 }
+
+//-----------------------------------------------------

@@ -77,7 +77,7 @@ void ColorFillDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
 }
 
 const QMetaObject ColorFillDialog::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_ColorFillDialog.data,
+    { &CustomBlockDialog::staticMetaObject, qt_meta_stringdata_ColorFillDialog.data,
       qt_meta_data_ColorFillDialog,  qt_static_metacall, 0, 0}
 };
 
@@ -92,12 +92,12 @@ void *ColorFillDialog::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_ColorFillDialog.stringdata))
         return static_cast<void*>(const_cast< ColorFillDialog*>(this));
-    return QDialog::qt_metacast(_clname);
+    return CustomBlockDialog::qt_metacast(_clname);
 }
 
 int ColorFillDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QDialog::qt_metacall(_c, _id, _a);
+    _id = CustomBlockDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

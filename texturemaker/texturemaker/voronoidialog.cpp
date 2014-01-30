@@ -3,15 +3,14 @@
 
 //-----------------------------------------------------
 
-VoronoiDialog::VoronoiDialog(c_block_voronoi_diagram *block, QWidget *parent) :
-    QDialog(parent),
+VoronoiDialog::VoronoiDialog(c_block *block, QWidget *parent) :
+    CustomBlockDialog(block,parent),
     ui(new Ui::VoronoiDialog)
 {
   c_parameters *parameters;
 
   ui->setupUi(this);
-  this->block = block;
-  this->setWindowTitle(VORONOI_DIAGRAM_NAME);
+  this->setWindowTitle(QString::fromStdString(block->get_name()));
 
   parameters = this->block->get_parameters();
 

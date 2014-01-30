@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_PerlinDialog_t {
-    QByteArrayData data[6];
-    char stringdata[109];
+    QByteArrayData data[5];
+    char stringdata[76];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,12 +33,10 @@ QT_MOC_LITERAL(0, 0, 12),
 QT_MOC_LITERAL(1, 13, 32),
 QT_MOC_LITERAL(2, 46, 0),
 QT_MOC_LITERAL(3, 47, 5),
-QT_MOC_LITERAL(4, 53, 32),
-QT_MOC_LITERAL(5, 86, 21)
+QT_MOC_LITERAL(4, 53, 21)
     },
-    "PerlinDialog\0on_horizontalSlider_valueChanged\0"
-    "\0value\0on_amplitude_slider_valueChanged\0"
-    "on_buttonBox_accepted\0"
+    "PerlinDialog\0on_amplitude_slider_valueChanged\0"
+    "\0value\0on_buttonBox_accepted\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -48,7 +46,7 @@ static const uint qt_meta_data_PerlinDialog[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -56,12 +54,10 @@ static const uint qt_meta_data_PerlinDialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   29,    2, 0x08,
-       4,    1,   32,    2, 0x08,
-       5,    0,   35,    2, 0x08,
+       1,    1,   24,    2, 0x08,
+       4,    0,   27,    2, 0x08,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void,
 
@@ -73,16 +69,15 @@ void PerlinDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
     if (_c == QMetaObject::InvokeMetaMethod) {
         PerlinDialog *_t = static_cast<PerlinDialog *>(_o);
         switch (_id) {
-        //case 0: _t->on_horizontalSlider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->on_amplitude_slider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->on_buttonBox_accepted(); break;
+        case 0: _t->on_amplitude_slider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->on_buttonBox_accepted(); break;
         default: ;
         }
     }
 }
 
 const QMetaObject PerlinDialog::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_PerlinDialog.data,
+    { &CustomBlockDialog::staticMetaObject, qt_meta_stringdata_PerlinDialog.data,
       qt_meta_data_PerlinDialog,  qt_static_metacall, 0, 0}
 };
 
@@ -97,22 +92,22 @@ void *PerlinDialog::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_PerlinDialog.stringdata))
         return static_cast<void*>(const_cast< PerlinDialog*>(this));
-    return QDialog::qt_metacast(_clname);
+    return CustomBlockDialog::qt_metacast(_clname);
 }
 
 int PerlinDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QDialog::qt_metacall(_c, _id, _a);
+    _id = CustomBlockDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 2)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 2;
     }
     return _id;
 }

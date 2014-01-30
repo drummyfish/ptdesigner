@@ -2,30 +2,22 @@
 #define PERLINDIALOG_H
 
 #include <QDialog>
-#include "ptdesigner.h"
-
-using namespace pt_design;
+#include "customblockdialog.h"
 
 namespace Ui {
 class PerlinDialog;
 }
 
-class PerlinDialog : public QDialog
+class PerlinDialog : public CustomBlockDialog
 {
     Q_OBJECT
 
 public:
-    explicit PerlinDialog(c_block_perlin_noise *block, QWidget *parent);
+    explicit PerlinDialog(c_block *block, QWidget *parent);
     ~PerlinDialog();
 
-protected:
-    c_block_perlin_noise *block;
-
 private slots:
-    void on_horizontalSlider_valueChanged(int value);
-
     void on_amplitude_slider_valueChanged(int value);
-
     void on_buttonBox_accepted();
 
 private:

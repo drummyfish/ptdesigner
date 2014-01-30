@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     voronoidialog.cpp \
     pointeditframe.cpp \
     perlindialog.cpp \
-    convolutiondialog.cpp
+    convolutiondialog.cpp \
+    customblockdialog.cpp \
+    aboutdialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -40,7 +42,9 @@ HEADERS  += mainwindow.h \
     voronoidialog.h \
     pointeditframe.h \
     perlindialog.h \
-    convolutiondialog.h
+    convolutiondialog.h \
+    customblockdialog.h \
+    aboutdialog.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -49,7 +53,8 @@ FORMS    += mainwindow.ui \
     lightdialog.ui \
     voronoidialog.ui \
     perlindialog.ui \
-    convolutiondialog.ui
+    convolutiondialog.ui \
+    aboutdialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 

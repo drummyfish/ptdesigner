@@ -4,6 +4,7 @@
 #include "lightdialog.h"
 #include "voronoidialog.h"
 #include "perlindialog.h"
+#include "convolutiondialog.h"
 
 //-----------------------------------------------------
 
@@ -446,22 +447,27 @@ void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
 
   if (block->get_name().compare(COLOR_FILL_NAME) == 0)
     {
-      ColorFillDialog dialog((c_block_color_fill *) block,this);
+      ColorFillDialog dialog(block,this);
       dialog.exec();
     }
   else if (block->get_name().compare(LIGHT_NAME) == 0)
     {
-      LightDialog dialog((c_block_light *) block,this);
+      LightDialog dialog(block,this);
       dialog.exec();
     }
   else if (block->get_name().compare(PERLIN_NOISE_NAME) == 0)
     {
-      PerlinDialog dialog((c_block_perlin_noise *) block,this);
+      PerlinDialog dialog(block,this);
       dialog.exec();
     }
   else if (block->get_name().compare(VORONOI_DIAGRAM_NAME) == 0)
     {
-      VoronoiDialog dialog((c_block_voronoi_diagram *) block,this);
+      VoronoiDialog dialog(block,this);
+      dialog.exec();
+    }
+  else if (block->get_name().compare(CONVOLUTION_NAME) == 0)
+    {
+      ConvolutionDialog dialog(block,this);
       dialog.exec();
     }
   else   // default dialog

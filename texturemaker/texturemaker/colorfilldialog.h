@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QColorDialog>
 #include "ptdesigner.h"
+#include "customblockdialog.h"
 
 using namespace pt_design;
 
@@ -11,12 +12,12 @@ namespace Ui {
 class ColorFillDialog;
 }
 
-class ColorFillDialog : public QDialog
+class ColorFillDialog : public CustomBlockDialog
 {
     Q_OBJECT
 
 public:
-    explicit ColorFillDialog(c_block_color_fill *block, QWidget *parent);
+    explicit ColorFillDialog(c_block *block, QWidget *parent);
     ~ColorFillDialog();
 
 private slots:
@@ -26,7 +27,6 @@ private slots:
 
 private:
     Ui::ColorFillDialog *ui;
-    c_block_color_fill *block;
     int r,g,b;
     void update_color();
 };

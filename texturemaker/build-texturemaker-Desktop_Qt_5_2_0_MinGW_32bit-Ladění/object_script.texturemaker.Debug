@@ -11,6 +11,9 @@ INPUT(
 ./debug\voronoidialog.o
 ./debug\pointeditframe.o
 ./debug\perlindialog.o
+./debug\convolutiondialog.o
+./debug\customblockdialog.o
+./debug\aboutdialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -23,4 +26,7 @@ INPUT(
 ./debug\moc_voronoidialog.o
 ./debug\moc_pointeditframe.o
 ./debug\moc_perlindialog.o
+./debug\moc_convolutiondialog.o
+./debug\moc_customblockdialog.o
+./debug\moc_aboutdialog.o
 );

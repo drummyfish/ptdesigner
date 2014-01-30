@@ -2019,9 +2019,10 @@ void c_block_convolution::set_default()
     this->parameters->add_parameter("matrix height",PARAMETER_INT);
     this->parameters->add_parameter("matrix data",PARAMETER_STRING);
 
-    this->parameters->set_int_value("matrix width",5);
-    this->parameters->set_int_value("matrix height",5);
-    this->parameters->set_string_value("matrix data",(char *) "");
+    this->parameters->set_int_value("matrix width",3);
+    this->parameters->set_int_value("matrix height",3);
+    this->parameters->set_string_value("matrix data",(char *)
+      "0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0");
   }
 
 //----------------------------------------------------------------------
