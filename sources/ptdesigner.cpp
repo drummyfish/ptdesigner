@@ -1528,7 +1528,7 @@ bool c_texture_graph::load_from_file(string filename)
 
     while (getline(myfile,line))
       {
-        filetext += line;
+        filetext += line + "\n";
       }
 
     myfile.close();
