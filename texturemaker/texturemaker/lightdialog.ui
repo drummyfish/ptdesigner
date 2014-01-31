@@ -21,7 +21,11 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="7" column="4">
-    <widget class="QDoubleSpinBox" name="direction_y"/>
+    <widget class="QDoubleSpinBox" name="direction_y">
+     <property name="minimum">
+      <double>-99.000000000000000</double>
+     </property>
+    </widget>
    </item>
    <item row="7" column="2">
     <widget class="QLabel" name="label_7">
@@ -53,7 +57,11 @@
     </widget>
    </item>
    <item row="7" column="3">
-    <widget class="QDoubleSpinBox" name="direction_x"/>
+    <widget class="QDoubleSpinBox" name="direction_x">
+     <property name="minimum">
+      <double>-99.000000000000000</double>
+     </property>
+    </widget>
    </item>
    <item row="5" column="8">
     <widget class="QComboBox" name="curve_selection">

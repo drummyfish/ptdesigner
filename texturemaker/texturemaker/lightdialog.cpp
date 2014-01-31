@@ -6,29 +6,53 @@
 LightDialog::LightDialog(c_block *block, QWidget *parent) :
     CustomBlockDialog(block,parent),
     ui(new Ui::LightDialog)
+
 {
+  c_parameters *parameters;
+
   ui->setupUi(this);
   this->setWindowTitle(QString::fromStdString(block->get_name()));
 
+  parameters = this->block->get_parameters();
+
   this->dialog_ambient.setCurrentColor(QColor::fromRgb(
-    block->get_parameters()->get_int_value("ambient red"),
-    block->get_parameters()->get_int_value("ambient green"),
-    block->get_parameters()->get_int_value("ambient blue")));
+    parameters->get_int_value("ambient red"),
+    parameters->get_int_value("ambient green"),
+    parameters->get_int_value("ambient blue")));
 
   this->dialog_diffuse.setCurrentColor(QColor::fromRgb(
-    block->get_parameters()->get_int_value("diffuse red"),
-    block->get_parameters()->get_int_value("diffuse green"),
-    block->get_parameters()->get_int_value("diffuse blue")));
+    parameters->get_int_value("diffuse red"),
+    parameters->get_int_value("diffuse green"),
+    parameters->get_int_value("diffuse blue")));
 
   this->dialog_specular.setCurrentColor(QColor::fromRgb(
-    block->get_parameters()->get_int_value("specular red"),
-    block->get_parameters()->get_int_value("specular green"),
-    block->get_parameters()->get_int_value("specular blue")));
+    parameters->get_int_value("specular red"),
+    parameters->get_int_value("specular green"),
+    parameters->get_int_value("specular blue")));
 
-  ui->direction_x->setValue(this->block->get_parameters()->get_double_value("direction vector x"));
-  ui->direction_y->setValue(this->block->get_parameters()->get_double_value("direction vector y"));
-  ui->phong_exponent->setValue(this->block->get_parameters()->get_double_value("phong exponent"));
-  ui->viewer_height->setValue(this->block->get_parameters()->get_double_value("viewer height"));
+  ui->direction_x->setValue(parameters->get_double_value("direction vector x"));
+  ui->direction_y->setValue(parameters->get_double_value("direction vector y"));
+  ui->phong_exponent->setValue(parameters->get_double_value("phong exponent"));
+  ui->viewer_height->setValue(parameters->get_double_value("viewer height"));
+
+  switch (parameters->get_int_value("reflection curve"))
+    {
+      case REFLECTION_CURVE_COSINE_ABS:
+        ui->curve_selection->setCurrentIndex(1);
+        break;
+
+      case REFLECTION_CURVE_COSINE_SMOOTH:
+        ui->curve_selection->setCurrentIndex(0);
+        break;
+
+      case REFLECTION_CURVE_LINEAR_FULL:
+        ui->curve_selection->setCurrentIndex(3);
+        break;
+
+      case REFLECTION_CURVE_LINEAR_HALF:
+        ui->curve_selection->setCurrentIndex(2);
+        break;
+    }
 
   this->update_graphics();
 }
@@ -36,6 +60,7 @@ LightDialog::LightDialog(c_block *block, QWidget *parent) :
 //-----------------------------------------------------
 
 void LightDialog::update_graphics()
+
 {
   QString curve_image;
 
@@ -79,6 +104,7 @@ void LightDialog::update_graphics()
 //-----------------------------------------------------
 
 LightDialog::~LightDialog()
+
 {
   delete ui;
 }
@@ -86,6 +112,7 @@ LightDialog::~LightDialog()
 //-----------------------------------------------------
 
 void LightDialog::on_pick_ambient_clicked()
+
 {
   this->dialog_ambient.exec();
   this->update_graphics();
@@ -94,6 +121,7 @@ void LightDialog::on_pick_ambient_clicked()
 //-----------------------------------------------------
 
 void LightDialog::on_pick_diffuse_clicked()
+
 {
   this->dialog_diffuse.exec();
   this->update_graphics();
@@ -102,6 +130,7 @@ void LightDialog::on_pick_diffuse_clicked()
 //-----------------------------------------------------
 
 void LightDialog::on_pick_specular_clicked()
+
 {
   this->dialog_specular.exec();
   this->update_graphics();
@@ -110,6 +139,7 @@ void LightDialog::on_pick_specular_clicked()
 //-----------------------------------------------------
 
 void LightDialog::on_curve_selection_currentIndexChanged(int index)
+
 {
   this->update_graphics();
 }
@@ -117,6 +147,7 @@ void LightDialog::on_curve_selection_currentIndexChanged(int index)
 //-----------------------------------------------------
 
 void LightDialog::on_buttonBox_accepted()
+
 {
   this->block->get_parameters()->set_int_value("ambient red",this->dialog_ambient.currentColor().red());
   this->block->get_parameters()->set_int_value("ambient green",this->dialog_ambient.currentColor().green());

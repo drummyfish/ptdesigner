@@ -10,6 +10,7 @@
 
 EditAreaFrame::EditAreaFrame(QWidget *parent) :
     QFrame(parent)
+
 {
    this->setAcceptDrops(true);
    this->disconnecting_mode = false;
@@ -28,6 +29,7 @@ EditAreaFrame::EditAreaFrame(QWidget *parent) :
 //-----------------------------------------------------
 
 EditAreaFrame::~EditAreaFrame()
+
 {
   delete this->pixel_buffer;
 }
@@ -51,6 +53,7 @@ void EditAreaFrame::set_main_window(MainWindow *main_window)
 //-----------------------------------------------------
 
 void EditAreaFrame::paintEvent(QPaintEvent *)
+
 {
   unsigned int i,j;
   int draw_from[2],draw_through1[2],draw_through2[2],draw_to[2];  // helper coordinations
@@ -385,7 +388,17 @@ void EditAreaFrame::paintEvent(QPaintEvent *)
 
 //-----------------------------------------------------
 
+void EditAreaFrame::reset()
+
+{
+  this->selected_id = -1;
+  this->update();
+}
+
+//-----------------------------------------------------
+
 void EditAreaFrame::dropEvent(QDropEvent *event)
+
 {
   string mime_string = event->mimeData()->text().toUtf8().constData();
   c_block *block;
@@ -410,6 +423,8 @@ void EditAreaFrame::dropEvent(QDropEvent *event)
 
   this->main_window->get_graph_mutex()->unlock();
 
+  this->main_window->change_occured(); // inform the main window about the change
+
   this->update();    // repaint
 
   event->acceptProposedAction();
@@ -427,6 +442,7 @@ void EditAreaFrame::dragEnterEvent(QDragEnterEvent *event)
 //-----------------------------------------------------
 
 void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
+
 {
   c_block *block;
   int slot,block_id;
@@ -475,6 +491,8 @@ void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
       DefaultBlockDialog dialog(block);
       dialog.exec();
     }
+
+  this->main_window->change_occured();
 
   this->main_window->get_graph_mutex()->unlock();
 
@@ -533,6 +551,8 @@ void EditAreaFrame::mousePressEvent(QMouseEvent *event)
 
   this->main_window->get_graph_mutex()->unlock();
 
+  this->main_window->change_occured();
+
   this->update();
   this->main_window->block_selected(this->selected_id);
 }
@@ -546,7 +566,9 @@ void EditAreaFrame::keyPressEvent(QKeyEvent *event)
     return;
 
   if (event->key() == Qt::Key_Delete)
-    this->main_window->delete_block_by_id(this->selected_id);
+    {
+      this->main_window->delete_block_by_id(this->selected_id);
+    }
 
   this->update();
   this->selected_id = -1;

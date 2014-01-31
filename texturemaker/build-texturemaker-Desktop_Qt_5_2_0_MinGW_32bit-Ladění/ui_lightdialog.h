@@ -64,6 +64,7 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         direction_y = new QDoubleSpinBox(LightDialog);
         direction_y->setObjectName(QStringLiteral("direction_y"));
+        direction_y->setMinimum(-99);
 
         gridLayout->addWidget(direction_y, 7, 4, 1, 1);
 
@@ -82,6 +83,7 @@ public:
 
         direction_x = new QDoubleSpinBox(LightDialog);
         direction_x->setObjectName(QStringLiteral("direction_x"));
+        direction_x->setMinimum(-99);
 
         gridLayout->addWidget(direction_x, 7, 3, 1, 1);
 

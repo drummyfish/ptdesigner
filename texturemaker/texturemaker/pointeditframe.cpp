@@ -4,6 +4,7 @@
 
 PointEditFrame::PointEditFrame(QWidget *parent) :
     QFrame(parent)
+
 {
   this->number_of_points = 0;
 }
@@ -11,6 +12,7 @@ PointEditFrame::PointEditFrame(QWidget *parent) :
 //-----------------------------------------------------
 
 void PointEditFrame::mousePressEvent(QMouseEvent *event)
+
 {
   int x,y;
   unsigned int i,j;
@@ -66,6 +68,7 @@ void PointEditFrame::mousePressEvent(QMouseEvent *event)
 //-----------------------------------------------------
 
 void PointEditFrame::clear()
+
 {
   this->number_of_points = 0;
   this->update();
@@ -74,6 +77,7 @@ void PointEditFrame::clear()
 //-----------------------------------------------------
 
 void PointEditFrame::paintEvent(QPaintEvent *)
+
 {
   QPainter painter(this);
   QPen pen;
@@ -96,6 +100,7 @@ void PointEditFrame::paintEvent(QPaintEvent *)
 //-----------------------------------------------------
 
 unsigned int PointEditFrame::get_number_of_points()
+
 {
   return this->number_of_points;
 }
@@ -103,6 +108,7 @@ unsigned int PointEditFrame::get_number_of_points()
 //-----------------------------------------------------
 
 void PointEditFrame::set_points(string point_string)
+
 {
   double float_points[MAXIMUM_POINTS][2];
   unsigned int length,i;
@@ -123,6 +129,7 @@ void PointEditFrame::set_points(string point_string)
 //-----------------------------------------------------
 
 void PointEditFrame::get_point(unsigned int index, int *x, int *y)
+
 {
   if (index < this->number_of_points)
     {

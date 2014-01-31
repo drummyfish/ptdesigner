@@ -14,61 +14,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
   this->graph = new c_texture_graph();
-
-  t_block_position pos;
-
-  this->graph->add_block(new c_block_voronoi_diagram());
-  pos.block_id = 0;
-  pos.x = 5;
-  pos.y = 10;
-  pos.direction = 0;
-  this->set_block_position(pos);
-
-  this->graph->add_block(new c_block_perlin_noise());
-  pos.block_id = 1;
-  pos.x = 100;
-  pos.y = 220;
-  pos.direction = 0;
-  this->set_block_position(pos);
-
-  this->graph->add_block(new c_block_mix_channels());
-  pos.block_id = 2;
-  pos.x = 200;
-  pos.y = 300;
-  pos.direction = 0;
-  this->set_block_position(pos);
-
-  this->graph->add_block(new c_block_voronoi_diagram());
-  pos.block_id = 3;
-  pos.x = 5;
-  pos.y = 10;
-  pos.direction = 0;
-  this->set_block_position(pos);
-
-  this->graph->add_block(new c_block_voronoi_diagram());
-  pos.block_id = 4;
-  pos.x = 5;
-  pos.y = 10;
-  pos.direction = 0;
-  this->set_block_position(pos);
-
-  this->graph->add_block(new c_block_voronoi_diagram());
-  pos.block_id = 5;
-  pos.x = 5;
-  pos.y = 10;
-  pos.direction = 0;
-  this->set_block_position(pos);
-
-  this->graph->connect_by_id(0,2,0);
-  this->graph->connect_by_id(1,2,1);
-  this->graph->connect_by_id(3,2,2);
-//  this->graph->connect_by_id(4,2,3);
-//  this->graph->connect_by_id(5,2,4);
-
   ui->setupUi(this);
   ui->editArea->set_main_window(this);
   ui->preview->set_main_window(this);
   ui->group_block->hide();
+  this->update_title();
+  this->filename = "";
+  this->change_happened = false;
 }
 
 //-----------------------------------------------------
@@ -197,6 +149,44 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
 
 //-----------------------------------------------------
 
+void MainWindow::change_occured()
+
+{
+  this->change_happened = true;
+}
+
+//-----------------------------------------------------
+
+bool MainWindow::save_positions(QString filename)
+
+{
+  ofstream output_file(filename.toStdString().c_str());
+  unsigned int i;
+  t_block_position position;
+
+  if (output_file.is_open())
+    {
+      output_file << ui->editArea->width() << ":" << ui->editArea->height() << "\n"; // canvas size
+
+      for (i = 0; i < this->block_positions.size(); i++)
+        {
+          position = this->block_positions.at(i);
+
+          output_file << position.block_id << ";";     // id
+          output_file << position.x << ";";            // x
+          output_file << position.y << ";";            // y
+          output_file << ((int) position.direction) << "\n"; // direction
+      }
+
+    output_file.close();
+      return true;
+    }
+
+  return false;
+}
+
+//-----------------------------------------------------
+
 void MainWindow::delete_block_by_id(int id)
 
 {
@@ -215,6 +205,7 @@ void MainWindow::delete_block_by_id(int id)
 //-----------------------------------------------------
 
 QMutex *MainWindow::get_graph_mutex()
+
 {
   return &this->graph_mutex;
 }
@@ -246,6 +237,7 @@ void MainWindow::delete_block_position(int block_id)
     if (this->block_positions.at(i).block_id == block_id)
       {
         this->block_positions.erase(this->block_positions.begin() + i);
+        this->change_occured();
         break;
       }
 }
@@ -297,6 +289,7 @@ void MainWindow::on_pushButton_2_clicked()
 //-----------------------------------------------------
 
 c_texture_graph *MainWindow::get_texture_graph()
+
 {
   return this->graph;
 }
@@ -304,6 +297,7 @@ c_texture_graph *MainWindow::get_texture_graph()
 //-----------------------------------------------------
 
 void MainWindow::on_actionDelete_triggered()
+
 {
   this->delete_block_by_id(ui->editArea->get_selected_id());
   this->update_graphics();
@@ -312,6 +306,7 @@ void MainWindow::on_actionDelete_triggered()
 //-----------------------------------------------------
 
 void MainWindow::on_actionRotate_CW_triggered()
+
 {
   t_block_position *position;
   int id;
@@ -347,6 +342,7 @@ void MainWindow::set_block_for_preview(int id)
 //-----------------------------------------------------
 
 void MainWindow::on_actionRotate_CCW_triggered()
+
 {
   t_block_position *position;
   int id;
@@ -369,6 +365,7 @@ void MainWindow::on_actionRotate_CCW_triggered()
 //-----------------------------------------------------
 
 void MainWindow::update_graphics()
+
 {
   ui->editArea->update();
   ui->preview->update();
@@ -377,6 +374,7 @@ void MainWindow::update_graphics()
 //-----------------------------------------------------
 
 void MainWindow::compute_thread(MainWindow *window, bool force)
+
 {
   window->get_graph_mutex()->lock();
   window->graph->compute(force);
@@ -387,6 +385,7 @@ void MainWindow::compute_thread(MainWindow *window, bool force)
 //-----------------------------------------------------
 
 void MainWindow::on_actionExecute_triggered()
+
 {
   QFuture<void> future;
 
@@ -435,6 +434,7 @@ void MainWindow::canvas_resolution_changed()
 //-----------------------------------------------------
 
 void MainWindow::on_width_valueChanged(int arg1)
+
 {
   this->global_settings_changed();
 }
@@ -442,6 +442,7 @@ void MainWindow::on_width_valueChanged(int arg1)
 //-----------------------------------------------------
 
 void MainWindow::on_height_valueChanged(int arg1)
+
 {
   this->global_settings_changed();
 }
@@ -449,6 +450,7 @@ void MainWindow::on_height_valueChanged(int arg1)
 //-----------------------------------------------------
 
 void MainWindow::on_supersampling_valueChanged(int arg1)
+
 {
   this->global_settings_changed();
 }
@@ -463,6 +465,7 @@ void MainWindow::on_seed_valueChanged(int arg1)
 //-----------------------------------------------------
 
 void MainWindow::on_cwidth_valueChanged(int arg1)
+
 {
   this->canvas_resolution_changed();
 }
@@ -470,6 +473,7 @@ void MainWindow::on_cwidth_valueChanged(int arg1)
 //----------------------------------------------------
 
 void MainWindow::on_cheight_valueChanged(int arg1)
+
 {
   this->canvas_resolution_changed();
 }
@@ -477,6 +481,7 @@ void MainWindow::on_cheight_valueChanged(int arg1)
 //-----------------------------------------------------
 
 void MainWindow::block_selected(int block_id)
+
 {
   c_block *block;
 
@@ -521,7 +526,23 @@ void MainWindow::block_selected(int block_id)
 
 //-----------------------------------------------------
 
+bool MainWindow::closing_file()
+
+{
+  if (!this->change_happened)
+    return true;
+
+  QMessageBox::StandardButton reply;
+
+  reply = QMessageBox::question(this,"Confirmation", "Close the file without saving?",QMessageBox::Yes|QMessageBox::No);
+
+  return reply == QMessageBox::Yes;
+}
+
+//-----------------------------------------------------
+
 void MainWindow::on_pushButton_clicked()
+
 {
   int selected_id;
   c_block *block;
@@ -543,6 +564,7 @@ void MainWindow::on_pushButton_clicked()
 //-----------------------------------------------------
 
 void MainWindow::on_radio_global_seed_toggled(bool checked)
+
 {
   c_block *block;
 
@@ -563,6 +585,7 @@ void MainWindow::on_radio_global_seed_toggled(bool checked)
 //-----------------------------------------------------
 
 void MainWindow::on_radio_custom_seed_toggled(bool checked)
+
 {
   c_block *block;
 
@@ -582,6 +605,7 @@ void MainWindow::on_radio_custom_seed_toggled(bool checked)
 //-----------------------------------------------------
 
 void MainWindow::on_custom_seed_valueChanged(int arg1)
+
 {
   c_block *block;
 
@@ -602,6 +626,7 @@ void MainWindow::on_custom_seed_valueChanged(int arg1)
 //-----------------------------------------------------
 
 void MainWindow::on_actionDisconnect_changed()
+
 {
   ui->editArea->set_disconnecting_mode(ui->actionDisconnect->isChecked());
 }
@@ -609,10 +634,224 @@ void MainWindow::on_actionDisconnect_changed()
 //-----------------------------------------------------
 
 void MainWindow::on_actionAbout_triggered()
+
 {
   AboutDialog dialog;
 
   dialog.exec();
+}
+
+//-----------------------------------------------------
+
+bool MainWindow::load(QString filename)
+
+{
+  bool success;
+  unsigned int i,j;
+  int id;
+  string line;
+  QString q_line;
+  QStringList string_list;
+  QString positions_filename;
+  t_block_position position, *position_ptr;
+
+  positions_filename = filename.left(filename.size() - 4) + "_positions";
+  ifstream input_file(positions_filename.toStdString().c_str());
+
+  ui->editArea->reset();
+  this->set_block_for_preview(-1);
+  ui->preview->set_block(NULL);
+  this->graph_mutex.lock();
+  this->block_positions.clear();
+
+  if (input_file.is_open())    // load the positions from the file
+    {
+      getline(input_file,line);   // load the canvas size first
+      q_line = QString::fromStdString(line);
+      string_list = q_line.split(':');
+
+      if (string_list.length() == 2)
+        {
+          ui->cwidth->setValue(string_list.at(0).toInt());
+          ui->cheight->setValue(string_list.at(1).toInt());
+
+          while (getline(input_file,line))
+            {
+              q_line = QString::fromStdString(line);
+
+              string_list = q_line.split(';');
+
+              if (string_list.length() < 4)  // invalid entry
+                continue;
+
+              position.block_id = string_list.at(0).toInt();
+              position.x = string_list.at(1).toInt();
+              position.y = string_list.at(2).toInt();
+              position.direction = string_list.at(3).toInt();
+
+              this->set_block_position(position);
+            }
+        }
+
+      input_file.close();
+    }
+
+  ui->preview->set_block(NULL);
+  this->set_block_for_preview(-10);
+
+  this->graph->clear();
+
+  success = this->graph->load_from_file(filename.toStdString());
+
+  if (!success)
+    {
+      this->graph_mutex.unlock();
+      this->block_positions.clear();
+      return false;
+    }
+
+  for (i = 0; i < this->graph->get_number_of_blocks(); i++)  // make up positions that don't exist
+    {
+      id = this->graph->get_block(i)->get_id();
+
+      position_ptr = this->get_block_position(id);
+
+      if (position_ptr == NULL)
+        {
+          position.block_id = id;
+          position.x = rand() % (ui->editArea->width() - 100);
+          position.y = rand() % (ui->editArea->height() - 100);
+          position.direction = 0; // up
+
+          this->set_block_position(position);
+        }
+    }
+
+  this->graph_mutex.unlock();
+
+  this->filename = filename;
+  this->update_title();
+  this->change_happened = false;
+
+  return true;
+}
+
+//-----------------------------------------------------
+
+void MainWindow::update_title()
+
+{
+  if (this->filename.length() == 0)
+    this->setWindowTitle(MAIN_WINDOW_TITLE);
+  else
+    this->setWindowTitle(QString::fromLocal8Bit(MAIN_WINDOW_TITLE) + QString::fromLocal8Bit(" - ") + this->filename);
+}
+
+//-----------------------------------------------------
+
+bool MainWindow::save(QString filename)
+
+{
+  bool success;
+  QString positions_filename;
+
+  success = this->graph->save_to_file(filename.toStdString());
+
+  if (success)
+    {
+      positions_filename = filename.left(filename.length() - 4) + "_positions";
+      this->save_positions(positions_filename);
+    }
+
+  return success;
+}
+
+//-----------------------------------------------------
+
+void MainWindow::save_as()
+
+{
+  QFileDialog dialog;
+
+  dialog.setAcceptMode(QFileDialog::AcceptSave);
+  dialog.setFileMode(QFileDialog::AnyFile);
+  dialog.setDefaultSuffix("xml");
+  dialog.setNameFilter(tr("xml files (*.xml)"));
+
+  if (dialog.exec() == QDialog::Accepted)
+    {
+      this->filename = dialog.selectedFiles().at(0);
+
+      if (!this->save(this->filename))
+        {
+          this->filename = "";
+
+          QMessageBox message;
+
+          message.setText("Could not save the file.");
+          message.exec();
+        }
+      else  // set the new window title
+        {
+          this->update_title();
+          this->change_happened = false; // reset the change watcher
+        }
+    }
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionSave_triggered()
+
+{
+  if (this->filename.length() == 0)  // unsaved file => save as
+    this->save_as();
+  else
+    {
+      this->save(this->filename);
+      this->change_happened = false; // reset the change watcher
+    }
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionSave_as_triggered()
+
+{
+  this->save_as();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionExit_triggered()
+
+{
+  if (this->closing_file())
+    QApplication::quit();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionOpen_triggered()
+{
+  QFileDialog dialog;
+  QString selected_file;
+
+  dialog.setAcceptMode(QFileDialog::AcceptOpen);
+  dialog.setFileMode(QFileDialog::AnyFile);
+  dialog.setDefaultSuffix("xml");
+  dialog.setNameFilter(tr("xml files (*.xml)"));
+
+  if (dialog.exec() == QDialog::Accepted)
+    {
+      selected_file = dialog.selectedFiles().at(0);
+
+      if (!this->closing_file())   // prompt the user
+        return;
+
+      this->load(selected_file);
+      this->update_graphics();
+    }
 }
 
 //-----------------------------------------------------

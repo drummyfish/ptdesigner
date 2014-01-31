@@ -4,6 +4,7 @@
 
 ColorBufferDisplay::ColorBufferDisplay(QWidget *parent):
     QFrame(parent)
+
 {
   this->block = NULL;
 }
@@ -19,6 +20,7 @@ void ColorBufferDisplay::set_block(c_block *block)
 //----------------------------------------------------
 
 void ColorBufferDisplay::set_main_window(MainWindow *main_window)
+
 {
   this->main_window = main_window;
 }

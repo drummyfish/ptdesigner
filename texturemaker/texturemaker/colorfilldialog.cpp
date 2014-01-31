@@ -6,6 +6,7 @@
 ColorFillDialog:: ColorFillDialog(c_block *block, QWidget *parent) :
     CustomBlockDialog(block, parent),
     ui(new Ui::ColorFillDialog)
+
 {
   ui->setupUi(this);
   this->setWindowTitle(QString::fromStdString(block->get_name()));
@@ -20,6 +21,7 @@ ColorFillDialog:: ColorFillDialog(c_block *block, QWidget *parent) :
 //-----------------------------------------------------
 
 ColorFillDialog::~ColorFillDialog()
+
 {
   delete ui;
 }
@@ -27,6 +29,7 @@ ColorFillDialog::~ColorFillDialog()
 //-----------------------------------------------------
 
 void ColorFillDialog::update_color()
+
 {
   ui->frame->setStyleSheet("QFrame {background-color: rgb(" + QString::number(this->r) + "," + QString::number(this->g) + "," + QString::number(this->b) + ")}");
 }
@@ -34,6 +37,7 @@ void ColorFillDialog::update_color()
 //-----------------------------------------------------
 
 void ColorFillDialog::on_pick_clicked()
+
 {
   QColorDialog dialog(QColor::fromRgb(this->r,this->g,this->b));
   dialog.exec();
@@ -48,6 +52,7 @@ void ColorFillDialog::on_pick_clicked()
 //-----------------------------------------------------
 
 void ColorFillDialog::on_buttonBox_accepted()
+
 {
   this->block->get_parameters()->set_int_value("red",this->r);
   this->block->get_parameters()->set_int_value("green",this->g);

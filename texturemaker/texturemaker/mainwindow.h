@@ -5,10 +5,15 @@
 #include <QMutex>
 #include <QFuture>
 #include <QTimer>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QtConcurrent/QtConcurrent>
+#include <fstream>
 #include "ptdesigner.h"
 #include "defaultblockdialog.h"
 #include "previewdialog.h"
+
+#define MAIN_WINDOW_TITLE "Texturemaker"
 
 using namespace pt_design;
 
@@ -44,6 +49,8 @@ protected:
     c_texture_graph *graph;                   ///< global texture graph
     vector<t_block_position> block_positions; ///< keeps position information about blocks
     QMutex graph_mutex;                       ///< protexts the texture graph from race conditions
+    QString filename;                         ///< name of the opened file, empty string means unsaved file
+    bool change_happened;                     ///< whether the file should be saved because a change happened
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -80,6 +87,15 @@ public:
 
 //-----------------------------------------------------
 
+    void change_occured();
+
+    /**<
+     Calling this method informs this window that a
+     change was made to its texture graph.
+     */
+
+//-----------------------------------------------------
+
     QMutex *get_graph_mutex();
 
     /**<
@@ -87,6 +103,33 @@ public:
 
       @return texture graph mutex
       */
+
+//-----------------------------------------------------
+
+    bool save_positions(QString filename);
+
+    /**<
+     Saves information about block positions in given
+     files.
+
+     @param filename file to save the information in
+
+     @return true if the file was saved, false otherwise
+     */
+
+//-----------------------------------------------------
+
+    bool closing_file();
+
+    /**<
+     This method should be called whenever the currently
+     edited file is being closed anyhow. It asks the user
+     to confirm that the file should be closed if it's
+     not saved.
+
+     @return true if the file can be closed (user confirmed
+             the action), false if not
+     */
 
 //-----------------------------------------------------
 
@@ -100,6 +143,45 @@ public:
              be replaced with the new information, otherwise
              a new element is created
       */
+
+//-----------------------------------------------------
+
+    void save_as();
+
+    /**<
+      Opens a "save as" dialog and let's the user select
+      where to save the file. If the user confirms the
+      action, the filename attribute is set and the
+      file is saved.
+     */
+
+//-----------------------------------------------------
+
+    bool save(QString filename);
+
+    /**<
+     Saves the texture graph into file and also makes
+     a file containing information about block positions.
+
+     @param filename name of the xml file to be saved
+            (with the .xml extension)
+     @return true if the xml file was saved, false
+             otherwise
+     */
+
+//-----------------------------------------------------
+
+    bool load(QString filename);
+
+    /**
+     Opens given xml file and file with position information
+     (if possible) without prompting.
+
+     @param filename name of the xml file (with extension)
+
+     @return true if the xml file was loaded, false
+             otherwise
+     */
 
 //-----------------------------------------------------
 
@@ -210,6 +292,15 @@ public:
 
 //-----------------------------------------------------
 
+   void update_title();
+
+   /**
+     Updates the window title. Should be called always
+     when the file is saved/loaded/closed.
+     */
+
+//-----------------------------------------------------
+
 private slots:
     void on_pushButton_2_clicked();
     void on_actionDelete_triggered();
@@ -222,18 +313,16 @@ private slots:
     void on_seed_valueChanged(int arg1);
     void on_cwidth_valueChanged(int arg1);
     void on_cheight_valueChanged(int arg1);
-
     void on_pushButton_clicked();
-
     void on_radio_global_seed_toggled(bool checked);
-
     void on_radio_custom_seed_toggled(bool checked);
-
     void on_custom_seed_valueChanged(int arg1);
-
     void on_actionDisconnect_changed();
-
     void on_actionAbout_triggered();
+    void on_actionSave_triggered();
+    void on_actionSave_as_triggered();
+    void on_actionExit_triggered();
+    void on_actionOpen_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Texture Designer</string>
+   <string/>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -56,13 +56,97 @@
       <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>-760</x>
          <y>0</y>
-         <width>1257</width>
+         <width>1316</width>
          <height>136</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
+        <item row="2" column="30">
+         <widget class="AddBlockButton" name="pushButton_19">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>square mosaic</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="29">
+         <widget class="AddBlockButton" name="pushButton_9">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>color transition</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="30">
+         <widget class="AddBlockButton" name="pushButton_12">
+          <property name="minimumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>53</width>
+            <height>53</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="text">
+           <string>map transition</string>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="31">
          <widget class="AddBlockButton" name="pushButton_28">
           <property name="minimumSize">
@@ -147,7 +231,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="42">
+        <item row="1" column="43">
          <spacer name="horizontalSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -1165,8 +1249,8 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="30">
-         <widget class="AddBlockButton" name="pushButton_19">
+        <item row="1" column="42">
+         <widget class="AddBlockButton" name="pushButton_45">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1189,12 +1273,12 @@
            <string/>
           </property>
           <property name="text">
-           <string>square mosaic</string>
+           <string>adjust rgb</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="29">
-         <widget class="AddBlockButton" name="pushButton_9">
+        <item row="2" column="42">
+         <widget class="AddBlockButton" name="pushButton_46">
           <property name="minimumSize">
            <size>
             <width>53</width>
@@ -1217,35 +1301,7 @@
            <string/>
           </property>
           <property name="text">
-           <string>color transition</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="30">
-         <widget class="AddBlockButton" name="pushButton_12">
-          <property name="minimumSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>53</width>
-            <height>53</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string/>
-          </property>
-          <property name="text">
-           <string>map transition</string>
+           <string>adjust hsl</string>
           </property>
          </widget>
         </item>
@@ -1297,7 +1353,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-319</y>
+           <y>-240</y>
            <width>196</width>
            <height>713</height>
           </rect>
@@ -1961,6 +2017,10 @@
    </property>
   </action>
   <action name="actionSave_as">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/resources/action save.png</normaloff>:/resources/action save.png</iconset>
+   </property>
    <property name="text">
     <string>save as</string>
    </property>

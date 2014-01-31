@@ -6,6 +6,7 @@
 VoronoiDialog::VoronoiDialog(c_block *block, QWidget *parent) :
     CustomBlockDialog(block,parent),
     ui(new Ui::VoronoiDialog)
+
 {
   c_parameters *parameters;
 
@@ -81,6 +82,7 @@ VoronoiDialog::VoronoiDialog(c_block *block, QWidget *parent) :
 //-----------------------------------------------------
 
 VoronoiDialog::~VoronoiDialog()
+
 {
   delete ui;
 }
@@ -88,12 +90,14 @@ VoronoiDialog::~VoronoiDialog()
 //-----------------------------------------------------
 
 void VoronoiDialog::on_clear_button_clicked()
+
 {
   ui->point_editor->clear();
 }
 //-----------------------------------------------------
 
 void VoronoiDialog::on_buttonBox_accepted()
+
 {
   c_parameters *parameters;
   unsigned int i;

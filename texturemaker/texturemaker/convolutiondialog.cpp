@@ -6,6 +6,7 @@
 ConvolutionDialog::ConvolutionDialog(c_block *block, QWidget *parent) :
     CustomBlockDialog(block,parent),
     ui(new Ui::ConvolutionDialog)
+
 {
   double double_buffer[256];
   unsigned int length,i,j,position;
@@ -43,6 +44,7 @@ ConvolutionDialog::ConvolutionDialog(c_block *block, QWidget *parent) :
 //-----------------------------------------------------
 
 ConvolutionDialog::~ConvolutionDialog()
+
 {
   delete ui;
 }
@@ -50,6 +52,7 @@ ConvolutionDialog::~ConvolutionDialog()
 //-----------------------------------------------------
 
 void ConvolutionDialog::change_matrix_size(unsigned int width, unsigned int height)
+
 {
   unsigned int i,j;
   QGridLayout *layout;
@@ -80,6 +83,7 @@ void ConvolutionDialog::change_matrix_size(unsigned int width, unsigned int heig
 //-----------------------------------------------------
 
 void ConvolutionDialog::on_matrix_width_valueChanged(int arg1)
+
 {
   this->change_matrix_size(ui->matrix_width->value(),ui->matrix_height->value());
 }
@@ -87,6 +91,7 @@ void ConvolutionDialog::on_matrix_width_valueChanged(int arg1)
 //-----------------------------------------------------
 
 void ConvolutionDialog::on_matrix_height_valueChanged(int arg1)
+
 {
   this->change_matrix_size(ui->matrix_width->value(),ui->matrix_height->value());
 }
@@ -94,6 +99,7 @@ void ConvolutionDialog::on_matrix_height_valueChanged(int arg1)
 //-----------------------------------------------------
 
 void ConvolutionDialog::on_buttonBox_accepted()
+
 {
   unsigned int i,j;
   string matrix_data,help_string;

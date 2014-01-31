@@ -6,6 +6,7 @@
 PreviewDialog::PreviewDialog(c_block *block, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PreviewDialog)
+
 {
   unsigned int width,height;
   this->block = block;
@@ -29,6 +30,7 @@ PreviewDialog::PreviewDialog(c_block *block, QWidget *parent) :
 //-----------------------------------------------------
 
 PreviewDialog::~PreviewDialog()
+
 {
     delete ui;
 }

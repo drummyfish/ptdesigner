@@ -58,6 +58,9 @@ public:
     QScrollArea *blockArea;
     QWidget *scrollAreaWidgetContents;
     QGridLayout *gridLayout_2;
+    AddBlockButton *pushButton_19;
+    AddBlockButton *pushButton_9;
+    AddBlockButton *pushButton_12;
     AddBlockButton *pushButton_28;
     AddBlockButton *pushButton_17;
     AddBlockButton *pushButton_33;
@@ -98,9 +101,8 @@ public:
     AddBlockButton *pushButton_30;
     AddBlockButton *pushButton_32;
     AddBlockButton *pushButton_41;
-    AddBlockButton *pushButton_19;
-    AddBlockButton *pushButton_9;
-    AddBlockButton *pushButton_12;
+    AddBlockButton *pushButton_45;
+    AddBlockButton *pushButton_46;
     QHBoxLayout *horizontalLayout;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents_2;
@@ -170,6 +172,7 @@ public:
         actionSave->setIcon(icon);
         actionSave_as = new QAction(MainWindow);
         actionSave_as->setObjectName(QStringLiteral("actionSave_as"));
+        actionSave_as->setIcon(icon);
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QStringLiteral("actionExit"));
         actionHelp_topics = new QAction(MainWindow);
@@ -218,11 +221,35 @@ public:
         blockArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1257, 136));
+        scrollAreaWidgetContents->setGeometry(QRect(-760, 0, 1316, 136));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        pushButton_19 = new AddBlockButton(scrollAreaWidgetContents);
+        pushButton_19->setObjectName(QStringLiteral("pushButton_19"));
+        pushButton_19->setMinimumSize(QSize(53, 53));
+        pushButton_19->setMaximumSize(QSize(53, 53));
+        pushButton_19->setBaseSize(QSize(53, 53));
+
+        gridLayout_2->addWidget(pushButton_19, 2, 30, 1, 1);
+
+        pushButton_9 = new AddBlockButton(scrollAreaWidgetContents);
+        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
+        pushButton_9->setMinimumSize(QSize(53, 53));
+        pushButton_9->setMaximumSize(QSize(53, 53));
+        pushButton_9->setBaseSize(QSize(53, 53));
+
+        gridLayout_2->addWidget(pushButton_9, 1, 29, 1, 1);
+
+        pushButton_12 = new AddBlockButton(scrollAreaWidgetContents);
+        pushButton_12->setObjectName(QStringLiteral("pushButton_12"));
+        pushButton_12->setMinimumSize(QSize(53, 53));
+        pushButton_12->setMaximumSize(QSize(53, 53));
+        pushButton_12->setBaseSize(QSize(53, 53));
+
+        gridLayout_2->addWidget(pushButton_12, 1, 30, 1, 1);
+
         pushButton_28 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_28->setObjectName(QStringLiteral("pushButton_28"));
         pushButton_28->setMinimumSize(QSize(53, 53));
@@ -249,7 +276,7 @@ public:
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout_2->addItem(horizontalSpacer, 1, 42, 1, 1);
+        gridLayout_2->addItem(horizontalSpacer, 1, 43, 1, 1);
 
         pushButton_16 = new AddBlockButton(scrollAreaWidgetContents);
         pushButton_16->setObjectName(QStringLiteral("pushButton_16"));
@@ -539,29 +566,21 @@ public:
 
         gridLayout_2->addWidget(pushButton_41, 2, 29, 1, 1);
 
-        pushButton_19 = new AddBlockButton(scrollAreaWidgetContents);
-        pushButton_19->setObjectName(QStringLiteral("pushButton_19"));
-        pushButton_19->setMinimumSize(QSize(53, 53));
-        pushButton_19->setMaximumSize(QSize(53, 53));
-        pushButton_19->setBaseSize(QSize(53, 53));
+        pushButton_45 = new AddBlockButton(scrollAreaWidgetContents);
+        pushButton_45->setObjectName(QStringLiteral("pushButton_45"));
+        pushButton_45->setMinimumSize(QSize(53, 53));
+        pushButton_45->setMaximumSize(QSize(53, 53));
+        pushButton_45->setBaseSize(QSize(53, 53));
 
-        gridLayout_2->addWidget(pushButton_19, 2, 30, 1, 1);
+        gridLayout_2->addWidget(pushButton_45, 1, 42, 1, 1);
 
-        pushButton_9 = new AddBlockButton(scrollAreaWidgetContents);
-        pushButton_9->setObjectName(QStringLiteral("pushButton_9"));
-        pushButton_9->setMinimumSize(QSize(53, 53));
-        pushButton_9->setMaximumSize(QSize(53, 53));
-        pushButton_9->setBaseSize(QSize(53, 53));
+        pushButton_46 = new AddBlockButton(scrollAreaWidgetContents);
+        pushButton_46->setObjectName(QStringLiteral("pushButton_46"));
+        pushButton_46->setMinimumSize(QSize(53, 53));
+        pushButton_46->setMaximumSize(QSize(53, 53));
+        pushButton_46->setBaseSize(QSize(53, 53));
 
-        gridLayout_2->addWidget(pushButton_9, 1, 29, 1, 1);
-
-        pushButton_12 = new AddBlockButton(scrollAreaWidgetContents);
-        pushButton_12->setObjectName(QStringLiteral("pushButton_12"));
-        pushButton_12->setMinimumSize(QSize(53, 53));
-        pushButton_12->setMaximumSize(QSize(53, 53));
-        pushButton_12->setBaseSize(QSize(53, 53));
-
-        gridLayout_2->addWidget(pushButton_12, 1, 30, 1, 1);
+        gridLayout_2->addWidget(pushButton_46, 2, 42, 1, 1);
 
         blockArea->setWidget(scrollAreaWidgetContents);
 
@@ -586,7 +605,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, -319, 196, 713));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, -240, 196, 713));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -936,7 +955,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Texture Designer", 0));
+        MainWindow->setWindowTitle(QString());
         actionNew_texture->setText(QApplication::translate("MainWindow", "new", 0));
         actionOpen->setText(QApplication::translate("MainWindow", "open", 0));
         actionSave->setText(QApplication::translate("MainWindow", "save", 0));
@@ -949,6 +968,18 @@ public:
         actionDelete->setText(QApplication::translate("MainWindow", "delete", 0));
         actionExecute->setText(QApplication::translate("MainWindow", "execute", 0));
         actionDisconnect->setText(QApplication::translate("MainWindow", "disconnect", 0));
+#ifndef QT_NO_TOOLTIP
+        pushButton_19->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+        pushButton_19->setText(QApplication::translate("MainWindow", "square mosaic", 0));
+#ifndef QT_NO_TOOLTIP
+        pushButton_9->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+        pushButton_9->setText(QApplication::translate("MainWindow", "color transition", 0));
+#ifndef QT_NO_TOOLTIP
+        pushButton_12->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+        pushButton_12->setText(QApplication::translate("MainWindow", "map transition", 0));
 #ifndef QT_NO_TOOLTIP
         pushButton_28->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
@@ -1103,17 +1134,13 @@ public:
 #endif // QT_NO_TOOLTIP
         pushButton_41->setText(QApplication::translate("MainWindow", "tile", 0));
 #ifndef QT_NO_TOOLTIP
-        pushButton_19->setToolTip(QString());
+        pushButton_45->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
-        pushButton_19->setText(QApplication::translate("MainWindow", "square mosaic", 0));
+        pushButton_45->setText(QApplication::translate("MainWindow", "adjust rgb", 0));
 #ifndef QT_NO_TOOLTIP
-        pushButton_9->setToolTip(QString());
+        pushButton_46->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
-        pushButton_9->setText(QApplication::translate("MainWindow", "color transition", 0));
-#ifndef QT_NO_TOOLTIP
-        pushButton_12->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-        pushButton_12->setText(QApplication::translate("MainWindow", "map transition", 0));
+        pushButton_46->setText(QApplication::translate("MainWindow", "adjust hsl", 0));
         pushButton->setText(QApplication::translate("MainWindow", "display full size", 0));
         groupBox_3->setTitle(QApplication::translate("MainWindow", "global settings", 0));
         label->setText(QApplication::translate("MainWindow", "texture width", 0));

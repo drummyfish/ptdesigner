@@ -62,6 +62,15 @@ public:
 
 //-----------------------------------------------------
 
+    void reset();
+
+    /**
+      Resets the area's state variables to default stat
+      (i.e. clears selected block etc.).
+      */
+
+//-----------------------------------------------------
+
     void set_disconnecting_mode(bool value);
 
     /**

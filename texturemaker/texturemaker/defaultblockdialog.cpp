@@ -1,9 +1,12 @@
 #include "defaultblockdialog.h"
 #include "ui_defaultblockdialog.h"
 
+//-----------------------------------------------------
+
 DefaultBlockDialog::DefaultBlockDialog(c_block *block, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DefaultBlockDialog)
+
 {
   unsigned int i;
   t_parameter_type parameter_type;
@@ -44,6 +47,7 @@ DefaultBlockDialog::DefaultBlockDialog(c_block *block, QWidget *parent) :
             {
               QDoubleSpinBox *double_spin_box = new QDoubleSpinBox();
               double_spin_box->setMinimumWidth(75);
+              double_spin_box->setMinimum(-99999999.99);
               double_spin_box->setValue(block->get_parameters()->get_double_value(i));
               ((QGridLayout *) this->layout())->addWidget(double_spin_box,i,1);
               break;
@@ -71,12 +75,18 @@ DefaultBlockDialog::DefaultBlockDialog(c_block *block, QWidget *parent) :
   ((QGridLayout *) this->layout())->addWidget(ui->buttonBox,i,0);
 }
 
+//-----------------------------------------------------
+
 DefaultBlockDialog::~DefaultBlockDialog()
+
 {
   delete ui;
 }
 
+//-----------------------------------------------------
+
 void DefaultBlockDialog::on_buttonBox_accepted()
+
 {
   t_parameter_type type;
   string std_string,help_string;
@@ -110,3 +120,5 @@ void DefaultBlockDialog::on_buttonBox_accepted()
         }
     }
 }
+
+//-----------------------------------------------------

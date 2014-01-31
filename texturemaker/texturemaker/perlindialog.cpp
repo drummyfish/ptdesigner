@@ -6,6 +6,7 @@
 PerlinDialog::PerlinDialog(c_block *block, QWidget *parent) :
     CustomBlockDialog(block,parent),
     ui(new Ui::PerlinDialog)
+
 {
     c_parameters *parameters;
 
@@ -49,6 +50,7 @@ PerlinDialog::PerlinDialog(c_block *block, QWidget *parent) :
 //-----------------------------------------------------
 
 PerlinDialog::~PerlinDialog()
+
 {
   delete ui;
 }
@@ -56,6 +58,7 @@ PerlinDialog::~PerlinDialog()
 //-----------------------------------------------------
 
 void PerlinDialog::on_amplitude_slider_valueChanged(int value)
+
 {
   ui->amplitude_value->setText(QString::number(ui->amplitude_slider->value()));
 }
@@ -63,6 +66,7 @@ void PerlinDialog::on_amplitude_slider_valueChanged(int value)
 //-----------------------------------------------------
 
 void PerlinDialog::on_buttonBox_accepted()
+
 {
   c_parameters *parameters;
 
