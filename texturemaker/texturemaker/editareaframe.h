@@ -62,6 +62,16 @@ public:
 
 //-----------------------------------------------------
 
+    void show_parameters_dialog();
+
+    /**
+      Shows a parameter edit dialog for currently
+      selected block. If no block is selected, nothing
+      happens. The method locks the graph mutex.
+      */
+
+//-----------------------------------------------------
+
     void reset();
 
     /**

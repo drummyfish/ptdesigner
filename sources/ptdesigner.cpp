@@ -2351,7 +2351,7 @@ void c_block_mix::set_default()
   {
     this->name = MIX_NAME;
     this->min_inputs = 2;
-    this->max_inputs = 2;
+    this->max_inputs = 3;
 
     this->parameters->add_parameter("percentage",PARAMETER_INT);
     this->parameters->add_parameter("method",PARAMETER_INT);

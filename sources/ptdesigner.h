@@ -27,6 +27,7 @@ extern "C"
 #include <string>
 #include "rapidxml.hpp"
 
+#define PT_LIB_VERSION    "1.0"  /// library version
 #define MAX_INPUT_BLOCKS  5  /// maximum number of input blocks
 #define MAX_SUPERSAMPLING 6  /// maximum supersampling level
 

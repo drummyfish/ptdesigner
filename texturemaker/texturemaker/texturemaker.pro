@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     perlindialog.cpp \
     convolutiondialog.cpp \
     customblockdialog.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    mixdialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -44,7 +45,8 @@ HEADERS  += mainwindow.h \
     perlindialog.h \
     convolutiondialog.h \
     customblockdialog.h \
-    aboutdialog.h
+    aboutdialog.h \
+    mixdialog.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -54,7 +56,8 @@ FORMS    += mainwindow.ui \
     voronoidialog.ui \
     perlindialog.ui \
     convolutiondialog.ui \
-    aboutdialog.ui
+    aboutdialog.ui \
+    mixdialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 

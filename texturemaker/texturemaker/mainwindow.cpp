@@ -855,3 +855,11 @@ void MainWindow::on_actionOpen_triggered()
 }
 
 //-----------------------------------------------------
+
+void MainWindow::on_pushButton_26_clicked()
+
+{
+  ui->editArea->show_parameters_dialog();
+}
+
+//-----------------------------------------------------

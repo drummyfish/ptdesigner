@@ -225,6 +225,9 @@ void EditAreaFrame::paintEvent(QPaintEvent *)
 
   if (this->connecting_id >= 0)    // draw the line if connecting
     {
+      pen.setWidth(3);
+      painter.setPen(pen);
+
       position = this->main_window->get_block_position(this->connecting_id);
 
       switch (position->direction)
@@ -273,10 +276,13 @@ void EditAreaFrame::paintEvent(QPaintEvent *)
         {
           pen.setColor(Qt::black);
           pen.setWidth(0);
+          pen.setDashOffset(2);
           pen.setStyle(Qt::DashLine);
 
+          painter.setRenderHints(QPainter::Antialiasing,false);
           painter.setPen(pen);
           painter.drawRect(position->x - 11,position->y - 9,75,75);
+          painter.setRenderHints(QPainter::Antialiasing,true);
         }
 
       painter.drawPixmap(position->x,position->y,pixmap);                      // draw the block
@@ -444,61 +450,58 @@ void EditAreaFrame::dragEnterEvent(QDragEnterEvent *event)
 void EditAreaFrame::mouseDoubleClickEvent(QMouseEvent *event)
 
 {
+  int slot;
+
+  this->selected_id = this->main_window->get_block_by_position(event->pos().x(),event->pos().y(),&slot);
+  this->moving = false;
+  this->connecting_id = -1;
+  this->show_parameters_dialog();
+}
+
+//-----------------------------------------------------
+
+void EditAreaFrame::show_parameters_dialog()
+
+{
   c_block *block;
-  int slot,block_id;
+  int block_id;
+  QDialog *help_dialog;
 
-  block_id = this->main_window->get_block_by_position(event->pos().x(),event->pos().y(),&slot);
-
-  if (block_id < 0)
+  if (this->selected_id < 0) // no block selected
     return;
-
-  block = this->main_window->get_texture_graph()->get_block_by_id(block_id);
-
-  if (block == NULL)
-    return;
-
-  // choose the right dialog:
 
   this->main_window->get_graph_mutex()->lock();
 
+  block = this->main_window->get_texture_graph()->get_block_by_id(this->selected_id);
+
+  if (block == NULL)
+    {
+      this->main_window->get_graph_mutex()->unlock();
+      return;
+    }
+
+  // choose the right dialog:
+
   if (block->get_name().compare(COLOR_FILL_NAME) == 0)
-    {
-      ColorFillDialog dialog(block,this);
-      dialog.exec();
-    }
-  else if (block->get_name().compare(LIGHT_NAME) == 0)
-    {
-      LightDialog dialog(block,this);
-      dialog.exec();
-    }
-  else if (block->get_name().compare(PERLIN_NOISE_NAME) == 0)
-    {
-      PerlinDialog dialog(block,this);
-      dialog.exec();
-    }
-  else if (block->get_name().compare(VORONOI_DIAGRAM_NAME) == 0)
-    {
-      VoronoiDialog dialog(block,this);
-      dialog.exec();
-    }
-  else if (block->get_name().compare(CONVOLUTION_NAME) == 0)
-    {
-      ConvolutionDialog dialog(block,this);
-      dialog.exec();
-    }
-  else   // default dialog
-    {
-      DefaultBlockDialog dialog(block);
-      dialog.exec();
-    }
+      help_dialog = new ColorFillDialog(block,this);
+    else if (block->get_name().compare(LIGHT_NAME) == 0)
+      help_dialog = new LightDialog(block,this);
+    else if (block->get_name().compare(PERLIN_NOISE_NAME) == 0)
+      help_dialog = new PerlinDialog(block,this);
+    else if (block->get_name().compare(VORONOI_DIAGRAM_NAME) == 0)
+      help_dialog = new VoronoiDialog(block,this);
+    else if (block->get_name().compare(CONVOLUTION_NAME) == 0)
+      help_dialog = new ConvolutionDialog(block,this);
+    else   // default dialog
+      help_dialog = new DefaultBlockDialog(block);
 
-  this->main_window->change_occured();
+    if (help_dialog->exec() == QDialog::Accepted)
+      this->main_window->change_occured();           // changes were made => inform the main window
 
-  this->main_window->get_graph_mutex()->unlock();
+    delete help_dialog;
 
-  this->moving = false;      // so that double click doesn't trigger block move
-  this->connecting_id = -1;
-  this->main_window->update_graphics();
+    this->main_window->get_graph_mutex()->unlock();
+    this->main_window->update_graphics();
 }
 
 //-----------------------------------------------------

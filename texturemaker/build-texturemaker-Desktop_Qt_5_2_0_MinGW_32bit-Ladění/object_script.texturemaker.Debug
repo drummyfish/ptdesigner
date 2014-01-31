@@ -14,6 +14,7 @@ INPUT(
 ./debug\convolutiondialog.o
 ./debug\customblockdialog.o
 ./debug\aboutdialog.o
+./debug\mixdialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -29,4 +30,5 @@ INPUT(
 ./debug\moc_convolutiondialog.o
 ./debug\moc_customblockdialog.o
 ./debug\moc_aboutdialog.o
+./debug\moc_mixdialog.o
 );

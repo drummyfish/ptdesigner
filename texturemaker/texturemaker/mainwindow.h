@@ -324,6 +324,8 @@ private slots:
     void on_actionExit_triggered();
     void on_actionOpen_triggered();
 
+    void on_pushButton_26_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
