@@ -16,6 +16,7 @@ INPUT(
 ./release\aboutdialog.o
 ./release\mixdialog.o
 ./release\saveloaddialog.o
+./release\lsystemdialog.o
 ./release\qrc_resources.o
 ./release\moc_mainwindow.o
 ./release\moc_editareaframe.o
@@ -33,4 +34,5 @@ INPUT(
 ./release\moc_aboutdialog.o
 ./release\moc_mixdialog.o
 ./release\moc_saveloaddialog.o
+./release\moc_lsystemdialog.o
 );

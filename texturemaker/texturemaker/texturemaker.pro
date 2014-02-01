@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     customblockdialog.cpp \
     aboutdialog.cpp \
     mixdialog.cpp \
-    saveloaddialog.cpp
+    saveloaddialog.cpp \
+    lsystemdialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -48,7 +49,8 @@ HEADERS  += mainwindow.h \
     customblockdialog.h \
     aboutdialog.h \
     mixdialog.h \
-    saveloaddialog.h
+    saveloaddialog.h \
+    lsystemdialog.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -60,7 +62,8 @@ FORMS    += mainwindow.ui \
     convolutiondialog.ui \
     aboutdialog.ui \
     mixdialog.ui \
-    saveloaddialog.ui
+    saveloaddialog.ui \
+    lsystemdialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 

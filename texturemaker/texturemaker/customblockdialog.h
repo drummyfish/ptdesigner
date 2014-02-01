@@ -6,6 +6,8 @@
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QDoubleValidator>
+#include <QTextStream>
+#include <QMessageBox>
 #include <iostream>
 #include "ptdesigner.h"
 
