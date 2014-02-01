@@ -30,9 +30,9 @@ public:
     QGridLayout *gridLayout;
     QLabel *label_2;
     QDialogButtonBox *buttonBox;
-    QComboBox *comboBox;
-    QSlider *horizontalSlider;
-    QLineEdit *lineEdit;
+    QComboBox *method_combo;
+    QSlider *ratio_slider;
+    QLineEdit *ratio_text;
     QLabel *label;
 
     void setupUi(QDialog *MixDialog)
@@ -59,24 +59,24 @@ public:
 
         gridLayout->addWidget(buttonBox, 6, 3, 1, 1);
 
-        comboBox = new QComboBox(MixDialog);
-        comboBox->setObjectName(QStringLiteral("comboBox"));
+        method_combo = new QComboBox(MixDialog);
+        method_combo->setObjectName(QStringLiteral("method_combo"));
 
-        gridLayout->addWidget(comboBox, 4, 3, 1, 1);
+        gridLayout->addWidget(method_combo, 4, 3, 1, 1);
 
-        horizontalSlider = new QSlider(MixDialog);
-        horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
-        horizontalSlider->setMaximum(100);
-        horizontalSlider->setOrientation(Qt::Horizontal);
+        ratio_slider = new QSlider(MixDialog);
+        ratio_slider->setObjectName(QStringLiteral("ratio_slider"));
+        ratio_slider->setMaximum(100);
+        ratio_slider->setOrientation(Qt::Horizontal);
 
-        gridLayout->addWidget(horizontalSlider, 3, 3, 1, 1);
+        gridLayout->addWidget(ratio_slider, 3, 3, 1, 1);
 
-        lineEdit = new QLineEdit(MixDialog);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setMaximumSize(QSize(50, 16777215));
-        lineEdit->setReadOnly(true);
+        ratio_text = new QLineEdit(MixDialog);
+        ratio_text->setObjectName(QStringLiteral("ratio_text"));
+        ratio_text->setMaximumSize(QSize(50, 16777215));
+        ratio_text->setReadOnly(true);
 
-        gridLayout->addWidget(lineEdit, 3, 1, 1, 1);
+        gridLayout->addWidget(ratio_text, 3, 1, 1, 1);
 
         label = new QLabel(MixDialog);
         label->setObjectName(QStringLiteral("label"));
@@ -95,8 +95,8 @@ public:
     {
         MixDialog->setWindowTitle(QApplication::translate("MixDialog", "Dialog", 0));
         label_2->setText(QApplication::translate("MixDialog", "method", 0));
-        comboBox->clear();
-        comboBox->insertItems(0, QStringList()
+        method_combo->clear();
+        method_combo->insertItems(0, QStringList()
          << QApplication::translate("MixDialog", "add", 0)
          << QApplication::translate("MixDialog", "substract", 0)
          << QApplication::translate("MixDialog", "average", 0)

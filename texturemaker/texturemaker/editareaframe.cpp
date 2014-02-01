@@ -5,6 +5,8 @@
 #include "voronoidialog.h"
 #include "perlindialog.h"
 #include "convolutiondialog.h"
+#include "mixdialog.h"
+#include "saveloaddialog.h"
 
 //-----------------------------------------------------
 
@@ -492,6 +494,11 @@ void EditAreaFrame::show_parameters_dialog()
       help_dialog = new VoronoiDialog(block,this);
     else if (block->get_name().compare(CONVOLUTION_NAME) == 0)
       help_dialog = new ConvolutionDialog(block,this);
+    else if (block->get_name().compare(MIX_NAME) == 0)
+      help_dialog = new MixDialog(block,this);
+    else if (block->get_name().compare(FILE_SAVE_NAME) == 0 ||
+             block->get_name().compare(FILE_LOAD_NAME) == 0)
+      help_dialog = new SaveLoadDialog(block,this);
     else   // default dialog
       help_dialog = new DefaultBlockDialog(block);
 

@@ -326,6 +326,10 @@ private slots:
 
     void on_pushButton_26_clicked();
 
+    void on_actionEdit_parameters_triggered();
+
+    void on_actionDuplicate_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

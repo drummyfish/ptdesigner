@@ -53,6 +53,8 @@ public:
     QAction *actionDelete;
     QAction *actionExecute;
     QAction *actionDisconnect;
+    QAction *actionEdit_parameters;
+    QAction *actionDuplicate;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QScrollArea *blockArea;
@@ -205,6 +207,10 @@ public:
         QIcon icon5;
         icon5.addFile(QStringLiteral(":/resources/action disconnect.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionDisconnect->setIcon(icon5);
+        actionEdit_parameters = new QAction(MainWindow);
+        actionEdit_parameters->setObjectName(QStringLiteral("actionEdit_parameters"));
+        actionDuplicate = new QAction(MainWindow);
+        actionDuplicate->setObjectName(QStringLiteral("actionDuplicate"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -221,7 +227,7 @@ public:
         blockArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(-760, 0, 1316, 136));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1316, 136));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -605,7 +611,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, -240, 196, 713));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 196, 713));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -892,6 +898,7 @@ public:
         editArea->setSizePolicy(sizePolicy6);
         editArea->setMinimumSize(QSize(640, 480));
         editArea->setBaseSize(QSize(640, 480));
+        editArea->setContextMenuPolicy(Qt::NoContextMenu);
         editArea->setFrameShape(QFrame::StyledPanel);
         editArea->setFrameShadow(QFrame::Raised);
 
@@ -939,6 +946,8 @@ public:
         menuEdit->addAction(actionDelete);
         menuEdit->addAction(actionExecute);
         menuEdit->addAction(actionDisconnect);
+        menuEdit->addAction(actionEdit_parameters);
+        menuEdit->addAction(actionDuplicate);
         menuHelp->addAction(actionHelp_topics);
         menuHelp->addAction(actionAbout);
         toolBar->addAction(actionSave);
@@ -968,6 +977,8 @@ public:
         actionDelete->setText(QApplication::translate("MainWindow", "delete", 0));
         actionExecute->setText(QApplication::translate("MainWindow", "execute", 0));
         actionDisconnect->setText(QApplication::translate("MainWindow", "disconnect", 0));
+        actionEdit_parameters->setText(QApplication::translate("MainWindow", "edit parameters", 0));
+        actionDuplicate->setText(QApplication::translate("MainWindow", "duplicate", 0));
 #ifndef QT_NO_TOOLTIP
         pushButton_19->setToolTip(QString());
 #endif // QT_NO_TOOLTIP

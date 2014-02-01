@@ -56,7 +56,7 @@
       <widget class="QWidget" name="scrollAreaWidgetContents">
        <property name="geometry">
         <rect>
-         <x>-760</x>
+         <x>0</x>
          <y>0</y>
          <width>1316</width>
          <height>136</height>
@@ -1353,7 +1353,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-240</y>
+           <y>0</y>
            <width>196</width>
            <height>713</height>
           </rect>
@@ -1910,6 +1910,9 @@
               <height>480</height>
              </size>
             </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::NoContextMenu</enum>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -1967,6 +1970,8 @@
     <addaction name="actionDelete"/>
     <addaction name="actionExecute"/>
     <addaction name="actionDisconnect"/>
+    <addaction name="actionEdit_parameters"/>
+    <addaction name="actionDuplicate"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -2088,9 +2093,25 @@
     <string>disconnect</string>
    </property>
   </action>
+  <action name="actionEdit_parameters">
+   <property name="text">
+    <string>edit parameters</string>
+   </property>
+  </action>
+  <action name="actionDuplicate">
+   <property name="text">
+    <string>duplicate</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>ColorBufferDisplay</class>
+   <extends>QFrame</extends>
+   <header location="global">ColorBufferDisplay.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>EditAreaFrame</class>
    <extends>QFrame</extends>
@@ -2101,12 +2122,6 @@
    <class>AddBlockButton</class>
    <extends>QPushButton</extends>
    <header location="global">AddBlockButton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ColorBufferDisplay</class>
-   <extends>QFrame</extends>
-   <header location="global">ColorBufferDisplay.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

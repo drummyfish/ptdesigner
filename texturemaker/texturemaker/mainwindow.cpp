@@ -863,3 +863,81 @@ void MainWindow::on_pushButton_26_clicked()
 }
 
 //-----------------------------------------------------
+
+void MainWindow::on_actionEdit_parameters_triggered()
+
+{
+  ui->editArea->show_parameters_dialog();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::on_actionDuplicate_triggered()
+
+{
+  c_block *block,*new_block;
+  c_parameters *parameters,*new_parameters;
+  t_block_position *position,new_position;
+  string parameter_name;
+  unsigned int i;
+
+  if (ui->editArea->get_selected_id() < 0)
+    return;
+
+  this->graph_mutex.lock();
+
+  block = this->graph->get_block_by_id(ui->editArea->get_selected_id());
+  position = this->get_block_position(ui->editArea->get_selected_id());
+
+  if (block == NULL || position == NULL)
+    {
+      this->graph_mutex.unlock();
+      return;
+    }
+
+  // duplicate the block:
+
+  new_block = c_block::get_block_instance(block->get_name());
+  this->graph->add_block(new_block);
+
+  new_position.block_id = new_block->get_id();
+  new_position.x = position->x < ui->editArea->width() - 150 ? position->x + 50 : position->x - 50;
+  new_position.y = position->y < ui->editArea->height() - 150 ? position->y + 50 : position->y - 50;
+  new_position.direction = position->direction;
+
+  // copy parameter values:
+
+  parameters = block->get_parameters();
+  new_parameters = new_block->get_parameters();
+
+  for (i = 0; i < parameters->number_of_parameters(); i++)
+    {
+      parameter_name = parameters->get_name(i);
+
+      switch (parameters->get_type(i))
+        {
+          case PARAMETER_INT:
+            new_parameters->set_int_value(parameter_name,parameters->get_int_value(parameter_name));
+            break;
+
+          case PARAMETER_DOUBLE:
+            new_parameters->set_double_value(parameter_name,parameters->get_double_value(parameter_name));
+            break;
+
+          case PARAMETER_BOOL:
+            new_parameters->set_bool_value(parameter_name,parameters->get_bool_value(parameter_name));
+            break;
+
+          case PARAMETER_STRING:
+            new_parameters->set_string_value(parameter_name,parameters->get_string_value(parameter_name));
+            break;
+        }
+    }
+
+  this->set_block_position(new_position);
+
+  this->graph_mutex.unlock();
+  this->update_graphics();
+}
+
+//-----------------------------------------------------

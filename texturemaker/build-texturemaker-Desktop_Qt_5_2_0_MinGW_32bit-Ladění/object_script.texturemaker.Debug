@@ -15,6 +15,7 @@ INPUT(
 ./debug\customblockdialog.o
 ./debug\aboutdialog.o
 ./debug\mixdialog.o
+./debug\saveloaddialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -31,4 +32,5 @@ INPUT(
 ./debug\moc_customblockdialog.o
 ./debug\moc_aboutdialog.o
 ./debug\moc_mixdialog.o
+./debug\moc_saveloaddialog.o
 );

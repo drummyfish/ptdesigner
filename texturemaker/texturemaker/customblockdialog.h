@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QColorDialog>
 #include <QLineEdit>
+#include <QFileDialog>
 #include <QDoubleValidator>
 #include <iostream>
 #include "ptdesigner.h"
