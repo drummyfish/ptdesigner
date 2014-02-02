@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <iostream>
 #include "ptdesigner.h"
+#include "colortransition.h"
 
 using namespace pt_design;
 using namespace std;

@@ -8,6 +8,7 @@
 #include "mixdialog.h"
 #include "saveloaddialog.h"
 #include "lsystemdialog.h"
+#include "colortransitiondialog.h"
 
 //-----------------------------------------------------
 
@@ -499,6 +500,8 @@ void EditAreaFrame::show_parameters_dialog()
       help_dialog = new MixDialog(block,this);
     else if (block->get_name().compare(L_SYSTEM_NAME) == 0)
       help_dialog = new LSystemDialog(block,this);
+    else if (block->get_name().compare(COLOR_TRANSITION_NAME) == 0)
+      help_dialog = new ColorTransitionDialog(block,this);
     else if (block->get_name().compare(FILE_SAVE_NAME) == 0 ||
              block->get_name().compare(FILE_LOAD_NAME) == 0)
       help_dialog = new SaveLoadDialog(block,this);

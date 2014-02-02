@@ -60,7 +60,9 @@ SOURCES       = ..\texturemaker\main.cpp \
 		..\texturemaker\aboutdialog.cpp \
 		..\texturemaker\mixdialog.cpp \
 		..\texturemaker\saveloaddialog.cpp \
-		..\texturemaker\lsystemdialog.cpp release\qrc_resources.cpp \
+		..\texturemaker\lsystemdialog.cpp \
+		..\texturemaker\colortransitiondialog.cpp \
+		..\texturemaker\transitionpreviewframe.cpp release\qrc_resources.cpp \
 		release\moc_mainwindow.cpp \
 		release\moc_editareaframe.cpp \
 		release\moc_addblockbutton.cpp \
@@ -77,7 +79,9 @@ SOURCES       = ..\texturemaker\main.cpp \
 		release\moc_aboutdialog.cpp \
 		release\moc_mixdialog.cpp \
 		release\moc_saveloaddialog.cpp \
-		release\moc_lsystemdialog.cpp
+		release\moc_lsystemdialog.cpp \
+		release\moc_colortransitiondialog.cpp \
+		release\moc_transitionpreviewframe.cpp
 OBJECTS       = release/main.o \
 		release/mainwindow.o \
 		release/editareaframe.o \
@@ -96,6 +100,8 @@ OBJECTS       = release/main.o \
 		release/mixdialog.o \
 		release/saveloaddialog.o \
 		release/lsystemdialog.o \
+		release/colortransitiondialog.o \
+		release/transitionpreviewframe.o \
 		release/qrc_resources.o \
 		release/moc_mainwindow.o \
 		release/moc_editareaframe.o \
@@ -113,7 +119,9 @@ OBJECTS       = release/main.o \
 		release/moc_aboutdialog.o \
 		release/moc_mixdialog.o \
 		release/moc_saveloaddialog.o \
-		release/moc_lsystemdialog.o
+		release/moc_lsystemdialog.o \
+		release/moc_colortransitiondialog.o \
+		release/moc_transitionpreviewframe.o
 
 DIST          = 
 QMAKE_TARGET  = texturemaker
@@ -142,7 +150,7 @@ DESTDIR_TARGET = release\texturemaker.exe
 first: all
 all: Makefile.Release  $(DESTDIR_TARGET)
 
-$(DESTDIR_TARGET): ui_mainwindow.h ui_defaultblockdialog.h ui_previewdialog.h ui_colorfilldialog.h ui_lightdialog.h ui_voronoidialog.h ui_perlindialog.h ui_convolutiondialog.h ui_aboutdialog.h ui_mixdialog.h ui_saveloaddialog.h ui_lsystemdialog.h $(OBJECTS) 
+$(DESTDIR_TARGET): ui_mainwindow.h ui_defaultblockdialog.h ui_previewdialog.h ui_colorfilldialog.h ui_lightdialog.h ui_voronoidialog.h ui_perlindialog.h ui_convolutiondialog.h ui_aboutdialog.h ui_mixdialog.h ui_saveloaddialog.h ui_lsystemdialog.h ui_colortransitiondialog.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) object_script.texturemaker.Release  $(LIBS)
 
 qmake: FORCE
@@ -154,7 +162,7 @@ dist:
 	$(ZIP) texturemaker.zip $(SOURCES) $(DIST) ..\texturemaker\texturemaker.pro ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\spec_pre.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\qdevice.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\device_config.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\common\shell-win32.conf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\qconfig.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axbase.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axbase_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axcontainer.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axcontainer_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axserver.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_axserver_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_bluetooth.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_bluetooth_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_bootstrap_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_clucene_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_core.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_declarative.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_declarative_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_help.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_network.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_nfc.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_nfc_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_openglextensions.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_openglextensions_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_platformsupport_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_positioning.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_positioning_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_script.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_script_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_scripttools.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_scripttools_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_sensors.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_sensors_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_serialport.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_webkit.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_webkit_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_webkitwidgets.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_winextras.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_winextras_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_xmlpatterns.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\qt_functions.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\qt_config.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\win32-g++\qmake.conf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\spec_post.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\exclusive_builds.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\default_pre.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\win32\default_pre.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\resolve_config.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\default_post.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\build_pass.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\qml_debug.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\declarative_debug.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\win32\rtti.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\warn_on.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\qt.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\resources.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\moc.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\win32\opengl.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\uic.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\win32\windows.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\testcase_targets.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\exceptions.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\yacc.prf ..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\features\lex.prf ..\texturemaker\texturemaker.pro ..\texturemaker\resources.qrc C:/Qt/5.2.0/mingw48_32/lib/Qt5Widgets.prl C:/Qt/5.2.0/mingw48_32/lib/Qt5Gui.prl C:/Qt/5.2.0/mingw48_32/lib/Qt5Core.prl  RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.o release\mainwindow.o release\editareaframe.o release\addblockbutton.o release\colorbufferdisplay.o release\defaultblockdialog.o release\previewdialog.o release\colorfilldialog.o release\lightdialog.o release\voronoidialog.o release\pointeditframe.o release\perlindialog.o release\convolutiondialog.o release\customblockdialog.o release\aboutdialog.o release\mixdialog.o release\saveloaddialog.o release\lsystemdialog.o release\qrc_resources.o release\moc_mainwindow.o release\moc_editareaframe.o release\moc_addblockbutton.o release\moc_colorbufferdisplay.o release\moc_defaultblockdialog.o release\moc_previewdialog.o release\moc_colorfilldialog.o release\moc_lightdialog.o release\moc_voronoidialog.o release\moc_pointeditframe.o release\moc_perlindialog.o release\moc_convolutiondialog.o release\moc_customblockdialog.o release\moc_aboutdialog.o release\moc_mixdialog.o release\moc_saveloaddialog.o release\moc_lsystemdialog.o
+	-$(DEL_FILE) release\main.o release\mainwindow.o release\editareaframe.o release\addblockbutton.o release\colorbufferdisplay.o release\defaultblockdialog.o release\previewdialog.o release\colorfilldialog.o release\lightdialog.o release\voronoidialog.o release\pointeditframe.o release\perlindialog.o release\convolutiondialog.o release\customblockdialog.o release\aboutdialog.o release\mixdialog.o release\saveloaddialog.o release\lsystemdialog.o release\colortransitiondialog.o release\transitionpreviewframe.o release\qrc_resources.o release\moc_mainwindow.o release\moc_editareaframe.o release\moc_addblockbutton.o release\moc_colorbufferdisplay.o release\moc_defaultblockdialog.o release\moc_previewdialog.o release\moc_colorfilldialog.o release\moc_lightdialog.o release\moc_voronoidialog.o release\moc_pointeditframe.o release\moc_perlindialog.o release\moc_convolutiondialog.o release\moc_customblockdialog.o release\moc_aboutdialog.o release\moc_mixdialog.o release\moc_saveloaddialog.o release\moc_lsystemdialog.o release\moc_colortransitiondialog.o release\moc_transitionpreviewframe.o
 
 distclean: clean
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -174,9 +182,9 @@ release/qrc_resources.cpp: ../texturemaker/resources.qrc \
 		../texturemaker/resources/hourglass3.png
 	C:\Qt\5.2.0\mingw48_32\bin\rcc.exe -name resources ..\texturemaker\resources.qrc -o release\qrc_resources.cpp
 
-compiler_moc_header_make_all: release/moc_mainwindow.cpp release/moc_editareaframe.cpp release/moc_addblockbutton.cpp release/moc_colorbufferdisplay.cpp release/moc_defaultblockdialog.cpp release/moc_previewdialog.cpp release/moc_colorfilldialog.cpp release/moc_lightdialog.cpp release/moc_voronoidialog.cpp release/moc_pointeditframe.cpp release/moc_perlindialog.cpp release/moc_convolutiondialog.cpp release/moc_customblockdialog.cpp release/moc_aboutdialog.cpp release/moc_mixdialog.cpp release/moc_saveloaddialog.cpp release/moc_lsystemdialog.cpp
+compiler_moc_header_make_all: release/moc_mainwindow.cpp release/moc_editareaframe.cpp release/moc_addblockbutton.cpp release/moc_colorbufferdisplay.cpp release/moc_defaultblockdialog.cpp release/moc_previewdialog.cpp release/moc_colorfilldialog.cpp release/moc_lightdialog.cpp release/moc_voronoidialog.cpp release/moc_pointeditframe.cpp release/moc_perlindialog.cpp release/moc_convolutiondialog.cpp release/moc_customblockdialog.cpp release/moc_aboutdialog.cpp release/moc_mixdialog.cpp release/moc_saveloaddialog.cpp release/moc_lsystemdialog.cpp release/moc_colortransitiondialog.cpp release/moc_transitionpreviewframe.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) release\moc_mainwindow.cpp release\moc_editareaframe.cpp release\moc_addblockbutton.cpp release\moc_colorbufferdisplay.cpp release\moc_defaultblockdialog.cpp release\moc_previewdialog.cpp release\moc_colorfilldialog.cpp release\moc_lightdialog.cpp release\moc_voronoidialog.cpp release\moc_pointeditframe.cpp release\moc_perlindialog.cpp release\moc_convolutiondialog.cpp release\moc_customblockdialog.cpp release\moc_aboutdialog.cpp release\moc_mixdialog.cpp release\moc_saveloaddialog.cpp release\moc_lsystemdialog.cpp
+	-$(DEL_FILE) release\moc_mainwindow.cpp release\moc_editareaframe.cpp release\moc_addblockbutton.cpp release\moc_colorbufferdisplay.cpp release\moc_defaultblockdialog.cpp release\moc_previewdialog.cpp release\moc_colorfilldialog.cpp release\moc_lightdialog.cpp release\moc_voronoidialog.cpp release\moc_pointeditframe.cpp release\moc_perlindialog.cpp release\moc_convolutiondialog.cpp release\moc_customblockdialog.cpp release\moc_aboutdialog.cpp release\moc_mixdialog.cpp release\moc_saveloaddialog.cpp release\moc_lsystemdialog.cpp release\moc_colortransitiondialog.cpp release\moc_transitionpreviewframe.cpp
 release/moc_mainwindow.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMainWindow \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmainwindow.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qwidget.h \
@@ -1574,6 +1582,9 @@ release/moc_colorfilldialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/includ
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../texturemaker/colorfilldialog.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ..\texturemaker\colorfilldialog.h -o release\moc_colorfilldialog.cpp
 
@@ -1703,6 +1714,9 @@ release/moc_lightdialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/Qt
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -1850,6 +1864,9 @@ release/moc_voronoidialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../texturemaker/voronoidialog.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ..\texturemaker\voronoidialog.h -o release\moc_voronoidialog.cpp
 
@@ -2106,6 +2123,9 @@ release/moc_perlindialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/Q
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -2244,6 +2264,9 @@ release/moc_convolutiondialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/incl
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -2381,6 +2404,9 @@ release/moc_customblockdialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/incl
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -2631,6 +2657,9 @@ release/moc_mixdialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/QtWi
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -2769,6 +2798,9 @@ release/moc_saveloaddialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -2907,6 +2939,9 @@ release/moc_lsystemdialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -2919,11 +2954,264 @@ release/moc_lsystemdialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/
 		../texturemaker/lsystemdialog.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ..\texturemaker\lsystemdialog.h -o release\moc_lsystemdialog.cpp
 
+release/moc_colortransitiondialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qdialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qwidget.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qwindowdefs.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobal.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qconfig.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfeatures.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsystemdetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qprocessordetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcompilerdetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobalstatic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasicatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qgenericatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_msvc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_integrity.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_power.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_alpha.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv7.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv6.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv5.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bfin.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_ia64.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_mips.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_s390.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sparc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_x86.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_gcc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_unix.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmutex.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlogging.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qflags.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypeinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypetraits.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsysinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobjectdefs.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qnamespace.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobject.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstring.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qchar.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbytearray.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrefcount.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qarraydata.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringbuilder.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlist.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qalgorithms.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qiterator.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcoreevent.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qscopedpointer.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmetatype.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvarlengtharray.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcontainerfwd.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qisenum.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobject_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmargins.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrect.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsize.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qpoint.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpaintdevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpalette.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qcolor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qrgb.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringlist.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdatastream.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qiodevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qpair.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregexp.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringmatcher.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qbrush.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvector.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qmatrix.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpolygon.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qregion.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qline.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtransform.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpainterpath.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qimage.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpixmap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsharedpointer.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qshareddata.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qhash.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfont.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfontmetrics.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfontinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qcursor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qkeysequence.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qevent.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvariant.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdebug.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtextstream.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlocale.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qset.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcontiguouscache.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qurl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qurlquery.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfile.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfiledevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvector2d.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtouchdevice.h \
+		../texturemaker/customblockdialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QColorDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qcolordialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QLineEdit \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qlineedit.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qframe.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextcursor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextformat.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpen.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextoption.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QFileDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qfiledialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdir.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfileinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
+		../../sources/ptdesigner.h \
+		../../sources/colorbuffer.h \
+		../../sources/kdtree.h \
+		../../sources/general.h \
+		../../sources/matrix.h \
+		../../sources/colortransition.h \
+		../../sources/grammar.h \
+		../../sources/proctextures.h \
+		../../sources/rapidxml.hpp \
+		../texturemaker/colortransitiondialog.h
+	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ..\texturemaker\colortransitiondialog.h -o release\moc_colortransitiondialog.cpp
+
+release/moc_transitionpreviewframe.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QFrame \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qframe.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qwidget.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qwindowdefs.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobal.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qconfig.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfeatures.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsystemdetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qprocessordetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcompilerdetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobalstatic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasicatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qgenericatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_msvc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_integrity.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_power.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_alpha.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv7.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv6.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv5.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bfin.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_ia64.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_mips.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_s390.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sparc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_x86.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_gcc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_unix.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmutex.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlogging.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qflags.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypeinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypetraits.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsysinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobjectdefs.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qnamespace.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobject.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstring.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qchar.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbytearray.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrefcount.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qarraydata.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringbuilder.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlist.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qalgorithms.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qiterator.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcoreevent.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qscopedpointer.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmetatype.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvarlengtharray.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcontainerfwd.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qisenum.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobject_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmargins.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrect.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsize.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qpoint.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpaintdevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpalette.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qcolor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qrgb.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringlist.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdatastream.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qiodevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qpair.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregexp.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringmatcher.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qbrush.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvector.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qmatrix.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpolygon.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qregion.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qline.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtransform.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpainterpath.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qimage.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpixmap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsharedpointer.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qshareddata.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qhash.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfont.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfontmetrics.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfontinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qcursor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qkeysequence.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qevent.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvariant.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdebug.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtextstream.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlocale.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qset.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcontiguouscache.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qurl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qurlquery.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfile.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfiledevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvector2d.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtouchdevice.h \
+		../texturemaker/transitionpreviewframe.h
+	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ..\texturemaker\transitionpreviewframe.h -o release\moc_transitionpreviewframe.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_defaultblockdialog.h ui_previewdialog.h ui_colorfilldialog.h ui_lightdialog.h ui_voronoidialog.h ui_perlindialog.h ui_convolutiondialog.h ui_aboutdialog.h ui_mixdialog.h ui_saveloaddialog.h ui_lsystemdialog.h
+compiler_uic_make_all: ui_mainwindow.h ui_defaultblockdialog.h ui_previewdialog.h ui_colorfilldialog.h ui_lightdialog.h ui_voronoidialog.h ui_perlindialog.h ui_convolutiondialog.h ui_aboutdialog.h ui_mixdialog.h ui_saveloaddialog.h ui_lsystemdialog.h ui_colortransitiondialog.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_defaultblockdialog.h ui_previewdialog.h ui_colorfilldialog.h ui_lightdialog.h ui_voronoidialog.h ui_perlindialog.h ui_convolutiondialog.h ui_aboutdialog.h ui_mixdialog.h ui_saveloaddialog.h ui_lsystemdialog.h
+	-$(DEL_FILE) ui_mainwindow.h ui_defaultblockdialog.h ui_previewdialog.h ui_colorfilldialog.h ui_lightdialog.h ui_voronoidialog.h ui_perlindialog.h ui_convolutiondialog.h ui_aboutdialog.h ui_mixdialog.h ui_saveloaddialog.h ui_lsystemdialog.h ui_colortransitiondialog.h
 ui_mainwindow.h: ../texturemaker/mainwindow.ui \
 		../texturemaker/ColorBufferDisplay.h \
 		../texturemaker/EditAreaFrame.h \
@@ -4075,6 +4363,9 @@ ui_saveloaddialog.h: ../texturemaker/saveloaddialog.ui
 ui_lsystemdialog.h: ../texturemaker/lsystemdialog.ui
 	C:\Qt\5.2.0\mingw48_32\bin\uic.exe ..\texturemaker\lsystemdialog.ui -o ui_lsystemdialog.h
 
+ui_colortransitiondialog.h: ../texturemaker/colortransitiondialog.ui
+	C:\Qt\5.2.0\mingw48_32\bin\uic.exe ..\texturemaker\colortransitiondialog.ui -o ui_colortransitiondialog.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
@@ -4959,13 +5250,15 @@ release/editareaframe.o: ../texturemaker/editareaframe.cpp ../texturemaker/edita
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qcolordialog.h \
 		../texturemaker/customblockdialog.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
 		../texturemaker/lightdialog.h \
 		../texturemaker/voronoidialog.h \
 		../texturemaker/perlindialog.h \
 		../texturemaker/convolutiondialog.h \
 		../texturemaker/mixdialog.h \
 		../texturemaker/saveloaddialog.h \
-		../texturemaker/lsystemdialog.h
+		../texturemaker/lsystemdialog.h \
+		../texturemaker/colortransitiondialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\editareaframe.o ..\texturemaker\editareaframe.cpp
 
 release/addblockbutton.o: ../texturemaker/addblockbutton.cpp ../texturemaker/addblockbutton.h \
@@ -5791,6 +6084,9 @@ release/colorfilldialog.o: ../texturemaker/colorfilldialog.cpp ../texturemaker/c
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		ui_colorfilldialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\colorfilldialog.o ..\texturemaker\colorfilldialog.cpp
 
@@ -5921,6 +6217,9 @@ release/lightdialog.o: ../texturemaker/lightdialog.cpp ../texturemaker/lightdial
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -6069,6 +6368,9 @@ release/voronoidialog.o: ../texturemaker/voronoidialog.cpp ../texturemaker/voron
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		ui_voronoidialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\voronoidialog.o ..\texturemaker\voronoidialog.cpp
 
@@ -6326,6 +6628,9 @@ release/perlindialog.o: ../texturemaker/perlindialog.cpp ../texturemaker/perlind
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -6465,6 +6770,9 @@ release/convolutiondialog.o: ../texturemaker/convolutiondialog.cpp ../texturemak
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -6603,6 +6911,9 @@ release/customblockdialog.o: ../texturemaker/customblockdialog.cpp ../texturemak
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -6854,6 +7165,9 @@ release/mixdialog.o: ../texturemaker/mixdialog.cpp ../texturemaker/mixdialog.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -6993,6 +7307,9 @@ release/saveloaddialog.o: ../texturemaker/saveloaddialog.cpp ../texturemaker/sav
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -7132,6 +7449,9 @@ release/lsystemdialog.o: ../texturemaker/lsystemdialog.cpp ../texturemaker/lsyst
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
 		../../sources/ptdesigner.h \
 		../../sources/colorbuffer.h \
 		../../sources/kdtree.h \
@@ -7143,6 +7463,260 @@ release/lsystemdialog.o: ../texturemaker/lsystemdialog.cpp ../texturemaker/lsyst
 		../../sources/rapidxml.hpp \
 		ui_lsystemdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\lsystemdialog.o ..\texturemaker\lsystemdialog.cpp
+
+release/colortransitiondialog.o: ../texturemaker/colortransitiondialog.cpp ../texturemaker/colortransitiondialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qdialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qwidget.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qwindowdefs.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobal.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qconfig.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfeatures.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsystemdetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qprocessordetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcompilerdetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobalstatic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasicatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qgenericatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_msvc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_integrity.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_power.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_alpha.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv7.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv6.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv5.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bfin.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_ia64.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_mips.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_s390.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sparc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_x86.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_gcc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_unix.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmutex.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlogging.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qflags.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypeinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypetraits.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsysinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobjectdefs.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qnamespace.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobject.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstring.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qchar.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbytearray.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrefcount.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qarraydata.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringbuilder.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlist.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qalgorithms.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qiterator.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcoreevent.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qscopedpointer.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmetatype.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvarlengtharray.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcontainerfwd.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qisenum.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobject_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmargins.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrect.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsize.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qpoint.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpaintdevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpalette.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qcolor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qrgb.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringlist.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdatastream.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qiodevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qpair.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregexp.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringmatcher.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qbrush.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvector.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qmatrix.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpolygon.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qregion.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qline.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtransform.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpainterpath.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qimage.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpixmap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsharedpointer.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qshareddata.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qhash.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfont.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfontmetrics.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfontinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qcursor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qkeysequence.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qevent.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvariant.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdebug.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtextstream.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlocale.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qset.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcontiguouscache.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qurl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qurlquery.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfile.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfiledevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvector2d.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtouchdevice.h \
+		../texturemaker/customblockdialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QColorDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qcolordialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QLineEdit \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qlineedit.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qframe.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextcursor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextformat.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpen.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextoption.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QFileDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qfiledialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdir.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfileinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
+		../../sources/ptdesigner.h \
+		../../sources/colorbuffer.h \
+		../../sources/kdtree.h \
+		../../sources/general.h \
+		../../sources/matrix.h \
+		../../sources/colortransition.h \
+		../../sources/grammar.h \
+		../../sources/proctextures.h \
+		../../sources/rapidxml.hpp \
+		ui_colortransitiondialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\colortransitiondialog.o ..\texturemaker\colortransitiondialog.cpp
+
+release/transitionpreviewframe.o: ../texturemaker/transitionpreviewframe.cpp ../texturemaker/transitionpreviewframe.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QFrame \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qframe.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qwidget.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qwindowdefs.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobal.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qconfig.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfeatures.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsystemdetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qprocessordetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcompilerdetection.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qglobalstatic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbasicatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qgenericatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_msvc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_integrity.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qoldbasicatomic.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_vxworks.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_power.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_alpha.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv7.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv6.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_armv5.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_bfin.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_ia64.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_mips.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_s390.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sh4a.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_sparc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_x86.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_cxx11.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_gcc.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qatomic_unix.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmutex.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlogging.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qflags.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypeinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtypetraits.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsysinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobjectdefs.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qnamespace.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobjectdefs_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qwindowdefs_win.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobject.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstring.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qchar.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qbytearray.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrefcount.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qarraydata.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringbuilder.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlist.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qalgorithms.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qiterator.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcoreevent.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qscopedpointer.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmetatype.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvarlengtharray.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcontainerfwd.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qisenum.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qobject_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmargins.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qrect.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsize.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qpoint.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpaintdevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpalette.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qcolor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qrgb.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringlist.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdatastream.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qiodevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qpair.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregexp.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qstringmatcher.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qbrush.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvector.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qmatrix.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpolygon.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qregion.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qline.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtransform.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpainterpath.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qimage.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpixmap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsharedpointer.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qshareddata.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qsharedpointer_impl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qhash.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfont.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfontmetrics.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qfontinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qsizepolicy.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qcursor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qkeysequence.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qevent.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qvariant.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qmap.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdebug.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qtextstream.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qlocale.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qset.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qcontiguouscache.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qurl.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qurlquery.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfile.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfiledevice.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvector2d.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtouchdevice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\transitionpreviewframe.o ..\texturemaker\transitionpreviewframe.cpp
 
 release/qrc_resources.o: release/qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\qrc_resources.o release\qrc_resources.cpp
@@ -7197,6 +7771,12 @@ release/moc_saveloaddialog.o: release/moc_saveloaddialog.cpp
 
 release/moc_lsystemdialog.o: release/moc_lsystemdialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_lsystemdialog.o release\moc_lsystemdialog.cpp
+
+release/moc_colortransitiondialog.o: release/moc_colortransitiondialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_colortransitiondialog.o release\moc_colortransitiondialog.cpp
+
+release/moc_transitionpreviewframe.o: release/moc_transitionpreviewframe.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_transitionpreviewframe.o release\moc_transitionpreviewframe.cpp
 
 ####### Install
 

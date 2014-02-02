@@ -1844,6 +1844,15 @@ c_block_color_transition::~c_block_color_transition()
 
 //----------------------------------------------------------------------
 
+void c_block_color_transition::get_color(unsigned int coordination,
+   unsigned char *r, unsigned char *g, unsigned char *b)
+        
+  {
+	color_transition_get_color(coordination,r,g,b,&this->transition);
+  }
+
+//----------------------------------------------------------------------
+
 c_block_l_system::c_block_l_system(): c_special_block()
 
   {

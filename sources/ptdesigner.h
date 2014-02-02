@@ -1803,6 +1803,20 @@ class c_block_color_transition: public c_special_block
     public:
       c_block_color_transition();
       ~c_block_color_transition();
+      
+      void get_color(unsigned int coordination, unsigned char *r,
+        unsigned char *g, unsigned char *b);
+      
+      /**<
+       * Returns a color with given coordination of the block's
+       * color transition.
+       * 
+       * @param coordination point coordination
+       * @param r in this variable an amount of red will be returned
+       * @param g in this variable an amount of green will be returned
+       * @param b in this variable an amount of blue will be returned
+       */
+      
       t_color_transition *get_color_transition();
 
       /**<

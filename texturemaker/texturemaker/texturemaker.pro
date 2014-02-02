@@ -29,7 +29,9 @@ SOURCES += main.cpp\
     aboutdialog.cpp \
     mixdialog.cpp \
     saveloaddialog.cpp \
-    lsystemdialog.cpp
+    lsystemdialog.cpp \
+    colortransitiondialog.cpp \
+    transitionpreviewframe.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -50,7 +52,9 @@ HEADERS  += mainwindow.h \
     aboutdialog.h \
     mixdialog.h \
     saveloaddialog.h \
-    lsystemdialog.h
+    lsystemdialog.h \
+    colortransitiondialog.h \
+    transitionpreviewframe.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -63,7 +67,8 @@ FORMS    += mainwindow.ui \
     aboutdialog.ui \
     mixdialog.ui \
     saveloaddialog.ui \
-    lsystemdialog.ui
+    lsystemdialog.ui \
+    colortransitiondialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 

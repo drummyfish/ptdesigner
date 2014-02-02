@@ -17,6 +17,8 @@ INPUT(
 ./release\mixdialog.o
 ./release\saveloaddialog.o
 ./release\lsystemdialog.o
+./release\colortransitiondialog.o
+./release\transitionpreviewframe.o
 ./release\qrc_resources.o
 ./release\moc_mainwindow.o
 ./release\moc_editareaframe.o
@@ -35,4 +37,6 @@ INPUT(
 ./release\moc_mixdialog.o
 ./release\moc_saveloaddialog.o
 ./release\moc_lsystemdialog.o
+./release\moc_colortransitiondialog.o
+./release\moc_transitionpreviewframe.o
 );
