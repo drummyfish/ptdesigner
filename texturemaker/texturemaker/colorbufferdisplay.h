@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QMutex>
+#include <QPixmap>
 #include "ptdesigner.h"
 #include "proctextures.h"
 #include "mainwindow.h"
@@ -26,10 +27,13 @@ class ColorBufferDisplay : public QFrame
 
 private:
     c_block *block;          /// block being displayed
+    QPixmap *preview_image;
+    bool is_up_to_date;
     MainWindow *main_window; /// pointer to the main window
 
 public:
     explicit ColorBufferDisplay(QWidget *parent = 0);
+    ~ColorBufferDisplay();
     void paintEvent(QPaintEvent *);
 
 //-----------------------------------------------------
@@ -40,6 +44,16 @@ public:
       Sets a main window for this object.
 
       @param main_window main window to be set
+      */
+
+//-----------------------------------------------------
+
+    void invalidate();
+
+    /**
+      Invalidates the preview so it is forced to
+      access its previewed block next time it is
+      repainted.
       */
 
 //-----------------------------------------------------

@@ -7,6 +7,17 @@ ColorBufferDisplay::ColorBufferDisplay(QWidget *parent):
 
 {
   this->block = NULL;
+  this->is_up_to_date = false;
+  this->preview_image = new QPixmap(this->width(),this->height());
+}
+
+//-----------------------------------------------------
+
+ColorBufferDisplay::~ColorBufferDisplay()
+
+{
+  delete this->preview_image;
+  this->block = NULL;
 }
 
 //-----------------------------------------------------
@@ -15,6 +26,7 @@ void ColorBufferDisplay::set_block(c_block *block)
 
 {
   this->block = block;
+  this->is_up_to_date = false;
 }
 
 //----------------------------------------------------
@@ -27,27 +39,37 @@ void ColorBufferDisplay::set_main_window(MainWindow *main_window)
 
 //-----------------------------------------------------
 
+void ColorBufferDisplay::invalidate()
+
+{
+  this->is_up_to_date = false;
+}
+
+//-----------------------------------------------------
+
 void ColorBufferDisplay::paintEvent(QPaintEvent *)
 
 {
   QPainter painter(this);
   QPen pen;
-  t_color_buffer buffer;   // help buffer for resizing the image
+  t_color_buffer buffer;      // helper color buffer for resizing
   unsigned int i,j;
   unsigned char r,g,b;
 
   if (!this->main_window->get_graph_mutex()->tryLock())
     {
-      QPixmap hourglass(":/resources/hourglass3.png");
-
-      painter.fillRect(0,0,this->width(),this->height(),QColor::fromRgb(255,255,255));
-      painter.drawRect(0,0,this->width() - 1,this->height() - 1);
-      painter.drawPixmap(this->width() / 2 - 30,this->height() / 2 - 30,hourglass);
-
+      painter.drawPixmap(0,0,this->width(),this->height(),*this->preview_image);
       return;
     }
 
   // mutex locked here
+
+  if (this->preview_image->width() != this->width() || this->preview_image->height() != this->height())
+    { // resize the image if needed
+      delete this->preview_image;
+      this->preview_image = new QPixmap(this->width(),this->height());
+      this->is_up_to_date = false;
+    }
 
   if (this->block == NULL || !this->block->has_image() || this->block->is_error())
     {
@@ -57,28 +79,31 @@ void ColorBufferDisplay::paintEvent(QPaintEvent *)
       return;
     }
 
-  if (!color_buffer_init(&buffer,this->width(),this->height()))
+  if (!this->is_up_to_date)
     {
-      this->main_window->get_graph_mutex()->unlock();
-      return;
+      color_buffer_init(&buffer,this->width(),this->height());
+      pt_resize(((c_graphic_block *) this->block)->get_color_buffer(),&buffer,INTERPOLATION_LINEAR);
+
+      QPainter help_painter(this->preview_image);
+
+      for (j = 0; j < buffer.height; j++)  // draw the buffer
+        for (i = 0; i < buffer.width; i++)
+          {
+            color_buffer_get_pixel(&buffer,i,j,&r,&g,&b);
+            pen.setColor(QColor::fromRgb(r,g,b));
+            help_painter.setPen(pen);
+            help_painter.drawPoint(i,j);
+          }
+
+      color_buffer_destroy(&buffer);
+      this->is_up_to_date = true;
     }
 
-  pt_resize(((c_graphic_block *) this->block)->get_color_buffer(),&buffer,INTERPOLATION_LINEAR);
-
-  for (j = 0; j < buffer.height; j++)  // draw the buffer
-    for (i = 0; i < buffer.width; i++)
-      {
-        color_buffer_get_pixel(&buffer,i,j,&r,&g,&b);
-        pen.setColor(QColor::fromRgb(r,g,b));
-        painter.setPen(pen);
-        painter.drawPoint(i,j);
-      }
+  painter.drawPixmap(0,0,this->width(),this->height(),*this->preview_image);  // draw the buffer
 
   pen.setColor(QColor::fromRgb(0,0,0));
   painter.setPen(pen);
   painter.drawRect(0,0,this->width() - 1,this->height() - 1);
-
-  color_buffer_destroy(&buffer);
 
   this->main_window->get_graph_mutex()->unlock();
 }

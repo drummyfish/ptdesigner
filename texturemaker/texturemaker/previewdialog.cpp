@@ -24,6 +24,7 @@ PreviewDialog::PreviewDialog(c_block *block, QWidget *parent) :
     }
 
   ui->preview->set_block(this->block);
+
   ui->preview->update();
 }
 
@@ -32,7 +33,7 @@ PreviewDialog::PreviewDialog(c_block *block, QWidget *parent) :
 PreviewDialog::~PreviewDialog()
 
 {
-    delete ui;
+  delete ui;
 }
 
 //-----------------------------------------------------

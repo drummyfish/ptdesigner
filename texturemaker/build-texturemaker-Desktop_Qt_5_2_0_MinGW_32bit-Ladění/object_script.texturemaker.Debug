@@ -19,6 +19,7 @@ INPUT(
 ./debug\lsystemdialog.o
 ./debug\colortransitiondialog.o
 ./debug\transitionpreviewframe.o
+./debug\blurdialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -39,4 +40,5 @@ INPUT(
 ./debug\moc_lsystemdialog.o
 ./debug\moc_colortransitiondialog.o
 ./debug\moc_transitionpreviewframe.o
+./debug\moc_blurdialog.o
 );

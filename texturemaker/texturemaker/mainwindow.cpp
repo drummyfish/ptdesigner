@@ -368,6 +368,7 @@ void MainWindow::update_graphics()
 
 {
   ui->editArea->update();
+  ui->preview->invalidate();
   ui->preview->update();
 }
 
