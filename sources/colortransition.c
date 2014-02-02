@@ -59,6 +59,91 @@ void color_transition_add_point(unsigned char coordination,
 
     transition->points[i] = new_point;
   }
+  
+//----------------------------------------------------------------------
+
+void color_transition_remove_point(unsigned char coordination,
+  t_color_transition *transition)
+  
+  {
+	unsigned int i, j;
+	
+	for (i = 0; (int) i < transition->number_of_points; i++)
+	  if (transition->points[i].value == coordination)
+	    {
+		  // shift all points from i forwards to the left by 1:
+			
+	      for (j = i; (int) j < transition->number_of_points - 1; j++)
+	        transition->points[j] = transition->points[j + 1];
+	      
+	      transition->number_of_points--;
+		  break;
+		}
+  }
+
+//----------------------------------------------------------------------
+
+void color_transition_to_string(t_color_transition *transition,
+  char destination[], unsigned int max_length)
+  
+  {
+	unsigned int i;
+	int copy_max;
+	char buffer[20];
+	
+	if (max_length == 0)
+	  return;
+	  
+	destination[0] = 0;  // make an empty string
+	
+	for (i = 0; (int) i < transition->number_of_points; i++)
+	  {
+		snprintf(buffer,20,"%d %d %d %d;",
+		  transition->points[i].value,
+		  transition->points[i].red,
+		  transition->points[i].green,
+		  transition->points[i].blue);
+		  
+		copy_max = max_length - strlen(destination) - 1;
+		
+		if (copy_max <= 0)  // no more room for the string
+		  break;
+		
+		strncat(destination,buffer,copy_max);
+	  }
+  }
+
+//----------------------------------------------------------------------
+
+void color_transition_from_string(t_color_transition *transition,
+  char *transition_string)
+  
+  {
+	int v,r,g,b,items_read;
+	  
+	transition->number_of_points = 0;   // clear the transition
+	
+	while (1)
+	  {
+        items_read =
+          sscanf(transition_string,"%d %d %d %d;",&v,&r,&g,&b);
+          
+        if (items_read != 4)
+          break;
+          
+        color_transition_add_point((unsigned char) v, (unsigned char)r,
+          (unsigned char) g,(unsigned char) b,transition);
+          
+        // locate the next semicolon:
+          
+        transition_string = strchr(transition_string,';');
+        
+        if (transition_string == NULL)
+          break;
+          
+        transition_string++;  // move one character behing ';'
+      }
+  }
 
 //----------------------------------------------------------------------
 

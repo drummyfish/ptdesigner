@@ -16,7 +16,7 @@ ptdesigner.o: $(SOURCEDIR)/ptdesigner.cpp $(SOURCEDIR)/ptdesigner.h
 lodepng.o: $(SOURCEDIR)/lodepng.c $(SOURCEDIR)/lodepng.h
 	$(CC) $(CFLAGS) -c -o lodepng.o $(SOURCEDIR)/lodepng.c
 
-grammar.0: $(SOURCEDIR)/grammar.c $(SOURCEDIR)/grammar.h
+grammar.o: $(SOURCEDIR)/grammar.c $(SOURCEDIR)/grammar.h
 	$(CC) $(CFLAGS) -c -o grammar.o $(SOURCEDIR)/grammar.c 
 
 test.o: $(SOURCEDIR)/test.cpp $(SOURCEDIR)/colorbuffer.h $(SOURCEDIR)/general.h

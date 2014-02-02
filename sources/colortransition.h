@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "string.h"
 #include "general.h"
                                 /** a structure representing a point in
                                     color transition, it maps one
@@ -64,6 +65,19 @@ void color_transition_add_point(unsigned char coordination,
 
 //----------------------------------------------------------------------
 
+void color_transition_remove_point(unsigned char coordination,
+  t_color_transition *transition);
+
+  /**<
+   * Removes a point from transition.
+   *
+   * @param coordination coordination of the point to be removed, if
+   *        there is no point with given coordination, nothing happens
+   * @param transition transition to remove the point from
+   */
+
+//----------------------------------------------------------------------
+
 void color_transition_get_color(unsigned char coordination,
   unsigned char *red, unsigned char *green, unsigned char *blue,
   t_color_transition *transition);
@@ -90,6 +104,33 @@ void color_transition_destroy(t_color_transition *transition);
    * Frees the memory allocated for transition.
    *
    * @param transition color transition to be destroyed
+   */
+
+//----------------------------------------------------------------------
+
+void color_transition_to_string(t_color_transition *transition,
+  char destination[], unsigned int max_length);
+  
+  /**
+   * Creates a string representing given color transition.
+   * 
+   * @param transition transition to be converted to string
+   * @param destination memory in which the final string will be stored
+   * @param max_length maximum length of the final string to be
+   *        generated (with the terminating zero)
+   */
+
+//----------------------------------------------------------------------
+
+void color_transition_from_string(t_color_transition *transition,
+  char *transition_string);
+
+  /**
+   * Loads a color transition data from given string.
+   * 
+   * @param transition transition to be loaded, must be initialised, if
+   *        it contains any data, it will be deleted
+   * @param transition_string string containing the data to be loaded
    */
 
 //----------------------------------------------------------------------

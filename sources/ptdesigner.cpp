@@ -2628,9 +2628,9 @@ void c_block_color_transition::set_default()
     this->min_inputs = 0;
     this->max_inputs = 0;
 
-    this->parameters->add_parameter("path",PARAMETER_STRING);
-    this->parameters->set_string_value("path",
-      (char *) "transition.txt");
+    this->parameters->add_parameter("data",PARAMETER_STRING);
+    this->parameters->set_string_value("data",(char *)
+      "0 0 0 0;255 255 255 255;");
   }
 
 //----------------------------------------------------------------------
@@ -3114,10 +3114,10 @@ bool c_block_simple_noise::execute()
 bool c_block_color_transition::execute()
 
   {
-    color_transition_destroy(&(this->transition));
+    color_transition_from_string(&(this->transition),
+      (char *) this->parameters->get_string_value("data").c_str());
 
-    return color_transition_load_from_file(&(this->transition),
-      (char *) this->parameters->get_string_value("path").c_str());
+    return true;
   }
 
 //----------------------------------------------------------------------
