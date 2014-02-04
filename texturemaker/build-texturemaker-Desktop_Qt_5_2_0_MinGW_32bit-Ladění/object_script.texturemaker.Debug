@@ -20,6 +20,7 @@ INPUT(
 ./debug\colortransitiondialog.o
 ./debug\transitionpreviewframe.o
 ./debug\blurdialog.o
+./debug\colorreplacedialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -41,4 +42,5 @@ INPUT(
 ./debug\moc_colortransitiondialog.o
 ./debug\moc_transitionpreviewframe.o
 ./debug\moc_blurdialog.o
+./debug\moc_colorreplacedialog.o
 );

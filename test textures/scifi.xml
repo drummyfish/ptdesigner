@@ -1,5 +1,5 @@
 <!DOCTYPE ptgraph>
-<texturegraph width="256" height="256" seed="1" supersampling="1">
+<texturegraph width="512" height="512" seed="0" supersampling="1">
 	<block type="voronoi diagram" id="0">
 		<parameter name="type" type="int" value="1"/>
 		<parameter name="metric" type="int" value="2"/>
@@ -41,11 +41,6 @@
 		<parameter name="amplitude" type="int" value="127"/>
 		<parameter name="grayscale" type="bool" value="1"/>
 	</block>
-	<block type="adjust rgb" id="7">
-		<parameter name="red" type="int" value="0"/>
-		<parameter name="green" type="int" value="0"/>
-		<parameter name="blue" type="int" value="0"/>
-	</block>
 	<block type="mix" id="11">
 		<input id="6" slot="0"/>
 		<input id="4" slot="1"/>
@@ -70,6 +65,23 @@
 		<input id="5" slot="2"/>
 		<parameter name="percentage" type="int" value="50"/>
 		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="wood" id="23">
+		<parameter name="circles" type="int" value="4"/>
+		<parameter name="hardness" type="int" value="5"/>
+		<parameter name="intensity" type="int" value="15"/>
+		<parameter name="amplitude" type="int" value="80"/>
+		<parameter name="direction" type="int" value="0"/>
+	</block>
+	<block type="mix" id="24">
+		<input id="23" slot="0"/>
+		<input id="14" slot="1"/>
+		<parameter name="percentage" type="int" value="71"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="tile" id="25">
+		<input id="24" slot="0"/>
+		<parameter name="times" type="int" value="2"/>
 	</block>
 </texturegraph>
 

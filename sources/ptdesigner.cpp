@@ -1231,6 +1231,7 @@ bool c_block::connect(c_block *input_block, unsigned int slot_number)
         return false;
       }
 
+    this->invalidate();
     this->graph->update();
     return true;
   }
@@ -1534,7 +1535,8 @@ bool c_texture_graph::load_from_file(string filename)
     myfile.close();
 
     filetext_c = document.allocate_string(filetext.c_str(),
-      filetext.length());
+      filetext.length() + 1);
+
     document.parse<0>(filetext_c);
 
     node = document.first_node("texturegraph");
