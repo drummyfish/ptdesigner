@@ -15,16 +15,7 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <property name="leftMargin">
-     <number>2</number>
-    </property>
-    <property name="topMargin">
-     <number>2</number>
-    </property>
-    <property name="rightMargin">
-     <number>2</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>2</number>
     </property>
     <item row="1" column="1">
@@ -59,7 +50,7 @@
          <x>0</x>
          <y>0</y>
          <width>1316</width>
-         <height>136</height>
+         <height>137</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
@@ -1324,7 +1315,7 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>215</width>
+          <width>275</width>
           <height>0</height>
          </size>
         </property>
@@ -1354,8 +1345,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>196</width>
-           <height>713</height>
+           <width>257</width>
+           <height>717</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -1368,16 +1359,7 @@
           <property name="spacing">
            <number>2</number>
           </property>
-          <property name="leftMargin">
-           <number>2</number>
-          </property>
-          <property name="topMargin">
-           <number>2</number>
-          </property>
-          <property name="rightMargin">
-           <number>2</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>2</number>
           </property>
           <item>
@@ -1398,16 +1380,7 @@
              <property name="spacing">
               <number>0</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1865,16 +1838,7 @@
           </palette>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>0</number>
           </property>
           <item row="0" column="1">
@@ -1948,7 +1912,7 @@
      <x>0</x>
      <y>0</y>
      <width>562</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -2109,19 +2073,19 @@
   <customwidget>
    <class>ColorBufferDisplay</class>
    <extends>QFrame</extends>
-   <header location="global">ColorBufferDisplay.h</header>
+   <header location="global">colorbufferdisplay.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>EditAreaFrame</class>
    <extends>QFrame</extends>
-   <header location="global">EditAreaFrame.h</header>
+   <header location="global">editareaframe.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>AddBlockButton</class>
    <extends>QPushButton</extends>
-   <header location="global">AddBlockButton.h</header>
+   <header location="global">addblockbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources>

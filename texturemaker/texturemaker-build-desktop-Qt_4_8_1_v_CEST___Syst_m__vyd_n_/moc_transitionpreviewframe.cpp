@@ -1,15 +1,15 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'colorbufferdisplay.h'
+** Meta object code from reading C++ file 'transitionpreviewframe.h'
 **
-** Created: Sat Feb 8 15:28:58 2014
+** Created: Sat Feb 8 15:29:08 2014
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../texturemaker/colorbufferdisplay.h"
+#include "../texturemaker/transitionpreviewframe.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'colorbufferdisplay.h' doesn't include <QObject>."
+#error "The header file 'transitionpreviewframe.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
 #error "This file was generated using the moc from 4.8.1. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_ColorBufferDisplay[] = {
+static const uint qt_meta_data_TransitionPreviewFrame[] = {
 
  // content:
        6,       // revision
@@ -33,11 +33,11 @@ static const uint qt_meta_data_ColorBufferDisplay[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_ColorBufferDisplay[] = {
-    "ColorBufferDisplay\0"
+static const char qt_meta_stringdata_TransitionPreviewFrame[] = {
+    "TransitionPreviewFrame\0"
 };
 
-void ColorBufferDisplay::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void TransitionPreviewFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -45,33 +45,33 @@ void ColorBufferDisplay::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData ColorBufferDisplay::staticMetaObjectExtraData = {
+const QMetaObjectExtraData TransitionPreviewFrame::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject ColorBufferDisplay::staticMetaObject = {
-    { &QFrame::staticMetaObject, qt_meta_stringdata_ColorBufferDisplay,
-      qt_meta_data_ColorBufferDisplay, &staticMetaObjectExtraData }
+const QMetaObject TransitionPreviewFrame::staticMetaObject = {
+    { &QFrame::staticMetaObject, qt_meta_stringdata_TransitionPreviewFrame,
+      qt_meta_data_TransitionPreviewFrame, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &ColorBufferDisplay::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &TransitionPreviewFrame::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *ColorBufferDisplay::metaObject() const
+const QMetaObject *TransitionPreviewFrame::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *ColorBufferDisplay::qt_metacast(const char *_clname)
+void *TransitionPreviewFrame::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_ColorBufferDisplay))
-        return static_cast<void*>(const_cast< ColorBufferDisplay*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_TransitionPreviewFrame))
+        return static_cast<void*>(const_cast< TransitionPreviewFrame*>(this));
     return QFrame::qt_metacast(_clname);
 }
 
-int ColorBufferDisplay::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int TransitionPreviewFrame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QFrame::qt_metacall(_c, _id, _a);
     if (_id < 0)

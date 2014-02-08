@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'editareaframe.h'
 **
-** Created: Tue Jan 21 12:38:21 2014
+** Created: Sat Feb 8 15:28:57 2014
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_editAreaFrame[] = {
+static const uint qt_meta_data_EditAreaFrame[] = {
 
  // content:
        6,       // revision
@@ -33,11 +33,11 @@ static const uint qt_meta_data_editAreaFrame[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_editAreaFrame[] = {
-    "editAreaFrame\0"
+static const char qt_meta_stringdata_EditAreaFrame[] = {
+    "EditAreaFrame\0"
 };
 
-void editAreaFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void EditAreaFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -45,33 +45,33 @@ void editAreaFrame::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData editAreaFrame::staticMetaObjectExtraData = {
+const QMetaObjectExtraData EditAreaFrame::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject editAreaFrame::staticMetaObject = {
-    { &QFrame::staticMetaObject, qt_meta_stringdata_editAreaFrame,
-      qt_meta_data_editAreaFrame, &staticMetaObjectExtraData }
+const QMetaObject EditAreaFrame::staticMetaObject = {
+    { &QFrame::staticMetaObject, qt_meta_stringdata_EditAreaFrame,
+      qt_meta_data_EditAreaFrame, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &editAreaFrame::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &EditAreaFrame::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *editAreaFrame::metaObject() const
+const QMetaObject *EditAreaFrame::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *editAreaFrame::qt_metacast(const char *_clname)
+void *EditAreaFrame::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_editAreaFrame))
-        return static_cast<void*>(const_cast< editAreaFrame*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_EditAreaFrame))
+        return static_cast<void*>(const_cast< EditAreaFrame*>(this));
     return QFrame::qt_metacast(_clname);
 }
 
-int editAreaFrame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int EditAreaFrame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QFrame::qt_metacall(_c, _id, _a);
     if (_id < 0)
