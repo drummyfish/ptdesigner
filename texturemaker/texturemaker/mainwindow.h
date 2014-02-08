@@ -330,6 +330,8 @@ private slots:
 
     void on_actionDuplicate_triggered();
 
+    void on_actionNew_texture_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

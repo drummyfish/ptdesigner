@@ -667,7 +667,6 @@ class c_block
          * @return true if any change in the block output happened,
          *         false if not (recomputing didn't happen because it
          *         wasn't necesarry)
-         *
          */
   };
 
@@ -881,6 +880,15 @@ class c_texture_graph
          * @param length in this variable the length of the array loaded
          *        will be returned
          * @param max_length maximum allowed array length
+         */
+
+      void block_invalidated(c_block *block);
+      
+        /**<
+         * Informs the graph that a block was invalidated so that all
+         * its children will be invalidated too.
+         * 
+         * @param block block that has been invalidated
          */
 
       void update();

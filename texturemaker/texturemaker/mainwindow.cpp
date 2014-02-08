@@ -942,3 +942,23 @@ void MainWindow::on_actionDuplicate_triggered()
 }
 
 //-----------------------------------------------------
+
+void MainWindow::on_actionNew_texture_triggered()
+
+{
+  if (this->closing_file())
+    {
+      this->graph_mutex.lock();
+      this->graph->clear();
+      this->block_positions.clear();
+      this->graph_mutex.unlock();
+      ui->cwidth->setValue(800);
+      ui->cheight->setValue(600);
+      this->update_graphics();
+      this->set_block_for_preview(-1);
+      ui->editArea->reset();
+      this->change_happened = false;
+    }
+}
+
+//-----------------------------------------------------

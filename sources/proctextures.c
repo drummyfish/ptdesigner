@@ -2379,7 +2379,7 @@ void pt_fault_formation_noise(int random, t_color_buffer *destination)
             border2 = number2 + step2 * i;
 
             if (direction)
-              {                    // this copied cody is kind of sad :/
+              {                    // this copied cod is kind of sad :/
                 for (k = 0; k < border1; k++)
                   {
                     color_buffer_set_pixel(&help_buffer,i,k,level1,

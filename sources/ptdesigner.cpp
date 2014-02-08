@@ -758,6 +758,33 @@ void c_block::invalidate()
 
   {
     this->valid = false;
+    
+    // invalidate all child blocks:
+    
+    if (this->graph != NULL)
+      this->graph->block_invalidated(this);
+  }
+
+//----------------------------------------------------------------------
+
+void c_texture_graph::block_invalidated(c_block *block)
+
+  {
+	unsigned int i,j;
+  
+    // find all children blocks and invalidate them:
+  
+    for (i = 0; i < this->blocks->size(); i++)
+      {
+        for (j = 0; j < MAX_INPUT_BLOCKS; j++)
+          if (this->blocks->at(i)->get_input(j) == block)
+            {
+			  // recursively invalidate the child block:
+
+		      this->blocks->at(i)->invalidate();
+		      break;
+			}
+      }
   }
 
 //----------------------------------------------------------------------
