@@ -11,6 +11,7 @@
 #include "colortransitiondialog.h"
 #include "blurdialog.h"
 #include "colorreplacedialog.h"
+#include "mosaicdialog.h"
 
 //-----------------------------------------------------
 
@@ -511,6 +512,8 @@ void EditAreaFrame::show_parameters_dialog()
     else if (block->get_name().compare(FILE_SAVE_NAME) == 0 ||
              block->get_name().compare(FILE_LOAD_NAME) == 0)
       help_dialog = new SaveLoadDialog(block,this);
+    else if (block->get_name().compare(SQUARE_MOSAIC_NAME) == 0)
+      help_dialog = new MosaicDialog(block,this);
     else   // default dialog
       help_dialog = new DefaultBlockDialog(block);
 

@@ -12,6 +12,7 @@ PerlinDialog::PerlinDialog(c_block *block, QWidget *parent) :
 
     ui->setupUi(this);
     this->setWindowTitle(QString::fromStdString(block->get_name()));
+    this->layout()->setSizeConstraint(QLayout::SetFixedSize);
 
     parameters = block->get_parameters();
 

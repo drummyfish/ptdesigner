@@ -21,6 +21,8 @@ INPUT(
 ./debug\transitionpreviewframe.o
 ./debug\blurdialog.o
 ./debug\colorreplacedialog.o
+./debug\mosaicdialog.o
+./debug\mosaicsideeditframe.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -43,4 +45,6 @@ INPUT(
 ./debug\moc_transitionpreviewframe.o
 ./debug\moc_blurdialog.o
 ./debug\moc_colorreplacedialog.o
+./debug\moc_mosaicdialog.o
+./debug\moc_mosaicsideeditframe.o
 );

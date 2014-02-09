@@ -9,7 +9,6 @@
 #ifndef UI_PREVIEWDIALOG_H
 #define UI_PREVIEWDIALOG_H
 
-#include <ColorBufferDisplay.h>
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
@@ -21,6 +20,7 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QWidget>
+#include <colorbufferdisplay.h>
 
 QT_BEGIN_NAMESPACE
 
