@@ -152,22 +152,25 @@ void c_texture_graph::string_to_coordinations(
 
     position = 0;
 
-    if (!str_stream.eof())
-      do
-        {
-          if (position >= max_length - 1)
-            break;
+    while (true)
+      {
+		if (position >= max_length - 1)
+          break;
+		  
+		str_stream >> value_x;
+        str_stream >> character;
+        
+        if (str_stream.eof())
+          break;
+        
+        str_stream >> value_y;
+        str_stream >> character;
+        
+        coordination_list[position][0] = value_x;
+        coordination_list[position][1] = value_y;
 
-          str_stream >> value_x;
-          str_stream >> character;
-          str_stream >> value_y;
-          str_stream >> character;
-
-          coordination_list[position][0] = value_x;
-          coordination_list[position][1] = value_y;
-
-          position++;
-        } while (!str_stream.eof());
+        position++;
+      }
 
     *length = position;
   }

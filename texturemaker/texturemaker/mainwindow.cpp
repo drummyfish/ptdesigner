@@ -648,7 +648,7 @@ bool MainWindow::load(QString filename)
 
 {
   bool success;
-  unsigned int i,j;
+  unsigned int i,j,x,y;
   int id;
   string line;
   QString q_line;
@@ -710,6 +710,12 @@ bool MainWindow::load(QString filename)
       this->block_positions.clear();
       return false;
     }
+
+  this->graph->get_resolution(&x,&y);
+
+  ui->width->setValue(x);
+  ui->height->setValue(y);
+  ui->supersampling->setValue(this->graph->get_supersampling());
 
   for (i = 0; i < this->graph->get_number_of_blocks(); i++)  // make up positions that don't exist
     {
