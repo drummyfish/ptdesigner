@@ -123,3 +123,62 @@ void MosaicSideEditFrame::mousePressEvent(QMouseEvent *event)
 }
 
 //-----------------------------------------------------
+
+string MosaicSideEditFrame::get_shape_string()
+
+{
+  QString help_string;
+  unsigned int i;
+  bool first;
+
+  help_string = "";
+  first = true;
+
+  for (i = 0; i < this->points.size(); i++)
+    {
+      if (first)
+        first = false;
+      else
+        help_string += " ";
+
+      help_string += QString::number(this->points.at(i).x) + " " + QString::number(this->points.at(i).y);
+    }
+
+  return help_string.toStdString();
+}
+
+//-----------------------------------------------------
+
+void MosaicSideEditFrame::set_shape(string shape_string)
+
+{
+  stringstream str_stream;
+  unsigned int position;
+  double value_x, value_y;
+  t_side_point point;
+
+  this->clear();
+
+  str_stream.str(shape_string);
+
+  position = 0;
+
+  if (!str_stream.eof())
+    do
+      {
+        str_stream >> value_x;
+        str_stream >> value_y;
+
+        point.x = value_x;
+        point.y = value_y;
+
+        this->points.push_back(point);
+
+        position++;
+      } while (!str_stream.eof());
+
+  this->sort_points();
+  this->update();
+}
+
+//-----------------------------------------------------

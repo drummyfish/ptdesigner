@@ -5,7 +5,9 @@
 #include <QPainter>
 #include <QPen>
 #include <vector>
+#include <string>
 #include <QMouseEvent>
+#include <sstream>
 
 using namespace std;
 
@@ -37,6 +39,8 @@ public:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void clear();
+    string get_shape_string();
+    void set_shape(string shape_string);
 
 protected:
     vector<t_side_point> points;  /// stores the side points
