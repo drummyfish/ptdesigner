@@ -55,6 +55,7 @@ public:
     QAction *actionDisconnect;
     QAction *actionEdit_parameters;
     QAction *actionDuplicate;
+    QAction *actionDefault_parameters_dialog;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QScrollArea *blockArea;
@@ -211,12 +212,15 @@ public:
         actionEdit_parameters->setObjectName(QStringLiteral("actionEdit_parameters"));
         actionDuplicate = new QAction(MainWindow);
         actionDuplicate->setObjectName(QStringLiteral("actionDuplicate"));
+        actionDefault_parameters_dialog = new QAction(MainWindow);
+        actionDefault_parameters_dialog->setObjectName(QStringLiteral("actionDefault_parameters_dialog"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(2, 2, 2, 2);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setContentsMargins(2, 2, 2, 2);
         blockArea = new QScrollArea(centralWidget);
         blockArea->setObjectName(QStringLiteral("blockArea"));
         blockArea->setMinimumSize(QSize(0, 155));
@@ -226,7 +230,7 @@ public:
         blockArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1316, 137));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1316, 136));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -610,7 +614,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 257, 717));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 256, 713));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -618,8 +622,9 @@ public:
         scrollAreaWidgetContents_2->setSizePolicy(sizePolicy1);
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout->setSpacing(2);
-        verticalLayout->setContentsMargins(2, 2, 2, 2);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(2, 2, 2, 2);
         widget = new QWidget(scrollAreaWidgetContents_2);
         widget->setObjectName(QStringLiteral("widget"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -630,8 +635,9 @@ public:
         widget->setMinimumSize(QSize(0, 200));
         horizontalLayout_3 = new QHBoxLayout(widget);
         horizontalLayout_3->setSpacing(0);
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
         preview = new ColorBufferDisplay(widget);
         preview->setObjectName(QStringLiteral("preview"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -879,8 +885,9 @@ public:
         scrollAreaWidgetContents_3->setPalette(palette);
         gridLayout_4 = new QGridLayout(scrollAreaWidgetContents_3);
         gridLayout_4->setSpacing(6);
-        gridLayout_4->setContentsMargins(0, 0, 0, 0);
+        gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        gridLayout_4->setContentsMargins(0, 0, 0, 0);
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         gridLayout_4->addItem(horizontalSpacer_2, 0, 1, 1, 1);
@@ -914,7 +921,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 562, 25));
+        menuBar->setGeometry(QRect(0, 0, 562, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -943,6 +950,7 @@ public:
         menuEdit->addAction(actionExecute);
         menuEdit->addAction(actionDisconnect);
         menuEdit->addAction(actionEdit_parameters);
+        menuEdit->addAction(actionDefault_parameters_dialog);
         menuEdit->addAction(actionDuplicate);
         menuHelp->addAction(actionHelp_topics);
         menuHelp->addAction(actionAbout);
@@ -975,6 +983,7 @@ public:
         actionDisconnect->setText(QApplication::translate("MainWindow", "disconnect", 0));
         actionEdit_parameters->setText(QApplication::translate("MainWindow", "edit parameters", 0));
         actionDuplicate->setText(QApplication::translate("MainWindow", "duplicate", 0));
+        actionDefault_parameters_dialog->setText(QApplication::translate("MainWindow", "default parameter dialog", 0));
 #ifndef QT_NO_TOOLTIP
         pushButton_19->setToolTip(QString());
 #endif // QT_NO_TOOLTIP

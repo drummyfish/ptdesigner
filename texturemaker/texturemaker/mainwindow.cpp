@@ -962,3 +962,19 @@ void MainWindow::on_actionNew_texture_triggered()
 }
 
 //-----------------------------------------------------
+
+void MainWindow::on_actionDefault_parameters_dialog_triggered()
+
+{
+  c_block *block;
+
+  block = this->graph->get_block_by_id(ui->editArea->get_selected_id());
+
+  if (block == NULL)
+    return;
+
+  DefaultBlockDialog dialog(block,this);
+  dialog.exec();
+}
+
+//-----------------------------------------------------

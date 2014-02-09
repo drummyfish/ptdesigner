@@ -13,6 +13,7 @@
 #include "ptdesigner.h"
 #include "defaultblockdialog.h"
 #include "previewdialog.h"
+#include "defaultblockdialog.h"
 
 #define MAIN_WINDOW_TITLE "Texturemaker"
 
@@ -332,6 +333,8 @@ private slots:
     void on_actionDuplicate_triggered();
 
     void on_actionNew_texture_triggered();
+
+    void on_actionDefault_parameters_dialog_triggered();
 
 private:
     Ui::MainWindow *ui;
