@@ -150,10 +150,10 @@ void EditAreaFrame::paintEvent(QPaintEvent *)
 
           block_distance -= 50;
 
-          if (block_distance < 50)   // limits
-            block_distance = 50;
-          else if (block_distance > 150)
-            block_distance = 150;
+          if (block_distance < 20)   // limits
+            block_distance = 20;
+          else if (block_distance > 200)
+            block_distance = 200;
 
           switch(position2->direction)   // coming from output
             {

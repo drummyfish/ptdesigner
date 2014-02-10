@@ -716,6 +716,7 @@ bool MainWindow::load(QString filename)
   ui->width->setValue(x);
   ui->height->setValue(y);
   ui->supersampling->setValue(this->graph->get_supersampling());
+  ui->seed->setValue(this->graph->get_random_seed());
 
   for (i = 0; i < this->graph->get_number_of_blocks(); i++)  // make up positions that don't exist
     {
