@@ -23,6 +23,8 @@ INPUT(
 ./release\colorreplacedialog.o
 ./release\mosaicdialog.o
 ./release\mosaicsideeditframe.o
+./release\edgedetectiondialog.o
+./release\ditherdialog.o
 ./release\qrc_resources.o
 ./release\moc_mainwindow.o
 ./release\moc_editareaframe.o
@@ -47,4 +49,6 @@ INPUT(
 ./release\moc_colorreplacedialog.o
 ./release\moc_mosaicdialog.o
 ./release\moc_mosaicsideeditframe.o
+./release\moc_edgedetectiondialog.o
+./release\moc_ditherdialog.o
 );

@@ -48,6 +48,7 @@ DefaultBlockDialog::DefaultBlockDialog(c_block *block, QWidget *parent) :
               QDoubleSpinBox *double_spin_box = new QDoubleSpinBox();
               double_spin_box->setMinimumWidth(75);
               double_spin_box->setMinimum(-99999999.99);
+              double_spin_box->setSingleStep(0.1);
               double_spin_box->setValue(block->get_parameters()->get_double_value(i));
               ((QGridLayout *) this->layout())->addWidget(double_spin_box,i,1);
               break;

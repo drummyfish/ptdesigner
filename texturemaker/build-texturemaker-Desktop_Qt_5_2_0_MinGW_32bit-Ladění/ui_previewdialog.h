@@ -40,13 +40,13 @@ public:
     {
         if (PreviewDialog->objectName().isEmpty())
             PreviewDialog->setObjectName(QStringLiteral("PreviewDialog"));
-        PreviewDialog->resize(800, 600);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        PreviewDialog->resize(346, 322);
+        QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(PreviewDialog->sizePolicy().hasHeightForWidth());
         PreviewDialog->setSizePolicy(sizePolicy);
-        PreviewDialog->setMinimumSize(QSize(800, 600));
+        PreviewDialog->setMinimumSize(QSize(100, 100));
         PreviewDialog->setMaximumSize(QSize(800, 600));
         gridLayout_2 = new QGridLayout(PreviewDialog);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
@@ -60,7 +60,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 780, 551));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 326, 273));
         gridLayout = new QGridLayout(scrollAreaWidgetContents);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);

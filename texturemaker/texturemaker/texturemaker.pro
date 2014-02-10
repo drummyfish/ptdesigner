@@ -35,7 +35,9 @@ SOURCES += main.cpp\
     blurdialog.cpp \
     colorreplacedialog.cpp \
     mosaicdialog.cpp \
-    mosaicsideeditframe.cpp
+    mosaicsideeditframe.cpp \
+    edgedetectiondialog.cpp \
+    ditherdialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -62,7 +64,9 @@ HEADERS  += mainwindow.h \
     blurdialog.h \
     colorreplacedialog.h \
     mosaicdialog.h \
-    mosaicsideeditframe.h
+    mosaicsideeditframe.h \
+    edgedetectiondialog.h \
+    ditherdialog.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -79,7 +83,9 @@ FORMS    += mainwindow.ui \
     colortransitiondialog.ui \
     blurdialog.ui \
     colorreplacedialog.ui \
-    mosaicdialog.ui
+    mosaicdialog.ui \
+    edgedetectiondialog.ui \
+    ditherdialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 

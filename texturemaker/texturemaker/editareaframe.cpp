@@ -12,6 +12,8 @@
 #include "blurdialog.h"
 #include "colorreplacedialog.h"
 #include "mosaicdialog.h"
+#include "edgedetectiondialog.h"
+#include "ditherdialog.h"
 
 //-----------------------------------------------------
 
@@ -514,6 +516,10 @@ void EditAreaFrame::show_parameters_dialog()
       help_dialog = new SaveLoadDialog(block,this);
     else if (block->get_name().compare(SQUARE_MOSAIC_NAME) == 0)
       help_dialog = new MosaicDialog(block,this);
+    else if (block->get_name().compare(EDGE_DETECTION_NAME) == 0)
+      help_dialog = new EdgeDetectionDialog(block,this);
+    else if (block->get_name().compare(DITHER_NAME) == 0)
+      help_dialog = new DitherDialog(block,this);
     else   // default dialog
       help_dialog = new DefaultBlockDialog(block);
 
