@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     mosaicdialog.cpp \
     mosaicsideeditframe.cpp \
     edgedetectiondialog.cpp \
-    ditherdialog.cpp
+    ditherdialog.cpp \
+    cellulargeneraldialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -66,7 +67,8 @@ HEADERS  += mainwindow.h \
     mosaicdialog.h \
     mosaicsideeditframe.h \
     edgedetectiondialog.h \
-    ditherdialog.h
+    ditherdialog.h \
+    cellulargeneraldialog.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -85,7 +87,8 @@ FORMS    += mainwindow.ui \
     colorreplacedialog.ui \
     mosaicdialog.ui \
     edgedetectiondialog.ui \
-    ditherdialog.ui
+    ditherdialog.ui \
+    cellulargeneraldialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 

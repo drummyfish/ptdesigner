@@ -182,6 +182,7 @@ void c_texture_graph::string_to_char_array(unsigned char char_array[],
 
   {
     stringstream str_stream;
+    unsigned char character;
     unsigned int helper;
     unsigned int position;
 
@@ -192,19 +193,21 @@ void c_texture_graph::string_to_char_array(unsigned char char_array[],
 
     position = 0;
 
-    if (!str_stream.eof())
-      do
-        {
-          if (position >= max_length - 1)
-            break;
-
-          str_stream >> helper;
-
-          char_array[position] = helper;
-
-          position++;
-        } while (!str_stream.eof());
-
+    while (true)
+      {
+		if (position >= max_length)
+          break;
+		  
+		if (str_stream.eof())
+          break;
+		  
+		str_stream >> helper;          
+		str_stream >> character;   // ","
+        
+        char_array[position] = helper;
+        position++;
+      }
+      
     *length = position;
   }
 
@@ -2199,7 +2202,7 @@ void c_block_square_mosaic::set_default()
     this->parameters->set_int_value("tiles y",2);
     this->parameters->set_int_value("fill type",FILL_NO_BORDERS);
     this->parameters->set_string_value("fill colors",
-      (char *) "255 0 0 255");
+      (char *) "255,0,0,255");
   }
 
 //----------------------------------------------------------------------
@@ -3114,6 +3117,10 @@ bool c_block_cellular_automaton_general::execute()
 
     if (!this->is_graphic_input(0))
       return false;
+
+    color_buffer_copy_data(
+      ((c_graphic_block *) this->input_blocks[0])->get_color_buffer(),
+      &(this->buffer));
 
     c_texture_graph::string_to_char_array(
       rules_char,

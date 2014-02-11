@@ -62,5 +62,6 @@
         <file>resources/curve linear half.png</file>
         <file>resources/curve cos abs.png</file>
         <file>resources/curve cos smooth.png</file>
+        <file>resources/cellular_general.png</file>
     </qresource>
 </RCC>

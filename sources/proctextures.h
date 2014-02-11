@@ -735,7 +735,7 @@ void pt_cellular_automaton_general(t_color_buffer *buffer,
    *        possible states of given cell's neighbourhood, the indice's
    *        number is considered a binary representation of the cell's
    *        neighbour cell values in order NW, N, NE, E, SE, S, SW, W,
-   *        the value stored on index can be:
+   *        where NW is LSB and W MSB, the value stored on index can be:
    *        1 (or any positive) - the cell is born
    *        0 - nothing happens to the cell
    *        -1 (or any negative) - the cell dies

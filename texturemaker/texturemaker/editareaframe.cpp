@@ -14,6 +14,7 @@
 #include "mosaicdialog.h"
 #include "edgedetectiondialog.h"
 #include "ditherdialog.h"
+#include "cellulargeneraldialog.h"
 
 //-----------------------------------------------------
 
@@ -520,6 +521,8 @@ void EditAreaFrame::show_parameters_dialog()
       help_dialog = new EdgeDetectionDialog(block,this);
     else if (block->get_name().compare(DITHER_NAME) == 0)
       help_dialog = new DitherDialog(block,this);
+    else if (block->get_name().compare(CELLULAR_GENERAL_NAME) == 0)
+      help_dialog = new CellularGeneralDialog(block,this);
     else   // default dialog
       help_dialog = new DefaultBlockDialog(block);
 

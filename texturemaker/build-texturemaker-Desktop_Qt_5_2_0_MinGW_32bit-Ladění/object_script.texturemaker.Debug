@@ -25,6 +25,7 @@ INPUT(
 ./debug\mosaicsideeditframe.o
 ./debug\edgedetectiondialog.o
 ./debug\ditherdialog.o
+./debug\cellulargeneraldialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -51,4 +52,5 @@ INPUT(
 ./debug\moc_mosaicsideeditframe.o
 ./debug\moc_edgedetectiondialog.o
 ./debug\moc_ditherdialog.o
+./debug\moc_cellulargeneraldialog.o
 );

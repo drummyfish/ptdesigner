@@ -4108,10 +4108,10 @@ void pt_cellular_automaton_general(t_color_buffer *buffer,
 
               color_buffer_get_pixel(main_buffer,x,y,&r,&g,&b);
 
-              if (rule == 0)     // nothing happens
+              if (rule == 0)      // nothing happens
                 {
                 }
-              else if (rule > 0) // the cell is born
+              else if (rule == 1) // the cell is born
                 {
                   r = 0;
                 }
