@@ -26,6 +26,7 @@ INPUT(
 ./release\edgedetectiondialog.o
 ./release\ditherdialog.o
 ./release\cellulargeneraldialog.o
+./release\cellulardialog.o
 ./release\qrc_resources.o
 ./release\moc_mainwindow.o
 ./release\moc_editareaframe.o
@@ -53,4 +54,5 @@ INPUT(
 ./release\moc_edgedetectiondialog.o
 ./release\moc_ditherdialog.o
 ./release\moc_cellulargeneraldialog.o
+./release\moc_cellulardialog.o
 );
