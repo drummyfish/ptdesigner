@@ -15,7 +15,7 @@ CellularGeneralDialog::CellularGeneralDialog(c_block *block, QWidget *parent):
   QString help_string;
 
   ui->setupUi(this);
-  this->setWindowTitle(QString::fromStdString(block->get_name()));
+  this->set_window_properties();
 
   ui->iterations->setValue(this->block->get_parameters()->get_int_value("iterations"));
   ui->states->setValue(this->block->get_parameters()->get_int_value("states"));

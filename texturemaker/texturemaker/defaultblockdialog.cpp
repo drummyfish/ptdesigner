@@ -16,6 +16,7 @@ DefaultBlockDialog::DefaultBlockDialog(c_block *block, QWidget *parent) :
   ui->setupUi(this);
 
   this->layout()->setSizeConstraint(QLayout::SetFixedSize); // make the window non-resizeable
+  this->setWindowIcon(QIcon(":/resources/nothing.png"));
 
   if (this->block == NULL)
     return;

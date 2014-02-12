@@ -9,8 +9,7 @@ EdgeDetectionDialog::EdgeDetectionDialog(c_block *block, QWidget *parent):
 
 {
   ui->setupUi(this);
-  this->setWindowTitle(QString::fromStdString(block->get_name()));
-  this->layout()->setSizeConstraint(QLayout::SetFixedSize);
+  this->set_window_properties();
   ui->intensity->setValue(this->block->get_parameters()->get_int_value("intensity"));
 
   switch (this->block->get_parameters()->get_int_value("type"))

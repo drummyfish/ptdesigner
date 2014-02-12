@@ -9,7 +9,7 @@ ColorFillDialog:: ColorFillDialog(c_block *block, QWidget *parent) :
 
 {
   ui->setupUi(this);
-  this->setWindowTitle(QString::fromStdString(block->get_name()));
+  this->set_window_properties();
 
   r = this->block->get_parameters()->get_int_value("red");
   g = this->block->get_parameters()->get_int_value("green");

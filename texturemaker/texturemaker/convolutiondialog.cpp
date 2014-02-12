@@ -16,7 +16,7 @@ ConvolutionDialog::ConvolutionDialog(c_block *block, QWidget *parent) :
 
   parameters = block->get_parameters();
 
-  this->setWindowTitle(QString::fromStdString(block->get_name()));
+  this->set_window_properties();
   ((QGridLayout *) ui->matrix_frame->layout())->setSpacing(0);
 
   ui->matrix_width->setValue(parameters->get_int_value("matrix width"));

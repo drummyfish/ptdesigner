@@ -8,6 +8,8 @@
 #include <QDoubleValidator>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QLayout>
+#include <QIcon>
 #include <iostream>
 #include "ptdesigner.h"
 #include "colortransition.h"
@@ -28,6 +30,12 @@ public:
 
 protected:
     c_block *block;   /// block being modified
+
+    void set_window_properties();
+
+    /**
+      Sets the window title and icon and makes it non-resizable.
+      */
 
 signals:
 

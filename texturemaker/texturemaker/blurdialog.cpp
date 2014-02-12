@@ -13,7 +13,7 @@ BlurDialog::BlurDialog(c_block *block, QWidget *parent) :
   parameters = this->block->get_parameters();
 
   ui->setupUi(this);
-  this->setWindowTitle(QString::fromStdString(block->get_name()));
+  this->set_window_properties();
 
   ui->intensity->setValue(parameters->get_int_value("intensity"));
 

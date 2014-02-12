@@ -8,7 +8,7 @@ LSystemDialog::LSystemDialog(c_block *block, QWidget *parent) :
     ui(new Ui::LSystemDialog)
 {
   ui->setupUi(this);
-  this->setWindowTitle(QString::fromStdString(block->get_name()));
+  this->set_window_properties();
 
   ui->path->setText(QString::fromStdString(this->block->get_parameters()->get_string_value("path")));
   ui->iterations->setValue(this->block->get_parameters()->get_int_value("iterations"));

@@ -9,8 +9,7 @@ ColorTransitionDialog::ColorTransitionDialog(c_block *block, QWidget *parent) :
 
 {
   ui->setupUi(this);
-  this->setWindowTitle(QString::fromStdString(block->get_name()));
-  this->layout()->setSizeConstraint(QLayout::SetFixedSize);
+  this->set_window_properties();
 
   color_transition_init(&this->transition);
   ui->transition_preview->set_transition(&this->transition);

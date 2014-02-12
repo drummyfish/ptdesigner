@@ -14,7 +14,7 @@ MosaicDialog::MosaicDialog(c_block *block, QWidget *parent):
   c_parameters *parameters;
 
   ui->setupUi(this);
-  this->layout()->setSizeConstraint(QLayout::SetFixedSize);
+  this->set_window_properties();
 
   parameters = this->block->get_parameters();
 

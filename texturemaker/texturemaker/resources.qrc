@@ -63,5 +63,6 @@
         <file>resources/curve cos abs.png</file>
         <file>resources/curve cos smooth.png</file>
         <file>resources/cellular_general.png</file>
+        <file>resources/nothing.png</file>
     </qresource>
 </RCC>
