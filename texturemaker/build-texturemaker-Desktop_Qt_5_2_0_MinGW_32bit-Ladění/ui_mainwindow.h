@@ -165,7 +165,7 @@ public:
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(562, 518);
         QIcon icon;
-        icon.addFile(QStringLiteral(":/resources/nothing.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/resources/icon64.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         actionNew_texture = new QAction(MainWindow);
         actionNew_texture->setObjectName(QStringLiteral("actionNew_texture"));

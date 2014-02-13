@@ -8,7 +8,9 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui(new Ui::AboutDialog)
 
 {
-    ui->setupUi(this);
+  ui->setupUi(this);
+  this->layout()->setSizeConstraint(QLayout::SetFixedSize);
+  this->setWindowIcon(QIcon(":/resources/nothing.png"));
 }
 
 //-----------------------------------------------------
@@ -16,7 +18,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 AboutDialog::~AboutDialog()
 
 {
-    delete ui;
+  delete ui;
 }
 
 //-----------------------------------------------------

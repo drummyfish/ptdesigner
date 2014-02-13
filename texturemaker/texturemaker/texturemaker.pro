@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = texturemaker
 TEMPLATE = app
 
+RC_FILE = res.rc
 
 SOURCES += main.cpp\
         mainwindow.cpp \
