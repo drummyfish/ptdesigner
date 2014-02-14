@@ -27,6 +27,7 @@ INPUT(
 ./debug\ditherdialog.o
 ./debug\cellulargeneraldialog.o
 ./debug\cellulardialog.o
+./debug\substratedialog.o
 ./debug\qrc_resources.o
 ./debug\moc_mainwindow.o
 ./debug\moc_editareaframe.o
@@ -55,4 +56,5 @@ INPUT(
 ./debug\moc_ditherdialog.o
 ./debug\moc_cellulargeneraldialog.o
 ./debug\moc_cellulardialog.o
+./debug\moc_substratedialog.o
 );

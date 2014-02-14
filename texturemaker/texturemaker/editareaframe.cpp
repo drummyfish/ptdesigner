@@ -16,6 +16,7 @@
 #include "ditherdialog.h"
 #include "cellulargeneraldialog.h"
 #include "cellulardialog.h"
+#include "substratedialog.h"
 
 //-----------------------------------------------------
 
@@ -527,6 +528,8 @@ void EditAreaFrame::show_parameters_dialog()
       help_dialog = new DitherDialog(block,this);
     else if (block->get_name().compare(CELLULAR_GENERAL_NAME) == 0)
       help_dialog = new CellularGeneralDialog(block,this);
+    else if (block->get_name().compare(SUBSTRATE_NAME) == 0)
+      help_dialog = new SubstrateDialog(block,this);
     else   // default dialog
       help_dialog = new DefaultBlockDialog(block);
 

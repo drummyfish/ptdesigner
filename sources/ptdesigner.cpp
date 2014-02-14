@@ -878,7 +878,7 @@ c_texture_graph::c_texture_graph()
     this->supersampling_level = 1;
     this->resolution_x = 256;       // default resolution
     this->resolution_y = 256;
-    this->random_seed = 1;
+    this->random_seed = 0;
   }
 
 //----------------------------------------------------------------------
@@ -1006,11 +1006,11 @@ void c_block::set_texture_graph(c_texture_graph *graph)
 
 //----------------------------------------------------------------------
 
-void c_texture_graph::add_block(c_block *block)
+int c_texture_graph::add_block(c_block *block)
 
   {
     if (block == NULL)
-      return;
+      return -1;
 
     this->blocks->push_back(block);
     block->set_texture_graph(this);
@@ -1020,6 +1020,8 @@ void c_texture_graph::add_block(c_block *block)
     this->last_id++;
 
     this->update();
+    
+    return block->get_id();
   }
 
 //----------------------------------------------------------------------

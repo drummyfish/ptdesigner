@@ -1041,7 +1041,7 @@ class c_texture_graph
          *         such ID doesn't exist
          */
 
-      void add_block(c_block *block);
+      int add_block(c_block *block);
 
         /**<
          * Adds given block to texture graph. This will initialise the
@@ -1049,6 +1049,8 @@ class c_texture_graph
          * they match the texture graph settings.
          *
          * @param block block to be added
+         * 
+         * @return id assigned to block
          */
 
       void remove_block(unsigned int block_number);

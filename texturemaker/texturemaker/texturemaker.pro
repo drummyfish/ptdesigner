@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     edgedetectiondialog.cpp \
     ditherdialog.cpp \
     cellulargeneraldialog.cpp \
-    cellulardialog.cpp
+    cellulardialog.cpp \
+    substratedialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -71,7 +72,8 @@ HEADERS  += mainwindow.h \
     edgedetectiondialog.h \
     ditherdialog.h \
     cellulargeneraldialog.h \
-    cellulardialog.h
+    cellulardialog.h \
+    substratedialog.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -92,7 +94,8 @@ FORMS    += mainwindow.ui \
     edgedetectiondialog.ui \
     ditherdialog.ui \
     cellulargeneraldialog.ui \
-    cellulardialog.ui
+    cellulardialog.ui \
+    substratedialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 
