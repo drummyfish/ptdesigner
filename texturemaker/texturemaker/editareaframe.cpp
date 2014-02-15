@@ -17,6 +17,7 @@
 #include "cellulargeneraldialog.h"
 #include "cellulardialog.h"
 #include "substratedialog.h"
+#include "woodmarbledialog.h"
 
 //-----------------------------------------------------
 
@@ -520,6 +521,9 @@ void EditAreaFrame::show_parameters_dialog()
     else if (block->get_name().compare(CELLULAR_CYCLIC_NAME) == 0 ||
              block->get_name().compare(CELLULAR_RPS_NAME) == 0)
       help_dialog = new CellularDialog(block,this);
+    else if (block->get_name().compare(MARBLE_NAME) == 0 ||
+           block->get_name().compare(WOOD_NAME) == 0)
+      help_dialog = new WoodMarbleDialog(block,this);
     else if (block->get_name().compare(SQUARE_MOSAIC_NAME) == 0)
       help_dialog = new MosaicDialog(block,this);
     else if (block->get_name().compare(EDGE_DETECTION_NAME) == 0)

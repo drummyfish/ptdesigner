@@ -28,6 +28,7 @@ INPUT(
 ./release\cellulargeneraldialog.o
 ./release\cellulardialog.o
 ./release\substratedialog.o
+./release\woodmarbledialog.o
 ./release\qrc_resources.o
 ./release\moc_mainwindow.o
 ./release\moc_editareaframe.o
@@ -57,4 +58,5 @@ INPUT(
 ./release\moc_cellulargeneraldialog.o
 ./release\moc_cellulardialog.o
 ./release\moc_substratedialog.o
+./release\moc_woodmarbledialog.o
 );

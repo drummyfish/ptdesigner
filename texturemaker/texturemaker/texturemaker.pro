@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     ditherdialog.cpp \
     cellulargeneraldialog.cpp \
     cellulardialog.cpp \
-    substratedialog.cpp
+    substratedialog.cpp \
+    woodmarbledialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -74,7 +75,8 @@ HEADERS  += mainwindow.h \
     cellulargeneraldialog.h \
     cellulardialog.h \
     substratedialog.h \
-    texturemakergeneral.h
+    texturemakergeneral.h \
+    woodmarbledialog.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -96,7 +98,8 @@ FORMS    += mainwindow.ui \
     ditherdialog.ui \
     cellulargeneraldialog.ui \
     cellulardialog.ui \
-    substratedialog.ui
+    substratedialog.ui \
+    woodmarbledialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 
