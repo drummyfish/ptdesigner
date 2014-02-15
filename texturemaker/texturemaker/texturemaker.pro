@@ -73,7 +73,8 @@ HEADERS  += mainwindow.h \
     ditherdialog.h \
     cellulargeneraldialog.h \
     cellulardialog.h \
-    substratedialog.h
+    substratedialog.h \
+    texturemakergeneral.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \

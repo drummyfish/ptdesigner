@@ -27,7 +27,7 @@ class Ui_AboutDialog
 public:
     QGridLayout *gridLayout;
     QDialogButtonBox *buttonBox;
-    QLabel *label_2;
+    QLabel *label_text;
     QLabel *label;
     QFrame *frame;
 
@@ -52,10 +52,10 @@ public:
 
         gridLayout->addWidget(buttonBox, 6, 0, 1, 1);
 
-        label_2 = new QLabel(AboutDialog);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_text = new QLabel(AboutDialog);
+        label_text->setObjectName(QStringLiteral("label_text"));
 
-        gridLayout->addWidget(label_2, 1, 0, 1, 1);
+        gridLayout->addWidget(label_text, 1, 0, 1, 1);
 
         label = new QLabel(AboutDialog);
         label->setObjectName(QStringLiteral("label"));
@@ -86,8 +86,8 @@ public:
 
     void retranslateUi(QDialog *AboutDialog)
     {
-        AboutDialog->setWindowTitle(QApplication::translate("AboutDialog", "Dialog", 0));
-        label_2->setText(QApplication::translate("AboutDialog", "<html><head/><body><p>Miloslav \304\214\303\255\305\276, 2014</p><p>version: 1.0</p></body></html>", 0));
+        AboutDialog->setWindowTitle(QApplication::translate("AboutDialog", "About", 0));
+        label_text->setText(QApplication::translate("AboutDialog", "<html><head/><body><p><br/></p></body></html>", 0));
         label->setText(QApplication::translate("AboutDialog", "Texturemaker", 0));
     } // retranslateUi
 

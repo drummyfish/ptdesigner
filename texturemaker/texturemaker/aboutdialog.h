@@ -2,6 +2,8 @@
 #define ABOUTDIALOG_H
 
 #include <QDialog>
+#include "ptdesigner.h"
+#include "texturemakergeneral.h"
 
 namespace Ui {
 class AboutDialog;

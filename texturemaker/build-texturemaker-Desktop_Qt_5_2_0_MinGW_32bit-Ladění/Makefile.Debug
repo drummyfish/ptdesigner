@@ -218,11 +218,11 @@ compiler_rcc_make_all: debug/qrc_resources.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_resources.cpp
 debug/qrc_resources.cpp: ../texturemaker/resources.qrc \
-		../texturemaker/resources/cellular_general.png \
 		../texturemaker/resources/hourglass3.png \
 		../texturemaker/resources/icon64.png \
-		../texturemaker/resources/nothing.png \
-		../texturemaker/resources/block.png
+		../texturemaker/resources/block.png \
+		../texturemaker/resources/cellular_general.png \
+		../texturemaker/resources/nothing.png
 	C:\Qt\5.2.0\mingw48_32\bin\rcc.exe -name resources ..\texturemaker\resources.qrc -o debug\qrc_resources.cpp
 
 compiler_moc_header_make_all: debug/moc_mainwindow.cpp debug/moc_editareaframe.cpp debug/moc_addblockbutton.cpp debug/moc_colorbufferdisplay.cpp debug/moc_defaultblockdialog.cpp debug/moc_previewdialog.cpp debug/moc_colorfilldialog.cpp debug/moc_lightdialog.cpp debug/moc_voronoidialog.cpp debug/moc_pointeditframe.cpp debug/moc_perlindialog.cpp debug/moc_convolutiondialog.cpp debug/moc_customblockdialog.cpp debug/moc_aboutdialog.cpp debug/moc_mixdialog.cpp debug/moc_saveloaddialog.cpp debug/moc_lsystemdialog.cpp debug/moc_colortransitiondialog.cpp debug/moc_transitionpreviewframe.cpp debug/moc_blurdialog.cpp debug/moc_colorreplacedialog.cpp debug/moc_mosaicdialog.cpp debug/moc_mosaicsideeditframe.cpp debug/moc_edgedetectiondialog.cpp debug/moc_ditherdialog.cpp debug/moc_cellulargeneraldialog.cpp debug/moc_cellulardialog.cpp debug/moc_substratedialog.cpp
@@ -2614,6 +2614,16 @@ debug/moc_aboutdialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/QtWi
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfiledevice.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvector2d.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtouchdevice.h \
+		../../sources/ptdesigner.h \
+		../../sources/colorbuffer.h \
+		../../sources/kdtree.h \
+		../../sources/general.h \
+		../../sources/matrix.h \
+		../../sources/colortransition.h \
+		../../sources/grammar.h \
+		../../sources/proctextures.h \
+		../../sources/rapidxml.hpp \
+		../texturemaker/texturemakergeneral.h \
 		../texturemaker/aboutdialog.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ..\texturemaker\aboutdialog.h -o debug\moc_aboutdialog.cpp
 
@@ -4610,6 +4620,42 @@ debug/moc_substratedialog.cpp: ../../../../../../../Qt/5.2.0/mingw48_32/include/
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfiledevice.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvector2d.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtouchdevice.h \
+		../texturemaker/customblockdialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QColorDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qcolordialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QLineEdit \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qlineedit.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qframe.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextcursor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextformat.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpen.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextoption.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QFileDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qfiledialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdir.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfileinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QLayout \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qlayout.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qlayoutitem.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qboxlayout.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qgridlayout.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QIcon \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qicon.h \
+		../../sources/ptdesigner.h \
+		../../sources/colorbuffer.h \
+		../../sources/kdtree.h \
+		../../sources/general.h \
+		../../sources/matrix.h \
+		../../sources/colortransition.h \
+		../../sources/grammar.h \
+		../../sources/proctextures.h \
+		../../sources/rapidxml.hpp \
 		../texturemaker/substratedialog.h
 	C:\Qt\5.2.0\mingw48_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 $(INCPATH) ..\texturemaker\substratedialog.h -o debug\moc_substratedialog.cpp
 
@@ -6624,7 +6670,8 @@ debug/mainwindow.o: ../texturemaker/mainwindow.cpp ../texturemaker/mainwindow.h 
 		../texturemaker/previewdialog.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QWidget \
 		ui_mainwindow.h \
-		../texturemaker/aboutdialog.h
+		../texturemaker/aboutdialog.h \
+		../texturemaker/texturemakergeneral.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\texturemaker\mainwindow.cpp
 
 debug/editareaframe.o: ../texturemaker/editareaframe.cpp ../texturemaker/editareaframe.h \
@@ -6947,7 +6994,8 @@ debug/editareaframe.o: ../texturemaker/editareaframe.cpp ../texturemaker/editare
 		../texturemaker/edgedetectiondialog.h \
 		../texturemaker/ditherdialog.h \
 		../texturemaker/cellulargeneraldialog.h \
-		../texturemaker/cellulardialog.h
+		../texturemaker/cellulardialog.h \
+		../texturemaker/substratedialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\editareaframe.o ..\texturemaker\editareaframe.cpp
 
 debug/addblockbutton.o: ../texturemaker/addblockbutton.cpp ../texturemaker/addblockbutton.h \
@@ -8767,6 +8815,16 @@ debug/aboutdialog.o: ../texturemaker/aboutdialog.cpp ../texturemaker/aboutdialog
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfiledevice.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvector2d.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtouchdevice.h \
+		../../sources/ptdesigner.h \
+		../../sources/colorbuffer.h \
+		../../sources/kdtree.h \
+		../../sources/general.h \
+		../../sources/matrix.h \
+		../../sources/colortransition.h \
+		../../sources/grammar.h \
+		../../sources/proctextures.h \
+		../../sources/rapidxml.hpp \
+		../texturemaker/texturemakergeneral.h \
 		ui_aboutdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\aboutdialog.o ..\texturemaker\aboutdialog.cpp
 
@@ -10775,6 +10833,42 @@ debug/substratedialog.o: ../texturemaker/substratedialog.cpp ../texturemaker/sub
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfiledevice.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvector2d.h \
 		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtouchdevice.h \
+		../texturemaker/customblockdialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QColorDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qcolordialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QLineEdit \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qlineedit.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qframe.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextcursor.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextformat.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qpen.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qtextoption.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QFileDialog \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qfiledialog.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qdir.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qfileinfo.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QDoubleValidator \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qvalidator.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/qregularexpression.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtCore/QTextStream \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QMessageBox \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qmessagebox.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/QLayout \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qlayout.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qlayoutitem.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qboxlayout.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtWidgets/qgridlayout.h \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/QIcon \
+		../../../../../../../Qt/5.2.0/mingw48_32/include/QtGui/qicon.h \
+		../../sources/ptdesigner.h \
+		../../sources/colorbuffer.h \
+		../../sources/kdtree.h \
+		../../sources/general.h \
+		../../sources/matrix.h \
+		../../sources/colortransition.h \
+		../../sources/grammar.h \
+		../../sources/proctextures.h \
+		../../sources/rapidxml.hpp \
 		ui_substratedialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\substratedialog.o ..\texturemaker\substratedialog.cpp
 
