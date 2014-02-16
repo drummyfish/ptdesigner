@@ -120,7 +120,9 @@ double two_points_to_angle(int x1, int y1, int x2, int y2)
     dx = x2 - x1;
     dy = y2 - y1;
 
-    if (dx != 0)
+    if (dy == 0)
+      angle = 0;
+    else if (dx != 0)
       angle = atan(abs(dy)/((double) abs(dx)));
     else
       angle = PI_DIVIDED_2;
@@ -150,6 +152,7 @@ void line_point(int initial_x, int initial_y, double angle,
 
   {
     int angle_area;    // eight areas to which 2 * PI angle is divided
+    double helper;
 
     while (angle >= PI_TIMES_2)  // adjust the angle
       {
@@ -161,7 +164,9 @@ void line_point(int initial_x, int initial_y, double angle,
         angle += PI_TIMES_2;
       }
 
-    angle_area = angle / (PI_DIVIDED_4);
+    helper = angle / (PI_DIVIDED_4);
+
+    angle_area = (int) (angle / (PI_DIVIDED_4));
 
     switch (angle_area)
       {
@@ -206,7 +211,7 @@ void line_point(int initial_x, int initial_y, double angle,
           *point_y = initial_y + point;
           break;
 
-        case 7:
+        default:
           angle = PI_TIMES_2 - angle;            // 7/4 * PI to 2 * PI
           *point_x = initial_x + point;
           *point_y = initial_y + round(point * tan(angle));

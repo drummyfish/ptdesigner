@@ -1045,7 +1045,6 @@ void _pt_draw_fancy_line(t_color_buffer *buffer, int x1, int y1, int x2,
   t_color_buffer *noise_buffer, t_line_type type)
 
   {
-
     int i, j, k;
     int x,y,help_x,help_y;
     int dx,dy;
@@ -1062,11 +1061,6 @@ void _pt_draw_fancy_line(t_color_buffer *buffer, int x1, int y1, int x2,
     dy = y2 - y1;
     dx = dx < 0 ? -1 * dx : dx;    // make absolute values
     dy = dy < 0 ? -1 * dy : dy;
-
-    if (dx != 0)
-      angle = atan(abs(dy)/abs(dx));
-    else
-      angle = PI_DIVIDED_2;
 
     angle = two_points_to_angle(x1,y1,x2,y2);
 
@@ -4150,6 +4144,7 @@ void pt_mosaic_square(t_color_buffer *destination,
     unsigned char r,g,b;
     unsigned int polygon_points,tile_number;
     unsigned int extra_border_x,extra_border_y,tile_width,tile_height;
+    unsigned int from_x,from_y,to_x,to_y;
     t_color_buffer tile_buffer, help_buffer;
     double (*polygon)[2];       // dynamic array of polygon points
     unsigned int i,j;
@@ -4182,20 +4177,21 @@ void pt_mosaic_square(t_color_buffer *destination,
 
     for (i = 0; i < polygon_points; i++)
       {
-        _pt_draw_fancy_line(&tile_buffer,
-          extra_border_x + polygon[i][0] * tile_width,
-          extra_border_y + tile_height - polygon[i][1] * tile_height,
-          extra_border_x + polygon[(i + 1) % polygon_points][0] * tile_width,
-          extra_border_y + tile_height - polygon[(i + 1) % polygon_points][1] * tile_height,
-          0,0,0,1,0,0,0,NULL,LINE_NORMAL);
+		from_x = extra_border_x + polygon[i][0] * tile_width;
+		from_y = extra_border_y + tile_height - polygon[i][1] * tile_height;
+		to_x = extra_border_x + polygon[(i + 1) % polygon_points][0] * tile_width;
+		to_y = extra_border_y + tile_height - polygon[(i + 1) % polygon_points][1] * tile_height;
+          
+        _pt_draw_fancy_line(&tile_buffer,from_x,from_y,to_x,to_y,0,0,0,
+          1,0,0,0,NULL,LINE_NORMAL);
       }
 
     _pt_floodfill(&tile_buffer,0,0,255,0,0); // fill the outside
 
+    // make the mosaic:
+
    if (fill_type == FILL_NO_BORDERS) // get rid of borders if needed
       _pt_replace_color(&tile_buffer,0,0,0,255,255,255);
-
-    // make the mosaic:
 
     tile_number = 0;
     current_transformation = MOSAIC_TRANSFORM_SHIFT;  // = no transform.

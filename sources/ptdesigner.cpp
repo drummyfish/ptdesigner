@@ -884,14 +884,6 @@ c_texture_graph::c_texture_graph()
 
 //----------------------------------------------------------------------
 
-vector<c_block *> *c_texture_graph::get_end_blocks()
-
-  {
-	return this->end_block;
-  }
-
-//----------------------------------------------------------------------
-
 bool c_block::is_graphic_input(unsigned int number)
 
   {
