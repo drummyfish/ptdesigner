@@ -22,6 +22,7 @@ private slots:
     void on_pick_specular_clicked();
     void on_curve_selection_currentIndexChanged(int index);
     void on_buttonBox_accepted();
+    void on_set_preset_clicked();
 
 private:
     Ui::LightDialog *ui;

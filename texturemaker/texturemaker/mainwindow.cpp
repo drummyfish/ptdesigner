@@ -12,6 +12,7 @@ using namespace pt_design;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
+
 {
   this->graph = new c_texture_graph();
   ui->setupUi(this);

@@ -466,7 +466,6 @@ class c_block
          * @return maximum number of input blocks for this block
          */
 
-
       c_parameters *get_parameters();
 
         /**<
@@ -816,6 +815,14 @@ class c_texture_graph
           *
           * @return string representation of the coordination list
           */
+
+      vector<c_block *> *get_end_blocks();
+      
+        /**
+         * Gets the end blocks vector.
+         * 
+         * @return end blocks vector
+         */
 
       static void string_to_coordinations(
         double coordination_list[][2], string coordinations,

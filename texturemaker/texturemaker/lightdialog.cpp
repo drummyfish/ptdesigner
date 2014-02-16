@@ -187,3 +187,54 @@ void LightDialog::on_buttonBox_accepted()
 }
 
 //-----------------------------------------------------
+
+void LightDialog::on_set_preset_clicked()
+
+{
+  switch (ui->preset->currentIndex())
+    {
+      case 0: // gold
+        this->dialog_ambient.setCurrentColor(QColor::fromRgb(24,14,30));
+        this->dialog_diffuse.setCurrentColor(QColor::fromRgb(170,115,52));
+        this->dialog_specular.setCurrentColor(QColor::fromRgb(255,244,88));
+        ui->curve_selection->setCurrentIndex(1);
+        ui->phong_exponent->setValue(3.5);
+        break;
+
+      case 1: // copper
+       this->dialog_ambient.setCurrentColor(QColor::fromRgb(22,11,5));
+        this->dialog_diffuse.setCurrentColor(QColor::fromRgb(199,60,14));
+        this->dialog_specular.setCurrentColor(QColor::fromRgb(255,248,193));
+        ui->curve_selection->setCurrentIndex(1);
+        ui->phong_exponent->setValue(3.8);
+        break;
+
+      case 2: // blue metal
+        this->dialog_ambient.setCurrentColor(QColor::fromRgb(11,11,10));
+        this->dialog_diffuse.setCurrentColor(QColor::fromRgb(111,120,158));
+        this->dialog_specular.setCurrentColor(QColor::fromRgb(228,231,255));
+        ui->curve_selection->setCurrentIndex(1);
+        ui->phong_exponent->setValue(3.3);
+        break;
+
+      case 3: // dirt
+        this->dialog_ambient.setCurrentColor(QColor::fromRgb(11,10,10));
+        this->dialog_diffuse.setCurrentColor(QColor::fromRgb(167,99,21));
+        this->dialog_specular.setCurrentColor(QColor::fromRgb(94,99,95));
+        ui->curve_selection->setCurrentIndex(1);
+        ui->phong_exponent->setValue(5.3);
+        break;
+
+      case 4: // green plastic
+        this->dialog_ambient.setCurrentColor(QColor::fromRgb(13,13,13));
+        this->dialog_diffuse.setCurrentColor(QColor::fromRgb(119,167,124));
+        this->dialog_specular.setCurrentColor(QColor::fromRgb(54,51,48));
+        ui->curve_selection->setCurrentIndex(1);
+        ui->phong_exponent->setValue(2.3);
+        break;
+    }
+
+  this->update_graphics();
+}
+
+//-----------------------------------------------------

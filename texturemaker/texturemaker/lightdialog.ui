@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>356</width>
-    <height>194</height>
+    <width>357</width>
+    <height>252</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,150 +20,6 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="7" column="4">
-    <widget class="QDoubleSpinBox" name="direction_y">
-     <property name="minimum">
-      <double>-99.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
-    <widget class="QLabel" name="label_7">
-     <property name="maximumSize">
-      <size>
-       <width>64</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>direction vector</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="3">
-    <widget class="QLabel" name="label_2">
-     <property name="maximumSize">
-      <size>
-       <width>64</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>diffuse</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="3">
-    <widget class="QDoubleSpinBox" name="direction_x">
-     <property name="minimum">
-      <double>-99.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="8">
-    <widget class="QComboBox" name="curve_selection">
-     <property name="maximumSize">
-      <size>
-       <width>128</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <item>
-      <property name="text">
-       <string>cos smooth</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>cos absolute value</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>linear half</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>linear full</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="6" column="8">
-    <widget class="QDoubleSpinBox" name="viewer_height">
-     <property name="maximumSize">
-      <size>
-       <width>64</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="maximum">
-      <double>50.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="4">
-    <widget class="QLabel" name="label_6">
-     <property name="maximumSize">
-      <size>
-       <width>64</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>viewer height</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="3">
-    <widget class="QDoubleSpinBox" name="phong_exponent">
-     <property name="minimum">
-      <double>-10.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>10.000000000000000</double>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="2">
-    <widget class="QLabel" name="label_5">
-     <property name="maximumSize">
-      <size>
-       <width>64</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Phong exponent</string>
-     </property>
-     <property name="scaledContents">
-      <bool>false</bool>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4">
-    <widget class="QLabel" name="label_3">
-     <property name="maximumSize">
-      <size>
-       <width>64</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>specular</string>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="2">
     <widget class="QFrame" name="frame_ambient">
      <property name="minimumSize">
@@ -252,8 +108,8 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="4">
-    <widget class="QPushButton" name="pick_specular">
+   <item row="5" column="2">
+    <widget class="QPushButton" name="pick_ambient">
      <property name="maximumSize">
       <size>
        <width>64</width>
@@ -262,22 +118,6 @@
      </property>
      <property name="text">
       <string>pick</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="8">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="maximumSize">
-      <size>
-       <width>128</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -294,8 +134,8 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="2">
-    <widget class="QPushButton" name="pick_ambient">
+   <item row="5" column="4">
+    <widget class="QPushButton" name="pick_specular">
      <property name="maximumSize">
       <size>
        <width>64</width>
@@ -304,6 +144,162 @@
      </property>
      <property name="text">
       <string>pick</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QLabel" name="label_3">
+     <property name="maximumSize">
+      <size>
+       <width>64</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>specular</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QLabel" name="label_5">
+     <property name="maximumSize">
+      <size>
+       <width>64</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Phong exponent</string>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="3">
+    <widget class="QDoubleSpinBox" name="phong_exponent">
+     <property name="minimum">
+      <double>-10.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="4">
+    <widget class="QLabel" name="label_6">
+     <property name="maximumSize">
+      <size>
+       <width>64</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>viewer height</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="8">
+    <widget class="QDoubleSpinBox" name="viewer_height">
+     <property name="maximumSize">
+      <size>
+       <width>64</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="maximum">
+      <double>50.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="8">
+    <widget class="QComboBox" name="curve_selection">
+     <property name="maximumSize">
+      <size>
+       <width>128</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <item>
+      <property name="text">
+       <string>cos smooth</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>cos absolute value</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>linear half</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>linear full</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="7" column="3">
+    <widget class="QDoubleSpinBox" name="direction_x">
+     <property name="minimum">
+      <double>-99.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QLabel" name="label_2">
+     <property name="maximumSize">
+      <size>
+       <width>64</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>diffuse</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QLabel" name="label_7">
+     <property name="maximumSize">
+      <size>
+       <width>64</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>direction vector</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="4">
+    <widget class="QDoubleSpinBox" name="direction_y">
+     <property name="minimum">
+      <double>-99.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.100000000000000</double>
      </property>
     </widget>
    </item>
@@ -318,6 +314,65 @@
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>reflection curve</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="8">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="maximumSize">
+      <size>
+       <width>128</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="8">
+    <widget class="QPushButton" name="set_preset">
+     <property name="text">
+      <string>set</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="3" colspan="2">
+    <widget class="QComboBox" name="preset">
+     <item>
+      <property name="text">
+       <string>gold</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>copper</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>blue metal</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>dirt</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>green plastic</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="8" column="2">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>presets</string>
      </property>
     </widget>
    </item>

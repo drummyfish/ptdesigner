@@ -210,7 +210,7 @@ void c_texture_graph::string_to_char_array(unsigned char char_array[],
       
     *length = position;
   }
-
+  
 //----------------------------------------------------------------------
 
 void c_texture_graph::string_to_double_array(double double_array[],
@@ -870,6 +870,7 @@ bool c_special_block::has_image()
 //----------------------------------------------------------------------
 
 c_texture_graph::c_texture_graph()
+
   {
     this->blocks = new vector<c_block *>();
     this->end_blocks = new vector<c_block *>();
@@ -879,6 +880,14 @@ c_texture_graph::c_texture_graph()
     this->resolution_x = 256;       // default resolution
     this->resolution_y = 256;
     this->random_seed = 0;
+  }
+
+//----------------------------------------------------------------------
+
+vector<c_block *> *c_texture_graph::get_end_blocks()
+
+  {
+	return this->end_block;
   }
 
 //----------------------------------------------------------------------
