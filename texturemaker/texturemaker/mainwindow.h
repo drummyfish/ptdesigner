@@ -336,6 +336,8 @@ private slots:
 
     void on_actionDefault_parameters_dialog_triggered();
 
+    void on_actionInvalidate_block_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

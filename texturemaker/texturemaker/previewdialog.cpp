@@ -21,6 +21,14 @@ PreviewDialog::PreviewDialog(c_block *block, QWidget *parent) :
       ui->preview->setMinimumSize(width,height);
 
       ui->preview->resize(width,height);
+
+      width += 50;
+      height += 60;
+
+      width = width > this->maximumWidth() ? this->maximumWidth() : width;
+      height = height > this->maximumHeight() ? this->maximumHeight() : height;
+
+      this->resize(width,height);
     }
 
   ui->preview->set_block(this->block);

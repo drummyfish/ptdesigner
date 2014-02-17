@@ -56,6 +56,7 @@ public:
     QAction *actionEdit_parameters;
     QAction *actionDuplicate;
     QAction *actionDefault_parameters_dialog;
+    QAction *actionInvalidate_block;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QScrollArea *blockArea;
@@ -217,6 +218,8 @@ public:
         actionDuplicate->setObjectName(QStringLiteral("actionDuplicate"));
         actionDefault_parameters_dialog = new QAction(MainWindow);
         actionDefault_parameters_dialog->setObjectName(QStringLiteral("actionDefault_parameters_dialog"));
+        actionInvalidate_block = new QAction(MainWindow);
+        actionInvalidate_block->setObjectName(QStringLiteral("actionInvalidate_block"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -955,7 +958,7 @@ public:
         menuEdit->addAction(actionEdit_parameters);
         menuEdit->addAction(actionDefault_parameters_dialog);
         menuEdit->addAction(actionDuplicate);
-        menuHelp->addAction(actionHelp_topics);
+        menuEdit->addAction(actionInvalidate_block);
         menuHelp->addAction(actionAbout);
         toolBar->addAction(actionSave);
         toolBar->addAction(actionRotate_CW);
@@ -987,6 +990,7 @@ public:
         actionEdit_parameters->setText(QApplication::translate("MainWindow", "edit parameters", 0));
         actionDuplicate->setText(QApplication::translate("MainWindow", "duplicate", 0));
         actionDefault_parameters_dialog->setText(QApplication::translate("MainWindow", "default parameter dialog", 0));
+        actionInvalidate_block->setText(QApplication::translate("MainWindow", "invalidate block", 0));
 #ifndef QT_NO_TOOLTIP
         pushButton_19->setToolTip(QString());
 #endif // QT_NO_TOOLTIP

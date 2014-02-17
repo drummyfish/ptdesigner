@@ -1977,12 +1977,12 @@
     <addaction name="actionEdit_parameters"/>
     <addaction name="actionDefault_parameters_dialog"/>
     <addaction name="actionDuplicate"/>
+    <addaction name="actionInvalidate_block"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionHelp_topics"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
@@ -2111,6 +2111,11 @@
   <action name="actionDefault_parameters_dialog">
    <property name="text">
     <string>default parameter dialog</string>
+   </property>
+  </action>
+  <action name="actionInvalidate_block">
+   <property name="text">
+    <string>invalidate block</string>
    </property>
   </action>
  </widget>
