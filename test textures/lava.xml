@@ -1,5 +1,5 @@
 <!DOCTYPE ptgraph>
-<texturegraph width="512" height="512" seed="4" supersampling="1">
+<texturegraph width="512" height="512" seed="0" supersampling="2">
 	<block type="color transition" id="3">
 		<parameter name="data" type="string" value="0 0 0 0;50 0 0 0;240 255 48 48;255 252 255 41;"/>
 	</block>
@@ -48,7 +48,7 @@
 	<block type="mix" id="20">
 		<input id="4" slot="0"/>
 		<input id="19" slot="1"/>
-		<parameter name="percentage" type="int" value="10"/>
+		<parameter name="percentage" type="int" value="25"/>
 		<parameter name="method" type="int" value="2"/>
 	</block>
 	<block type="mix" id="21">

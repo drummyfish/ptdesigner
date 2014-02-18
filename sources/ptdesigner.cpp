@@ -1550,6 +1550,7 @@ bool c_texture_graph::load_from_file(string filename)
     string line,filetext,block_name,parameter_name,parameter_value,
       help_string;
     char *parameter_type;
+    int greatest_id;
     int block_id,slot_number;
     ifstream myfile(filename);
     xml_document<> document;
@@ -1592,6 +1593,8 @@ bool c_texture_graph::load_from_file(string filename)
 
     // node should point to the first block node now
 
+    greatest_id = 0;
+
     while (node != NULL) // process all blocks
       {
         block_name = node->first_attribute("type")->value();
@@ -1613,6 +1616,9 @@ bool c_texture_graph::load_from_file(string filename)
 
         this->add_block(block);
         block->set_id(block_id);
+
+        if (block_id > greatest_id)
+          greatest_id = block_id;
 
         node2 = node->first_node();
 
@@ -1646,6 +1652,8 @@ bool c_texture_graph::load_from_file(string filename)
 
         node = node->next_sibling();  // next block
       }
+
+    this->last_id = greatest_id + 1;
 
     // now that the blocks are created, connect them:
 
