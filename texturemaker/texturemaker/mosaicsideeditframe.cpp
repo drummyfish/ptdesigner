@@ -22,8 +22,6 @@ MosaicSideEditFrame::MosaicSideEditFrame(QWidget *parent):
 void MosaicSideEditFrame::sort_points()
 
 {
-  unsigned int i;
-
   sort(this->points.begin(),this->points.end(),compare_points);
 }
 

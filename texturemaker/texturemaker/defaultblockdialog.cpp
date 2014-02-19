@@ -50,6 +50,7 @@ DefaultBlockDialog::DefaultBlockDialog(c_block *block, QWidget *parent) :
               double_spin_box->setMinimumWidth(75);
               double_spin_box->setMinimum(-99999999.99);
               double_spin_box->setSingleStep(0.1);
+              double_spin_box->setDecimals(5);
               double_spin_box->setValue(block->get_parameters()->get_double_value(i));
               ((QGridLayout *) this->layout())->addWidget(double_spin_box,i,1);
               break;
@@ -95,7 +96,7 @@ void DefaultBlockDialog::on_buttonBox_accepted()
   unsigned int i;
   QWidget *value_widget;
 
-  for (i = 0; i < ((QGridLayout *) this->layout())->rowCount() - 1; i++)
+  for (i = 0; (int) i < ((QGridLayout *) this->layout())->rowCount() - 1; i++)
     {
       std_string = ((QLabel *) ((QGridLayout *) this->layout())->itemAtPosition(i,0)->widget())->text().toStdString();
       type = this->block->get_parameters()->get_type(std_string);

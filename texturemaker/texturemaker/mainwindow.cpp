@@ -74,7 +74,7 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           else
             {
               for (i = 0; i < MAX_INPUT_BLOCKS; i++)
-                if (dx >= (i + 1) * 7 && dy >= 58 && dx <= (i + 2) * 8 && dy <= 64)
+                if (dx >= ((int) i + 1) * 7 && dy >= 58 && dx <= ((int) i + 2) * 8 && dy <= 64)
                   {
                     *slot = i;
                     break;
@@ -89,7 +89,7 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           else
             {
               for (i = 0; i < MAX_INPUT_BLOCKS; i++)
-                if ((int) dx >= -8 && dy >= 9 + i * 9 && (int) dx <= -1 && dy <= 9 + (i + 1) * 9)
+                if (dx >= -8 && dy >= 9 + (int) i * 9 && dx <= -1 && dy <= 9 + ((int) i + 1) * 9)
                   {
                     *slot = i;
                     break;
@@ -104,7 +104,7 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           else
             {
               for (i = 0; i < MAX_INPUT_BLOCKS; i++)
-                if ((int) dx >= (i + 1) * 7 && (int) dy >= -4 && (int) dx <= (i + 2) * 8 && (int) dy <= 1)
+                if (dx >= ((int) i + 1) * 7 && dy >= -4 && dx <= ((int) i + 2) * 8 && dy <= 1)
                   {
                     *slot = MAX_INPUT_BLOCKS - i - 1;
                     break;
@@ -114,12 +114,12 @@ int MainWindow::get_block_by_position(int x, int y, int *slot)
           break;
 
         case 3: // left
-          if ((int) dx >= -8 && (int) dy >= 27 && (int) dx <= 1 && dy <= 36)
+          if (dx >= -8 && dy >= 27 && dx <= 1 && dy <= 36)
             *slot = MAX_INPUT_BLOCKS;
           else
             {
               for (i = 0; i < MAX_INPUT_BLOCKS; i++)
-                if (dx >= 56 && dy >= 9 + i * 9 && dx <= 63 && dy <= 9 + (i + 1) * 9)
+                if (dx >= 56 && dy >= 9 + (int) i * 9 && dx <= 63 && dy <= 9 + ((int) i + 1) * 9)
                   {
                     *slot = MAX_INPUT_BLOCKS - i - 1;
                     break;

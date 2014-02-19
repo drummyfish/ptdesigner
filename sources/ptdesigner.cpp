@@ -2342,7 +2342,7 @@ void c_block_bump_noise::set_default()
     this->parameters->add_parameter("alter amplitude",PARAMETER_BOOL);
 
     this->parameters->set_double_value("bump size from",0.7);
-    this->parameters->set_double_value("bump size to",0.01);
+    this->parameters->set_double_value("bump size to",0.001);
     this->parameters->set_int_value("quantity",1);
     this->parameters->set_bool_value("alter amplitude",false);
   }

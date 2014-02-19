@@ -97,6 +97,8 @@ t_mosaic_transformation MosaicDialog::get_side_combo(QComboBox *combo)
         return MOSAIC_TRANSFORM_SHIFT_MIRROR;
         break;
     }
+
+  return MOSAIC_TRANSFORM_SHIFT_MIRROR;
 }
 
 //-----------------------------------------------------
@@ -186,10 +188,10 @@ void MosaicDialog::check_validity()
 {
   t_square_mosaic mosaic;
 
-  mosaic.side_shape[0] = "";  // sides are not important for validity
-  mosaic.side_shape[1] = "";
-  mosaic.side_shape[2] = "";
-  mosaic.side_shape[3] = "";
+  mosaic.side_shape[0] = (char *) "";  // sides are not important for validity
+  mosaic.side_shape[1] = (char *) "";
+  mosaic.side_shape[2] = (char *) "";
+  mosaic.side_shape[3] = (char *) "";
 
   mosaic.tiles_x = ui->repeat_x->value();
   mosaic.tiles_y = ui->repeat_y->value();

@@ -61,7 +61,7 @@ void ConvolutionDialog::change_matrix_size(unsigned int width, unsigned int heig
 
   layout = (QGridLayout *) ui->matrix_frame->layout();
 
-  while (item = (layout->takeAt(0)))   // clear the previous layout
+  while ((item = layout->takeAt(0)))   // clear the previous layout
     {
       delete item->widget();
       delete item;
@@ -107,8 +107,8 @@ void ConvolutionDialog::on_buttonBox_accepted()
 
   first = 0;
 
-  for (j = 0; j < ui->matrix_height->value(); j++)
-    for (i = 0; i < ui->matrix_height->value(); i++)
+  for (j = 0; (int) j < ui->matrix_height->value(); j++)
+    for (i = 0; (int) i < ui->matrix_height->value(); i++)
       {
         if (first)
           first = false;

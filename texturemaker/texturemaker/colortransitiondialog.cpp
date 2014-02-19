@@ -53,7 +53,7 @@ void ColorTransitionDialog::update_items()
 
   ui->points->clear();
 
-  for (i = 0; i < this->transition.number_of_points; i++)
+  for (i = 0; (int) i < this->transition.number_of_points; i++)
     ui->points->addItem(
       QString::number(transition.points[i].value) + ": [" +
       QString::number(transition.points[i].red) + "," +

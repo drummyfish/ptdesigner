@@ -4309,17 +4309,19 @@ void pt_bump_noise(t_color_buffer *buffer, double bump_size_from,
     pt_color_fill(buffer,255,255,255);
 
     for (bump_size = bump_size_from * buffer->width;
-      bump_size >= bump_size_to; bump_size *= 0.5)
-      for (bump_count = (buffer->width / bump_size) * bump_quantity;
-        bump_count > 0; bump_count--)
-        {
-          x = noise(random) * buffer->width;
-          random++;
-          y = noise(random) * buffer->height;
-          random++;
+      bump_size >= bump_size_to * buffer->width; bump_size *= 0.5)
+      { 
+        for (bump_count = (buffer->width / bump_size) * bump_quantity;
+          bump_count > 0; bump_count--)
+          {
+            x = noise(random) * buffer->width;
+            random++;
+            y = noise(random) * buffer->height;
+            random++;
 
-          _pt_draw_bump(buffer,x,y,bump_size,alter_amplitude);
-        }
+            _pt_draw_bump(buffer,x,y,bump_size,alter_amplitude);
+          }
+	  }
   }
 
 //----------------------------------------------------------------------
