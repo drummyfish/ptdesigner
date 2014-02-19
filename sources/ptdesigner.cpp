@@ -1230,6 +1230,14 @@ bool c_texture_graph::compute(bool force)
 
 //----------------------------------------------------------------------
 
+bool c_texture_graph::compute()
+
+  {
+	return this->compute(false);
+  }
+
+//----------------------------------------------------------------------
+
 bool c_texture_graph::is_error()
 
   {

@@ -911,6 +911,16 @@ class c_texture_graph
          * @return true if every block was computed succesfully,
          *         otherwise false
          */
+         
+      bool compute();
+
+        /**<
+         * Computes all the block outputs and executes all asociated
+         * actions. This is equal to calling compute(false).
+         *
+         * @return true if every block was computed succesfully,
+         *         otherwise false
+         */
 
       bool connect_by_id(int id_input, int id_to, unsigned int slot);
 

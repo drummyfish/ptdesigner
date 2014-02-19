@@ -1684,7 +1684,7 @@ void pt_mix_buffers(t_color_buffer *buffer1, t_color_buffer *buffer2,
 
   {
     unsigned int i,j;
-    unsigned char red1, green1, blue1, red2, green2, blue2;
+    unsigned char red1, green1, blue1, red2, green2, blue2, helper;
     int red3, green3, blue3;
     double percentage_double, percentage_double2, divide_by;
 
@@ -1713,12 +1713,7 @@ void pt_mix_buffers(t_color_buffer *buffer1, t_color_buffer *buffer2,
     for (j = 0; j < buffer1->height; j++)
       for (i = 0; i < buffer1->width; i++)
         {
-          if (type == MIX_MULTIPLY)
-            { // don't use percentages with multiply:
-              percentage_double = 1.0;
-              percentage_double2 = 1.0;
-            }
-          else if (alpha != NULL)
+          if (alpha != NULL)
             {
               color_buffer_get_pixel(alpha,i,j,&red1,&green1,&blue1);
               percentage = (red1 / 255.0) * 100;
@@ -1769,6 +1764,16 @@ void pt_mix_buffers(t_color_buffer *buffer1, t_color_buffer *buffer2,
                 break;
 
               case MIX_MULTIPLY:
+                helper = 255 - percentage_double * 255;
+                red1 += helper;
+                green1 += helper;
+                blue1 += helper;
+              
+                helper = 255 - percentage_double2 * 255;
+                red2 += helper;
+                green2 += helper;
+                blue2 += helper;
+              
                 red3 = ((red1 / 255.0) * (red2 / 255.0)) * 255;
                 green3 = ((green1 / 255.0) * (green2 / 255.0)) * 255;
                 blue3 = ((blue1 / 255.0) * (blue2 / 255.0)) * 255 ;

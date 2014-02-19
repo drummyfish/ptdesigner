@@ -6,12 +6,18 @@
 		<parameter name="quantity" type="int" value="8"/>
 		<parameter name="alter amplitude" type="bool" value="1"/>
 	</block>
-	<block type="normal map" id="1">
+	<block type="blur" id="3">
 		<input id="0" slot="0"/>
+		<parameter name="intensity" type="int" value="7"/>
+		<parameter name="motion" type="bool" value="0"/>
+		<parameter name="direction" type="int" value="0"/>
+	</block>
+	<block type="normal map" id="4">
+		<input id="3" slot="0"/>
 		<parameter name="neighbourhood size" type="int" value="2"/>
 	</block>
-	<block type="light" id="2">
-		<input id="1" slot="0"/>
+	<block type="light" id="5">
+		<input id="4" slot="0"/>
 		<parameter name="ambient red" type="int" value="24"/>
 		<parameter name="ambient green" type="int" value="14"/>
 		<parameter name="ambient blue" type="int" value="30"/>
@@ -22,7 +28,7 @@
 		<parameter name="specular green" type="int" value="244"/>
 		<parameter name="specular blue" type="int" value="88"/>
 		<parameter name="reflection curve" type="int" value="1"/>
-		<parameter name="viewer height" type="double" value="1.1"/>
+		<parameter name="viewer height" type="double" value="1"/>
 		<parameter name="phong exponent" type="double" value="3.5"/>
 		<parameter name="direction vector x" type="double" value="0.5"/>
 		<parameter name="direction vector y" type="double" value="0.5"/>
