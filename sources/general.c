@@ -152,7 +152,6 @@ void line_point(int initial_x, int initial_y, double angle,
 
   {
     int angle_area;    // eight areas to which 2 * PI angle is divided
-    double helper;
 
     while (angle >= PI_TIMES_2)  // adjust the angle
       {
@@ -163,8 +162,6 @@ void line_point(int initial_x, int initial_y, double angle,
       {
         angle += PI_TIMES_2;
       }
-
-    helper = angle / (PI_DIVIDED_4);
 
     angle_area = (int) (angle / (PI_DIVIDED_4));
 

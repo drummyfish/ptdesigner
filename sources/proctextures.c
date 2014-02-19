@@ -2341,15 +2341,15 @@ void pt_fault_formation_noise(int random, t_color_buffer *destination)
       {
         if (direction)
           {
-            limit1 = destination->width;
-            limit2 = destination->height;
-            half_resolution = destination->height / 2;
+            limit2 = destination->width;
+            limit1 = destination->height;
+            half_resolution = destination->width / 2;
           }
         else
           {
-            limit1 = destination->height;
-            limit2 = destination->width;
-            half_resolution = destination->width / 2;
+            limit2 = destination->height;
+            limit1 = destination->width;
+            half_resolution = destination->height / 2;
           }
                                  // initial points of triangles
         number1 = noise_int_range(random,0,limit1);
@@ -2368,12 +2368,12 @@ void pt_fault_formation_noise(int random, t_color_buffer *destination)
         step2 = ((double) d2) / half_resolution;
 
         for (i = 0; i <= limit2 / 2; i++)
-          {
+          { 
             border1 = number1 + step1 * i;
             border2 = number2 + step2 * i;
 
             if (direction)
-              {                    // this copied cod is kind of sad :/
+              {                    // not nice :/
                 for (k = 0; k < border1; k++)
                   {
                     color_buffer_set_pixel(&help_buffer,i,k,level1,
