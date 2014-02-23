@@ -18,11 +18,8 @@ public:
 
 private slots:
     void on_browse_clicked();
-
     void on_reload_clicked();
-
     void on_buttonBox_accepted();
-
     void on_save_clicked();
 
 private:

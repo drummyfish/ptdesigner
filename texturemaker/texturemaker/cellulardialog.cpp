@@ -43,6 +43,7 @@ CellularDialog::CellularDialog(c_block *block, QWidget *parent):
 //-----------------------------------------------------
 
 CellularDialog::~CellularDialog()
+
 {
   delete ui;
 }

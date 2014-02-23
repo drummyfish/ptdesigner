@@ -16,7 +16,7 @@ CFLAGS        = -pipe -fno-keep-inline-dllexport -g -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fno-keep-inline-dllexport -g -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
 INCPATH       = -I..\texturemaker -I"..\..\sources" -I"..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\include" -I"..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\include\QtWidgets" -I"..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\include\QtGui" -I"..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\include\QtCore" -I"debug" -I"." -I"." -I"..\..\..\..\..\..\..\Qt\5.2.0\mingw48_32\mkspecs\win32-g++"
 LINKER      =        g++
-LFLAGS        =        -Wl,-subsystem,windows -mthreads
+LFLAGS        =        -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -Wl,-subsystem,windows -mthreads
 LIBS        =        -lglu32 -lopengl32 -lgdi32 -luser32 -lmingw32 -lqtmaind -LC:/Users/tastyfish/Documents/GitHub/proctextures/texturemaker/texturemaker/../../lib/win32/ -lptdesigner -lm -LC:\Qt\5.2.0\mingw48_32\lib -lQt5Widgetsd -lQt5Guid -lQt5Cored debug\res_res.o 
 QMAKE         = C:\Qt\5.2.0\mingw48_32\bin\qmake.exe
 IDC           = idc
@@ -222,11 +222,12 @@ compiler_rcc_make_all: debug/qrc_resources.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_resources.cpp
 debug/qrc_resources.cpp: ../texturemaker/resources.qrc \
-		../texturemaker/resources/hourglass3.png \
 		../texturemaker/resources/cellular_general.png \
+		../texturemaker/resources/hourglass3.png \
+		../texturemaker/resources/block.png \
+		tile.png \
 		../texturemaker/resources/nothing.png \
-		../texturemaker/resources/icon64.png \
-		../texturemaker/resources/block.png
+		../texturemaker/resources/icon64.png
 	C:\Qt\5.2.0\mingw48_32\bin\rcc.exe -name resources ..\texturemaker\resources.qrc -o debug\qrc_resources.cpp
 
 compiler_moc_header_make_all: debug/moc_mainwindow.cpp debug/moc_editareaframe.cpp debug/moc_addblockbutton.cpp debug/moc_colorbufferdisplay.cpp debug/moc_defaultblockdialog.cpp debug/moc_previewdialog.cpp debug/moc_colorfilldialog.cpp debug/moc_lightdialog.cpp debug/moc_voronoidialog.cpp debug/moc_pointeditframe.cpp debug/moc_perlindialog.cpp debug/moc_convolutiondialog.cpp debug/moc_customblockdialog.cpp debug/moc_aboutdialog.cpp debug/moc_mixdialog.cpp debug/moc_saveloaddialog.cpp debug/moc_lsystemdialog.cpp debug/moc_colortransitiondialog.cpp debug/moc_transitionpreviewframe.cpp debug/moc_blurdialog.cpp debug/moc_colorreplacedialog.cpp debug/moc_mosaicdialog.cpp debug/moc_mosaicsideeditframe.cpp debug/moc_edgedetectiondialog.cpp debug/moc_ditherdialog.cpp debug/moc_cellulargeneraldialog.cpp debug/moc_cellulardialog.cpp debug/moc_substratedialog.cpp debug/moc_woodmarbledialog.cpp
@@ -7150,7 +7151,8 @@ debug/editareaframe.o: ../texturemaker/editareaframe.cpp ../texturemaker/editare
 		../texturemaker/ditherdialog.h \
 		../texturemaker/cellulargeneraldialog.h \
 		../texturemaker/cellulardialog.h \
-		../texturemaker/substratedialog.h
+		../texturemaker/substratedialog.h \
+		../texturemaker/woodmarbledialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\editareaframe.o ..\texturemaker\editareaframe.cpp
 
 debug/addblockbutton.o: ../texturemaker/addblockbutton.cpp ../texturemaker/addblockbutton.h \

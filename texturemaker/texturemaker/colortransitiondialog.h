@@ -18,12 +18,11 @@ public:
 
 private slots:
     void on_delete_button_clicked();
-
     void on_add_button_clicked();
-
     void on_edit_button_clicked();
-
     void on_buttonBox_accepted();
+
+    void on_change_position_clicked();
 
 private:
     Ui::ColorTransitionDialog *ui;

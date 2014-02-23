@@ -6,6 +6,7 @@
 LSystemDialog::LSystemDialog(c_block *block, QWidget *parent) :
     CustomBlockDialog(block,parent),
     ui(new Ui::LSystemDialog)
+
 {
   ui->setupUi(this);
   this->set_window_properties();
@@ -17,6 +18,7 @@ LSystemDialog::LSystemDialog(c_block *block, QWidget *parent) :
 //-----------------------------------------------------
 
 LSystemDialog::~LSystemDialog()
+
 {
   delete ui;
 }
@@ -73,6 +75,7 @@ void LSystemDialog::on_buttonBox_accepted()
 //-----------------------------------------------------
 
 void LSystemDialog::on_save_clicked()
+
 {
   QFile file(ui->path->text());
 

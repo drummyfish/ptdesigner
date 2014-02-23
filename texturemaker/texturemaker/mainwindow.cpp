@@ -460,6 +460,7 @@ void MainWindow::on_supersampling_valueChanged(int arg1)
 //-----------------------------------------------------
 
 void MainWindow::on_seed_valueChanged(int arg1)
+
 {
   this->global_settings_changed();
 }
@@ -842,6 +843,7 @@ void MainWindow::on_actionExit_triggered()
 //-----------------------------------------------------
 
 void MainWindow::on_actionOpen_triggered()
+
 {
   QFileDialog dialog;
   QString selected_file;

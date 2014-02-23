@@ -94,6 +94,7 @@ void VoronoiDialog::on_clear_button_clicked()
 {
   ui->point_editor->clear();
 }
+
 //-----------------------------------------------------
 
 void VoronoiDialog::on_buttonBox_accepted()

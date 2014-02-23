@@ -132,3 +132,25 @@ void ColorTransitionDialog::on_buttonBox_accepted()
 }
 
 //-----------------------------------------------------
+
+void ColorTransitionDialog::on_change_position_clicked()
+
+{
+  unsigned char r,g,b;
+  int index;
+
+  index = this->selected_point();
+
+  if (index < 0)
+    return;        // no point selected
+
+  color_transition_get_color(index,&r,&g,&b,&this->transition);
+
+  color_transition_remove_point(index,&this->transition);
+  color_transition_add_point(ui->coordination->value(),r,g,b,&this->transition);
+
+  this->update_items();
+  ui->transition_preview->update();
+}
+
+//-----------------------------------------------------

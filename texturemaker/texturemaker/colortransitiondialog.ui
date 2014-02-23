@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>355</width>
+    <width>363</width>
     <height>271</height>
    </rect>
   </property>
@@ -20,9 +20,6 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="6" column="2" rowspan="5">
-    <widget class="QListWidget" name="points"/>
-   </item>
    <item row="2" column="2">
     <widget class="TransitionPreviewFrame" name="transition_preview">
      <property name="minimumSize">
@@ -45,6 +42,9 @@
      </property>
     </widget>
    </item>
+   <item row="6" column="2" rowspan="8">
+    <widget class="QListWidget" name="points"/>
+   </item>
    <item row="2" column="3">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
@@ -55,7 +55,7 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="3">
+   <item row="13" column="3">
     <widget class="QSpinBox" name="coordination">
      <property name="maximumSize">
       <size>
@@ -68,21 +68,35 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="3">
+   <item row="10" column="3">
+    <widget class="QPushButton" name="change_position">
+     <property name="text">
+      <string>change position</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="3">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>position</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="3">
     <widget class="QPushButton" name="add_button">
      <property name="text">
       <string>add point</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="3">
+   <item row="9" column="3">
     <widget class="QPushButton" name="edit_button">
      <property name="text">
       <string>edit color</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="3">
+   <item row="8" column="3">
     <widget class="QPushButton" name="delete_button">
      <property name="text">
       <string>delete</string>

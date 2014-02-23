@@ -22,13 +22,9 @@ protected:
 
 private slots:
     void on_edit_1_clicked();
-
     void on_edit_2_clicked();
-
     void on_edit_3_clicked();
-
     void on_edit_4_clicked();
-
     void on_buttonBox_accepted();
 
 private:

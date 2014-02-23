@@ -18,7 +18,6 @@ public:
 
 private slots:
     void on_ratio_slider_valueChanged(int value);
-
     void on_buttonBox_accepted();
 
 private:

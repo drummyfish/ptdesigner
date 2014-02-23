@@ -17,7 +17,7 @@ using namespace pt_design;
 //-----------------------------------------------------
 
   /**
-    Displays a content of given color buffer, serves
+    Displays content of given color buffer, serves
     as a preview.
     */
 

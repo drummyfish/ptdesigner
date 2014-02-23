@@ -22,7 +22,6 @@ public:
 
 private slots:
     void on_pick_clicked();
-
     void on_buttonBox_accepted();
 
 private:

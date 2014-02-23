@@ -18,7 +18,6 @@ public:
 
 private slots:
     void on_buttonBox_accepted();
-
     void on_browse_clicked();
 
 private:

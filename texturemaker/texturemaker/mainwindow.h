@@ -8,7 +8,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QtConcurrent/QtConcurrent>
-//#include <QtConcurrentRun>
+// #include <QtConcurrentRun>
 #include <fstream>
 #include "ptdesigner.h"
 #include "defaultblockdialog.h"
@@ -325,17 +325,11 @@ private slots:
     void on_actionSave_as_triggered();
     void on_actionExit_triggered();
     void on_actionOpen_triggered();
-
     void on_pushButton_26_clicked();
-
     void on_actionEdit_parameters_triggered();
-
     void on_actionDuplicate_triggered();
-
     void on_actionNew_texture_triggered();
-
     void on_actionDefault_parameters_dialog_triggered();
-
     void on_actionInvalidate_block_triggered();
 
 private:

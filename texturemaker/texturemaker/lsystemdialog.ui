@@ -38,7 +38,11 @@
     <widget class="QLineEdit" name="path"/>
    </item>
    <item row="2" column="0" rowspan="7" colspan="2">
-    <widget class="QPlainTextEdit" name="text_edit"/>
+    <widget class="QPlainTextEdit" name="text_edit">
+     <property name="lineWrapMode">
+      <enum>QPlainTextEdit::NoWrap</enum>
+     </property>
+    </widget>
    </item>
    <item row="3" column="4">
     <widget class="QDialogButtonBox" name="buttonBox">

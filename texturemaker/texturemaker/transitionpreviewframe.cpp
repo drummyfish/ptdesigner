@@ -4,6 +4,7 @@
 
 TransitionPreviewFrame::TransitionPreviewFrame(QWidget *parent) :
     QFrame(parent)
+
 {
   this->transition = NULL;
 }

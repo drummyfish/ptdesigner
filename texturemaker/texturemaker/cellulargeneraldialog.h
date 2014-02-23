@@ -18,9 +18,7 @@ public:
 
 private slots:
     void on_clear_button_clicked();
-
     void on_game_of_life_clicked();
-
     void on_buttonBox_accepted();
 
 private:
