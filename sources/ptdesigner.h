@@ -25,6 +25,7 @@ extern "C"
 #include <iostream>
 #include <vector>
 #include <string>
+#include <locale.h>
 #include "rapidxml.hpp"
 
 #define PT_LIB_VERSION    "1.0"  /// library version

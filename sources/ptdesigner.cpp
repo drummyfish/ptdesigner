@@ -1567,6 +1567,8 @@ bool c_texture_graph::load_from_file(string filename)
     char *filetext_c;
     c_block *block;
 
+    setlocale(LC_NUMERIC,"C");  // for standard double format
+
     if (!myfile.is_open())
       return false;
 
@@ -1643,7 +1645,7 @@ bool c_texture_graph::load_from_file(string filename)
 
                 if (strcmp(parameter_type,"int") == 0)
                   block->get_parameters()->set_int_value(parameter_name,
-                    atoi(parameter_value.c_str()));
+                    strtod(parameter_value.c_str(),NULL));
                 else if (strcmp(parameter_type,"double") == 0)
                   block->get_parameters()->set_double_value(
                     parameter_name,atof(parameter_value.c_str()));
@@ -1724,6 +1726,8 @@ bool c_texture_graph::save_to_file(string filename)
     unsigned int i,j;
     string help_string,slot_number;
     unsigned int res_x,res_y;
+
+    setlocale(LC_NUMERIC,"C");  // for standard double format
 
     if (save_file.is_open())
       {

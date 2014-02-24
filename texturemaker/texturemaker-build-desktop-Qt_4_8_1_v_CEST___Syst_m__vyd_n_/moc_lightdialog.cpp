@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'lightdialog.h'
 **
-** Created: Sat Feb 8 15:29:01 2014
+** Created: Mon Feb 24 13:34:21 2014
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_LightDialog[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,6 +36,7 @@ static const uint qt_meta_data_LightDialog[] = {
       65,   12,   12,   12, 0x08,
       98,   92,   12,   12, 0x08,
      142,   12,   12,   12, 0x08,
+     166,   12,   12,   12, 0x08,
 
        0        // eod
 };
@@ -45,7 +46,7 @@ static const char qt_meta_stringdata_LightDialog[] = {
     "on_pick_diffuse_clicked()\0"
     "on_pick_specular_clicked()\0index\0"
     "on_curve_selection_currentIndexChanged(int)\0"
-    "on_buttonBox_accepted()\0"
+    "on_buttonBox_accepted()\0on_set_preset_clicked()\0"
 };
 
 void LightDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -59,6 +60,7 @@ void LightDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 2: _t->on_pick_specular_clicked(); break;
         case 3: _t->on_curve_selection_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 4: _t->on_buttonBox_accepted(); break;
+        case 5: _t->on_set_preset_clicked(); break;
         default: ;
         }
     }
@@ -96,9 +98,9 @@ int LightDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

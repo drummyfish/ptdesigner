@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Feb 8 15:28:37 2014
+** Created: Mon Feb 24 13:33:44 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -56,6 +56,8 @@ public:
     QAction *actionDisconnect;
     QAction *actionEdit_parameters;
     QAction *actionDuplicate;
+    QAction *actionDefault_parameters_dialog;
+    QAction *actionInvalidate_block;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QScrollArea *blockArea;
@@ -164,18 +166,21 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(562, 518);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/resources/icon64.png"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         actionNew_texture = new QAction(MainWindow);
         actionNew_texture->setObjectName(QString::fromUtf8("actionNew_texture"));
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
         actionSave = new QAction(MainWindow);
         actionSave->setObjectName(QString::fromUtf8("actionSave"));
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/resources/action save.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionSave->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/resources/action save.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSave->setIcon(icon1);
         actionSave_as = new QAction(MainWindow);
         actionSave_as->setObjectName(QString::fromUtf8("actionSave_as"));
-        actionSave_as->setIcon(icon);
+        actionSave_as->setIcon(icon1);
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
         actionHelp_topics = new QAction(MainWindow);
@@ -184,40 +189,45 @@ public:
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
         actionRotate_CW = new QAction(MainWindow);
         actionRotate_CW->setObjectName(QString::fromUtf8("actionRotate_CW"));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/resources/action rotate cw.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionRotate_CW->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/resources/action rotate cw.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionRotate_CW->setIcon(icon2);
         actionRotate_CCW = new QAction(MainWindow);
         actionRotate_CCW->setObjectName(QString::fromUtf8("actionRotate_CCW"));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/resources/action rotate ccw.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionRotate_CCW->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/resources/action rotate ccw.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionRotate_CCW->setIcon(icon3);
         actionDelete = new QAction(MainWindow);
         actionDelete->setObjectName(QString::fromUtf8("actionDelete"));
-        QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/resources/action delete.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionDelete->setIcon(icon3);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/resources/action delete.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDelete->setIcon(icon4);
         actionExecute = new QAction(MainWindow);
         actionExecute->setObjectName(QString::fromUtf8("actionExecute"));
-        QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/resources/action execute.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionExecute->setIcon(icon4);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/resources/action execute.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionExecute->setIcon(icon5);
         actionDisconnect = new QAction(MainWindow);
         actionDisconnect->setObjectName(QString::fromUtf8("actionDisconnect"));
         actionDisconnect->setCheckable(true);
-        QIcon icon5;
-        icon5.addFile(QString::fromUtf8(":/resources/action disconnect.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionDisconnect->setIcon(icon5);
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/resources/action disconnect.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDisconnect->setIcon(icon6);
         actionEdit_parameters = new QAction(MainWindow);
         actionEdit_parameters->setObjectName(QString::fromUtf8("actionEdit_parameters"));
         actionDuplicate = new QAction(MainWindow);
         actionDuplicate->setObjectName(QString::fromUtf8("actionDuplicate"));
+        actionDefault_parameters_dialog = new QAction(MainWindow);
+        actionDefault_parameters_dialog->setObjectName(QString::fromUtf8("actionDefault_parameters_dialog"));
+        actionInvalidate_block = new QAction(MainWindow);
+        actionInvalidate_block->setObjectName(QString::fromUtf8("actionInvalidate_block"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(2, 2, 2, 2);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(2, 2, 2, 2);
         blockArea = new QScrollArea(centralWidget);
         blockArea->setObjectName(QString::fromUtf8("blockArea"));
         blockArea->setMinimumSize(QSize(0, 155));
@@ -227,7 +237,7 @@ public:
         blockArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1316, 137));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1316, 136));
         gridLayout_2 = new QGridLayout(scrollAreaWidgetContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -611,7 +621,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 257, 717));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 256, 713));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -619,8 +629,9 @@ public:
         scrollAreaWidgetContents_2->setSizePolicy(sizePolicy1);
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents_2);
         verticalLayout->setSpacing(2);
-        verticalLayout->setContentsMargins(2, 2, 2, 2);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(2, 2, 2, 2);
         widget = new QWidget(scrollAreaWidgetContents_2);
         widget->setObjectName(QString::fromUtf8("widget"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -631,8 +642,9 @@ public:
         widget->setMinimumSize(QSize(0, 200));
         horizontalLayout_3 = new QHBoxLayout(widget);
         horizontalLayout_3->setSpacing(0);
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
         preview = new ColorBufferDisplay(widget);
         preview->setObjectName(QString::fromUtf8("preview"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -880,8 +892,9 @@ public:
         scrollAreaWidgetContents_3->setPalette(palette);
         gridLayout_4 = new QGridLayout(scrollAreaWidgetContents_3);
         gridLayout_4->setSpacing(6);
-        gridLayout_4->setContentsMargins(0, 0, 0, 0);
+        gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
+        gridLayout_4->setContentsMargins(0, 0, 0, 0);
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         gridLayout_4->addItem(horizontalSpacer_2, 0, 1, 1, 1);
@@ -915,7 +928,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 562, 25));
+        menuBar->setGeometry(QRect(0, 0, 562, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -944,8 +957,9 @@ public:
         menuEdit->addAction(actionExecute);
         menuEdit->addAction(actionDisconnect);
         menuEdit->addAction(actionEdit_parameters);
+        menuEdit->addAction(actionDefault_parameters_dialog);
         menuEdit->addAction(actionDuplicate);
-        menuHelp->addAction(actionHelp_topics);
+        menuEdit->addAction(actionInvalidate_block);
         menuHelp->addAction(actionAbout);
         toolBar->addAction(actionSave);
         toolBar->addAction(actionRotate_CW);
@@ -976,6 +990,8 @@ public:
         actionDisconnect->setText(QApplication::translate("MainWindow", "disconnect", 0, QApplication::UnicodeUTF8));
         actionEdit_parameters->setText(QApplication::translate("MainWindow", "edit parameters", 0, QApplication::UnicodeUTF8));
         actionDuplicate->setText(QApplication::translate("MainWindow", "duplicate", 0, QApplication::UnicodeUTF8));
+        actionDefault_parameters_dialog->setText(QApplication::translate("MainWindow", "default parameter dialog", 0, QApplication::UnicodeUTF8));
+        actionInvalidate_block->setText(QApplication::translate("MainWindow", "invalidate block", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         pushButton_19->setToolTip(QString());
 #endif // QT_NO_TOOLTIP

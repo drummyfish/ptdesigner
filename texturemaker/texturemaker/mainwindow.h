@@ -7,8 +7,13 @@
 #include <QTimer>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QtConcurrent/QtConcurrent>
-// #include <QtConcurrentRun>
+
+#if QT_VERSION >= 0x050000
+  #include <QtConcurrent/QtConcurrent>
+#else
+  #include <QtConcurrentRun>
+#endif
+
 #include <fstream>
 #include "ptdesigner.h"
 #include "defaultblockdialog.h"

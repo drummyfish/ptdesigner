@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'previewdialog.ui'
 **
-** Created: Sat Feb 8 15:28:37 2014
+** Created: Mon Feb 24 13:33:44 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -41,13 +41,13 @@ public:
     {
         if (PreviewDialog->objectName().isEmpty())
             PreviewDialog->setObjectName(QString::fromUtf8("PreviewDialog"));
-        PreviewDialog->resize(800, 600);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        PreviewDialog->resize(346, 322);
+        QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(PreviewDialog->sizePolicy().hasHeightForWidth());
         PreviewDialog->setSizePolicy(sizePolicy);
-        PreviewDialog->setMinimumSize(QSize(800, 600));
+        PreviewDialog->setMinimumSize(QSize(100, 100));
         PreviewDialog->setMaximumSize(QSize(800, 600));
         gridLayout_2 = new QGridLayout(PreviewDialog);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
@@ -61,7 +61,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 780, 551));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 326, 273));
         gridLayout = new QGridLayout(scrollAreaWidgetContents);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);

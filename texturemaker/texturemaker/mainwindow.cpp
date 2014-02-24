@@ -968,6 +968,8 @@ void MainWindow::on_actionNew_texture_triggered()
       this->set_block_for_preview(-1);
       ui->editArea->reset();
       this->change_happened = false;
+      this->filename = "";
+      this->update_title();
     }
 }
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'colortransitiondialog.h'
 **
-** Created: Sat Feb 8 15:29:07 2014
+** Created: Mon Feb 24 13:34:27 2014
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_ColorTransitionDialog[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,6 +35,7 @@ static const uint qt_meta_data_ColorTransitionDialog[] = {
       50,   22,   22,   22, 0x08,
       74,   22,   22,   22, 0x08,
       99,   22,   22,   22, 0x08,
+     123,   22,   22,   22, 0x08,
 
        0        // eod
 };
@@ -45,6 +46,7 @@ static const char qt_meta_stringdata_ColorTransitionDialog[] = {
     "on_add_button_clicked()\0"
     "on_edit_button_clicked()\0"
     "on_buttonBox_accepted()\0"
+    "on_change_position_clicked()\0"
 };
 
 void ColorTransitionDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -57,6 +59,7 @@ void ColorTransitionDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c
         case 1: _t->on_add_button_clicked(); break;
         case 2: _t->on_edit_button_clicked(); break;
         case 3: _t->on_buttonBox_accepted(); break;
+        case 4: _t->on_change_position_clicked(); break;
         default: ;
         }
     }
@@ -95,9 +98,9 @@ int ColorTransitionDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }
