@@ -3197,12 +3197,14 @@ bool c_block_l_system::execute()
     if(!grammar_load_from_file(&(this->grammar),
       (char *) this->parameters->get_string_value("path").c_str(),
       this->get_random_seed()))
-      return false;
-
+      {
+        return false;
+      }
+      
     grammar_generate_string(
       &(this->grammar),
       this->parameters->get_int_value("iterations"));
-
+grammar_print_string(&(this->grammar)); // DELETE
     return true;
   }
 
@@ -3323,6 +3325,8 @@ bool c_block_turtle::execute()
     if (this->input_blocks[0] == NULL ||
       this->input_blocks[0]->get_name().compare(L_SYSTEM_NAME) != 0)
       return false;
+
+    pt_color_fill(&(this->buffer),255,255,255);
 
     pt_turtle_draw(
       &(this->buffer),

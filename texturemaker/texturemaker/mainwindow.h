@@ -60,6 +60,7 @@ public:
     void dropEvent(QDropEvent *de);
     void dragMoveEvent(QDragMoveEvent *de);
     void dragEnterEvent(QDragEnterEvent *event);
+    void closeEvent(QCloseEvent *event);
 
 //-----------------------------------------------------
 

@@ -1005,3 +1005,12 @@ void MainWindow::on_actionInvalidate_block_triggered()
 }
 
 //-----------------------------------------------------
+
+void MainWindow::closeEvent(QCloseEvent *event)
+
+{
+  if (this->closing_file())
+    QApplication::quit();
+}
+
+//-----------------------------------------------------
