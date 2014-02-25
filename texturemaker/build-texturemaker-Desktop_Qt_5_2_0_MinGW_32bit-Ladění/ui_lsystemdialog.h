@@ -184,6 +184,9 @@ public:
 
         text_edit = new QPlainTextEdit(LSystemDialog);
         text_edit->setObjectName(QStringLiteral("text_edit"));
+        QFont font;
+        font.setFamily(QStringLiteral("Lucida Console"));
+        text_edit->setFont(font);
         text_edit->setLineWrapMode(QPlainTextEdit::NoWrap);
 
         gridLayout->addWidget(text_edit, 2, 0, 8, 3);

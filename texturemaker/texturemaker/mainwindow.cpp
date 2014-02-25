@@ -510,15 +510,15 @@ void MainWindow::block_selected(int block_id)
 
       if (block->is_using_global_seed())
         {
-          ui->custom_seed->setValue(block->get_random_seed());
           ui->radio_global_seed->setChecked(true);
-          ui->radio_custom_seed->setChecked(false);          
+          ui->radio_custom_seed->setChecked(false);
+          ui->custom_seed->setValue(block->get_random_seed());
         }
       else
         {
-          ui->custom_seed->setValue(block->get_random_seed());
-          ui->radio_global_seed->setChecked(false);
           ui->radio_custom_seed->setChecked(true);
+          ui->radio_global_seed->setChecked(false);
+          ui->custom_seed->setValue(block->get_random_seed());
         }
     }
   else
@@ -571,6 +571,9 @@ void MainWindow::on_radio_global_seed_toggled(bool checked)
 {
   c_block *block;
 
+  if (!checked) // only interested in checked == true
+    return;
+
   if (!this->graph_mutex.tryLock())
     return;
 
@@ -579,7 +582,9 @@ void MainWindow::on_radio_global_seed_toggled(bool checked)
   block = this->graph->get_block_by_id(ui->editArea->get_selected_id());
 
   if (block != NULL)
-    block->use_global_seed();
+    {
+      block->use_global_seed();
+    }
 
   this->graph_mutex.unlock();
   this->update_graphics();
@@ -592,6 +597,9 @@ void MainWindow::on_radio_custom_seed_toggled(bool checked)
 {
   c_block *block;
 
+  if (!checked) // only interested in checked == true
+    return;
+
   this->graph_mutex.lock();
 
   // mutex locked here:
@@ -599,7 +607,9 @@ void MainWindow::on_radio_custom_seed_toggled(bool checked)
   block = this->graph->get_block_by_id(ui->editArea->get_selected_id());
 
   if (block != NULL)
-    block->use_custom_seed(ui->custom_seed->value());
+    {
+      block->use_custom_seed(ui->custom_seed->value());
+    }
 
   this->graph_mutex.unlock();
   this->update_graphics();
@@ -612,14 +622,16 @@ void MainWindow::on_custom_seed_valueChanged(int arg1)
 {
   c_block *block;
 
-  if (ui->radio_custom_seed->isChecked())
+  block = this->graph->get_block_by_id(ui->editArea->get_selected_id());
+
+  if (block == NULL)
+    return;
+
+  if (!block->is_using_global_seed())
     {
       this->graph_mutex.lock();
 
-      block = this->graph->get_block_by_id(ui->editArea->get_selected_id());
-
-      if (block != NULL)
-        block->use_custom_seed(ui->custom_seed->value());
+      block->use_custom_seed(ui->custom_seed->value());
 
       this->graph_mutex.unlock();
       this->update_graphics();

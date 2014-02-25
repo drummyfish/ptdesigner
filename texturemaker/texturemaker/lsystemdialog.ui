@@ -220,6 +220,11 @@
    </item>
    <item row="2" column="0" rowspan="8" colspan="3">
     <widget class="QPlainTextEdit" name="text_edit">
+     <property name="font">
+      <font>
+       <family>Lucida Console</family>
+      </font>
+     </property>
      <property name="lineWrapMode">
       <enum>QPlainTextEdit::NoWrap</enum>
      </property>

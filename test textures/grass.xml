@@ -1,0 +1,45 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="simple noise" id="1">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="grayscale" type="bool" value="1"/>
+	</block>
+	<block type="color transition" id="2">
+		<parameter name="data" type="string" value="0 44 149 0;255 203 223 18;"/>
+	</block>
+	<block type="map transition" id="3">
+		<input id="1" slot="0"/>
+		<input id="2" slot="1"/>
+	</block>
+	<block type="cellular automaton rps" id="4">
+		<input id="1" slot="0"/>
+		<parameter name="iterations" type="int" value="50"/>
+		<parameter name="neighbourhood" type="int" value="0"/>
+		<parameter name="neighbourhood size" type="int" value="5"/>
+		<parameter name="players" type="int" value="3"/>
+	</block>
+	<block type="mix" id="5">
+		<input id="3" slot="0"/>
+		<input id="4" slot="1"/>
+		<parameter name="percentage" type="int" value="10"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="perlin noise" id="7" seed="5">
+		<parameter name="amplitude" type="int" value="90"/>
+		<parameter name="frequency" type="int" value="5"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="2"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="map transition" id="8">
+		<input id="7" slot="0"/>
+		<input id="2" slot="1"/>
+	</block>
+	<block type="mix" id="9">
+		<input id="5" slot="0"/>
+		<input id="8" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+</texturegraph>
+

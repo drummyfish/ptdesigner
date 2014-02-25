@@ -599,6 +599,7 @@ void EditAreaFrame::mousePressEvent(QMouseEvent *event)
   this->main_window->change_occured();
 
   this->update();
+
   this->main_window->block_selected(this->selected_id);
 }
 
