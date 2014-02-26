@@ -898,6 +898,30 @@ class c_texture_graph
          * disconnect functions has been called.
          */
 
+      bool compute(bool force,void (*progress_function)(int,int));
+
+        /**<
+         * Computes all the block outputs and executes all asociated
+         * actions. As many as possible of the blocks will be computed,
+         * even if there are errors. Optional pointer to function can
+         * be provided to be updated about computation progress.
+         *
+         * @param force if true, all blocks will be forced to recompute
+         *        even if it's not necesarry, otherwise only invalid
+         *        blocks will be recomputed
+         * @param progress_function pointer to function taking two int
+         *        parameters that will be called every time a single
+         *        block is to be computed (and after all blocks are
+         *        computed), parameters passed to the function are
+         *        number of blocks left to be computed and an id of the
+         *        block to be computed next (in the last function call
+         *        this is -1), this parameter can be NULL in which case
+         *        it will be ignored 
+         * 
+         * @return true if every block was computed succesfully,
+         *         otherwise false
+         */
+
       bool compute(bool force);
 
         /**<
@@ -1025,6 +1049,14 @@ class c_texture_graph
          * Returns number of block in texture graph.
          *
          * @return number of block in texture graph
+         */
+         
+      unsigned int get_number_of_invalid();
+      
+        /**<
+         * Returns a number of invalid blocks in the graph.
+         * 
+         * @return number of invalid blocks in the graph.
          */
 
       c_block *get_block(unsigned int block_number);

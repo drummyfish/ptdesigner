@@ -14,6 +14,13 @@
 using namespace pt_design;
 using namespace std;
 
+void (*_global_progress_function) (int,int); /** a global variable that
+                                                 holds a pointer to
+                                                 progress function */
+unsigned int _left_to_compute;  /** a global variable that holds a
+                                    number of blocks left to be computed
+                                    */     
+
 //----------------------------------------------------------------------
 
   /**
@@ -694,6 +701,22 @@ string c_block::get_name()
 
 //----------------------------------------------------------------------
 
+unsigned int c_texture_graph::get_number_of_invalid()
+
+  {
+	unsigned int total,i;
+	
+	total = 0;
+	
+	for (i = 0; i < this->blocks->size(); i++)
+	  if (!this->blocks->at(i)->is_valid())
+	    total++;
+	    
+	return total;
+  }
+
+//----------------------------------------------------------------------
+
 bool c_block::compute(bool force)
 
   {
@@ -711,12 +734,24 @@ bool c_block::compute(bool force)
 
     for (i = 0; i < MAX_INPUT_BLOCKS; i++)  // check input blocks
       if (this->input_blocks[i] != NULL)
-        if (this->input_blocks[i]->compute(force))
-          change_occured = true;
+	    {	
+          if (this->input_blocks[i]->compute(force))
+            change_occured = true;
+		}
 
     if (change_occured || force || !this->is_valid())
       {
-        error_occured = !this->execute();
+		// call the progress function:
+		  
+		if (_global_progress_function != NULL) 
+          {
+		    _global_progress_function(_left_to_compute,this->get_id());
+		
+		    if (_left_to_compute >= 1)
+		      _left_to_compute--;
+	      }
+		  
+        error_occured = !this->execute(); // execute this block
         change_occured = true;
       }
 
@@ -1217,15 +1252,38 @@ void c_texture_graph::delete_block_with_id(unsigned int block_id)
 
 //----------------------------------------------------------------------
 
-bool c_texture_graph::compute(bool force)
+bool c_texture_graph::compute(bool force,void (*progress_function)(int,int))
 
   {
     unsigned int i;
-
+    
+    /* set the global pointer for other methods to see the progress
+       function: */
+    
+    _global_progress_function = progress_function; 
+    
+    if (force)
+      _left_to_compute = this->get_number_of_blocks();
+    else
+      _left_to_compute = this->get_number_of_invalid();
+    
     for (i = 0; i < this->end_blocks->size(); i++)
-      this->end_blocks->at(i)->compute(force);
+      {  
+        this->end_blocks->at(i)->compute(force);
+	  }
+	  
+	if (progress_function != NULL) 
+      progress_function(0,-1);
 
     return !this->is_error();
+  }
+
+//----------------------------------------------------------------------
+
+bool c_texture_graph::compute(bool force)
+
+  {
+	return this->compute(force,NULL);
   }
 
 //----------------------------------------------------------------------

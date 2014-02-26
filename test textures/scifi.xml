@@ -83,5 +83,8 @@
 		<input id="24" slot="0"/>
 		<parameter name="times" type="int" value="2"/>
 	</block>
+	<block type="end" id="26">
+		<input id="25" slot="0"/>
+	</block>
 </texturegraph>
 

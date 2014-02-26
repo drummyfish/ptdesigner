@@ -1989,7 +1989,7 @@
    <addaction name="menuEdit"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="status_bar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>

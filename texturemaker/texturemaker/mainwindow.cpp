@@ -7,6 +7,8 @@
 using namespace std;
 using namespace pt_design;
 
+MainWindow *global_main_window;  // a global pointer to the main window, needed by some static functions
+
 //-----------------------------------------------------
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -22,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
   this->update_title();
   this->filename = "";
   this->change_happened = false;
+  this->blocks_to_compute = -1;
+  global_main_window = this;
 }
 
 //-----------------------------------------------------
@@ -379,7 +383,7 @@ void MainWindow::compute_thread(MainWindow *window, bool force)
 
 {
   window->get_graph_mutex()->lock();
-  window->graph->compute(force);
+  window->graph->compute(force,MainWindow::progress_function);
   window->get_graph_mutex()->unlock();
   window->update_graphics();
 }
@@ -391,7 +395,70 @@ void MainWindow::on_actionExecute_triggered()
 {
   QFuture<void> future;
 
+  connect(this,SIGNAL(send_progress(int,int)),this,SLOT(update_progress_bar(int,int)));
+
   future = QtConcurrent::run(MainWindow::compute_thread,this,ui->force->isChecked());   // run the computation in separate thread with one parameter
+  this->progress_dialog.exec();
+}
+
+//-----------------------------------------------------
+
+void MainWindow::progress_function(int blocks_left, int next_id)
+
+{
+  global_main_window->emit_progress_signal(blocks_left,next_id);
+}
+
+//-----------------------------------------------------
+
+void MainWindow::emit_progress_signal(int blocks_left, int next_id)
+
+{
+  emit send_progress(blocks_left,next_id);
+}
+
+//-----------------------------------------------------
+
+void MainWindow::update_progress_bar(int blocks_left, int next_id)
+
+{
+  unsigned int already_computed,percents;
+  QString progress_text,block_name;
+  c_block *block;
+
+  if (next_id < 0)
+    {
+      this->progress_dialog.done(1);
+      this->blocks_to_compute = -1;    // reset this
+      return;
+    }
+
+  if (this->blocks_to_compute < 0) // first call in the current computing
+    {
+      this->blocks_to_compute = blocks_left;
+      already_computed = 0;
+    }
+  else
+    {
+      already_computed = this->blocks_to_compute - blocks_left;
+    }
+
+  percents = round(already_computed / (double) this->blocks_to_compute * 100);
+
+  /* the next command should not cause race condition as the blocks themselves
+     aren't being modified and we're only reading their names: */
+
+  block = this->graph->get_block_by_id(next_id);
+
+  if (block == NULL)
+    block_name = "";
+  else
+    block_name = QString::fromStdString(block->get_name());
+
+  progress_text = QString::number(already_computed) + " / " + QString::number(this->blocks_to_compute) +
+    ", computing " + block_name + " (id " + (next_id >= 0 ? QString::number(next_id) : "") + ")";
+
+  this->progress_dialog.set_info(percents,progress_text);
 }
 
 //-----------------------------------------------------

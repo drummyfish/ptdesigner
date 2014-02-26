@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QFileDialog>
 #include <QMessageBox>
+#include "progressdialog.h"
 
 #if QT_VERSION >= 0x050000
   #include <QtConcurrent/QtConcurrent>
@@ -58,6 +59,8 @@ protected:
     QMutex graph_mutex;                       ///< protexts the texture graph from race conditions
     QString filename;                         ///< name of the opened file, empty string means unsaved file
     bool change_happened;                     ///< whether the file should be saved because a change happened
+    ProgressDialog progress_dialog;           ///< dialog with progress bar
+    int blocks_to_compute;                    ///< number of blocks to be computed, -1 means this information is yet to be set
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -84,6 +87,32 @@ public:
              to recompute, otherwise only necessary
              computations will be done
       */
+
+//-----------------------------------------------------
+
+    static void progress_function(int blocks_left, int next_id);
+
+    /**<
+     A method used to track progress of the computing. It's
+     called after each block is computed by the computing
+     thread.
+
+     @param blocks_left number of blocks left to compute
+     @param next_id id of the next block to be computed
+     */
+
+//-----------------------------------------------------
+
+    void emit_progress_signal(int blocks_left, int next_id);
+
+    /**<
+     Emits a signal about the computing progress. This is
+     called from computing thread so that the GUI thread
+     catches the signal and updates the progress bar.
+
+     @param blocks_left number of blocks left to compute
+     @param next_id id of the next block to be computed
+     */
 
 //-----------------------------------------------------
 
@@ -309,7 +338,11 @@ public:
 
 //-----------------------------------------------------
 
+signals:
+    void send_progress(int blocks_left,int next_id);
+
 private slots:
+    void update_progress_bar(int blocks_left, int next_id);
     void on_pushButton_2_clicked();
     void on_actionDelete_triggered();
     void on_actionRotate_CW_triggered();
@@ -340,6 +373,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
 };
 
 //-----------------------------------------------------

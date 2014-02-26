@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     cellulargeneraldialog.cpp \
     cellulardialog.cpp \
     substratedialog.cpp \
-    woodmarbledialog.cpp
+    woodmarbledialog.cpp \
+    progressdialog.cpp
 
 HEADERS  += mainwindow.h \
     editareaframe.h \
@@ -76,7 +77,8 @@ HEADERS  += mainwindow.h \
     cellulardialog.h \
     substratedialog.h \
     texturemakergeneral.h \
-    woodmarbledialog.h
+    woodmarbledialog.h \
+    progressdialog.h
 
 FORMS    += mainwindow.ui \
     defaultblockdialog.ui \
@@ -99,7 +101,8 @@ FORMS    += mainwindow.ui \
     cellulargeneraldialog.ui \
     cellulardialog.ui \
     substratedialog.ui \
-    woodmarbledialog.ui
+    woodmarbledialog.ui \
+    progressdialog.ui
 
 INCLUDEPATH += $$PWD/../../sources
 

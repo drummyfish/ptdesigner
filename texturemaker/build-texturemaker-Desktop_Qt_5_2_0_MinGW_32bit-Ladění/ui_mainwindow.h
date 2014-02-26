@@ -157,7 +157,7 @@ public:
     QMenu *menuFile;
     QMenu *menuEdit;
     QMenu *menuHelp;
-    QStatusBar *statusBar;
+    QStatusBar *status_bar;
     QToolBar *toolBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -935,9 +935,9 @@ public:
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
         MainWindow->setMenuBar(menuBar);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
+        status_bar = new QStatusBar(MainWindow);
+        status_bar->setObjectName(QStringLiteral("status_bar"));
+        MainWindow->setStatusBar(status_bar);
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QStringLiteral("toolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
