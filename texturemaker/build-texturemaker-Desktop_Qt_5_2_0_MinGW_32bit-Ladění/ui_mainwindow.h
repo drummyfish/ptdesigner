@@ -620,7 +620,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 256, 713));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, -181, 256, 713));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -1167,7 +1167,7 @@ public:
         pushButton->setText(QApplication::translate("MainWindow", "display full size", 0));
         groupBox_3->setTitle(QApplication::translate("MainWindow", "global settings", 0));
         label->setText(QApplication::translate("MainWindow", "texture width", 0));
-        label_4->setText(QApplication::translate("MainWindow", "seed", 0));
+        label_4->setText(QApplication::translate("MainWindow", "global seed", 0));
         label_2->setText(QApplication::translate("MainWindow", "texture height", 0));
         label_3->setText(QApplication::translate("MainWindow", "supersampling", 0));
         label_5->setText(QApplication::translate("MainWindow", "canvas width", 0));

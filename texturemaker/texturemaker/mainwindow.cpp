@@ -583,9 +583,9 @@ void MainWindow::block_selected(int block_id)
         }
       else
         {
+          ui->custom_seed->setValue(block->get_random_seed());
           ui->radio_custom_seed->setChecked(true);
           ui->radio_global_seed->setChecked(false);
-          ui->custom_seed->setValue(block->get_random_seed());
         }
     }
   else
@@ -1049,6 +1049,11 @@ void MainWindow::on_actionNew_texture_triggered()
       this->change_happened = false;
       this->filename = "";
       this->update_title();
+      ui->width->setValue(256);
+      ui->height->setValue(256);
+      ui->seed->setValue(0);
+      ui->supersampling->setValue(1);
+      ui->force->setChecked(false);
     }
 }
 
