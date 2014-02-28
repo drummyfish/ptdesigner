@@ -2452,7 +2452,7 @@ void pt_substrate(int random, int iterate, unsigned int number,
 
   {
     unsigned int iteration, i, step, total_step, new_lines_space,
-      number_of_lines, number_of_iterations;
+      number_of_lines, number_of_iterations, width_ratio, height_ratio;
     int x, y, x2, y2, continue_drawing, length, random_shift,
       stop_iterating, help_length;
     double angle, new_angle;
@@ -2573,6 +2573,13 @@ void pt_substrate(int random, int iterate, unsigned int number,
                 {
                   /* we only use 255 level so we don't get black which
                      might mess it all up with the borders later    */
+
+                  /* compute the seed depending on position to get more
+                     resolution-independency */
+
+                  width_ratio = (x / (double) destination->width) * 100;
+                  height_ratio = (y / (double) destination->height) * 100;
+                  random = width_ratio + height_ratio;
 
                   red = noise_int_range(random,0,254);
                   random++;

@@ -1357,7 +1357,7 @@
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-181</y>
+           <y>0</y>
            <width>256</width>
            <height>713</height>
           </rect>
@@ -1957,7 +1957,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Fi&amp;le</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionNew_texture"/>
     <addaction name="actionOpen"/>
@@ -1967,7 +1967,7 @@
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Edit</string>
+     <string>&amp;Edit</string>
     </property>
     <addaction name="actionRotate_CW"/>
     <addaction name="actionRotate_CCW"/>
@@ -1981,7 +1981,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
@@ -2016,6 +2016,9 @@
    <property name="text">
     <string>open</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionSave">
    <property name="icon">
@@ -2024,6 +2027,9 @@
    </property>
    <property name="text">
     <string>save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionSave_as">
@@ -2139,11 +2145,75 @@
    <header location="global">addblockbutton.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>width</tabstop>
+  <tabstop>height</tabstop>
+  <tabstop>supersampling</tabstop>
+  <tabstop>seed</tabstop>
+  <tabstop>cwidth</tabstop>
+  <tabstop>cheight</tabstop>
+  <tabstop>force</tabstop>
+  <tabstop>block_name</tabstop>
+  <tabstop>block_id</tabstop>
+  <tabstop>block_inputs</tabstop>
+  <tabstop>block_state</tabstop>
+  <tabstop>custom_seed</tabstop>
+  <tabstop>pushButton_39</tabstop>
+  <tabstop>pushButton_37</tabstop>
+  <tabstop>pushButton_36</tabstop>
+  <tabstop>pushButton_40</tabstop>
+  <tabstop>pushButton_38</tabstop>
+  <tabstop>pushButton_18</tabstop>
+  <tabstop>pushButton_14</tabstop>
+  <tabstop>pushButton_23</tabstop>
+  <tabstop>pushButton_29</tabstop>
+  <tabstop>pushButton_27</tabstop>
+  <tabstop>pushButton_34</tabstop>
+  <tabstop>pushButton_6</tabstop>
+  <tabstop>pushButton_42</tabstop>
+  <tabstop>pushButton_22</tabstop>
+  <tabstop>pushButton_25</tabstop>
+  <tabstop>pushButton_8</tabstop>
+  <tabstop>pushButton_13</tabstop>
+  <tabstop>pushButton_7</tabstop>
+  <tabstop>pushButton_5</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_15</tabstop>
+  <tabstop>pushButton_43</tabstop>
+  <tabstop>pushButton_44</tabstop>
+  <tabstop>pushButton_35</tabstop>
+  <tabstop>pushButton_20</tabstop>
+  <tabstop>pushButton_24</tabstop>
+  <tabstop>pushButton_31</tabstop>
+  <tabstop>pushButton_30</tabstop>
+  <tabstop>pushButton_32</tabstop>
+  <tabstop>pushButton_41</tabstop>
+  <tabstop>pushButton_45</tabstop>
+  <tabstop>pushButton_46</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>blockArea</tabstop>
+  <tabstop>pushButton_12</tabstop>
+  <tabstop>pushButton_19</tabstop>
+  <tabstop>pushButton_9</tabstop>
+  <tabstop>pushButton_28</tabstop>
+  <tabstop>pushButton_17</tabstop>
+  <tabstop>pushButton_33</tabstop>
+  <tabstop>radio_custom_seed</tabstop>
+  <tabstop>pushButton_11</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>radio_global_seed</tabstop>
+  <tabstop>pushButton_26</tabstop>
+  <tabstop>pushButton_10</tabstop>
+  <tabstop>pushButton_21</tabstop>
+  <tabstop>pushButton_16</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>
  <connections/>
  <slots>
-  <signal>onCompleted()</signal>
  </slots>
 </ui>

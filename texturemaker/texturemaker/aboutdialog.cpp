@@ -16,7 +16,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
     QString::fromUtf8("Author: Miloslav Číž \n") +
     QString::fromUtf8("version: ") + QString::fromUtf8(TEXTURE_MAKER_VERSION) + QString::fromUtf8("\n") +
     QString::fromUtf8("built on: ") + QString::fromUtf8(__DATE__) + QString::fromUtf8("\n") +
-    QString::fromUtf8("uses PT Designer library version ") + QString::fromUtf8(PT_LIB_VERSION)
+    QString::fromUtf8("uses PT Designer library version ") + QString::fromUtf8(PT_LIB_VERSION) + QString::fromUtf8("\n") +
+    QString::fromUtf8("created with QT version ") + qVersion()
     );
 }
 
