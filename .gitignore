@@ -38,3 +38,7 @@ images
 "example pictures/prezentace"
 *.png
 !"example pictures/*"
+
+#exclude test
+
+./sources/test.cpp

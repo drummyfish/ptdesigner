@@ -748,7 +748,7 @@ bool MainWindow::load(QString filename)
 
 {
   bool success;
-  unsigned int i,j,x,y;
+  unsigned int i,j,x,y,supersampling,global_seed;
   int id;
   string line;
   QString q_line;
@@ -812,11 +812,13 @@ bool MainWindow::load(QString filename)
     }
 
   this->graph->get_resolution(&x,&y);
+  supersampling = this->graph->get_supersampling();
+  global_seed = this->graph->get_random_seed();
 
+  ui->seed->setValue(global_seed);
+  ui->supersampling->setValue(supersampling);
   ui->width->setValue(x);
-  ui->height->setValue(y);
-  ui->supersampling->setValue(this->graph->get_supersampling());
-  ui->seed->setValue(this->graph->get_random_seed());
+  ui->height->setValue(y);  
 
   for (i = 0; i < this->graph->get_number_of_blocks(); i++)  // make up positions that don't exist
     {
