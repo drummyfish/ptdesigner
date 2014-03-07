@@ -653,6 +653,7 @@ void EditAreaFrame::mouseMoveEvent(QMouseEvent *event)
 
 {
   int slot,id;
+  c_block *block;
 
   if (!this->main_window->get_graph_mutex()->tryLock())
     return;
@@ -707,7 +708,17 @@ void EditAreaFrame::mouseMoveEvent(QMouseEvent *event)
         if (slot == MAX_INPUT_BLOCKS)
           this->mouse_string = "output";
         else
-          this->mouse_string = "slot " + QString::number(slot);
+          {
+            this->mouse_string = "slot " + QString::number(slot);
+
+            block = this->main_window->get_texture_graph()->get_block_by_id(id);
+
+            if (block != NULL)
+              {
+                if (slot >= block->get_min_inputs())
+                  this->mouse_string += " (optional)";
+              }
+          }
 
         this->update();
       }
