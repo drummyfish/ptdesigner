@@ -42,6 +42,8 @@ public:
 private slots:
     void on_buttonBox_accepted();
 
+    void on_button_set_clicked();
+
 private:
     Ui::CellularDialog *ui;
 };

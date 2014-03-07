@@ -55,6 +55,8 @@ CellularDialog::CellularDialog(c_block *block, QWidget *parent):
       ui->threshold->hide();
       ui->label_states->hide();
       ui->states->hide();
+      ui->button_set->hide();
+      ui->combo_presets->hide();
       ui->players->setValue(parameters->get_int_value("players"));
     }
 }
@@ -92,6 +94,81 @@ void CellularDialog::on_buttonBox_accepted()
   else
     {
       parameters->set_int_value("players",ui->players->value());
+    }
+}
+
+//-----------------------------------------------------
+
+void CellularDialog::on_button_set_clicked()
+
+{
+  // presets:
+
+  switch (ui->combo_presets->currentIndex())
+    {
+      case 0:
+        ui->combo->setCurrentIndex(0);
+        ui->neighbourhood_size->setValue(2);
+        ui->states->setValue(6);
+        ui->threshold->setValue(2);
+        ui->iterations->setValue(30);
+        break;
+
+      case 1:
+        ui->combo->setCurrentIndex(1);
+        ui->neighbourhood_size->setValue(3);
+        ui->states->setValue(8);
+        ui->threshold->setValue(5);
+        ui->iterations->setValue(60);
+        break;
+
+      case 2:
+       ui->combo->setCurrentIndex(0);
+        ui->neighbourhood_size->setValue(2);
+        ui->states->setValue(5);
+        ui->threshold->setValue(4);
+        ui->iterations->setValue(30);
+        break;
+
+      case 3:
+        ui->combo->setCurrentIndex(0);
+        ui->neighbourhood_size->setValue(3);
+        ui->states->setValue(2);
+        ui->threshold->setValue(10);
+        ui->iterations->setValue(5);
+        break;
+
+      case 4:
+        ui->combo->setCurrentIndex(0);
+        ui->neighbourhood_size->setValue(2);
+        ui->states->setValue(3);
+        ui->threshold->setValue(5);
+        ui->iterations->setValue(20);
+        break;
+
+      case 5:
+        ui->combo->setCurrentIndex(1);
+        ui->neighbourhood_size->setValue(2);
+        ui->states->setValue(4);
+        ui->threshold->setValue(9);
+        ui->iterations->setValue(25);
+        break;
+
+      case 6:
+        ui->combo->setCurrentIndex(1);
+        ui->neighbourhood_size->setValue(1);
+        ui->states->setValue(4);
+        ui->threshold->setValue(2);
+        ui->iterations->setValue(40);
+        break;
+
+      case 7:
+        ui->combo->setCurrentIndex(0);
+        ui->neighbourhood_size->setValue(3);
+        ui->states->setValue(5);
+        ui->threshold->setValue(4);
+        ui->iterations->setValue(60);
+        break;
     }
 }
 
