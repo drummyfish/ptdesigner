@@ -1,0 +1,76 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="2">
+	<block type="marble" id="0">
+		<input id="3" slot="0"/>
+		<parameter name="periods" type="int" value="3"/>
+		<parameter name="intensity" type="int" value="2"/>
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="direction" type="int" value="2"/>
+	</block>
+	<block type="simple noise" id="1">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="grayscale" type="bool" value="1"/>
+	</block>
+	<block type="perlin noise" id="2">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="frequency" type="int" value="6"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="1"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="mix" id="3">
+		<input id="1" slot="0"/>
+		<input id="2" slot="1"/>
+		<parameter name="percentage" type="int" value="70"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="color transition" id="4">
+		<parameter name="data" type="string" value="0 122 110 98;128 202 153 92;240 245 245 177;255 240 240 240;"/>
+	</block>
+	<block type="map transition" id="5">
+		<input id="13" slot="0"/>
+		<input id="4" slot="1"/>
+	</block>
+	<block type="radius transform" id="13">
+		<input id="0" slot="0"/>
+		<parameter name="radius min" type="int" value="0"/>
+		<parameter name="radius max" type="int" value="15"/>
+		<parameter name="rotate left" type="bool" value="0"/>
+		<parameter name="horizontal" type="bool" value="0"/>
+	</block>
+	<block type="map transition" id="15">
+		<input id="13" slot="0"/>
+		<input id="16" slot="1"/>
+	</block>
+	<block type="color transition" id="16">
+		<parameter name="data" type="string" value="0 122 73 73;128 214 209 155;240 245 245 140;255 253 253 253;"/>
+	</block>
+	<block type="mix" id="17">
+		<input id="5" slot="0"/>
+		<input id="15" slot="1"/>
+		<input id="2" slot="2"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="mix" id="19">
+		<input id="22" slot="0"/>
+		<input id="17" slot="1"/>
+		<input id="20" slot="2"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="bump noise" id="20">
+		<parameter name="bump size from" type="double" value="0.7"/>
+		<parameter name="bump size to" type="double" value="0.101"/>
+		<parameter name="quantity" type="int" value="1"/>
+		<parameter name="alter amplitude" type="bool" value="0"/>
+	</block>
+	<block type="map transition" id="22">
+		<input id="1" slot="0"/>
+		<input id="4" slot="1"/>
+	</block>
+	<block type="end" id="23">
+		<input id="19" slot="0"/>
+	</block>
+</texturegraph>
+

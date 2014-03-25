@@ -1,0 +1,85 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="square mosaic" id="28">
+		<parameter name="side 1" type="string" value="1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 0.3875 0.064 0.30625 0.096 0.225 0.16 0.175 0.256 0.11875 0.128 0.06875 0.064 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+		<parameter name="side 2" type="string" value="1 0 1 0 1 0 1 0 1 0 0.875 0.08 0.7625 0.08 0.6625 0.08 0.49375 0.016 0.40625 -0.064 0.375 -0.128 0.33125 -0.048 0.3125 0.016 0.3 0.064 0.28125 0.144 0.26875 0.24 0.24375 0.336 0.225 0.224 0.18125 0.112 0.13125 0.048 0 0 0 0 0 0 0 0 0 0"/>
+		<parameter name="side 3" type="string" value="1 0 1 0 1 0 0.4625 -0.272 0.41875 -0.256 0.36875 -0.24 0.31875 -0.176 0.2875 -0.144 0.225 -0.08 0 0 0 0 0 0"/>
+		<parameter name="side 4" type="string" value="1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 3.94067e-205 6.89397e-308 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+		<parameter name="transformation 1" type="int" value="1"/>
+		<parameter name="transformation 2" type="int" value="0"/>
+		<parameter name="transformation 3" type="int" value="1"/>
+		<parameter name="transformation 4" type="int" value="0"/>
+		<parameter name="tiles x" type="int" value="2"/>
+		<parameter name="tiles y" type="int" value="2"/>
+		<parameter name="fill type" type="int" value="2"/>
+		<parameter name="fill colors" type="string" value="255,0,0,255"/>
+	</block>
+	<block type="tile" id="30">
+		<input id="28" slot="0"/>
+		<parameter name="times" type="int" value="2"/>
+	</block>
+	<block type="perlin noise" id="34" seed="3">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="frequency" type="int" value="6"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="2"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="color transition" id="36">
+		<parameter name="data" type="string" value="0 26 25 23;255 255 83 83;"/>
+	</block>
+	<block type="map transition" id="37">
+		<input id="34" slot="0"/>
+		<input id="36" slot="1"/>
+	</block>
+	<block type="geometric transform" id="40">
+		<input id="30" slot="0"/>
+		<parameter name="shift x" type="double" value="0.01"/>
+		<parameter name="shift y" type="double" value="-0.01"/>
+		<parameter name="flip horizontal" type="bool" value="0"/>
+		<parameter name="flip vertical" type="bool" value="0"/>
+		<parameter name="angle" type="int" value="0"/>
+	</block>
+	<block type="adjust hsl" id="41">
+		<input id="40" slot="0"/>
+		<parameter name="hue" type="double" value="0"/>
+		<parameter name="saturation" type="double" value="0"/>
+		<parameter name="lightness" type="double" value="0.5"/>
+	</block>
+	<block type="mix" id="42">
+		<input id="30" slot="0"/>
+		<input id="41" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="replace colors" id="43">
+		<input id="44" slot="0"/>
+		<input id="37" slot="1"/>
+		<input id="45" slot="2"/>
+		<parameter name="color 1 red" type="int" value="0"/>
+		<parameter name="color 1 green" type="int" value="0"/>
+		<parameter name="color 1 blue" type="int" value="0"/>
+		<parameter name="color 2 red" type="int" value="255"/>
+		<parameter name="color 2 green" type="int" value="255"/>
+		<parameter name="color 2 blue" type="int" value="255"/>
+		<parameter name="color 3 red" type="int" value="170"/>
+		<parameter name="color 3 green" type="int" value="170"/>
+		<parameter name="color 3 blue" type="int" value="170"/>
+		<parameter name="color 4 red" type="int" value="85"/>
+		<parameter name="color 4 green" type="int" value="85"/>
+		<parameter name="color 4 blue" type="int" value="85"/>
+	</block>
+	<block type="brightness and contrast" id="44">
+		<input id="42" slot="0"/>
+		<parameter name="brightness" type="double" value="0"/>
+		<parameter name="contrast" type="double" value="0.2"/>
+	</block>
+	<block type="map transition" id="45">
+		<input id="34" slot="0"/>
+		<input id="46" slot="1"/>
+	</block>
+	<block type="color transition" id="46">
+		<parameter name="data" type="string" value="0 255 255 255;255 196 209 255;"/>
+	</block>
+</texturegraph>
+

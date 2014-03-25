@@ -28,7 +28,6 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSpinBox>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -157,7 +156,6 @@ public:
     QMenu *menuFile;
     QMenu *menuEdit;
     QMenu *menuHelp;
-    QStatusBar *status_bar;
     QToolBar *toolBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -935,9 +933,6 @@ public:
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
         MainWindow->setMenuBar(menuBar);
-        status_bar = new QStatusBar(MainWindow);
-        status_bar->setObjectName(QStringLiteral("status_bar"));
-        MainWindow->setStatusBar(status_bar);
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QStringLiteral("toolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);

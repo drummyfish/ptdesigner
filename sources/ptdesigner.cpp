@@ -1222,6 +1222,8 @@ void c_texture_graph::remove_block(unsigned int block_number)
       return;
 
     this->blocks->erase(this->blocks->begin() + block_number);
+    
+    this->update();
   }
 
 //----------------------------------------------------------------------
@@ -1254,6 +1256,8 @@ void c_texture_graph::delete_block(unsigned int block_number)
         }
     
     delete block;
+    
+    this->update();
   }
   
 //----------------------------------------------------------------------
@@ -2904,6 +2908,11 @@ bool c_block_geometric_transform::execute()
       &(this->buffer));
 
     angle = this->parameters->get_int_value("angle");
+    
+    if (angle % 90 != 0) // only allow multiples of 90, other values don't tile
+      {
+		angle = (angle / 90) * 90;
+	  }
 
     if (angle != 0)
       pt_rotate(

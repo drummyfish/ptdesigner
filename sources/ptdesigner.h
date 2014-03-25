@@ -915,8 +915,8 @@ class c_texture_graph
       void update();
 
         /**<
-         * Updates the texture graph. Should be called after connect or
-         * disconnect functions has been called.
+         * Updates the texture graph. Should be called after connect,
+         * disconnect, delete etc. functions has been called.
          */
 
       bool compute(bool force,void (*progress_function)(int,int));

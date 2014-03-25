@@ -27,7 +27,7 @@
 	<block type="mix" id="3">
 		<input id="2" slot="0"/>
 		<input id="8" slot="1"/>
-		<parameter name="percentage" type="int" value="81"/>
+		<parameter name="percentage" type="int" value="85"/>
 		<parameter name="method" type="int" value="2"/>
 	</block>
 	<block type="marble" id="4">
@@ -46,7 +46,7 @@
 	<block type="mix" id="7">
 		<input id="3" slot="0"/>
 		<input id="6" slot="1"/>
-		<parameter name="percentage" type="int" value="19"/>
+		<parameter name="percentage" type="int" value="10"/>
 		<parameter name="method" type="int" value="3"/>
 	</block>
 	<block type="blur" id="8">

@@ -100,6 +100,17 @@ public:
 
 //-----------------------------------------------------
 
+    bool connecting_in_progress();
+
+    /**
+      Checks if block connecting is in progress.
+
+      @return true if connrcting is in progress, false
+              otherwise
+      */
+
+//-----------------------------------------------------
+
     void set_disconnecting_mode(bool value);
 
     /**
@@ -119,15 +130,6 @@ public:
 
       @return id of the selected block or -1 if none
               is selected
-      */
-
-//-----------------------------------------------------
-
-    void open_block_setting(c_block *block);
-
-    /**
-
-
       */
 
 //-----------------------------------------------------

@@ -1989,7 +1989,6 @@
    <addaction name="menuEdit"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="status_bar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -2214,6 +2213,4 @@
   <include location="resources.qrc"/>
  </resources>
  <connections/>
- <slots>
- </slots>
 </ui>

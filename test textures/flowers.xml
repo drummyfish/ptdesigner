@@ -1,0 +1,35 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="cellular automaton cyclic" id="0">
+		<input id="1" slot="0"/>
+		<parameter name="iterations" type="int" value="60"/>
+		<parameter name="neighbourhood" type="int" value="1"/>
+		<parameter name="neighbourhood size" type="int" value="3"/>
+		<parameter name="states" type="int" value="5"/>
+		<parameter name="threshold" type="int" value="4"/>
+	</block>
+	<block type="simple noise" id="1">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="grayscale" type="bool" value="1"/>
+	</block>
+	<block type="map transition" id="2">
+		<input id="6" slot="0"/>
+		<input id="3" slot="1"/>
+	</block>
+	<block type="color transition" id="3">
+		<parameter name="data" type="string" value="0 185 255 253;255 34 3 112;"/>
+	</block>
+	<block type="blur" id="4">
+		<input id="0" slot="0"/>
+		<parameter name="intensity" type="int" value="10"/>
+		<parameter name="motion" type="bool" value="0"/>
+		<parameter name="direction" type="int" value="0"/>
+	</block>
+	<block type="mix" id="6">
+		<input id="4" slot="0"/>
+		<input id="0" slot="1"/>
+		<parameter name="percentage" type="int" value="30"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+</texturegraph>
+

@@ -41,5 +41,8 @@
 		<parameter name="percentage" type="int" value="50"/>
 		<parameter name="method" type="int" value="2"/>
 	</block>
+	<block type="end" id="10">
+		<input id="9" slot="0"/>
+	</block>
 </texturegraph>
 

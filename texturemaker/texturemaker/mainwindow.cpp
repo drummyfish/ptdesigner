@@ -323,6 +323,9 @@ c_texture_graph *MainWindow::get_texture_graph()
 void MainWindow::on_actionDelete_triggered()
 
 {
+  if (ui->editArea->connecting_in_progress())
+    return;
+
   this->delete_block_by_id(ui->editArea->get_selected_id());
   this->update_graphics();
 }

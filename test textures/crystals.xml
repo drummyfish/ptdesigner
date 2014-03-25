@@ -1,0 +1,46 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="voronoi diagram" id="2">
+		<parameter name="type" type="int" value="1"/>
+		<parameter name="metric" type="int" value="2"/>
+		<parameter name="point place" type="int" value="0"/>
+		<parameter name="width" type="int" value="75"/>
+		<parameter name="point positions" type="string" value=""/>
+		<parameter name="number of points" type="int" value="10"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="emboss" id="4">
+		<input id="2" slot="0"/>
+		<parameter name="intensity" type="int" value="3"/>
+	</block>
+	<block type="normal map" id="5">
+		<input id="2" slot="0"/>
+		<parameter name="neighbourhood size" type="int" value="1"/>
+	</block>
+	<block type="light" id="6">
+		<input id="5" slot="0"/>
+		<parameter name="ambient red" type="int" value="11"/>
+		<parameter name="ambient green" type="int" value="11"/>
+		<parameter name="ambient blue" type="int" value="10"/>
+		<parameter name="diffuse red" type="int" value="111"/>
+		<parameter name="diffuse green" type="int" value="120"/>
+		<parameter name="diffuse blue" type="int" value="158"/>
+		<parameter name="specular red" type="int" value="228"/>
+		<parameter name="specular green" type="int" value="231"/>
+		<parameter name="specular blue" type="int" value="255"/>
+		<parameter name="reflection curve" type="int" value="1"/>
+		<parameter name="viewer height" type="double" value="1"/>
+		<parameter name="phong exponent" type="double" value="3.3"/>
+		<parameter name="direction vector x" type="double" value="0.5"/>
+		<parameter name="direction vector y" type="double" value="0.5"/>
+	</block>
+	<block type="mix" id="7">
+		<input id="6" slot="0"/>
+		<input id="4" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+</texturegraph>
+

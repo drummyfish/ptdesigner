@@ -1990,7 +1990,7 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
             }
           break;
 
-        case PLACE_SQUARE:
+        case PLACE_SQUARE: 
                                       // distance between two points
           help_distance = ((double) side_length) / (parameter2 - 1);
                                       // set starting points
@@ -2003,8 +2003,7 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
           point_array[3][0] = center_x - side_length / 2;
           point_array[3][1] = center_y + side_length / 2;
 
-          for (i = 0; i < parameter2 - 1; i++)
-
+          for (i = 0; i < parameter2 - 2; i++)
             {                // make all other points for all four sides
               point_array[(i + 1) * 4][0] = point_array[0][0] +
                 (i + 1) * help_distance;
@@ -2017,7 +2016,7 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
               point_array[(i + 1) * 4 + 2][1] = point_array[2][1];
               point_array[(i + 1) * 4 + 3][0] = point_array[3][0];
               point_array[(i + 1) * 4 + 3][1] = point_array[3][1] -
-                (i + 1) * help_distance;
+                (i + 1) * help_distance; 
             }
 
           break;
@@ -2120,7 +2119,7 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
               point_array[i][1] = parameter3[i][1];
             }
           break;
-      }
+      } // switch
 
     pt_color_fill(destination,255,255,255);
 
@@ -2134,7 +2133,7 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
         kd_tree_init(&search_tree,point_array,number_of_points);
       }
     else
-      use_tree = 0;
+      use_tree = 0;  
                                      // set the color of each pixel
     for (i = 0; i < destination->width; i++)
       for (j = 0; j < destination->height; j++)
@@ -2210,7 +2209,7 @@ void pt_voronoi_diagram(t_voronoi_type type, t_metric metric,
     if (use_tree)
       kd_tree_destroy(&search_tree);
 
-    free(point_array);
+    free(point_array); 
   }
 
 //----------------------------------------------------------------------

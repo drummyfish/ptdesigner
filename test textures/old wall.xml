@@ -1,0 +1,55 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="2">
+	<block type="emboss" id="2">
+		<input id="9" slot="0"/>
+		<parameter name="intensity" type="int" value="3"/>
+	</block>
+	<block type="sharpen" id="3">
+		<input id="9" slot="0"/>
+		<parameter name="intensity" type="int" value="3"/>
+	</block>
+	<block type="mix" id="4">
+		<input id="3" slot="0"/>
+		<input id="2" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="perlin noise" id="5">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="frequency" type="int" value="6"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="2"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="invert" id="8">
+		<input id="4" slot="0"/>
+	</block>
+	<block type="crop amplitude" id="9">
+		<input id="5" slot="0"/>
+		<parameter name="lower limit" type="int" value="70"/>
+		<parameter name="upper limit" type="int" value="150"/>
+	</block>
+	<block type="mix" id="11">
+		<input id="8" slot="0"/>
+		<input id="16" slot="1"/>
+		<input id="12" slot="2"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="brightness and contrast" id="12">
+		<input id="9" slot="0"/>
+		<parameter name="brightness" type="double" value="0"/>
+		<parameter name="contrast" type="double" value="0.7"/>
+	</block>
+	<block type="color transition" id="15">
+		<parameter name="data" type="string" value="0 106 48 48;255 218 135 2;"/>
+	</block>
+	<block type="map transition" id="16">
+		<input id="5" slot="0"/>
+		<input id="15" slot="1"/>
+	</block>
+	<block type="end" id="17">
+		<input id="11" slot="0"/>
+	</block>
+</texturegraph>
+

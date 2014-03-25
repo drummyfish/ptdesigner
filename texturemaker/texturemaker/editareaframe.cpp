@@ -435,6 +435,14 @@ void EditAreaFrame::reset()
 
 //-----------------------------------------------------
 
+bool EditAreaFrame::connecting_in_progress()
+
+{
+  return this->connecting_id >= 0;
+}
+
+//-----------------------------------------------------
+
 void EditAreaFrame::dropEvent(QDropEvent *event)
 
 {
@@ -584,7 +592,7 @@ void EditAreaFrame::mousePressEvent(QMouseEvent *event)
 
   this->selected_id = this->main_window->get_block_by_position(x,y,&slot);
 
-  if (this->disconnecting_mode)
+  if (this->disconnecting_mode || event->button() == Qt::RightButton)
     {
       if (this->selected_id >= 0 && slot < MAX_INPUT_BLOCKS && slot >= 0)
         {
@@ -593,6 +601,7 @@ void EditAreaFrame::mousePressEvent(QMouseEvent *event)
         }
 
       this->main_window->get_graph_mutex()->unlock();
+      this->update();
       return;
     }
 
@@ -632,6 +641,9 @@ void EditAreaFrame::keyPressEvent(QKeyEvent *event)
 
   if (event->key() == Qt::Key_Delete)
     {
+      if (this->connecting_in_progress())
+        return;
+
       this->main_window->delete_block_by_id(this->selected_id);
     }
 
