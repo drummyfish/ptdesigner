@@ -1,0 +1,30 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="perlin noise" id="4" seed="3">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="frequency" type="int" value="6"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="1"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="circle transform" id="5">
+		<input id="4" slot="0"/>
+		<parameter name="radius" type="int" value="1"/>
+		<parameter name="jumps" type="int" value="20"/>
+	</block>
+	<block type="tile" id="16">
+		<input id="5" slot="0"/>
+		<parameter name="times" type="int" value="2"/>
+	</block>
+	<block type="map transition" id="23">
+		<input id="16" slot="0"/>
+		<input id="24" slot="1"/>
+	</block>
+	<block type="color transition" id="24">
+		<parameter name="data" type="string" value="0 0 0 0;100 76 88 168;200 240 255 255;255 255 255 255;"/>
+	</block>
+	<block type="end" id="25">
+		<input id="23" slot="0"/>
+	</block>
+</texturegraph>
+

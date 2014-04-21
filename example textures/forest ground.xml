@@ -1,0 +1,95 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="2">
+	<block type="l-system" id="0">
+		<parameter name="path" type="string" value="C:/Users/tastyfish/Documents/GitHub/proctextures/example textures/plant2.txt"/>
+		<parameter name="iterations" type="int" value="10"/>
+	</block>
+	<block type="turtle" id="1">
+		<input id="0" slot="0"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.9"/>
+		<parameter name="initial angle" type="int" value="90"/>
+		<parameter name="noise intensity" type="double" value="1"/>
+		<parameter name="particle density" type="double" value="1"/>
+	</block>
+	<block type="end" id="2">
+		<input id="18" slot="0"/>
+	</block>
+	<block type="geometric transform" id="3">
+		<input id="1" slot="0"/>
+		<parameter name="shift x" type="double" value="-0.4"/>
+		<parameter name="shift y" type="double" value="-0.5"/>
+		<parameter name="flip horizontal" type="bool" value="1"/>
+		<parameter name="flip vertical" type="bool" value="0"/>
+		<parameter name="angle" type="int" value="-75"/>
+	</block>
+	<block type="geometric transform" id="4">
+		<input id="1" slot="0"/>
+		<parameter name="shift x" type="double" value="0.4"/>
+		<parameter name="shift y" type="double" value="-0.1"/>
+		<parameter name="flip horizontal" type="bool" value="0"/>
+		<parameter name="flip vertical" type="bool" value="1"/>
+		<parameter name="angle" type="int" value="4"/>
+	</block>
+	<block type="geometric transform" id="5">
+		<input id="1" slot="0"/>
+		<parameter name="shift x" type="double" value="0.2"/>
+		<parameter name="shift y" type="double" value="0.2"/>
+		<parameter name="flip horizontal" type="bool" value="0"/>
+		<parameter name="flip vertical" type="bool" value="0"/>
+		<parameter name="angle" type="int" value="10"/>
+	</block>
+	<block type="mix" id="6">
+		<input id="1" slot="0"/>
+		<input id="5" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="mix" id="7">
+		<input id="6" slot="0"/>
+		<input id="3" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="mix" id="8">
+		<input id="7" slot="0"/>
+		<input id="4" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="geometric transform" id="10">
+		<input id="8" slot="0"/>
+		<parameter name="shift x" type="double" value="0.5"/>
+		<parameter name="shift y" type="double" value="0.3"/>
+		<parameter name="flip horizontal" type="bool" value="0"/>
+		<parameter name="flip vertical" type="bool" value="1"/>
+		<parameter name="angle" type="int" value="0"/>
+	</block>
+	<block type="mix" id="11">
+		<input id="8" slot="0"/>
+		<input id="10" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="map transition" id="16">
+		<input id="21" slot="0"/>
+		<input id="17" slot="1"/>
+	</block>
+	<block type="color transition" id="17">
+		<parameter name="data" type="string" value="0 136 147 88;10 148 107 93;128 138 156 57;190 121 162 120;255 68 172 66;"/>
+	</block>
+	<block type="mix" id="18">
+		<input id="16" slot="0"/>
+		<input id="11" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="perlin noise" id="21">
+		<parameter name="amplitude" type="int" value="90"/>
+		<parameter name="frequency" type="int" value="6"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="2"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+</texturegraph>
+

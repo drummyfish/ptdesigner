@@ -1,0 +1,74 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="3">
+	<block type="l-system" id="0">
+		<parameter name="path" type="string" value="C:/Users/tastyfish/Documents/GitHub/proctextures/example textures/logo.txt"/>
+		<parameter name="iterations" type="int" value="20"/>
+	</block>
+	<block type="turtle" id="1">
+		<input id="0" slot="0"/>
+		<parameter name="initial x" type="double" value="0.4"/>
+		<parameter name="initial y" type="double" value="0.6"/>
+		<parameter name="initial angle" type="int" value="90"/>
+		<parameter name="noise intensity" type="double" value="1"/>
+		<parameter name="particle density" type="double" value="1"/>
+	</block>
+	<block type="grayscale" id="3">
+		<input id="1" slot="0"/>
+	</block>
+	<block type="brightness and contrast" id="4">
+		<input id="3" slot="0"/>
+		<parameter name="brightness" type="double" value="0.1"/>
+		<parameter name="contrast" type="double" value="0.5"/>
+	</block>
+	<block type="mix" id="5">
+		<input id="1" slot="0"/>
+		<input id="6" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="blur" id="6">
+		<input id="7" slot="0"/>
+		<parameter name="intensity" type="int" value="15"/>
+		<parameter name="motion" type="bool" value="0"/>
+		<parameter name="direction" type="int" value="0"/>
+	</block>
+	<block type="geometric transform" id="7">
+		<input id="4" slot="0"/>
+		<parameter name="shift x" type="double" value="0.01"/>
+		<parameter name="shift y" type="double" value="0.01"/>
+		<parameter name="flip horizontal" type="bool" value="0"/>
+		<parameter name="flip vertical" type="bool" value="0"/>
+		<parameter name="angle" type="int" value="0"/>
+	</block>
+	<block type="mix" id="14">
+		<input id="5" slot="0"/>
+		<input id="16" slot="1"/>
+		<parameter name="percentage" type="int" value="10"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="end" id="15">
+		<input id="14" slot="0"/>
+	</block>
+	<block type="map transition" id="16">
+		<input id="18" slot="0"/>
+		<input id="19" slot="1"/>
+	</block>
+	<block type="color transition" id="17">
+		<parameter name="data" type="string" value="0 0 0 0;255 255 255 255;"/>
+	</block>
+	<block type="voronoi diagram" id="18">
+		<parameter name="type" type="int" value="1"/>
+		<parameter name="metric" type="int" value="0"/>
+		<parameter name="point place" type="int" value="2"/>
+		<parameter name="width" type="int" value="25"/>
+		<parameter name="point positions" type="string" value=""/>
+		<parameter name="number of points" type="int" value="20"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="color transition" id="19">
+		<parameter name="data" type="string" value="0 42 0 181;200 126 154 255;240 255 255 255;"/>
+	</block>
+</texturegraph>
+

@@ -1,0 +1,90 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="voronoi diagram" id="0">
+		<parameter name="type" type="int" value="1"/>
+		<parameter name="metric" type="int" value="2"/>
+		<parameter name="point place" type="int" value="5"/>
+		<parameter name="width" type="int" value="75"/>
+		<parameter name="point positions" type="string" value="0:0,0.85:0.465,0.47:0.88,0.13:0.465,0.47:0.1,0.2:0.805,0.8:0.81,0.795:0.165,0.205:0.17"/>
+		<parameter name="number of points" type="int" value="15"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="normal map" id="1">
+		<input id="5" slot="0"/>
+		<parameter name="neighbourhood size" type="int" value="5"/>
+	</block>
+	<block type="light" id="4">
+		<input id="1" slot="0"/>
+		<parameter name="ambient red" type="int" value="5"/>
+		<parameter name="ambient green" type="int" value="0"/>
+		<parameter name="ambient blue" type="int" value="10"/>
+		<parameter name="diffuse red" type="int" value="91"/>
+		<parameter name="diffuse green" type="int" value="99"/>
+		<parameter name="diffuse blue" type="int" value="115"/>
+		<parameter name="specular red" type="int" value="248"/>
+		<parameter name="specular green" type="int" value="240"/>
+		<parameter name="specular blue" type="int" value="255"/>
+		<parameter name="reflection curve" type="int" value="0"/>
+		<parameter name="viewer height" type="double" value="2"/>
+		<parameter name="phong exponent" type="double" value="1.5"/>
+		<parameter name="direction vector x" type="double" value="1.5"/>
+		<parameter name="direction vector y" type="double" value="2.5"/>
+	</block>
+	<block type="crop amplitude" id="5">
+		<input id="0" slot="0"/>
+		<parameter name="lower limit" type="int" value="100"/>
+		<parameter name="upper limit" type="int" value="240"/>
+	</block>
+	<block type="simple noise" id="6">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="grayscale" type="bool" value="1"/>
+	</block>
+	<block type="mix" id="11">
+		<input id="6" slot="0"/>
+		<input id="4" slot="1"/>
+		<parameter name="percentage" type="int" value="95"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="adjust rgb" id="12">
+		<input id="11" slot="0"/>
+		<parameter name="red" type="int" value="-50"/>
+		<parameter name="green" type="int" value="-10"/>
+		<parameter name="blue" type="int" value="33"/>
+	</block>
+	<block type="adjust rgb" id="13">
+		<input id="11" slot="0"/>
+		<parameter name="red" type="int" value="75"/>
+		<parameter name="green" type="int" value="-25"/>
+		<parameter name="blue" type="int" value="15"/>
+	</block>
+	<block type="mix" id="14">
+		<input id="13" slot="0"/>
+		<input id="12" slot="1"/>
+		<input id="5" slot="2"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="wood" id="23">
+		<parameter name="circles" type="int" value="4"/>
+		<parameter name="hardness" type="int" value="5"/>
+		<parameter name="intensity" type="int" value="15"/>
+		<parameter name="amplitude" type="int" value="80"/>
+		<parameter name="direction" type="int" value="0"/>
+	</block>
+	<block type="mix" id="24">
+		<input id="23" slot="0"/>
+		<input id="14" slot="1"/>
+		<parameter name="percentage" type="int" value="71"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="tile" id="25">
+		<input id="24" slot="0"/>
+		<parameter name="times" type="int" value="2"/>
+	</block>
+	<block type="end" id="26">
+		<input id="25" slot="0"/>
+	</block>
+</texturegraph>
+

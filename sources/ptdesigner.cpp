@@ -2045,7 +2045,8 @@ void c_block_perlin_noise::set_default()
     this->parameters->set_int_value("amplitude",127);
     this->parameters->set_int_value("frequency",6);
     this->parameters->set_int_value("max iterations",-1);
-    this->parameters->set_int_value("interpolation",INTERPOLATION_LINEAR);
+    this->parameters->set_int_value("interpolation",
+      INTERPOLATION_LINEAR);
     this->parameters->set_bool_value("smooth",true);
   }
 
@@ -3296,7 +3297,7 @@ bool c_block_l_system::execute()
     grammar_generate_string(
       &(this->grammar),
       this->parameters->get_int_value("iterations"));
-grammar_print_string(&(this->grammar)); // DELETE
+
     return true;
   }
 

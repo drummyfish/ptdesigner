@@ -1,0 +1,83 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="voronoi diagram" id="0">
+		<parameter name="type" type="int" value="0"/>
+		<parameter name="metric" type="int" value="0"/>
+		<parameter name="point place" type="int" value="0"/>
+		<parameter name="width" type="int" value="75"/>
+		<parameter name="point positions" type="string" value=""/>
+		<parameter name="number of points" type="int" value="30"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="invert" id="8">
+		<input id="0" slot="0"/>
+	</block>
+	<block type="circle transform" id="9">
+		<input id="8" slot="0"/>
+		<parameter name="radius" type="int" value="5"/>
+		<parameter name="jumps" type="int" value="1"/>
+	</block>
+	<block type="invert" id="10">
+		<input id="13" slot="0"/>
+	</block>
+	<block type="circle transform" id="12">
+		<input id="10" slot="0"/>
+		<parameter name="radius" type="int" value="5"/>
+		<parameter name="jumps" type="int" value="1"/>
+	</block>
+	<block type="voronoi diagram" id="13">
+		<parameter name="type" type="int" value="1"/>
+		<parameter name="metric" type="int" value="0"/>
+		<parameter name="point place" type="int" value="0"/>
+		<parameter name="width" type="int" value="75"/>
+		<parameter name="point positions" type="string" value=""/>
+		<parameter name="number of points" type="int" value="40"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="mix" id="14">
+		<input id="9" slot="0"/>
+		<input id="12" slot="1"/>
+		<input id="13" slot="2"/>
+		<parameter name="percentage" type="int" value="31"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="map transition" id="16">
+		<input id="14" slot="0"/>
+		<input id="17" slot="1"/>
+	</block>
+	<block type="color transition" id="17">
+		<parameter name="data" type="string" value="0 39 35 38;20 75 70 66;200 255 247 226;255 255 255 255;"/>
+	</block>
+	<block type="voronoi diagram" id="25" seed="6">
+		<parameter name="type" type="int" value="0"/>
+		<parameter name="metric" type="int" value="0"/>
+		<parameter name="point place" type="int" value="0"/>
+		<parameter name="width" type="int" value="75"/>
+		<parameter name="point positions" type="string" value=""/>
+		<parameter name="number of points" type="int" value="50"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="color transition" id="26">
+		<parameter name="data" type="string" value="0 254 212 111;20 145 112 96;100 255 255 255;"/>
+	</block>
+	<block type="map transition" id="27">
+		<input id="25" slot="0"/>
+		<input id="26" slot="1"/>
+	</block>
+	<block type="mix" id="28">
+		<input id="27" slot="0"/>
+		<input id="16" slot="1"/>
+		<parameter name="percentage" type="int" value="70"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+	<block type="end" id="30">
+		<input id="28" slot="0"/>
+	</block>
+</texturegraph>
+

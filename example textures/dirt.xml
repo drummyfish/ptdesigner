@@ -1,0 +1,138 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="bump noise" id="0">
+		<parameter name="bump size from" type="double" value="0.3"/>
+		<parameter name="bump size to" type="double" value="0.01"/>
+		<parameter name="quantity" type="int" value="1"/>
+		<parameter name="alter amplitude" type="bool" value="0"/>
+	</block>
+	<block type="normal map" id="1">
+		<input id="0" slot="0"/>
+		<parameter name="neighbourhood size" type="int" value="2"/>
+	</block>
+	<block type="light" id="2">
+		<input id="1" slot="0"/>
+		<parameter name="ambient red" type="int" value="11"/>
+		<parameter name="ambient green" type="int" value="10"/>
+		<parameter name="ambient blue" type="int" value="10"/>
+		<parameter name="diffuse red" type="int" value="167"/>
+		<parameter name="diffuse green" type="int" value="99"/>
+		<parameter name="diffuse blue" type="int" value="21"/>
+		<parameter name="specular red" type="int" value="94"/>
+		<parameter name="specular green" type="int" value="99"/>
+		<parameter name="specular blue" type="int" value="95"/>
+		<parameter name="reflection curve" type="int" value="1"/>
+		<parameter name="viewer height" type="double" value="1"/>
+		<parameter name="phong exponent" type="double" value="5.3"/>
+		<parameter name="direction vector x" type="double" value="0.5"/>
+		<parameter name="direction vector y" type="double" value="0.5"/>
+	</block>
+	<block type="simple noise" id="3">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="grayscale" type="bool" value="1"/>
+	</block>
+	<block type="cellular automaton rps" id="5">
+		<input id="3" slot="0"/>
+		<parameter name="iterations" type="int" value="50"/>
+		<parameter name="neighbourhood" type="int" value="0"/>
+		<parameter name="neighbourhood size" type="int" value="5"/>
+		<parameter name="players" type="int" value="3"/>
+	</block>
+	<block type="mix" id="6">
+		<input id="7" slot="0"/>
+		<input id="2" slot="1"/>
+		<parameter name="percentage" type="int" value="75"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="adjust rgb" id="7">
+		<input id="5" slot="0"/>
+		<parameter name="red" type="int" value="20"/>
+		<parameter name="green" type="int" value="30"/>
+		<parameter name="blue" type="int" value="-20"/>
+	</block>
+	<block type="blur" id="10">
+		<input id="6" slot="0"/>
+		<parameter name="intensity" type="int" value="10"/>
+		<parameter name="motion" type="bool" value="0"/>
+		<parameter name="direction" type="int" value="0"/>
+	</block>
+	<block type="circle transform" id="11">
+		<input id="10" slot="0"/>
+		<parameter name="radius" type="int" value="5"/>
+		<parameter name="jumps" type="int" value="1"/>
+	</block>
+	<block type="mix" id="12">
+		<input id="6" slot="0"/>
+		<input id="11" slot="1"/>
+		<parameter name="percentage" type="int" value="14"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="particles" id="14">
+		<input id="19" slot="0"/>
+		<parameter name="particles" type="int" value="400"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="angle" type="int" value="0"/>
+		<parameter name="spread" type="int" value="360"/>
+		<parameter name="initial velocity" type="double" value="9"/>
+	</block>
+	<block type="adjust rgb" id="15">
+		<input id="14" slot="0"/>
+		<parameter name="red" type="int" value="-10"/>
+		<parameter name="green" type="int" value="30"/>
+		<parameter name="blue" type="int" value="10"/>
+	</block>
+	<block type="mix" id="17">
+		<input id="20" slot="0"/>
+		<input id="12" slot="1"/>
+		<parameter name="percentage" type="int" value="92"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="end" id="18">
+		<input id="17" slot="0"/>
+	</block>
+	<block type="perlin noise" id="19">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="frequency" type="int" value="6"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="1"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="mix" id="20">
+		<input id="25" slot="0"/>
+		<input id="15" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="0"/>
+	</block>
+	<block type="adjust rgb" id="21">
+		<input id="23" slot="0"/>
+		<parameter name="red" type="int" value="10"/>
+		<parameter name="green" type="int" value="0"/>
+		<parameter name="blue" type="int" value="-8"/>
+	</block>
+	<block type="particles" id="23">
+		<input id="24" slot="0"/>
+		<parameter name="particles" type="int" value="400"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="angle" type="int" value="0"/>
+		<parameter name="spread" type="int" value="360"/>
+		<parameter name="initial velocity" type="double" value="8"/>
+	</block>
+	<block type="perlin noise" id="24" seed="4">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="frequency" type="int" value="6"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="1"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="geometric transform" id="25">
+		<input id="21" slot="0"/>
+		<parameter name="shift x" type="double" value="0.3"/>
+		<parameter name="shift y" type="double" value="0.2"/>
+		<parameter name="flip horizontal" type="bool" value="0"/>
+		<parameter name="flip vertical" type="bool" value="0"/>
+		<parameter name="angle" type="int" value="0"/>
+	</block>
+</texturegraph>
+

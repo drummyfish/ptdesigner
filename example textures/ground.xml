@@ -1,0 +1,88 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="perlin noise" id="16" seed="3">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="frequency" type="int" value="10"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="2"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="mix" id="18">
+		<input id="38" slot="0"/>
+		<input id="19" slot="1"/>
+		<input id="20" slot="2"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="fault formation noise" id="19"/>
+	<block type="bump noise" id="20">
+		<parameter name="bump size from" type="double" value="0.7"/>
+		<parameter name="bump size to" type="double" value="0.001"/>
+		<parameter name="quantity" type="int" value="1"/>
+		<parameter name="alter amplitude" type="bool" value="0"/>
+	</block>
+	<block type="map transition" id="23">
+		<input id="18" slot="0"/>
+		<input id="24" slot="1"/>
+	</block>
+	<block type="color transition" id="24">
+		<parameter name="data" type="string" value="0 45 32 17;255 255 234 196;"/>
+	</block>
+	<block type="map transition" id="26">
+		<input id="18" slot="0"/>
+		<input id="27" slot="1"/>
+	</block>
+	<block type="color transition" id="27">
+		<parameter name="data" type="string" value="0 93 48 39;255 223 214 88;"/>
+	</block>
+	<block type="mix" id="28">
+		<input id="23" slot="0"/>
+		<input id="26" slot="1"/>
+		<input id="20" slot="2"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="normal map" id="29">
+		<input id="18" slot="0"/>
+		<parameter name="neighbourhood size" type="int" value="1"/>
+	</block>
+	<block type="light" id="30">
+		<input id="29" slot="0"/>
+		<parameter name="ambient red" type="int" value="13"/>
+		<parameter name="ambient green" type="int" value="13"/>
+		<parameter name="ambient blue" type="int" value="13"/>
+		<parameter name="diffuse red" type="int" value="132"/>
+		<parameter name="diffuse green" type="int" value="131"/>
+		<parameter name="diffuse blue" type="int" value="100"/>
+		<parameter name="specular red" type="int" value="54"/>
+		<parameter name="specular green" type="int" value="51"/>
+		<parameter name="specular blue" type="int" value="48"/>
+		<parameter name="reflection curve" type="int" value="1"/>
+		<parameter name="viewer height" type="double" value="1"/>
+		<parameter name="phong exponent" type="double" value="2.3"/>
+		<parameter name="direction vector x" type="double" value="0.5"/>
+		<parameter name="direction vector y" type="double" value="0.5"/>
+	</block>
+	<block type="mix" id="31">
+		<input id="28" slot="0"/>
+		<input id="30" slot="1"/>
+		<parameter name="percentage" type="int" value="15"/>
+		<parameter name="method" type="int" value="0"/>
+	</block>
+	<block type="end" id="32">
+		<input id="31" slot="0"/>
+	</block>
+	<block type="bump noise" id="37">
+		<parameter name="bump size from" type="double" value="0.3"/>
+		<parameter name="bump size to" type="double" value="0.0001"/>
+		<parameter name="quantity" type="int" value="10"/>
+		<parameter name="alter amplitude" type="bool" value="1"/>
+	</block>
+	<block type="mix" id="38">
+		<input id="16" slot="0"/>
+		<input id="37" slot="1"/>
+		<parameter name="percentage" type="int" value="70"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+</texturegraph>
+

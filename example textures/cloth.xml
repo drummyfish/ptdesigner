@@ -1,0 +1,53 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="marble" id="1">
+		<input id="5" slot="0"/>
+		<parameter name="periods" type="int" value="4"/>
+		<parameter name="intensity" type="int" value="3"/>
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="direction" type="int" value="0"/>
+	</block>
+	<block type="circle transform" id="2">
+		<input id="1" slot="0"/>
+		<parameter name="radius" type="int" value="4"/>
+		<parameter name="jumps" type="int" value="1"/>
+	</block>
+	<block type="fault formation noise" id="5"/>
+	<block type="geometric transform" id="9">
+		<input id="2" slot="0"/>
+		<parameter name="shift x" type="double" value="0"/>
+		<parameter name="shift y" type="double" value="0"/>
+		<parameter name="flip horizontal" type="bool" value="0"/>
+		<parameter name="flip vertical" type="bool" value="0"/>
+		<parameter name="angle" type="int" value="90"/>
+	</block>
+	<block type="mix" id="10">
+		<input id="2" slot="0"/>
+		<input id="9" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="map transition" id="11">
+		<input id="10" slot="0"/>
+		<input id="12" slot="1"/>
+	</block>
+	<block type="color transition" id="12">
+		<parameter name="data" type="string" value="0 85 81 86;128 190 152 144;255 225 249 253;"/>
+	</block>
+	<block type="end" id="17">
+		<input id="19" slot="0"/>
+	</block>
+	<block type="marble" id="18">
+		<parameter name="periods" type="int" value="2"/>
+		<parameter name="intensity" type="int" value="1"/>
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="direction" type="int" value="3"/>
+	</block>
+	<block type="mix" id="19">
+		<input id="11" slot="0"/>
+		<input id="18" slot="1"/>
+		<parameter name="percentage" type="int" value="10"/>
+		<parameter name="method" type="int" value="3"/>
+	</block>
+</texturegraph>
+

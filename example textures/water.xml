@@ -1,0 +1,89 @@
+<!DOCTYPE ptgraph>
+<texturegraph width="512" height="512" seed="0" supersampling="1">
+	<block type="voronoi diagram" id="27">
+		<parameter name="type" type="int" value="1"/>
+		<parameter name="metric" type="int" value="0"/>
+		<parameter name="point place" type="int" value="0"/>
+		<parameter name="width" type="int" value="75"/>
+		<parameter name="point positions" type="string" value=""/>
+		<parameter name="number of points" type="int" value="8"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="color transition" id="28">
+		<parameter name="data" type="string" value="0 0 16 125;180 19 179 200;250 210 252 255;255 255 255 255;"/>
+	</block>
+	<block type="map transition" id="29">
+		<input id="45" slot="0"/>
+		<input id="28" slot="1"/>
+	</block>
+	<block type="normal map" id="30">
+		<input id="37" slot="0"/>
+		<parameter name="neighbourhood size" type="int" value="5"/>
+	</block>
+	<block type="glass" id="32">
+		<input id="29" slot="0"/>
+		<input id="30" slot="1"/>
+		<parameter name="height" type="double" value="0.3"/>
+	</block>
+	<block type="normal map" id="36">
+		<input id="40" slot="0"/>
+		<parameter name="neighbourhood size" type="int" value="5"/>
+	</block>
+	<block type="glass" id="37">
+		<input id="39" slot="0"/>
+		<input id="36" slot="1"/>
+		<parameter name="height" type="double" value="0.2"/>
+	</block>
+	<block type="voronoi diagram" id="38" seed="200">
+		<parameter name="type" type="int" value="1"/>
+		<parameter name="metric" type="int" value="0"/>
+		<parameter name="point place" type="int" value="0"/>
+		<parameter name="width" type="int" value="75"/>
+		<parameter name="point positions" type="string" value=""/>
+		<parameter name="number of points" type="int" value="15"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="mix" id="39">
+		<input id="38" slot="0"/>
+		<input id="27" slot="1"/>
+		<parameter name="percentage" type="int" value="50"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+	<block type="perlin noise" id="40">
+		<parameter name="amplitude" type="int" value="127"/>
+		<parameter name="frequency" type="int" value="4"/>
+		<parameter name="max iterations" type="int" value="-1"/>
+		<parameter name="interpolation" type="int" value="2"/>
+		<parameter name="smooth" type="bool" value="1"/>
+	</block>
+	<block type="voronoi diagram" id="41" seed="377">
+		<parameter name="type" type="int" value="1"/>
+		<parameter name="metric" type="int" value="0"/>
+		<parameter name="point place" type="int" value="0"/>
+		<parameter name="width" type="int" value="75"/>
+		<parameter name="point positions" type="string" value=""/>
+		<parameter name="number of points" type="int" value="7"/>
+		<parameter name="initial x" type="double" value="0.5"/>
+		<parameter name="initial y" type="double" value="0.5"/>
+		<parameter name="initial angle" type="int" value="90"/>
+	</block>
+	<block type="crop amplitude" id="42">
+		<input id="41" slot="0"/>
+		<parameter name="lower limit" type="int" value="110"/>
+		<parameter name="upper limit" type="int" value="255"/>
+	</block>
+	<block type="end" id="43">
+		<input id="32" slot="0"/>
+	</block>
+	<block type="mix" id="45">
+		<input id="40" slot="0"/>
+		<input id="42" slot="1"/>
+		<parameter name="percentage" type="int" value="70"/>
+		<parameter name="method" type="int" value="2"/>
+	</block>
+</texturegraph>
+
