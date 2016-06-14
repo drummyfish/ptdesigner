@@ -1,5 +1,11 @@
 # proctextures
-My Bachelor thesis work - Procedural textures C library plus GUI tool. GPL. Some videos:
+My Bachelor thesis work - Procedural textures C library plus GUI tool. GPL.
+
+Example tiling textures:
+
+![example textures](http://i.imgur.com/eQ1L145.jpg)
+
+Some videos:
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/n5fy9sr6iAQ/0.jpg)](http://www.youtube.com/watch?v=n5fy9sr6iAQ "quick tutorial")
 
