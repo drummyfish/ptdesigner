@@ -7,6 +7,8 @@ Example tiling textures:
 
 For convenience I've included precompiled binaries in the bin subfolder.
 
+You can download some generated textures over at [opengameart website](https://opengameart.org/content/40-procedural-textures?page=1).
+
 Some videos:
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/n5fy9sr6iAQ/0.jpg)](http://www.youtube.com/watch?v=n5fy9sr6iAQ "quick tutorial")
