@@ -5,6 +5,8 @@ Example tiling textures:
 
 ![example textures](http://i.imgur.com/eQ1L145.jpg)
 
+For convenience I've included precompiled binaries in the bin subfolder.
+
 Some videos:
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/n5fy9sr6iAQ/0.jpg)](http://www.youtube.com/watch?v=n5fy9sr6iAQ "quick tutorial")
